@@ -1,4 +1,4 @@
-# design-system-repository-demo
+# Figma Icon Exporter (Demo)
 Ideal setup to handle assets export from Figma 
 
 - Figma Icon Exporter **[Documentation](https://sofian-design.github.io/fivra/)**
