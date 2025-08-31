@@ -31,7 +31,7 @@ const ALL_META: IconRecord[] = [...OUTLINE_META, ...SOLID_META];
 const ALL_CATEGORIES = Array.from(new Set(ALL_META.map((i) => i.category))).sort();
 
 const meta: Meta = {
-  title: "Gallery/Icons",
+  title: "Gallery/Icons Gallery",
   argTypes: {
     variant: {
       control: { type: "inline-radio" },
