@@ -1,0 +1,11 @@
+{
+  "name": "design-system-icons",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "optimize-icons": "node scripts/optimize-icons.mjs"
+  },
+  "dependencies": {
+    "svgo": "^3.0.2"
+  }
+}

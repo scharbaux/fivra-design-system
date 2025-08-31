@@ -1,0 +1,21 @@
+name: Optimize icons
+
+on:
+  push:
+    paths:
+      - 'src/icons/**/*.svg'
+  pull_request:
+    paths:
+      - 'src/icons/**/*.svg'
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm run optimize-icons
+      - run: git diff --quiet || (echo "SVGs are not optimized" && exit 1)
