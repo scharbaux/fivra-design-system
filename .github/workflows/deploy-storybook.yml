@@ -30,6 +30,9 @@ jobs:
       - name: Install dependencies
         run: yarn ci
 
+      - name: Generate icons map
+        run: yarn run generate:icons
+
       - name: Build Storybook
         run: yarn build-storybook
 

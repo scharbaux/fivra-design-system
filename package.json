@@ -7,7 +7,8 @@
     "optimize-icons": "node scripts/optimize-icons.mjs",
     "generate:icons": "node scripts/generate-icons-map.mjs",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "prebuild-storybook": "yarn run generate:icons"
   },
   "dependencies": {
     "svgo": "^3.0.2"
