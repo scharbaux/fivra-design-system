@@ -187,7 +187,7 @@ const Gallery: React.FC<{ variant: Variant; category: string }> = ({ variant, ca
       >
         {icons.map((it) => (
           <button
-            key={`${variant}:${it.name}`}
+            key={`${variantState}:${it.name}`}
             onClick={() => onCopy(it.name)}
             title={`Click to copy: ${it.name}`}
             style={{
