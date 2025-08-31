@@ -18,9 +18,23 @@ const config = {
     name: "@storybook/react-vite",
     options: {},
   },
-  async viteFinal(config) {
-    // Ensure assets use relative URLs so Storybook works under GitHub Pages subpaths.
-    return { ...config, base: "./" };
+  async viteFinal(config, { configType }) {
+    // Use relative base only for production builds (Pages). Keep dev defaults.
+    if (configType === 'PRODUCTION') {
+      return { ...config, base: './' };
+    }
+    // Strengthen file watching for Windows/VM/network drives
+    return {
+      ...config,
+      server: {
+        ...(config.server || {}),
+        watch: {
+          // polling improves reliability on some environments
+          usePolling: true,
+          interval: 200,
+        },
+      },
+    };
   },
 };
 
