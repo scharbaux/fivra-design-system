@@ -18,6 +18,10 @@ const config = {
     name: "@storybook/react-vite",
     options: {},
   },
+  async viteFinal(config) {
+    // Ensure assets use relative URLs so Storybook works under GitHub Pages subpaths.
+    return { ...config, base: "./" };
+  },
 };
 
 export default config;
