@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import Icon from "../components/Icon";
@@ -91,7 +91,21 @@ function copyText(txt: string) {
 }
 
 const Gallery: React.FC<{ variant: Variant; category: string }> = ({ variant, category }) => {
-  const icons = useFilteredIcons(variant, category);
+  // Local UI state driven by toolbar
+  const [variantState, setVariantState] = useState<Variant>(variant);
+  const [categoryState, setCategoryState] = useState<string>(category);
+  const [search, setSearch] = useState<string>("");
+
+  // Sync local state if user tweaks Controls panel
+  useEffect(() => setVariantState(variant), [variant]);
+  useEffect(() => setCategoryState(category), [category]);
+
+  const iconsBase = useFilteredIcons(variantState, categoryState);
+  const icons = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    if (!q) return iconsBase;
+    return iconsBase.filter((i) => i.name.toLowerCase().includes(q));
+  }, [iconsBase, search]);
   const [copied, setCopied] = useState<string | null>(null);
 
   const onCopy = async (name: string) => {
@@ -102,8 +116,66 @@ const Gallery: React.FC<{ variant: Variant; category: string }> = ({ variant, ca
 
   return (
     <div style={{ padding: 16 }}>
-      <div style={{ display: "flex", gap: 16, alignItems: "center", marginBottom: 16 }}>
-        <span style={{ color: "#6b7280" }}>{icons.length} icons</span>
+      {/* Toolbar */}
+      <div
+        style={{
+          display: "flex",
+          gap: 12,
+          alignItems: "center",
+          flexWrap: "wrap",
+          marginBottom: 16,
+        }}
+      >
+        {/* Variant toggle */}
+        <div style={{ display: "inline-flex", border: "1px solid #e5e7eb", borderRadius: 8, overflow: "hidden" }}>
+          {(["outline", "solid"] as Variant[]).map((v) => (
+            <button
+              key={v}
+              onClick={() => setVariantState(v)}
+              style={{
+                padding: "6px 10px",
+                background: variantState === v ? "#111827" : "#fff",
+                color: variantState === v ? "#fff" : "#111827",
+                border: "none",
+                cursor: "pointer",
+              }}
+              aria-pressed={variantState === v}
+            >
+              {v}
+            </button>
+          ))}
+        </div>
+
+        {/* Category select */}
+        <label style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+          <span style={{ color: "#6b7280", fontSize: 12 }}>Category</span>
+          <select
+            value={categoryState}
+            onChange={(e) => setCategoryState(e.target.value)}
+            style={{ padding: "6px 10px", border: "1px solid #e5e7eb", borderRadius: 6 }}
+          >
+            <option value="all">all</option>
+            {ALL_CATEGORIES.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        {/* Search */}
+        <label style={{ display: "inline-flex", alignItems: "center", gap: 8, flex: "1 1 260px", minWidth: 220 }}>
+          <span style={{ color: "#6b7280", fontSize: 12 }}>Search</span>
+          <input
+            type="search"
+            placeholder="Filter by name…"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            style={{ flex: 1, padding: "6px 10px", border: "1px solid #e5e7eb", borderRadius: 6 }}
+          />
+        </label>
+
+        <span style={{ color: "#6b7280", marginLeft: "auto" }}>{icons.length} icons</span>
       </div>
       <div
         style={{
@@ -119,6 +191,7 @@ const Gallery: React.FC<{ variant: Variant; category: string }> = ({ variant, ca
             onClick={() => onCopy(it.name)}
             title={`Click to copy: ${it.name}`}
             style={{
+              position: "relative",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -130,12 +203,29 @@ const Gallery: React.FC<{ variant: Variant; category: string }> = ({ variant, ca
               cursor: "pointer",
             }}
           >
+            {/* Floating copied badge */}
+            {copied === it.name ? (
+              <span
+                style={{
+                  position: "absolute",
+                  top: 8,
+                  right: 8,
+                  padding: "2px 6px",
+                  background: "#16a34a",
+                  color: "#fff",
+                  borderRadius: 999,
+                  fontSize: 10,
+                }}
+              >
+                copied
+              </span>
+            ) : null}
+
             <div style={{ display: "flex", gap: 12, alignItems: "center", minHeight: 28 }}>
-              <Icon name={it.name} variant={variant} size={28} color="#111827" />
+              <Icon name={it.name} variant={variantState} size={28} color="#111827" />
             </div>
             <div style={{ fontSize: 12, color: "#6b7280", textAlign: "center", wordBreak: "break-all" }}>
               {it.name}
-              {copied === it.name ? <span style={{ color: "#16a34a", marginLeft: 8 }}>(copied)</span> : null}
             </div>
             <div style={{ fontSize: 10, color: "#9ca3af" }}>{it.category}</div>
           </button>
@@ -153,4 +243,3 @@ export const Preview: Story = {
   },
   render: (args) => <Gallery {...args} />,
 };
-

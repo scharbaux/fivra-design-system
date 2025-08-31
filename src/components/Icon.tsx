@@ -1,7 +1,10 @@
 import React, { forwardRef, isValidElement } from 'react';
 import { icons as generatedIcons } from '../icons.generated';
 
-export type IconPaths = { paths: string[]; viewBox?: string };
+export type IconPathEntry =
+  | string
+  | { d: string; fillRule?: 'evenodd' | 'nonzero'; clipRule?: 'evenodd' | 'nonzero' };
+export type IconPaths = { paths: IconPathEntry[]; viewBox?: string };
 export type IconSvg = { svg: string; viewBox?: string };
 export type IconElement = React.ReactElement<React.SVGProps<SVGSVGElement>>;
 export type IconComponent = React.ComponentType<React.SVGProps<SVGSVGElement>>;
@@ -178,9 +181,13 @@ const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(props, ref) {
       const vb = (s as IconPaths).viewBox ?? baseSvgProps.viewBox;
       return (
         <svg {...(baseSvgProps as any)} viewBox={vb} title={title}>
-          {(s as IconPaths).paths.map((d, i) => (
-            <path key={i} d={d} />
-          ))}
+          {(s as IconPaths).paths.map((entry, i) => {
+            if (typeof entry === 'string') {
+              return <path key={i} d={entry} />;
+            }
+            const e = entry as { d: string; fillRule?: 'evenodd' | 'nonzero'; clipRule?: 'evenodd' | 'nonzero' };
+            return <path key={i} d={e.d} fillRule={e.fillRule} clipRule={e.clipRule} />;
+          })}
         </svg>
       );
     }

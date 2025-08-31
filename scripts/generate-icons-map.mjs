@@ -48,13 +48,33 @@ function extractViewBox(svg) {
 }
 
 function extractPaths(svg) {
-  const paths = [];
-  const re = /<\s*path[^>]*\s+d\s*=\s*"([^"]+)"[^>]*>/gi;
+  // Drop paths in <defs> (clipPaths, masks, etc.) so we don't render
+  // those as solid rectangles.
+  const withoutDefs = svg.replace(/<\s*defs[\s\S]*?<\s*\/\s*defs\s*>/gi, '');
+
+  // Capture each <path ...> tag's attributes so we can preserve
+  // fill-rule/clip-rule, which are essential for donut/outlined shapes.
+  const entries = [];
+  const re = /<\s*path([^>]*)>/gi;
+  const hasGlobalEvenOddFill = /fill-rule\s*=\s*"evenodd"/i.test(withoutDefs);
+  const hasGlobalEvenOddClip = /clip-rule\s*=\s*"evenodd"/i.test(withoutDefs);
   let m;
-  while ((m = re.exec(svg))) {
-    paths.push(m[1]);
+  while ((m = re.exec(withoutDefs))) {
+    const attrs = m[1] || '';
+    const dMatch = attrs.match(/\sd\s*=\s*"([^"]+)"/i);
+    if (!dMatch) continue;
+    const d = dMatch[1];
+    const fillRuleMatch = attrs.match(/fill-rule\s*=\s*"(evenodd|nonzero)"/i);
+    const clipRuleMatch = attrs.match(/clip-rule\s*=\s*"(evenodd|nonzero)"/i);
+    const fillRule = (fillRuleMatch && fillRuleMatch[1]) || (hasGlobalEvenOddFill ? 'evenodd' : undefined);
+    const clipRule = (clipRuleMatch && clipRuleMatch[1]) || (hasGlobalEvenOddClip ? 'evenodd' : undefined);
+    if (fillRule || clipRule) {
+      entries.push({ d, ...(fillRule ? { fillRule } : {}), ...(clipRule ? { clipRule } : {}) });
+    } else {
+      entries.push(d);
+    }
   }
-  return paths;
+  return entries;
 }
 
 async function parseSvgFile(file) {
@@ -127,4 +147,3 @@ generate().catch((err) => {
   console.error(err);
   process.exitCode = 1;
 });
-
