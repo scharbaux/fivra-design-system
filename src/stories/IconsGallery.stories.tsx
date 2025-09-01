@@ -50,6 +50,10 @@ const meta: Meta = {
           "Browse all icons with filters. Click any tile to copy the icon name for use in the Icon component's `name` prop.",
       },
     },
+    design: {
+      type: "figma",
+      url: "https://www.figma.com/design/Zt40QOhEylVnVmHOfrbex8/Figma-Icons-Exporter--Demo-File-?node-id=0-1&t=LCoE4lsUxsvxZNg7-1",
+    }
   },
   tags: ["autodocs"],
 };
@@ -211,7 +215,7 @@ const Gallery: React.FC<{ variant: Variant; category: string }> = ({ variant, ca
                   top: 8,
                   right: 8,
                   padding: "2px 6px",
-                  background: "#16a34a",
+                  background: "#139442ff",
                   color: "#fff",
                   borderRadius: 999,
                   fontSize: 10,
@@ -224,10 +228,10 @@ const Gallery: React.FC<{ variant: Variant; category: string }> = ({ variant, ca
             <div style={{ display: "flex", gap: 12, alignItems: "center", minHeight: 28 }}>
               <Icon name={it.name} variant={variantState} size={28} color="#111827" />
             </div>
-            <div style={{ fontSize: 12, color: "#6b7280", textAlign: "center", wordBreak: "break-all" }}>
+            <div style={{ fontSize: 12, color: "#393c42ff", textAlign: "center", wordBreak: "break-all" }}>
               {it.name}
             </div>
-            <div style={{ fontSize: 10, color: "#9ca3af" }}>{it.category}</div>
+            <div style={{ fontSize: 10, color: "#7e838dff" }}>{it.category}</div>
           </button>
         ))}
       </div>
