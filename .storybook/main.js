@@ -1,6 +1,6 @@
 /**
  * Storybook configuration (ESM) for a React + Vite setup.
- * Uses Storybook 8 framework packages.
+ * Uses Storybook 9 framework packages.
  */
 
 /** @type { import('@storybook/react-vite').StorybookConfig } */
@@ -10,9 +10,9 @@ const config = {
     "../src/**/*.mdx",
   ],
   addons: [
-    "@storybook/addon-essentials",
+    "@storybook/addon-actions",
+    "@storybook/addon-controls",
     "@storybook/addon-docs",
-    "@storybook/addon-interactions",
     "@storybook/addon-a11y",
     "@storybook/addon-designs",
   ],
