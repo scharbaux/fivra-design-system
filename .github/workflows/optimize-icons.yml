@@ -33,7 +33,8 @@ jobs:
           key: ${{ runner.os }}-yarn4-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn4-
-      - run: yarn ci
+      - name: Install dependencies
+        run: yarn install --immutable
 
       - name: Optimize SVGs
         run: yarn run optimize-icons
