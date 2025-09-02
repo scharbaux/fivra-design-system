@@ -886,20 +886,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-actions@npm:^9.0.8":
-  version: 9.0.8
-  resolution: "@storybook/addon-actions@npm:9.0.8"
-  checksum: 10c0/40ab6bf018cb423bf156e6b1317d199f3730690750b88b4c4eed7af636fdbc9392ddc95b1383927ec85f462515ae35bc9f517c934bf05e1edb645f6b9b94264a
-  languageName: node
-  linkType: hard
-
-"@storybook/addon-controls@npm:^9.0.8":
-  version: 9.0.8
-  resolution: "@storybook/addon-controls@npm:9.0.8"
-  checksum: 10c0/cfde9dcafeeec4da8095406ce03e0f301c0731a1b965769f981acfedae4d61487c18e15583142ed2755a5a75ddec4dc11759b066ec20d0e5855603b8d54a9b85
-  languageName: node
-  linkType: hard
-
 "@storybook/addon-designs@npm:^10.0.2":
   version: 10.0.2
   resolution: "@storybook/addon-designs@npm:10.0.2"
@@ -1576,8 +1562,6 @@ __metadata:
   dependencies:
     "@mdx-js/react": "npm:^2.3.0"
     "@storybook/addon-a11y": "npm:^9.1.4"
-    "@storybook/addon-actions": "npm:^9.0.8"
-    "@storybook/addon-controls": "npm:^9.0.8"
     "@storybook/addon-designs": "npm:^10.0.2"
     "@storybook/addon-docs": "npm:^9.1.4"
     "@storybook/react-vite": "npm:^9.1.4"

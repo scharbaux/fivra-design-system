@@ -10,8 +10,6 @@ const config = {
     "../src/**/*.mdx",
   ],
   addons: [
-    "@storybook/addon-actions",
-    "@storybook/addon-controls",
     "@storybook/addon-docs",
     "@storybook/addon-a11y",
     "@storybook/addon-designs",
@@ -23,7 +21,22 @@ const config = {
   async viteFinal(config, { configType }) {
     // Use relative base only for production builds (Pages). Keep dev defaults.
     if (configType === 'PRODUCTION') {
-      return { ...config, base: './' };
+      return {
+        ...config,
+        base: './',
+        plugins: [
+          ...(config.plugins || []),
+          {
+            name: 'sb-ghpages-fix-absolute-vite-inject',
+            transformIndexHtml(html) {
+              return html.replace(
+                /src="\/vite-inject-mocker-entry\.js"/g,
+                'src="./vite-inject-mocker-entry.js"'
+              );
+            },
+          },
+        ],
+      };
     }
     // Strengthen file watching for Windows/VM/network drives
     return {
