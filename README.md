@@ -121,6 +121,7 @@ Notes:
 - When `variant="outline"`, it uses `stroke: currentColor; fill: none` by default.
 - When `variant="solid"`, it uses `fill: currentColor` by default.
 - If you pass raw `<svg>` markup as a string, it is injected via `dangerouslySetInnerHTML` and sized via the wrapper element.
+ - Aliases supported: `variant="stroke"` maps to `outline`, `variant="fill"` maps to `solid`.
 
 ### Auto-generated icons map
 
@@ -154,6 +155,48 @@ Scripts:
 - `yarn optimize-icons` — Runs SVGO to normalize SVGs
 - `yarn generate:icons` — Scans `src/icons/*` and generates `src/icons.generated.ts`
 - `prebuild-storybook` — Runs `generate:icons` before a Storybook build
+
+How generation works (summary):
+
+- Recursively scans `src/icons/**/*.svg` under the configured variant folders.
+- For each SVG, removes `<defs>` blocks, extracts `<path d="...">` entries, and preserves `fill-rule`/`clip-rule` when present.
+- Captures `viewBox` if present; defaults to `0 0 24 24` at render time when missing.
+- If no `<path>` is found, stores the raw `<svg>` markup and injects it at render time.
+- Writes a deterministic, typed map to `src/icons.generated.ts` used by the Icon component.
+
+### Customize variants/directories
+
+By default, the generator expects two styles/variants under `src/icons`:
+
+- `outline/<category>/<name>.svg`
+- `solid/<category>/<name>.svg`
+
+If your design/plugin exports use different top-level folder names (e.g. `stroke` and `fill`), you can map them to the canonical variants without changing code by adding a small config in `package.json`:
+
+```
+{
+  "iconsGenerator": {
+    "variants": {
+      "outline": ["outline", "stroke"],
+      "solid": ["solid", "fill"]
+    }
+  }
+}
+```
+
+Notes:
+
+- Keys (`outline`, `solid`) are the canonical variant names expected by the Icon component.
+- Values are one or more folder names to scan under `src/icons/<folder>`; the last occurrence wins if duplicates exist across aliases.
+- You can also provide a single string instead of an array, e.g. `{ "outline": "stroke", "solid": "fill" }`.
+
+If you customize the variant folders, update the Gallery story’s glob patterns to include your aliases. Example for `stroke`/`fill`:
+
+```
+// src/stories/IconsGallery.stories.tsx
+const outlineFiles = import.meta.glob("../icons/{outline,stroke}/**/*.svg", { eager: true });
+const solidFiles = import.meta.glob("../icons/{solid,fill}/**/*.svg", { eager: true });
+```
 
 ## CI / GitHub Actions
 

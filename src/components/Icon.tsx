@@ -12,10 +12,14 @@ export type IconSource = IconComponent | IconElement | string | IconPaths | Icon
 export type IconVariants = { outline?: IconSource; solid?: IconSource };
 export type IconsMap = Record<string, IconSource | IconVariants>;
 
+type VariantProp = 'outline' | 'solid' | 'fill' | 'stroke';
+type NormalizedVariant = 'outline' | 'solid';
+
 export interface IconProps extends Omit<React.SVGProps<SVGSVGElement>, 'stroke' | 'strokeWidth'> {
   name: string;
   icons?: IconsMap;
-  variant?: 'outline' | 'solid';
+  // Accept common aliases: 'stroke' -> 'outline', 'fill' -> 'solid'
+  variant?: VariantProp;
   size?: number | string;
   color?: string;
   title?: string;
@@ -37,7 +41,13 @@ function toPx(v?: number | string): string | undefined {
   return typeof v === 'number' ? `${v}px` : String(v);
 }
 
-function pickVariantEntry(entry: unknown, variant: 'outline' | 'solid') {
+function normalizeVariant(v: VariantProp | undefined): NormalizedVariant {
+  if (v === 'fill') return 'solid';
+  if (v === 'stroke') return 'outline';
+  return (v as NormalizedVariant) ?? 'outline';
+}
+
+function pickVariantEntry(entry: unknown, variant: NormalizedVariant) {
   if (
     entry &&
     typeof entry === 'object' &&
@@ -70,7 +80,7 @@ const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(props, ref) {
   } = props;
 
   const entry = icons ? (icons as any)[name] : undefined;
-  const source = pickVariantEntry(entry, variant) as IconSource | undefined;
+  const source = pickVariantEntry(entry, normalizeVariant(variant)) as IconSource | undefined;
 
   if (!source) {
     if (process.env.NODE_ENV !== 'production') {

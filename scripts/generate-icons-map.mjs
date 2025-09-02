@@ -108,19 +108,41 @@ function stableStringify(obj) {
   }, 2);
 }
 
+async function loadVariantDirs() {
+  // Default mapping: look in icons/outline and icons/solid
+  const defaults = { outline: ['outline'], solid: ['solid'] };
+  try {
+    const pkgRaw = await fs.readFile(path.join(repoRoot, 'package.json'), 'utf8');
+    const pkg = JSON.parse(pkgRaw);
+    const cfg = pkg?.iconsGenerator?.variants;
+    if (cfg && typeof cfg === 'object') {
+      const out = { ...defaults };
+      for (const [variant, dirs] of Object.entries(cfg)) {
+        if (Array.isArray(dirs) && dirs.length > 0) out[variant] = dirs.map(String);
+        else if (typeof dirs === 'string' && dirs) out[variant] = [String(dirs)];
+      }
+      return out;
+    }
+  } catch {}
+  return defaults;
+}
+
 async function generate() {
-  const variants = ['outline', 'solid'];
+  const variantDirs = await loadVariantDirs();
   const map = {};
 
-  for (const variant of variants) {
-    const dir = path.join(iconsDir, variant);
-    const files = await listSvgs(dir);
-    for (const file of files) {
-      const name = getBaseNameNoExt(file);
-      const parsed = await parseSvgFile(file);
-      const entry = map[name] || {};
-      entry[variant] = parsed.value; // store {paths:[],viewBox?} or {svg:'',viewBox?}
-      map[name] = entry;
+  for (const [variant, dirs] of Object.entries(variantDirs)) {
+    for (const sub of dirs) {
+      const dir = path.join(iconsDir, sub);
+      const files = await listSvgs(dir);
+      for (const file of files) {
+        const name = getBaseNameNoExt(file);
+        const parsed = await parseSvgFile(file);
+        const entry = map[name] || {};
+        // last one wins if duplicated across alias dirs
+        entry[variant] = parsed.value; // {paths:[],viewBox?} or {svg:'',viewBox?}
+        map[name] = entry;
+      }
     }
   }
 
