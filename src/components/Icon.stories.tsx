@@ -66,7 +66,7 @@ export default meta;
 type Story = StoryObj<typeof Icon>;
 
 export const Basic: Story = {
-  name: "Basic (outline)",
+  name: "Outline",
   args: {
     name: defaultIcon,
     variant: "outline",

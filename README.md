@@ -5,6 +5,18 @@ Ideal setup to handle assets export from Figma
 - Figma Plugin: **[Figma Icon Exporter](https://www.figma.com/community/plugin/1533548616572213704/figma-icon-exporter)**
 - Pro License: **[Get Pro](https://figma-icon-exporter.lemonsqueezy.com/buy/d7258c83-561d-496b-a1cc-33bd5ddb0b22)**
 
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Quick Start](#quick-start)
+- [Storybook 9 Setup (React + Vite)](#storybook-9-setup-react--vite)
+- [React Icon Component](#react-icon-component)
+  - [Auto-generated icons map](#auto-generated-icons-map)
+- [Icons Pipeline](#icons-pipeline)
+  - [Customize variants/directories](#customize-variantsdirectories)
+- [CI / GitHub Actions](#ci--github-actions)
+- [Troubleshooting](#troubleshooting)
+
 ## Requirements
 
 - Node.js: 18.17+ (recommended: 22.x)
