@@ -2,6 +2,7 @@
   "name": "design-system-icons",
   "private": true,
   "type": "module",
+  "packageManager": "yarn@4.9.4",
   "scripts": {
     "ci": "yarn install --frozen-lockfile",
     "optimize-icons": "node scripts/optimize-icons.mjs",
