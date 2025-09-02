@@ -1,9 +1,78 @@
 # Figma Icon Exporter (Demo)
-Ideal setup to handle assets export from Figma 
+Ideal setup to handle assets export from Figma
 
-- Figma Icon Exporter **[Documentation](https://sofian-design.github.io/fivra/)**
-- Figma **[Plugin](https://www.figma.com/community/plugin/1533548616572213704/figma-icon-exporter)**
-- Get **[Pro License](https://figma-icon-exporter.lemonsqueezy.com/buy/d7258c83-561d-496b-a1cc-33bd5ddb0b22)**
+- Figma Icon Exporter: **[Documentation](https://sofian-design.github.io/fivra/)**
+- Figma Plugin: **[Figma Icon Exporter](https://www.figma.com/community/plugin/1533548616572213704/figma-icon-exporter)**
+- Pro License: **[Get Pro](https://figma-icon-exporter.lemonsqueezy.com/buy/d7258c83-561d-496b-a1cc-33bd5ddb0b22)**
+
+## Requirements
+
+- Node.js: 18.17+ (recommended: 22.x)
+- Corepack: enabled (bundled with Node >= 16.9)
+- Yarn: v4.9.4 (pinned via `packageManager`)
+
+Check your environment:
+
+```
+node -v
+corepack --version || echo "Corepack bundled with Node"
+yarn -v || echo "Use Corepack to activate Yarn 4"
+```
+
+Enable Corepack and activate Yarn 4 (first time on a machine/CI):
+
+```
+corepack enable
+corepack prepare yarn@4.9.4 --activate
+```
+
+The repo uses Yarn’s node-modules linker (`.yarnrc.yml`) and a Yarn v4 lockfile (`yarn.lock`).
+
+## Quick Start
+
+Install deps and generate the icons map:
+
+```
+yarn install --immutable
+yarn generate:icons
+```
+
+Run Storybook locally:
+
+```
+yarn storybook
+```
+
+Build static Storybook:
+
+```
+yarn build-storybook
+```
+
+Notes:
+
+- If you see a “packageManager … Corepack” error, ensure you ran the Corepack commands above.
+- If you see “Your lockfile needs to be updated … --frozen-lockfile”, use Yarn 4 and `--immutable`.
+- On Windows/WSL or network drives, file watching can be flaky. This repo enables Vite polling in `.storybook/main.js` to improve reliability.
+
+## Storybook 9 Setup (React + Vite)
+
+- Framework: `@storybook/react-vite@^9.1.4`
+- Builder: Vite 5
+- Addons used: `@storybook/addon-docs`, `@storybook/addon-a11y`, `@storybook/addon-designs`
+- Not used in SB 9: `@storybook/addon-essentials`, `@storybook/addon-actions`, `@storybook/addon-controls` (Actions/Controls are built-in in SB 9)
+
+MDX blocks import:
+
+```
+// Use the Docs addon blocks in SB9
+import { Meta, Title, Subtitle } from '@storybook/addon-docs/blocks';
+```
+
+Vite config for GitHub Pages:
+
+- In production (static build), we set `base: './'` in `.storybook/main.js` so assets resolve correctly on GitHub Pages subpaths.
+- Additionally, a tiny transform rewrites the absolute `/vite-inject-mocker-entry.js` to a relative `./vite-inject-mocker-entry.js` to prevent 404s when hosted under `/OWNER/REPO/`.
 
 ## React Icon Component
 
@@ -62,7 +131,59 @@ Notes:
 Run generation:
 
 ```
-npm run generate:icons
+yarn generate:icons
 ```
 
 The `Icon` component imports the generated map by default. You can still pass a custom `icons` map prop to override or extend it.
+
+## Icons Pipeline
+
+Folder structure expected from the Figma plugin:
+
+```
+src/
+  icons/
+    outline/
+      <category>/<name>.svg
+    solid/
+      <category>/<name>.svg
+```
+
+Scripts:
+
+- `yarn optimize-icons` — Runs SVGO to normalize SVGs
+- `yarn generate:icons` — Scans `src/icons/*` and generates `src/icons.generated.ts`
+- `prebuild-storybook` — Runs `generate:icons` before a Storybook build
+
+## CI / GitHub Actions
+
+Workflows:
+
+- `.github/workflows/optimize-icons.yml`
+  - Node 22 + Corepack → Yarn 4
+  - Installs with `yarn install --immutable`
+  - Optimizes SVGs and regenerates the icons map
+  - Commits changes or uploads a patch for fork PRs
+
+- `.github/workflows/deploy-storybook.yml`
+  - Node 22 + Corepack → Yarn 4
+  - Installs with `yarn install --immutable`
+  - Builds Storybook and deploys to GitHub Pages
+
+Important:
+
+- The repo pins Yarn via `package.json#packageManager`. CI enables Corepack and activates Yarn 4 prior to install.
+- Avoid `setup-node cache: yarn` with Yarn 4 — it calls Yarn before Corepack activation. We cache `.yarn/cache` instead.
+
+## Troubleshooting
+
+- “Your lockfile needs to be updated … --frozen-lockfile”
+  - You’re likely using Yarn 1. Enable Corepack and activate Yarn 4, then `yarn install --immutable`.
+
+- GitHub Pages loads but preview fails with 404s on assets
+  - Ensure `base: './'` is set in `.storybook/main.js` for PRODUCTION.
+  - The config includes a Vite transform to rewrite `/vite-inject-mocker-entry.js` to `./vite-inject-mocker-entry.js`.
+  - Hard-refresh to bust caches after deploy.
+
+- Windows
+  - Consider running in WSL (Ubuntu). If using Windows FS, polling is enabled in Storybook’s Vite server for reliability.
