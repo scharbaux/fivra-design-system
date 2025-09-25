@@ -3,6 +3,7 @@ Ideal setup to handle assets export from Figma
 
 - Figma Icon Exporter: **[Documentation](https://sofian-design.github.io/fivra/)**
 - Figma Plugin: **[Figma Icon Exporter](https://www.figma.com/community/plugin/1533548616572213704/figma-icon-exporter)**
+- Storybook Demo: **[Storybook](https://sofian-design.github.io/design-system-repository-demo/)**  
 - Pro License: **[Get Pro](https://figma-icon-exporter.lemonsqueezy.com/buy/d7258c83-561d-496b-a1cc-33bd5ddb0b22)**
 
 ## Table of Contents
