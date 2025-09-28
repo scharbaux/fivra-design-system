@@ -1,16 +1,15 @@
-import path from "node:path";
 import { fileURLToPath } from "node:url";
+import type { StorybookConfig } from "@storybook/react-vite";
 
 /**
- * Storybook configuration (ESM) for a React + Vite setup.
+ * Storybook configuration (TypeScript) for a React + Vite setup.
  * Uses Storybook 9 framework packages.
  */
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const resolveAliasPath = (relativePath: string) =>
+  fileURLToPath(new URL(relativePath, import.meta.url));
 
-/** @type { import('@storybook/react-vite').StorybookConfig } */
-const config = {
+const config: StorybookConfig = {
   stories: [
     "../src/docs/**/*.mdx",
     "../src/components/**/*.stories.@(js|jsx|mjs|ts|tsx)",
@@ -30,23 +29,23 @@ const config = {
       ...(config.resolve || {}),
       alias: {
         ...(config.resolve?.alias || {}),
-        "@components": path.resolve(__dirname, "../src/components"),
-        "@web-components": path.resolve(__dirname, "../src/web-components"),
-        "@shared": path.resolve(__dirname, "../src/shared"),
-        "@styles": path.resolve(__dirname, "../src/styles"),
+        "@components": resolveAliasPath("../src/components"),
+        "@web-components": resolveAliasPath("../src/web-components"),
+        "@shared": resolveAliasPath("../src/shared"),
+        "@styles": resolveAliasPath("../src/styles"),
       },
     };
 
     // Use relative base only for production builds (Pages). Keep dev defaults.
-    if (configType === 'PRODUCTION') {
+    if (configType === "PRODUCTION") {
       return {
         ...config,
-        base: './',
+        base: "./",
         resolve,
         plugins: [
           ...(config.plugins || []),
           {
-            name: 'sb-ghpages-fix-absolute-vite-inject',
+            name: "sb-ghpages-fix-absolute-vite-inject",
             transformIndexHtml(html) {
               return html.replace(
                 /src="\/vite-inject-mocker-entry\.js"/g,
