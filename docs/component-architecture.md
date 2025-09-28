@@ -34,8 +34,10 @@ To determine whether a component should be authored as a web component or framew
 - **Vue:** Provide single-file component (SFC) wrappers that map props and `v-on` listeners to custom element APIs. Use `defineCustomElement` only when full Vue lifecycle is required.
 
 ## Theming & Accessibility Requirements
-- Define global design tokens (spacing, typography, color ramps) as CSS variables exposed on the `:root` and consumed by both web components and framework styles.
-- Support light/dark theme switching via CSS media queries and explicit theme attributes.
+- Maintain design tokens via the Tokens Studio export consumed by `scripts/generate-design-tokens.mjs`; run `yarn generate:tokens` (or rely on `prebuild`/`prestorybook`) to regenerate `src/styles/themes/*.css` and the manifest before shipping changes.
+- Engage tokens remain the default by scoping to `:root` in `src/styles/themes/engage.css`; alternative themes (e.g., `legacy`) apply when `data-fivra-theme='<slug>'` is present on a container.
+- Import `src/styles/index.css` wherever global CSS is bundled so both Engage and Legacy layers are registered.
+- Use the helpers in `src/styles/themes/index.ts` (`applyDesignTokenTheme`, `clearDesignTokenTheme`, `FIVRA_THEME_ATTRIBUTE`) to toggle themes in React apps, web components, or tests instead of duplicating attribute management.
 - Ensure every interactive component exposes ARIA labels, focus indicators, and keyboard shortcuts consistent across frameworks.
 - Provide a theming guide that describes how to override CSS variables, including restrictions when Shadow DOM encapsulation is enabled.
 - For frameworks with their own theming systems (e.g., Angular Material, Vue style bindings), document how to map design tokens into those systems while keeping the core CSS variables authoritative.

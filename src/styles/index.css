@@ -1,4 +1,13 @@
+@layer fivra.tokens.engage {
+  @import url('./themes/engage.css');
+}
+
+@layer fivra.tokens.legacy {
+  @import url('./themes/legacy.css');
+}
+
 /*
-  Placeholder for global design tokens and shared CSS utilities.
-  Future components should import styles from this entry point.
+  Theme variables are resolved against the `data-fivra-theme` attribute.
+  - Engage tokens are the default and apply to :root.
+  - Set `data-fivra-theme="legacy"` on any container to opt into legacy tokens.
 */

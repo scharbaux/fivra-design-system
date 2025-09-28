@@ -6,12 +6,16 @@
  */
 
 export const designTokenManifest = {
+  "themeAttribute": "data-fivra-theme",
   "themes": [
     {
       "name": "Engage",
       "id": "internals-engage",
       "group": "Internals",
       "cssPath": "./engage.css",
+      "slug": "engage",
+      "selector": ":root, [data-fivra-theme='engage']",
+      "isDefault": true,
       "selectedTokenSets": {
         "Internals/Engage": "enabled"
       },
@@ -31,6 +35,9 @@ export const designTokenManifest = {
       "id": "cbb4ab9822ee0cabac71a6b5e23748f1e9d4e1ff",
       "group": "Internals",
       "cssPath": "./legacy.css",
+      "slug": "legacy",
+      "selector": "[data-fivra-theme='legacy']",
+      "isDefault": false,
       "selectedTokenSets": {
         "Internals/Legacy": "enabled"
       },
@@ -57,3 +64,4 @@ export const designTokenManifest = {
 
 export type DesignTokenTheme = typeof designTokenManifest.themes[number];
 export type DesignTokenThemeName = DesignTokenTheme['name'];
+export type DesignTokenThemeSlug = DesignTokenTheme['slug'];

@@ -5,7 +5,7 @@
  * -----------------------------------------------------------------------------
  */
 
-:root {
+:root, [data-fivra-theme='engage'] {
   --backgroundPrimaryInteractive: #4c57ea;
   --backgroundPrimaryBrand: #29308a;
   --backgroundPrimaryNotice: #4c57ea;

@@ -23,6 +23,12 @@ This document captures the current tooling, languages, and automation that power
 2. **Generation** – `yarn generate:icons` runs `scripts/generate-icons-map.mjs` to scan `src/shared/assets/icons`, extract path data and viewBox info, and emit `src/shared/icons/icons.generated.ts`. Variants default to `outline` and `solid`, but can be customized via `package.json#iconsGenerator.variants`.
 3. **Storybook build hook** – `prebuild-storybook` triggers icon map generation prior to `storybook build` to ensure assets are up to date.
 
+## Design Token & Theme Workflow
+1. **Token transformation** – `yarn generate:tokens` invokes `scripts/generate-design-tokens.mjs`, which reads the Tokens Studio bundle, produces CSS per theme (`src/styles/themes/engage.css`, `legacy.css`), and emits the runtime manifest (`tokens.generated.ts`).
+2. **Selector scoping** – the transformer rewrites each CSS file so Engage tokens apply to both `:root` and `[data-fivra-theme='engage']`, while other themes scope to their `data-fivra-theme` value. Import `src/styles/index.css` to register both layers.
+3. **Automated hooks** – `prebuild` and `prestorybook` scripts call `yarn generate:tokens` so builds and Storybook always consume up-to-date theme assets.
+4. **Runtime helpers** – `src/styles/themes/index.ts` re-exports manifest data, utility helpers, and the `FIVRA_THEME_ATTRIBUTE` constant for toggling themes in apps and tests.
+
 ## Package Management & Tooling Requirements
 - **Node.js 18.17+ (22.x recommended)** – ensures compatibility with modern ECMAScript features and Storybook tooling.
 - **Corepack** – must be enabled to manage Yarn releases bundled with Node >= 16.9.
