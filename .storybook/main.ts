@@ -14,9 +14,9 @@ const resolveAliasPath = (relativePath: string) =>
 
 const config: StorybookConfig = {
   stories: [
-    "../src/docs/**/*.mdx",
+    "../docs/**/*.mdx",
     "../src/components/**/*.stories.@(js|jsx|mjs|ts|tsx)",
-    "../src/docs/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+    "../docs/**/*.stories.@(js|jsx|mjs|ts|tsx)",
   ],
   addons: [
     "@storybook/addon-docs",
