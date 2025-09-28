@@ -1,23 +1,23 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
-import Icon from "./Icon";
-import { icons as ICONS } from "../icons.generated";
+import { Icon } from "@components";
+import { icons as ICONS } from "@shared/icons/icons.generated";
 
 const iconNames = Object.keys(ICONS).sort();
 const defaultIcon = iconNames.includes("chevron-right")
   ? "chevron-right"
-  : iconNames[0];
+  : iconNames[0] ?? "";
 
 const meta: Meta<typeof Icon> = {
-  title: "Components/Icon",
+  title: "Components/Icon/React",
   component: Icon,
   tags: ["autodocs"],
   argTypes: {
     name: {
       control: "select",
       options: iconNames,
-      description: "Icon identifier from the generated map (src/icons.generated.ts).",
+      description: "Icon identifier from the generated map (src/shared/icons/icons.generated.ts).",
       table: { category: "Identity" },
     },
     variant: {

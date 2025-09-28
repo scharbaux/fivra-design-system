@@ -19,8 +19,8 @@ This document captures the current tooling, languages, and automation that power
 - Development server enables Vite polling (`usePolling: true`, `interval: 200`) to improve reliability on networked filesystems.
 
 ## Icon Workflow
-1. **Optimization** – `yarn optimize-icons` runs `scripts/optimize-icons.mjs` to recursively optimize SVG files in `src/icons`, retaining `viewBox` attributes and replacing literal `fill`/`stroke` colors with `currentColor`.
-2. **Generation** – `yarn generate:icons` runs `scripts/generate-icons-map.mjs` to scan `src/icons`, extract path data and viewBox info, and emit `src/icons.generated.ts`. Variants default to `outline` and `solid`, but can be customized via `package.json#iconsGenerator.variants`.
+1. **Optimization** – `yarn optimize-icons` runs `scripts/optimize-icons.mjs` to recursively optimize SVG files in `src/shared/assets/icons`, retaining `viewBox` attributes and replacing literal `fill`/`stroke` colors with `currentColor`.
+2. **Generation** – `yarn generate:icons` runs `scripts/generate-icons-map.mjs` to scan `src/shared/assets/icons`, extract path data and viewBox info, and emit `src/shared/icons/icons.generated.ts`. Variants default to `outline` and `solid`, but can be customized via `package.json#iconsGenerator.variants`.
 3. **Storybook build hook** – `prebuild-storybook` triggers icon map generation prior to `storybook build` to ensure assets are up to date.
 
 ## Package Management & Tooling Requirements

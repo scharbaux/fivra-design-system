@@ -1,5 +1,6 @@
 import React, { forwardRef, isValidElement } from 'react';
-import { icons as generatedIcons } from '../icons.generated';
+
+import { icons as generatedIcons } from '@shared/icons/icons.generated';
 
 export type IconPathEntry =
   | string

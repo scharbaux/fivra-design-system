@@ -12,24 +12,26 @@ The plugin should export icons into the following folders so the generator can i
 
 ```
 src/
-  icons/
-    outline/
-      ai/
-      media/
-      navigation/
-      status/
-      users/
-      ...
-    solid/
-      ai/
-      media/
-      navigation/
-      status/
-      users/
-      ...
+  shared/
+    assets/
+      icons/
+        outline/
+          ai/
+          media/
+          navigation/
+          status/
+          users/
+          ...
+        solid/
+          ai/
+          media/
+          navigation/
+          status/
+          users/
+          ...
 ```
 
-Each icon is a single SVG file: `src/icons/{outline|solid}/{category}/{name}.svg`.
+Each icon is a single SVG file: `src/shared/assets/icons/{outline|solid}/{category}/{name}.svg`.
 
 ## Authoring guidelines (Figma → SVG)
 
@@ -41,7 +43,7 @@ Each icon is a single SVG file: `src/icons/{outline|solid}/{category}/{name}.svg
 ## CI steps after export
 
 1. Optimize SVGs (SVGO) to normalize attributes and size.
-2. Generate the `icons.generated.ts` map.
+2. Generate the `icons.generated.ts` map in `src/shared/icons`.
 3. Auto‑commit changes back to the PR branch (for same‑repo branches). For forks, the workflow uploads a patch artifact and comments on the PR.
 
 ## Useful links

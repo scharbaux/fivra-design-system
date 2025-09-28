@@ -66,8 +66,7 @@ yarn build-storybook
 ## Scripts
 Commonly used scripts are listed below. Run them with `yarn <script>`.
 
-- `generate:icons` – Scan `src/icons/**/*` and regenerate `src/icons.generated.ts`.
-- `optimize-icons` – Normalize SVG assets with SVGO prior to generation.
+- `generate:icons` – Scan `src/shared/assets/icons/**/*` and regenerate `src/shared/icons/icons.generated.ts`.- `optimize-icons` – Normalize SVG assets with SVGO prior to generation.
 - `storybook` – Start the Storybook 9 (React + Vite) dev server with hot reload.
 - `build-storybook` – Produce a static Storybook bundle for deployment.
 - `build` – Create the distributable library bundles.
