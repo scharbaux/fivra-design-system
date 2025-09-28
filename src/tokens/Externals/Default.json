@@ -728,7 +728,7 @@
       "fontFamily": "{Font Family.Saans}",
       "fontWeight": "{FontWeight.670}",
       "fontSize": "{Font Size.heading.1}",
-      "lineHeight": "30"
+      "lineHeight": "30px"
     },
     "$description": "h1"
   },
@@ -738,7 +738,7 @@
       "fontFamily": "{Font Family.Saans}",
       "fontWeight": "{FontWeight.570}",
       "fontSize": "{Font Size.heading.2}",
-      "lineHeight": "20"
+      "lineHeight": "20px"
     }
   },
   "heading-3": {
@@ -747,7 +747,7 @@
       "fontFamily": "{Font Family.Saans}",
       "fontWeight": "{FontWeight.300}",
       "fontSize": "{Font Size.heading.3}",
-      "lineHeight": "20"
+      "lineHeight": "20px"
     }
   },
   "body-1": {
@@ -756,7 +756,7 @@
       "fontFamily": "{Font Family.Saans}",
       "fontWeight": "{FontWeight.380}",
       "fontSize": "{Font Size.body.1}",
-      "lineHeight": "18"
+      "lineHeight": "18px"
     }
   },
   "body-1-medium": {
@@ -765,7 +765,7 @@
       "fontFamily": "{Font Family.Saans}",
       "fontWeight": "{FontWeight.570}",
       "fontSize": "{Font Size.body.1}",
-      "lineHeight": "18"
+      "lineHeight": "18px"
     }
   },
   "body-1-strong": {
@@ -774,7 +774,7 @@
       "fontFamily": "{Font Family.Saans}",
       "fontWeight": "{FontWeight.670}",
       "fontSize": "{Font Size.body.1}",
-      "lineHeight": "18"
+      "lineHeight": "18px"
     }
   },
   "body-2": {
@@ -783,7 +783,7 @@
       "fontFamily": "{Font Family.Saans}",
       "fontWeight": "{FontWeight.380}",
       "fontSize": "{Font Size.body.2}",
-      "lineHeight": "16",
+      "lineHeight": "16px",
       "letterSpacing": "1.5%"
     }
   },
@@ -793,7 +793,7 @@
       "fontFamily": "{Font Family.Saans}",
       "fontWeight": "{FontWeight.570}",
       "fontSize": "{Font Size.body.2}",
-      "lineHeight": "16",
+      "lineHeight": "16px",
       "letterSpacing": "1.5%"
     }
   },
@@ -803,7 +803,7 @@
       "fontFamily": "{Font Family.Saans}",
       "fontWeight": "{FontWeight.380}",
       "fontSize": "{Font Size.body.2}",
-      "lineHeight": "16",
+      "lineHeight": "16px",
       "letterSpacing": "1.5%"
     }
   },
@@ -823,7 +823,7 @@
       "fontFamily": "{Font Family.Saans}",
       "fontWeight": "{FontWeight.300}",
       "fontSize": "{Font Size.body.3}",
-      "lineHeight": "17",
+      "lineHeight": "17px",
       "letterSpacing": "1.5%"
     }
   },
@@ -833,7 +833,7 @@
       "fontFamily": "{Font Family.Saans}",
       "fontWeight": "{FontWeight.380}",
       "fontSize": "{Font Size.caption.1}",
-      "lineHeight": "14",
+      "lineHeight": "14px",
       "letterSpacing": "1.5%"
     }
   },
@@ -843,7 +843,7 @@
       "fontFamily": "{Font Family.Saans}",
       "fontWeight": "{FontWeight.570}",
       "fontSize": "{Font Size.caption.1}",
-      "lineHeight": "14",
+      "lineHeight": "14px",
       "letterSpacing": "1.5%"
     }
   }

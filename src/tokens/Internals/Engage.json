@@ -827,7 +827,7 @@
     "Multi-line": {
       "l": {
         "$type": "lineHeights",
-        "$value": "21",
+        "$value": "21px",
         "$description": "body-2"
       }
     }

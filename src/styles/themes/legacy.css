@@ -185,60 +185,60 @@
   --heading1FontFamily: Saans; /** h1 */
   --heading1FontWeight: 600; /** h1 */
   --heading1FontSize: 28px; /** h1 */
-  --heading1LineHeight: 30; /** h1 */
+  --heading1LineHeight: 30px; /** h1 */
   --heading2FontFamily: Saans;
   --heading2FontWeight: 500;
   --heading2FontSize: 18px;
-  --heading2LineHeight: 20;
+  --heading2LineHeight: 20px;
   --heading3FontFamily: Saans;
   --heading3FontWeight: 300;
   --heading3FontSize: 18px;
-  --heading3LineHeight: 20;
+  --heading3LineHeight: 20px;
   --body1FontFamily: Saans;
   --body1FontWeight: 400;
   --body1FontSize: 16px;
-  --body1LineHeight: 18;
+  --body1LineHeight: 18px;
   --body1MediumFontFamily: Saans;
   --body1MediumFontWeight: 500;
   --body1MediumFontSize: 16px;
-  --body1MediumLineHeight: 18;
+  --body1MediumLineHeight: 18px;
   --body1StrongFontFamily: Saans;
   --body1StrongFontWeight: 600;
   --body1StrongFontSize: 16px;
-  --body1StrongLineHeight: 18;
+  --body1StrongLineHeight: 18px;
   --body2FontFamily: Saans;
   --body2FontWeight: 400;
   --body2FontSize: 14px;
-  --body2LineHeight: 16;
+  --body2LineHeight: 16px;
   --body2LetterSpacing: 0.015em;
   --body2StrongFontFamily: Saans;
   --body2StrongFontWeight: 500;
   --body2StrongFontSize: 14px;
-  --body2StrongLineHeight: 16;
+  --body2StrongLineHeight: 16px;
   --body2StrongLetterSpacing: 0.015em;
   --body2LinkFontFamily: Saans;
   --body2LinkFontWeight: 400;
   --body2LinkFontSize: 14px;
-  --body2LinkLineHeight: 16;
+  --body2LinkLineHeight: 16px;
   --body2LinkLetterSpacing: 0.015em;
   --body2LongFontFamily: Saans;
   --body2LongFontWeight: 400;
   --body2LongFontSize: 14px;
-  --body2LongLineHeight: 21;
+  --body2LongLineHeight: 21px;
   --body2LongLetterSpacing: 0.015em;
   --body3FontFamily: Saans;
   --body3FontWeight: 300;
   --body3FontSize: 15px;
-  --body3LineHeight: 17;
+  --body3LineHeight: 17px;
   --body3LetterSpacing: 0.015em;
   --caption1FontFamily: Saans;
   --caption1FontWeight: 400;
   --caption1FontSize: 12px;
-  --caption1LineHeight: 14;
+  --caption1LineHeight: 14px;
   --caption1LetterSpacing: 0.015em;
   --caption1StrongFontFamily: Saans;
   --caption1StrongFontWeight: 500;
   --caption1StrongFontSize: 12px;
-  --caption1StrongLineHeight: 14;
+  --caption1StrongLineHeight: 14px;
   --caption1StrongLetterSpacing: 0.015em;
 }
