@@ -13,4 +13,5 @@ This document inherits all policies from the repository root `AGENTS.md`. Review
 - Coordinate with the Style Dictionary pipeline when introducing new token categories so preprocessing assumptions remain valid.
 
 ## Functional Changes
-- 2025-09-25: Established directory governance, documented Engage/Legacy exports, and recorded the initial Tokens Studio import; validated with `yarn test` and `yarn build`.
+- Use `<major>.<minor>[.<patch>]` labels instead of dates when recording new entries.
+- 1.0: Established directory governance, documented Engage/Legacy exports, and recorded the initial Tokens Studio import; validated with `yarn test` and `yarn build`.

@@ -18,4 +18,5 @@ This guide supplements the repository root `AGENTS.md`. Review the root standard
 - Validate stories in all supported frameworks before merging.
 
 ## Functional Changes
-- 2025-09-25: Added Button stories covering React usage, variants, sizes, icons, and responsive layouts.
+- Use `<major>.<minor>[.<patch>]` labels instead of dates when recording new entries.
+- 1.0: Added Button stories covering React usage, variants, sizes, icons, and responsive layouts.
