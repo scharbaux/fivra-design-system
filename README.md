@@ -16,6 +16,10 @@ For a deeper look at the architecture decisions, see the evolving documentation 
 - **Build Targets**: ESM packages for direct consumption, generated icon maps, and Storybook static builds for documentation.
 - **Planned Deliverables**: Framework-specific entry points (React today, Angular/Vue wrappers next), and web-component bundles for direct browser consumption.
 
+## Components
+- **Icon** – Renders generated SVG assets by name with outline/solid variants and accessibility helpers.
+- **Button** – Multi-variant action trigger available as a React component and `<fivra-button>` custom element that share styling tokens.
+
 ## Local Development
 ### Requirements
 - Node.js 18.17+ (Node 22.x recommended)

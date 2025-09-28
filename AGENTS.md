@@ -23,3 +23,6 @@
 - Product overview and integration guides reside under `docs/overview/` and `docs/integrations/` respectively.
 - When implementing features that alter technology choices, architectural boundaries, integration contracts, or documented component behavior, update the corresponding documents alongside your code changes.
 
+## Functional Changes
+- 2024-07-08: Introduced the Button component with shared React and web component implementations plus associated documentation.
+

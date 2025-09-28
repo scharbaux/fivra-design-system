@@ -17,3 +17,6 @@ This document extends the root-level `AGENTS.md`. All contributors must read and
 - Reference the root guidelines for testing, documentation, and architectural decisions.
 - Whenever code behavior changes, append a "Functional Changes" note to the commit description or PR summary covering `src/components/` modifications.
 - Update corresponding documentation in `docs/` and stories under `src/stories/` when component APIs or visuals shift.
+
+## Functional Changes
+- 2024-07-08: Added the shared Button implementation (React + web component) with reusable styling primitives.
