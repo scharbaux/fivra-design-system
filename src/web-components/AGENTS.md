@@ -9,3 +9,4 @@ This directory extends the repository and `src/components/` guidance for custom 
 ## Functional Changes
 - 2025-09-25: Registered the `<fivra-button>` custom element that mirrors the shared Button styles and attributes.
 - 2025-09-25: Ensured `defineDesignSystemElements` explicitly imports `defineFivraButton` to support isolated DTS builds.
+- 2025-10-02: Synced injected button styles with tokenized variables so the custom element reflects theme spacing, colors, and focus states.
