@@ -16,8 +16,15 @@ export const designTokenManifest = {
         "Internals/Engage": "enabled"
       },
       "activeTokenSets": [
+        "Externals/Default",
         "Internals/Engage"
-      ]
+      ],
+      "tokenSetCombination": {
+        "external": [
+          "Externals/Default"
+        ],
+        "internal": "Internals/Engage"
+      }
     },
     {
       "name": "Legacy",
@@ -28,8 +35,15 @@ export const designTokenManifest = {
         "Internals/Legacy": "enabled"
       },
       "activeTokenSets": [
+        "Externals/Default",
         "Internals/Legacy"
-      ]
+      ],
+      "tokenSetCombination": {
+        "external": [
+          "Externals/Default"
+        ],
+        "internal": "Internals/Legacy"
+      }
     }
   ],
   "metadata": {
