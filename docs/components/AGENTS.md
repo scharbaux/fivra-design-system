@@ -7,4 +7,4 @@ This directory inherits the repository and `docs/` guidance. Keep component refe
 - Update the "Functional Changes" section below whenever documentation changes to reflect new component behavior.
 
 ## Functional Changes
-- 2024-07-08: Authored the initial Button reference guide covering React and custom element usage.
+- 2025-09-25: Authored the initial Button reference guide covering React and custom element usage.

@@ -7,4 +7,4 @@ This directory follows the repository and `src/components/` standards. Keep shar
 - Update the "Functional Changes" section below with a short note when behavior or public API changes.
 
 ## Functional Changes
-- 2024-07-08: Initial `Button` component authored as both a React component and custom element with shared styling.
+- 2025-09-25: Initial `Button` component authored as both a React component and custom element with shared styling.

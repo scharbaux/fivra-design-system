@@ -19,4 +19,4 @@ This document extends the root-level `AGENTS.md`. All contributors must read and
 - Update corresponding documentation in `docs/` and stories under `src/stories/` when component APIs or visuals shift.
 
 ## Functional Changes
-- 2024-07-08: Added the shared Button implementation (React + web component) with reusable styling primitives.
+- 2025-09-25: Added the shared Button implementation (React + web component) with reusable styling primitives.

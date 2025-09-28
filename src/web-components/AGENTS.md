@@ -7,5 +7,5 @@ This directory extends the repository and `src/components/` guidance for custom 
 - Update the "Functional Changes" log below whenever a web component gains new capabilities.
 
 ## Functional Changes
-- 2024-07-08: Registered the `<fivra-button>` custom element that mirrors the shared Button styles and attributes.
-- 2024-07-09: Ensured `defineDesignSystemElements` explicitly imports `defineFivraButton` to support isolated DTS builds.
+- 2025-09-25: Registered the `<fivra-button>` custom element that mirrors the shared Button styles and attributes.
+- 2025-09-25: Ensured `defineDesignSystemElements` explicitly imports `defineFivraButton` to support isolated DTS builds.
