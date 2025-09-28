@@ -16,3 +16,6 @@ This guide supplements the repository root `AGENTS.md`. Review the root standard
 - Follow root testing and documentation requirements; sync changes with `src/components/` and `docs/` as needed.
 - When story adjustments reflect functional behavior changes, append a "Functional Changes" note in the associated change documentation (commit or PR) describing the behavior impact.
 - Validate stories in all supported frameworks before merging.
+
+## Functional Changes
+- 2024-07-08: Added Button stories covering React usage, variants, sizes, icons, and responsive layouts.

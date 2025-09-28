@@ -16,3 +16,6 @@ This document augments the root `AGENTS.md`. Ensure you understand the repositor
 - Follow root standards for accuracy, tone, and completeness.
 - Whenever documentation reflects a behavior change in code, append a "Functional Changes" note in the associated change record (commit or PR) summarizing the user-facing impact.
 - Cross-link relevant component stories, scripts, and architectural docs to help teams adopt multi-framework patterns.
+
+## Functional Changes
+- 2024-07-08: Documented the new Button component, including React usage and custom element registration steps.
