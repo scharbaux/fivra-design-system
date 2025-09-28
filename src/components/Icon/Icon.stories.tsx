@@ -28,12 +28,14 @@ const meta: Meta<typeof Icon> = {
     },
     size: {
       control: "text",
-      description: "Number in px (e.g. 24) or any CSS size (e.g. '1em'). Defaults to '1em'.",
+      description:
+        "Number in px (e.g. 24) or any CSS size (e.g. 'var(--iconsizesL)'). Defaults to the token-driven 'var(--iconsizesM)'.",
       table: { category: "Sizing" },
     },
     color: {
-      control: "color",
-      description: "Applies to fill via currentColor. You can also set it with CSS on a parent.",
+      control: "text",
+      description:
+        "Applies to fill via currentColor. Defaults to 'var(--textSecondaryInteractive)' and can be overridden with props or parent color styles.",
       table: { category: "Color" },
     },
     title: {
@@ -70,14 +72,14 @@ export const Basic: Story = {
   args: {
     name: defaultIcon,
     variant: "outline",
-    size: 24,
-    color: "#334155",
+    size: "var(--iconsizesXl2)",
+    color: "var(--textPrimaryInteractive)",
   },
   parameters: {
     docs: {
       description: {
         story:
-          "Outline variant with a fixed size (24px) and a custom color. Use this as the starting point for most icons.",
+          "Outline variant scaled via the token 'var(--iconsizesXl2)' and tinted with 'var(--textPrimaryInteractive)'.",
       },
     },
   },
@@ -102,21 +104,27 @@ export const Sizes: Story = {
   args: {
     name: defaultIcon,
     variant: "outline",
-    color: "#334155",
+    color: "var(--textSecondaryInteractive)",
   },
   render: (args) => (
-    <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
-      <Icon {...args} size={16} />
-      <Icon {...args} size={24} />
-      <Icon {...args} size={32} />
-      <Icon {...args} size={"2em"} />
+    <div
+      style={{
+        display: "flex",
+        gap: "calc(var(--spacingL) * 1px)",
+        alignItems: "center",
+      }}
+    >
+      <Icon {...args} size="var(--iconsizesS)" />
+      <Icon {...args} size="var(--iconsizesM)" />
+      <Icon {...args} size="var(--iconsizesXl2)" />
+      <Icon {...args} size="var(--iconsizesXl3)" />
     </div>
   ),
   parameters: {
     docs: {
       description: {
         story:
-          "Demonstrates sizing with numeric pixels and relative CSS (em). The default size is '1em', which scales with text.",
+          "Highlights the icon size scale using the '--iconsizes*' tokens. The component defaults to 'var(--iconsizesM)'.",
       },
     },
   },
@@ -126,21 +134,21 @@ export const Colors: Story = {
   args: {
     name: defaultIcon,
     variant: "solid",
-    size: 24,
+    size: "var(--iconsizesXl2)",
   },
   render: (args) => (
-    <div style={{ display: "flex", gap: 16 }}>
-      <Icon {...args} color="#0ea5e9" />
-      <Icon {...args} color="#16a34a" />
-      <Icon {...args} color="#f59e0b" />
-      <Icon {...args} color="#ef4444" />
+    <div style={{ display: "flex", gap: "calc(var(--spacingL) * 1px)" }}>
+      <Icon {...args} color="var(--textPrimaryInteractive)" />
+      <Icon {...args} color="var(--textPrimarySuccess)" />
+      <Icon {...args} color="var(--textPrimaryWarning)" />
+      <Icon {...args} color="var(--textPrimaryError)" />
     </div>
   ),
   parameters: {
     docs: {
       description: {
         story:
-          "Icons inherit 'currentColor'. Set the 'color' prop directly or style a wrapper with CSS 'color'.",
+          "Icons inherit 'currentColor'. Token values like '--textPrimarySuccess' or '--textPrimaryError' make it easy to align with the theme palette.",
       },
     },
   },
@@ -153,7 +161,7 @@ export const WithTitle: Story = {
     name: defaultIcon,
     title: "Descriptive title for tooltip",
     variant: "outline",
-    size: 28,
+    size: "var(--iconsizesXl2)",
   },
   parameters: {
     docs: {
@@ -169,8 +177,8 @@ export const WithAriaLabel: Story = {
   args: {
     name: defaultIcon,
     variant: "solid",
-    size: 28,
-    color: "#111827",
+    size: "var(--iconsizesXl2)",
+    color: "var(--textNeutral1)",
     "aria-label": "Notifications",
   },
   parameters: {

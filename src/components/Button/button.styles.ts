@@ -21,27 +21,33 @@ export const buttonClassStyles = `
 ${BASE_CLASS} {
   --fivra-button-font-family: inherit;
   --fivra-button-font-weight: 600;
-  --fivra-button-radius: 9999px;
+  --fivra-button-radius: var(--radiusMax);
   --fivra-button-transition: background-color 160ms ease, color 160ms ease,
     box-shadow 160ms ease, border-color 160ms ease;
-  --fivra-button-gap: 0.5rem;
-  --fivra-button-padding-y: 0.5rem;
-  --fivra-button-padding-x: 1rem;
+  --fivra-button-gap: calc(var(--spacingS) * 1px);
+  --fivra-button-padding-y: calc(var(--spacingS) * 1px);
+  --fivra-button-padding-x: calc(var(--spacingL) * 1px);
   --fivra-button-font-size: 0.95rem;
   --fivra-button-line-height: 1.2;
-  --fivra-button-min-height: 2.5rem;
-  --fivra-button-icon-size: 1.1em;
-  --fivra-button-primary-bg: var(--fivra-color-primary-600, #2563eb);
-  --fivra-button-primary-bg-hover: var(--fivra-color-primary-700, #1d4ed8);
-  --fivra-button-primary-bg-active: var(--fivra-color-primary-800, #1e40af);
-  --fivra-button-primary-color: var(--fivra-color-neutral-0, #ffffff);
-  --fivra-button-secondary-bg: transparent;
-  --fivra-button-secondary-border: var(--fivra-color-neutral-300, #cbd5f5);
-  --fivra-button-secondary-border-hover: var(--fivra-color-primary-500, #3b82f6);
-  --fivra-button-secondary-color: var(--fivra-color-primary-700, #1d4ed8);
-  --fivra-button-ghost-color: var(--fivra-color-primary-700, #1d4ed8);
-  --fivra-button-ghost-bg-hover: rgba(37, 99, 235, 0.12);
-  --fivra-button-focus-ring: 0 0 0 4px rgba(37, 99, 235, 0.2);
+  --fivra-button-min-height: calc(var(--spacingXl3) * 1px - var(--spacingS) * 1px);
+  --fivra-button-icon-size: var(--iconsizesL);
+  --fivra-button-primary-bg: var(--backgroundPrimaryInteractive);
+  --fivra-button-primary-bg-hover: var(--stateBrandHover);
+  --fivra-button-primary-bg-active: var(--stateBrandPress);
+  --fivra-button-primary-color: var(--backgroundNeutral0);
+  --fivra-button-secondary-bg: var(--backgroundTertiaryInteractive);
+  --fivra-button-secondary-border: var(--borderSecondaryInteractive);
+  --fivra-button-secondary-border-hover: var(--borderPrimaryInteractive);
+  --fivra-button-secondary-color: var(--textSecondaryInteractive);
+  --fivra-button-secondary-bg-hover: var(--stateBrandHover);
+  --fivra-button-secondary-bg-active: var(--stateBrandPress);
+  --fivra-button-ghost-color: var(--textPrimaryInteractive);
+  --fivra-button-ghost-bg-hover: var(--stateBrandHover);
+  --fivra-button-ghost-bg-active: var(--stateBrandPress);
+  --fivra-button-focus-ring-width: calc(var(--spacingXs) * 1px);
+  --fivra-button-focus-ring-color: var(--stateBrandFocus);
+  --fivra-button-shadow: calc(var(--shadowsMX) * 1px) calc(var(--shadowsMY) * 1px)
+    calc(var(--shadowsMBlur) * 1px) calc(var(--shadowsMSpread) * 1px) var(--shadowsMColor);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -49,7 +55,9 @@ ${BASE_CLASS} {
   padding: var(--fivra-button-padding-y) var(--fivra-button-padding-x);
   min-height: var(--fivra-button-min-height);
   border-radius: var(--fivra-button-radius);
-  border: 1px solid transparent;
+  border-width: calc(var(--borderwidthS) * 1px);
+  border-style: solid;
+  border-color: transparent;
   background-color: var(--fivra-button-primary-bg);
   color: var(--fivra-button-primary-color);
   font-family: var(--fivra-button-font-family);
@@ -63,6 +71,7 @@ ${BASE_CLASS} {
   position: relative;
   user-select: none;
   appearance: none;
+  box-shadow: var(--fivra-button-shadow);
 }
 
 ${BASE_CLASS}[data-full-width='true'] {
@@ -70,19 +79,21 @@ ${BASE_CLASS}[data-full-width='true'] {
 }
 
 ${BASE_CLASS}[data-size='sm'] {
-  --fivra-button-padding-y: 0.35rem;
-  --fivra-button-padding-x: 0.85rem;
+  --fivra-button-padding-y: calc(var(--spacingXs) * 1px + var(--spacingXs2) * 1px);
+  --fivra-button-padding-x: calc(var(--spacingM) * 1px + var(--spacingXs2) * 1px);
   --fivra-button-font-size: 0.85rem;
-  --fivra-button-min-height: 2.125rem;
-  --fivra-button-gap: 0.35rem;
+  --fivra-button-min-height: calc(var(--spacingXl2) * 1px + var(--spacingXs2) * 1px);
+  --fivra-button-gap: calc(var(--spacingXs) * 1px + var(--spacingXs2) * 1px);
+  --fivra-button-icon-size: var(--iconsizesM);
 }
 
 ${BASE_CLASS}[data-size='lg'] {
-  --fivra-button-padding-y: 0.65rem;
-  --fivra-button-padding-x: 1.25rem;
+  --fivra-button-padding-y: calc(var(--spacingS) * 1px + var(--spacingXs2) * 1px);
+  --fivra-button-padding-x: calc(var(--spacingL) * 1px + var(--spacingXs) * 1px);
   --fivra-button-font-size: 1rem;
-  --fivra-button-min-height: 2.875rem;
-  --fivra-button-gap: 0.6rem;
+  --fivra-button-min-height: calc(var(--spacingXl3) * 1px - var(--spacingXs2) * 1px);
+  --fivra-button-gap: calc(var(--spacingS) * 1px + var(--spacingXs2) * 1px);
+  --fivra-button-icon-size: var(--iconsizesXl);
 }
 
 ${BASE_CLASS}[data-variant='secondary'] {
@@ -103,7 +114,7 @@ ${BASE_CLASS}:hover:not(:disabled) {
 
 ${BASE_CLASS}[data-variant='secondary']:hover:not(:disabled) {
   border-color: var(--fivra-button-secondary-border-hover);
-  background-color: rgba(59, 130, 246, 0.08);
+  background-color: var(--fivra-button-secondary-bg-hover);
 }
 
 ${BASE_CLASS}[data-variant='ghost']:hover:not(:disabled) {
@@ -116,16 +127,17 @@ ${BASE_CLASS}:active:not(:disabled) {
 }
 
 ${BASE_CLASS}[data-variant='secondary']:active:not(:disabled) {
-  background-color: rgba(59, 130, 246, 0.18);
+  background-color: var(--fivra-button-secondary-bg-active);
 }
 
 ${BASE_CLASS}[data-variant='ghost']:active:not(:disabled) {
-  background-color: rgba(37, 99, 235, 0.2);
+  background-color: var(--fivra-button-ghost-bg-active);
 }
 
 ${BASE_CLASS}:focus-visible {
   outline: none;
-  box-shadow: var(--fivra-button-focus-ring);
+  box-shadow: var(--fivra-button-shadow),
+    0 0 0 var(--fivra-button-focus-ring-width) var(--fivra-button-focus-ring-color);
 }
 
 ${BASE_CLASS}:disabled,

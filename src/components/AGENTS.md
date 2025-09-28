@@ -20,3 +20,4 @@ This document extends the root-level `AGENTS.md`. All contributors must read and
 
 ## Functional Changes
 - 2025-09-25: Added the shared Button implementation (React + web component) with reusable styling primitives.
+- 2025-10-02: Button and Icon now consume theme tokens for layout, color, and state styling; Storybook docs updated accordingly.

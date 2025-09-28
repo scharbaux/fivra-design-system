@@ -63,7 +63,8 @@ export const Primary: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Primary button emphasizes the main action with solid background and white text.",
+        story:
+          "Primary button emphasizes the main action using '--backgroundPrimaryInteractive' with contrast text from '--backgroundNeutral0'.",
       },
     },
   },
@@ -77,7 +78,8 @@ export const Secondary: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Secondary button uses an outlined style appropriate for tertiary actions.",
+        story:
+          "Secondary button relies on '--borderSecondaryInteractive' and hover states from '--stateBrandHover' for an outlined treatment.",
       },
     },
   },
@@ -91,7 +93,8 @@ export const Ghost: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Ghost buttons sit on neutral backgrounds and rely on text color for emphasis.",
+        story:
+          "Ghost buttons stay transparent until interaction, leaning on '--textPrimaryInteractive' and brand state overlays.",
       },
     },
   },
@@ -118,7 +121,14 @@ export const Sizes: Story = {
     variant: "primary",
   },
   render: (args) => (
-    <div style={{ display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap" }}>
+    <div
+      style={{
+        display: "flex",
+        gap: "calc(var(--spacingL) * 1px)",
+        alignItems: "center",
+        flexWrap: "wrap",
+      }}
+    >
       <Button {...args} size="sm">
         Small
       </Button>
@@ -133,7 +143,8 @@ export const Sizes: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Small, medium, and large presets adjust padding, font size, and icon spacing.",
+        story:
+          "Small, medium, and large presets pull padding, gaps, and icon sizes from the spacing and icon tokens.",
       },
     },
   },
