@@ -18,6 +18,8 @@ Ideal setup to handle assets export from Figma
 - [CI / GitHub Actions](#ci--github-actions)
 - [Troubleshooting](#troubleshooting)
 
+For a living overview of languages, tooling, and automation, see [docs/tech-stack.md](docs/tech-stack.md).
+
 ## Requirements
 
 - Node.js: 18.17+ (recommended: 22.x)
