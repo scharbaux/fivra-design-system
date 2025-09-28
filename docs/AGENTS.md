@@ -20,4 +20,4 @@ This document augments the root `AGENTS.md`. Ensure you understand the repositor
 ## Functional Changes
 - 2025-09-25: Documented the new Button component, including React usage and custom element registration steps.
 - 2025-09-25: Ensured Storybook pulls overview and integration MDX pages from `docs/` for sidebar visibility.
-- 2025-09-30: Documented the theme token workflow, runtime helpers, and data-attribute switching strategy.
+- 2025-09-25: Documented the theme token workflow, runtime helpers, and data-attribute switching strategy.
