@@ -16,6 +16,8 @@
 - When creating a new directory, add an `AGENTS.md` that explicitly references this root file and describes any directory-specific expectations.
 - Keep child `AGENTS.md` files synchronized with root policies. If root standards change, review and update descendant instructions accordingly.
 - Record all functional or behavioral changes in the relevant directory-level `AGENTS.md` under a "Change Log" or similar section.
+- Always make sure `yarn build` is ✅ successful before marking the task as completed.
+- Always make sure `yarn test` has ✅ passed before marking the task as completed.
 
 ## Key Documentation References
 - Tech stack details live in `docs/tech-stack.md`.
