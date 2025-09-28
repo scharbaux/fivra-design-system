@@ -27,8 +27,9 @@
 - When implementing features that alter technology choices, architectural boundaries, integration contracts, or documented component behavior, update the corresponding documents alongside your code changes.
 
 ## Functional Changes
-- 2025-09-25: Introduced the Button component with shared React and web component implementations plus associated documentation.
-- 2025-09-25: Established tokens governance in `src/tokens/` (see the new `AGENTS.md` and README) and verified repository health with `yarn test` and `yarn build`.
-- 2025-09-25: Added a Style Dictionary + Tokens Studio transform workflow; run `yarn generate:tokens` to refresh theme CSS before builds.
-- 2025-09-25: Scoped generated Engage/Legacy CSS to `data-fivra-theme`, added theme helpers/tests, and wired `yarn generate:tokens` into build + Storybook hooks.
+- Use `<major>.<minor>[.<patch>]` labels instead of dates when recording new entries.
+- 1.0: Introduced the Button component with shared React and web component implementations plus associated documentation.
+- 1.0: Established tokens governance in `src/tokens/` (see the new `AGENTS.md` and README) and verified repository health with `yarn test` and `yarn build`.
+- 1.0: Added a Style Dictionary + Tokens Studio transform workflow; run `yarn generate:tokens` to refresh theme CSS before builds.
+- 1.0: Scoped generated Engage/Legacy CSS to `data-fivra-theme`, added theme helpers/tests, and wired `yarn generate:tokens` into build + Storybook hooks.
 

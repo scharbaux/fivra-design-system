@@ -18,6 +18,7 @@ This document augments the root `AGENTS.md`. Ensure you understand the repositor
 - Cross-link relevant component stories, scripts, and architectural docs to help teams adopt multi-framework patterns.
 
 ## Functional Changes
-- 2025-09-25: Documented the new Button component, including React usage and custom element registration steps.
-- 2025-09-25: Ensured Storybook pulls overview and integration MDX pages from `docs/` for sidebar visibility.
-- 2025-09-25: Documented the theme token workflow, runtime helpers, and data-attribute switching strategy.
+- Use `<major>.<minor>[.<patch>]` labels instead of dates when recording new entries.
+- 1.0: Documented the new Button component, including React usage and custom element registration steps.
+- 1.0: Ensured Storybook pulls overview and integration MDX pages from `docs/` for sidebar visibility.
+- 1.0: Documented the theme token workflow, runtime helpers, and data-attribute switching strategy.

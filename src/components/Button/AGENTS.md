@@ -7,5 +7,6 @@ This directory follows the repository and `src/components/` standards. Keep shar
 - Update the "Functional Changes" section below with a short note when behavior or public API changes.
 
 ## Functional Changes
-- 2025-09-25: Initial `Button` component authored as both a React component and custom element with shared styling.
-- 2025-10-02: Button styling variables now map directly to Engage/Legacy design tokens (backgrounds, states, spacing, radii, icon sizes).
+- Use `<major>.<minor>[.<patch>]` labels instead of dates when recording new entries.
+- 1.0: Initial `Button` component authored as both a React component and custom element with shared styling.
+- 1.0: Button styling variables now map directly to Engage/Legacy design tokens (backgrounds, states, spacing, radii, icon sizes).

@@ -7,4 +7,5 @@ This file inherits the repository root `AGENTS.md`. Generated theme assets live 
 - Run `yarn generate:tokens` after updating any design token exports to refresh these files before committing.
 
 ## Functional Changes
-- 2025-09-25: Added layered `index.css`, theme helpers, and scoped CSS selectors so `data-fivra-theme` toggles Engage/Legacy tokens.
+- Use `<major>.<minor>[.<patch>]` labels instead of dates when recording new entries.
+- 1.0: Added layered `index.css`, theme helpers, and scoped CSS selectors so `data-fivra-theme` toggles Engage/Legacy tokens.
