@@ -16,3 +16,6 @@ This file extends the repository root `AGENTS.md`. Always review the root conven
 - Respect root testing requirements and add unit coverage for complex script behavior when feasible.
 - If a script change alters behavior or output, append a "Functional Changes" note in the associated commit or PR summarizing the impact.
 - Document new or updated commands in `docs/` so teams understand cross-framework workflows.
+
+## Functional Changes
+- 2025-09-28: Added `generate-design-tokens.mjs` to produce CSS themes and a manifest via Style Dictionary and Tokens Studio transforms.
