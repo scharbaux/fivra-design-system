@@ -1,3 +1,4 @@
+import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { StorybookConfig } from "@storybook/react-vite";
 
@@ -6,8 +7,10 @@ import type { StorybookConfig } from "@storybook/react-vite";
  * Uses Storybook 9 framework packages.
  */
 
+const storybookDir = dirname(fileURLToPath(import.meta.url));
+
 const resolveAliasPath = (relativePath: string) =>
-  fileURLToPath(new URL(relativePath, import.meta.url));
+  resolve(storybookDir, relativePath);
 
 const config: StorybookConfig = {
   stories: [

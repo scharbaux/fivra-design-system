@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES2020",
     "module": "ESNext",
-    "types": ["node", "vite/client"],
+    "types": ["node", "vite/client", "@testing-library/jest-dom"],
     "moduleResolution": "Node",
     "jsx": "react-jsx",
     "allowJs": true,
