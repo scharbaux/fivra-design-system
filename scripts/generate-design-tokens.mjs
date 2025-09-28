@@ -24,6 +24,30 @@ const slugify = (value) =>
     .replace(/-{2,}/g, '-');
 
 const ensureBanner = (content, banner) => (content.startsWith(banner) ? content : `${banner}${content}`);
+const FIVRA_THEME_ATTRIBUTE = 'data-fivra-theme';
+
+const clearGeneratedThemeArtifacts = async () => {
+  await fs.mkdir(THEMES_OUTPUT_DIR, { recursive: true });
+  const entries = await fs.readdir(THEMES_OUTPUT_DIR, { withFileTypes: true }).catch(() => []);
+
+  await Promise.all(
+    entries
+      .filter((entry) =>
+        entry.isFile() && (entry.name.endsWith('.css') || entry.name === 'tokens.generated.ts'),
+      )
+      .map((entry) => fs.unlink(path.join(THEMES_OUTPUT_DIR, entry.name))),
+  );
+};
+
+const formatThemeSelector = ({ slug, isDefault }) => {
+  const attributeSelector = `[${FIVRA_THEME_ATTRIBUTE}='${slug}']`;
+  return isDefault ? `:root, ${attributeSelector}` : attributeSelector;
+};
+
+const rewriteRootSelector = ({ cssContent, selector }) => {
+  const pattern = /^:root(\s*\{)/gm;
+  return cssContent.replace(pattern, `${selector}$1`);
+};
 
 const readJson = async (filePath) => {
   const content = await fs.readFile(filePath, 'utf8');
@@ -90,9 +114,10 @@ const buildStyleDictionary = async ({
   internalSetName,
   themeName,
   tokenSets,
+  selector,
+  slug,
 }) => {
   const relativeOutputDir = path.relative(process.cwd(), THEMES_OUTPUT_DIR) || '.';
-  const slug = slugify(themeName);
   const baseDictionary = new StyleDictionary();
   const externalEntries = externalSetNames.map((setName) => {
     const entry = tokenSets[setName];
@@ -149,21 +174,25 @@ const buildStyleDictionary = async ({
 
   const cssPath = path.join(THEMES_OUTPUT_DIR, `${slug}.css`);
   const cssContent = await fs.readFile(cssPath, 'utf8');
-  await fs.writeFile(cssPath, ensureBanner(cssContent, CSS_BANNER), 'utf8');
+  const rewrittenCss = rewriteRootSelector({ cssContent, selector });
+  await fs.writeFile(cssPath, ensureBanner(rewrittenCss, CSS_BANNER), 'utf8');
 
   return {
     cssPath,
-    slug,
   };
 };
 
 const formatManifest = ({ themes, metadata }) => {
   const manifest = {
+    themeAttribute: FIVRA_THEME_ATTRIBUTE,
     themes: themes.map((theme) => ({
       name: theme.theme.name,
       id: theme.theme.id,
       group: theme.theme.group ?? null,
       cssPath: `./${theme.slug}.css`,
+      slug: theme.slug,
+      selector: theme.selector,
+      isDefault: theme.isDefault,
       selectedTokenSets: theme.theme.selectedTokenSets,
       activeTokenSets: [...theme.setCombination.external, theme.setCombination.internal],
       tokenSetCombination: {
@@ -174,7 +203,7 @@ const formatManifest = ({ themes, metadata }) => {
     metadata: metadata ?? null,
   };
 
-  const manifestBody = `${TS_BANNER}export const designTokenManifest = ${JSON.stringify(manifest, null, 2)} as const;\n\nexport type DesignTokenTheme = typeof designTokenManifest.themes[number];\nexport type DesignTokenThemeName = DesignTokenTheme['name'];\n`;
+  const manifestBody = `${TS_BANNER}export const designTokenManifest = ${JSON.stringify(manifest, null, 2)} as const;\n\nexport type DesignTokenTheme = typeof designTokenManifest.themes[number];\nexport type DesignTokenThemeName = DesignTokenTheme['name'];\nexport type DesignTokenThemeSlug = DesignTokenTheme['slug'];\n`;
 
   return manifestBody;
 };
@@ -188,8 +217,7 @@ const main = async () => {
     throw new Error(`No themes were found in ${path.relative(ROOT_DIR, TOKENS_FILE)}`);
   }
 
-  await fs.rm(THEMES_OUTPUT_DIR, { recursive: true, force: true });
-  await fs.mkdir(THEMES_OUTPUT_DIR, { recursive: true });
+  await clearGeneratedThemeArtifacts();
 
   const manifestThemes = [];
   const externalTheme = themes.find((item) => item.group === 'Externals');
@@ -202,7 +230,7 @@ const main = async () => {
     throw new Error(`Theme "${externalTheme.name}" does not enable any external token sets.`);
   }
 
-  for (const targetThemeName of TARGET_THEMES) {
+  for (const [index, targetThemeName] of TARGET_THEMES.entries()) {
     const theme = themes.find((item) => item.name === targetThemeName);
     if (!theme) {
       throw new Error(`Theme "${targetThemeName}" is missing from ${path.relative(ROOT_DIR, TOKENS_FILE)}`);
@@ -217,15 +245,23 @@ const main = async () => {
 
     const [internalSetName] = internalSetNames;
 
-    const { cssPath, slug } = await buildStyleDictionary({
+    const isDefault = index === 0;
+    const slug = slugify(targetThemeName);
+    const selector = formatThemeSelector({ slug, isDefault });
+
+    const { cssPath } = await buildStyleDictionary({
       externalSetNames,
       internalSetName,
       themeName: targetThemeName,
       tokenSets,
+      selector,
+      slug,
     });
     manifestThemes.push({
       theme,
       slug,
+      selector,
+      isDefault,
       cssPath,
       setCombination: {
         external: [...externalSetNames],

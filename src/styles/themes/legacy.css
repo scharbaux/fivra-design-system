@@ -5,7 +5,7 @@
  * -----------------------------------------------------------------------------
  */
 
-:root {
+[data-fivra-theme='legacy'] {
   --backgroundPrimaryInteractive: #0071fd;
   --backgroundPrimaryBrand: #29308a;
   --backgroundPrimaryNotice: #0071fd;

@@ -30,4 +30,5 @@
 - 2025-09-25: Introduced the Button component with shared React and web component implementations plus associated documentation.
 - 2025-09-25: Established tokens governance in `src/tokens/` (see the new `AGENTS.md` and README) and verified repository health with `yarn test` and `yarn build`.
 - 2025-09-28: Added a Style Dictionary + Tokens Studio transform workflow; run `yarn generate:tokens` to refresh theme CSS before builds.
+- 2025-09-30: Scoped generated Engage/Legacy CSS to `data-fivra-theme`, added theme helpers/tests, and wired `yarn generate:tokens` into build + Storybook hooks.
 

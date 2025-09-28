@@ -42,11 +42,12 @@ corepack prepare yarn@4.9.4 --activate
 ```
 
 ### Quick Start
-Install dependencies and generate the icon map used by components:
+Install dependencies and generate the icon map and theme tokens used by components:
 
 ```bash
 yarn install --immutable
 yarn generate:icons
+yarn generate:tokens
 ```
 
 Run Storybook for local development:
@@ -70,13 +71,20 @@ yarn build-storybook
 ## Scripts
 Commonly used scripts are listed below. Run them with `yarn <script>`.
 
-- `generate:icons` – Scan `src/shared/assets/icons/**/*` and regenerate `src/shared/icons/icons.generated.ts`.- `optimize-icons` – Normalize SVG assets with SVGO prior to generation.
+- `generate:icons` – Scan `src/shared/assets/icons/**/*` and regenerate `src/shared/icons/icons.generated.ts`.
+- `optimize-icons` – Normalize SVG assets with SVGO prior to generation.
+- `generate:tokens` – Run the design token transformer (`scripts/generate-design-tokens.mjs`) to refresh `src/styles/themes/*.css` and `tokens.generated.ts`.
 - `storybook` – Start the Storybook 9 (React + Vite) dev server with hot reload.
 - `build-storybook` – Produce a static Storybook bundle for deployment.
 - `build` – Create the distributable library bundles.
 - `lint` / `typecheck` (coming soon) – Static analysis tasks that will be documented in the architecture guides.
 
 Refer to `package.json` for the full list of scripts and watch the `docs/architecture/` directory for deeper implementation notes.
+
+### Theming workflow
+- Generated CSS lives in `src/styles/themes/` (`engage.css`, `legacy.css`) and is surfaced through `src/styles/index.css`.
+- The Engage theme is the default and applies to `:root`; add `data-fivra-theme="legacy"` to any container to opt into the legacy variables at runtime.
+- Run `yarn generate:tokens` whenever tokens change (or rely on the automated `prebuild`/`prestorybook` hooks) to keep the manifest and CSS up to date.
 
 ## Storybook Usage
 - Storybook 9 runs on Vite 5 with the `@storybook/react-vite` framework.
