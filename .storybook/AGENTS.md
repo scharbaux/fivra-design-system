@@ -18,4 +18,4 @@ This document augments the repository root `AGENTS.md`. Review root conventions 
 - Coordinate with component authors if configuration changes require story updates or new documentation.
 
 ## Functional Changes
-- 2025-09-28: Updated Storybook story globs to read MDX documentation from `docs/` so overview and integration pages render.
+- 2025-09-25: Updated Storybook story globs to read MDX documentation from `docs/` so overview and integration pages render.
