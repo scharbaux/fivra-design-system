@@ -16,3 +16,6 @@ This document augments the repository root `AGENTS.md`. Review root conventions 
 - Ensure `yarn storybook`, `yarn build-storybook`, and TypeScript type checks succeed after modifying configuration.
 - Avoid introducing duplicated configuration files or unused legacy settings.
 - Coordinate with component authors if configuration changes require story updates or new documentation.
+
+## Functional Changes
+- 2025-09-28: Updated Storybook story globs to read MDX documentation from `docs/` so overview and integration pages render.
