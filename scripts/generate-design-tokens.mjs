@@ -3,7 +3,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import StyleDictionary from 'style-dictionary';
-import { register, permutateThemes, expandTypesMap } from '@tokens-studio/sd-transforms';
+import { register, expandTypesMap } from '@tokens-studio/sd-transforms';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = path.resolve(__dirname, '..');
@@ -24,26 +24,6 @@ const slugify = (value) =>
     .replace(/-{2,}/g, '-');
 
 const ensureBanner = (content, banner) => (content.startsWith(banner) ? content : `${banner}${content}`);
-
-const deepMerge = (base, source) => {
-  if (Array.isArray(base) || Array.isArray(source)) {
-    return structuredClone(source);
-  }
-
-  if (typeof base !== 'object' || base === null) {
-    return structuredClone(source);
-  }
-
-  const merged = { ...base };
-  for (const [key, value] of Object.entries(source)) {
-    if (value && typeof value === 'object' && !Array.isArray(value) && typeof merged[key] === 'object' && merged[key] !== null && !Array.isArray(merged[key])) {
-      merged[key] = deepMerge(merged[key], value);
-    } else {
-      merged[key] = structuredClone(value);
-    }
-  }
-  return merged;
-};
 
 const readJson = async (filePath) => {
   const content = await fs.readFile(filePath, 'utf8');
@@ -67,18 +47,80 @@ const loadTokenBundle = async () => {
   const tokenSets = {};
 
   for (const [name, value] of setEntries) {
-    tokenSets[name] = await resolveTokenSource(value);
+    if (typeof value === 'string') {
+      const absolute = path.resolve(TOKENS_DIR, value);
+      tokenSets[name] = {
+        tokens: await readJson(absolute),
+        path: absolute,
+      };
+    } else if (value && typeof value === 'object') {
+      tokenSets[name] = {
+        tokens: value,
+        path: null,
+      };
+    } else {
+      throw new Error(`Token set "${name}" must resolve to a JSON object or file path.`);
+    }
   }
 
   return { metadata, themes, tokenSets };
 };
 
-const buildStyleDictionary = async ({ tokens, themeName }) => {
+const SOURCE_STATES = new Set(['enabled', 'source']);
+
+const extractSetNames = (selectedTokenSets, prefix) => {
+  if (!selectedTokenSets) {
+    return [];
+  }
+
+  return Object.entries(selectedTokenSets)
+    .filter(([setName, state]) => setName.startsWith(prefix) && SOURCE_STATES.has(state))
+    .map(([setName]) => setName);
+};
+
+const resolveDictionarySource = (entry) => {
+  if (entry.path) {
+    return entry.path;
+  }
+  return { tokens: structuredClone(entry.tokens) };
+};
+
+const buildStyleDictionary = async ({
+  externalSetNames,
+  internalSetName,
+  themeName,
+  tokenSets,
+}) => {
   const relativeOutputDir = path.relative(process.cwd(), THEMES_OUTPUT_DIR) || '.';
   const slug = slugify(themeName);
   const baseDictionary = new StyleDictionary();
+  const externalEntries = externalSetNames.map((setName) => {
+    const entry = tokenSets[setName];
+    if (!entry) {
+      throw new Error(`Token set "${setName}" is not defined in ${path.relative(ROOT_DIR, TOKENS_FILE)}`);
+    }
+    return entry;
+  });
+  const internalEntry = tokenSets[internalSetName];
+  if (!internalEntry) {
+    throw new Error(`Token set "${internalSetName}" is not defined in ${path.relative(ROOT_DIR, TOKENS_FILE)}`);
+  }
+
+  const externalFilePaths = new Set(externalEntries.map((entry) => entry.path).filter(Boolean));
+  const internalFilePaths = new Set(internalEntry.path ? [internalEntry.path] : []);
+  const filterToken = (token) => {
+    if (externalFilePaths.size > 0) {
+      return externalFilePaths.has(token.filePath);
+    }
+    if (internalFilePaths.size > 0) {
+      return !internalFilePaths.has(token.filePath);
+    }
+    return true;
+  };
+
   const dictionary = await baseDictionary.extend({
-    tokens,
+    include: [resolveDictionarySource(internalEntry)],
+    source: externalEntries.map(resolveDictionarySource),
     expand: {
       typesMap: expandTypesMap,
     },
@@ -90,11 +132,13 @@ const buildStyleDictionary = async ({ tokens, themeName }) => {
           : `${relativeOutputDir}${path.sep}`,
         options: {
           showFileHeader: false,
+          outputReferences: false,
         },
         files: [
           {
             destination: `${slug}.css`,
             format: 'css/variables',
+            filter: filterToken,
           },
         ],
       },
@@ -121,7 +165,11 @@ const formatManifest = ({ themes, metadata }) => {
       group: theme.theme.group ?? null,
       cssPath: `./${theme.slug}.css`,
       selectedTokenSets: theme.theme.selectedTokenSets,
-      activeTokenSets: theme.activeSets,
+      activeTokenSets: [...theme.setCombination.external, theme.setCombination.internal],
+      tokenSetCombination: {
+        external: [...theme.setCombination.external],
+        internal: theme.setCombination.internal,
+      },
     })),
     metadata: metadata ?? null,
   };
@@ -144,6 +192,15 @@ const main = async () => {
   await fs.mkdir(THEMES_OUTPUT_DIR, { recursive: true });
 
   const manifestThemes = [];
+  const externalTheme = themes.find((item) => item.group === 'Externals');
+  if (!externalTheme) {
+    throw new Error(`No theme with group "Externals" found in ${path.relative(ROOT_DIR, TOKENS_FILE)}`);
+  }
+
+  const externalSetNames = extractSetNames(externalTheme.selectedTokenSets, 'Externals/');
+  if (externalSetNames.length === 0) {
+    throw new Error(`Theme "${externalTheme.name}" does not enable any external token sets.`);
+  }
 
   for (const targetThemeName of TARGET_THEMES) {
     const theme = themes.find((item) => item.name === targetThemeName);
@@ -151,27 +208,29 @@ const main = async () => {
       throw new Error(`Theme "${targetThemeName}" is missing from ${path.relative(ROOT_DIR, TOKENS_FILE)}`);
     }
 
-    const permutations = permutateThemes([theme]);
-    const activeSets = permutations[targetThemeName];
-    if (!Array.isArray(activeSets) || activeSets.length === 0) {
-      throw new Error(`Theme "${targetThemeName}" does not define any active token sets.`);
+    const internalSetNames = extractSetNames(theme.selectedTokenSets, 'Internals/');
+    if (internalSetNames.length !== 1) {
+      throw new Error(
+        `Theme "${targetThemeName}" must enable exactly one internal token set. Found ${internalSetNames.length}.`,
+      );
     }
 
-    let mergedTokens = {};
-    for (const setName of activeSets) {
-      const setTokens = tokenSets[setName];
-      if (!setTokens) {
-        throw new Error(`Token set "${setName}" referenced by theme "${targetThemeName}" is missing.`);
-      }
-      mergedTokens = deepMerge(mergedTokens, setTokens);
-    }
+    const [internalSetName] = internalSetNames;
 
-    const { cssPath, slug } = await buildStyleDictionary({ tokens: mergedTokens, themeName: targetThemeName });
+    const { cssPath, slug } = await buildStyleDictionary({
+      externalSetNames,
+      internalSetName,
+      themeName: targetThemeName,
+      tokenSets,
+    });
     manifestThemes.push({
       theme,
       slug,
       cssPath,
-      activeSets,
+      setCombination: {
+        external: [...externalSetNames],
+        internal: internalSetName,
+      },
     });
   }
 

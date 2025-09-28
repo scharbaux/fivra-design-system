@@ -19,3 +19,4 @@ This file extends the repository root `AGENTS.md`. Always review the root conven
 
 ## Functional Changes
 - 2025-09-28: Added `generate-design-tokens.mjs` to produce CSS themes and a manifest via Style Dictionary and Tokens Studio transforms.
+- 2025-09-28: Updated `generate-design-tokens.mjs` to build external themes against a single internal source set, emit only public variables, and capture the set pairing in the generated manifest.
