@@ -25,8 +25,9 @@ const meta: Meta<typeof Button> = {
     },
     variant: {
       control: "inline-radio",
-      options: ["primary", "secondary", "ghost"],
-      description: "Visual treatment of the button.",
+      options: ["primary", "secondary", "tertiary"],
+      description:
+        "Visual treatment of the button mapped to `--backgroundPrimaryInteractive`, `--backgroundNeutral0`, and transparent tiers.",
       table: { category: "Appearance" },
     },
     size: {
@@ -40,12 +41,32 @@ const meta: Meta<typeof Button> = {
       description: "Stretches the button to fill its container width.",
       table: { category: "Layout" },
     },
+    iconOnly: {
+      control: "boolean",
+      description: "Removes the visible label and switches to `--radiusMax`. Provide `aria-label` for accessibility.",
+      table: { category: "Appearance" },
+    },
+    hasLabel: {
+      control: "boolean",
+      description: "Override automatic label detection when rendering screen-reader-only copy.",
+      table: { category: "Accessibility" },
+    },
+    dropdown: {
+      control: "boolean",
+      description: "Appends a disclosure caret for menu triggers.",
+      table: { category: "Appearance" },
+    },
+    loading: {
+      control: "boolean",
+      description: "Displays a spinner with `aria-busy` set on the underlying `<button>`.",
+      table: { category: "State" },
+    },
   },
   parameters: {
     docs: {
       description: {
         component:
-          "Accessible button primitive with primary, secondary, and ghost variants. Supports icons, full-width layout, and forwards native button attributes.",
+          "Accessible button primitive with primary, secondary, and tertiary variants mapped directly to the spec token palette. Supports icons, dropdown affordances, loading states, and forwards native button attributes.",
       },
     },
   },
@@ -79,22 +100,53 @@ export const Secondary: Story = {
     docs: {
       description: {
         story:
-          "Secondary button relies on '--borderSecondaryInteractive' and hover states from '--stateBrandHover' for an outlined treatment.",
+          "Secondary buttons pair `--backgroundNeutral0` with `--borderPrimaryInteractive` to deliver a neutral outline that still shares the brand hover tokens.",
       },
     },
   },
 };
 
-export const Ghost: Story = {
+export const Tertiary: Story = {
   args: {
-    children: "Ghost",
-    variant: "ghost",
+    children: "Tertiary",
+    variant: "tertiary",
   },
   parameters: {
     docs: {
       description: {
         story:
-          "Ghost buttons stay transparent until interaction, leaning on '--textPrimaryInteractive' and brand state overlays.",
+          "Tertiary buttons stay transparent until interaction, relying on `--textPrimaryInteractive` and the selected background overlay tokens for hover and press states.",
+      },
+    },
+  },
+};
+
+export const DisabledStates: Story = {
+  render: () => (
+    <div
+      style={{
+        display: "flex",
+        gap: "calc(var(--spacingL) * 1px)",
+        alignItems: "center",
+        flexWrap: "wrap",
+      }}
+    >
+      <Button variant="primary" disabled>
+        Primary
+      </Button>
+      <Button variant="secondary" disabled>
+        Secondary
+      </Button>
+      <Button variant="tertiary" disabled>
+        Tertiary
+      </Button>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Disabled states pull from `--backgroundPrimaryDisabled`, `--backgroundSecondaryDisabled`, and `--textPrimaryDisabled` ensuring consistent contrast and borders via `--borderPrimaryDisabled`.",
       },
     },
   },
@@ -144,7 +196,7 @@ export const Sizes: Story = {
     docs: {
       description: {
         story:
-          "Small, medium, and large presets pull padding, gaps, and icon sizes from the spacing and icon tokens.",
+          "Small, medium, and large presets use explicit padding (12×4, 16×8, 24×12) with heights 24/32/40px and radii mapped to `--radiusXs`, `--radiusS`, and `--radiusM`.",
       },
     },
   },
@@ -170,13 +222,61 @@ export const FullWidth: Story = {
   },
 };
 
+export const Dropdown: Story = {
+  args: {
+    children: "Menu",
+    dropdown: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Dropdown mode adds a built-in caret to communicate nested actions while still supporting manual icon slots if needed.",
+      },
+    },
+  },
+};
+
+export const Loading: Story = {
+  args: {
+    children: "Saving...",
+    loading: true,
+    disabled: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Setting `loading` renders the centered spinner, sets `aria-busy`, and works alongside `disabled` to block duplicate submissions.",
+      },
+    },
+  },
+};
+
+export const IconOnly: Story = {
+  args: {
+    iconOnly: true,
+    'aria-label': 'Next',
+    leadingIcon: <Icon name="chevron-right" variant="outline" aria-hidden="true" />,
+  },
+  render: (args) => <Button {...args} />,
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Icon-only buttons collapse to a circular hit area via `--radiusMax`. Remember to supply an accessible `aria-label`.",
+      },
+    },
+  },
+};
+
 const WebComponentPreview: React.FC = () => {
   React.useEffect(() => {
     defineFivraButton();
   }, []);
 
   return (
-    <fivra-button variant="secondary" size="md">
+    <fivra-button variant="secondary" size="md" dropdown>
       <span slot="leading-icon" aria-hidden="true">
         ★
       </span>

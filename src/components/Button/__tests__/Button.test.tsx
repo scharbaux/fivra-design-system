@@ -18,14 +18,14 @@ describe('Button', () => {
 
   it('supports variant, size, and fullWidth props', () => {
     render(
-      <Button variant="ghost" size="lg" fullWidth>
+      <Button variant="tertiary" size="lg" fullWidth>
         Explore
       </Button>,
     );
 
     const button = screen.getByRole('button', { name: 'Explore' });
 
-    expect(button).toHaveAttribute('data-variant', 'ghost');
+    expect(button).toHaveAttribute('data-variant', 'tertiary');
     expect(button).toHaveAttribute('data-size', 'lg');
     expect(button).toHaveAttribute('data-full-width', 'true');
   });
@@ -58,5 +58,26 @@ describe('Button', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Submit' }));
 
     expect(handleClick).toHaveBeenCalledTimes(1);
+  });
+
+  it('supports iconOnly, dropdown, and loading props', () => {
+    render(
+      <Button
+        iconOnly
+        dropdown
+        loading
+        aria-label="Open menu"
+        leadingIcon={<span data-testid="menu-icon" />}
+      />,
+    );
+
+    const button = screen.getByRole('button', { name: 'Open menu' });
+
+    expect(button).toHaveAttribute('data-icon-only', 'true');
+    expect(button).toHaveAttribute('data-has-label', 'false');
+    expect(button).toHaveAttribute('data-dropdown', 'true');
+    expect(button).toHaveAttribute('data-loading', 'true');
+    expect(button).toHaveAttribute('aria-busy', 'true');
+    expect(button.querySelector('.fivra-button__spinner')).toBeInTheDocument();
   });
 });

@@ -2,6 +2,10 @@ import {
   BUTTON_CLASS_NAME,
   BUTTON_ICON_CLASS,
   BUTTON_LABEL_CLASS,
+  BUTTON_LEADING_ICON_CLASS,
+  BUTTON_TRAILING_ICON_CLASS,
+  BUTTON_SPINNER_CLASS,
+  BUTTON_CARET_CLASS,
   DEFAULT_BUTTON_SIZE,
   DEFAULT_BUTTON_VARIANT,
   BUTTON_SIZES,
@@ -19,9 +23,6 @@ template.innerHTML = `
   <style>
     ${buttonHostStyles}
     ${buttonClassStyles}
-    .${BUTTON_ICON_CLASS}[data-empty="true"] {
-      display: none !important;
-    }
   </style>
   <button
     class="${BUTTON_CLASS_NAME}"
@@ -29,27 +30,46 @@ template.innerHTML = `
     type="button"
     data-variant="${DEFAULT_BUTTON_VARIANT}"
     data-size="${DEFAULT_BUTTON_SIZE}"
+    data-has-label="false"
   >
-    <span class="${BUTTON_ICON_CLASS} ${BUTTON_ICON_CLASS}--leading" part="leading-icon" data-empty="true" aria-hidden="true">
+    <span class="${BUTTON_SPINNER_CLASS}" part="spinner" aria-hidden="true"></span>
+    <span class="${BUTTON_ICON_CLASS} ${BUTTON_LEADING_ICON_CLASS}" part="leading-icon" data-empty="true" aria-hidden="true">
       <slot name="leading-icon"></slot>
     </span>
-    <span class="${BUTTON_LABEL_CLASS}" part="label"><slot></slot></span>
-    <span class="${BUTTON_ICON_CLASS} ${BUTTON_ICON_CLASS}--trailing" part="trailing-icon" data-empty="true" aria-hidden="true">
+    <span class="${BUTTON_LABEL_CLASS}" part="label" data-empty="true">
+      <slot></slot>
+    </span>
+    <span class="${BUTTON_ICON_CLASS} ${BUTTON_TRAILING_ICON_CLASS}" part="trailing-icon" data-empty="true" aria-hidden="true">
       <slot name="trailing-icon"></slot>
     </span>
+    <span class="${BUTTON_CARET_CLASS}" part="caret" aria-hidden="true"></span>
   </button>
 `;
 
 export class FivraButtonElement extends HTMLElement {
   static get observedAttributes(): string[] {
-    return ['variant', 'size', 'disabled', 'full-width', 'type'];
+    return [
+      'variant',
+      'size',
+      'disabled',
+      'full-width',
+      'type',
+      'icon-only',
+      'dropdown',
+      'loading',
+      'has-label',
+      'aria-label',
+      'aria-labelledby',
+    ];
   }
 
   private readonly buttonEl: HTMLButtonElement;
   private readonly leadingWrapper: HTMLElement;
   private readonly trailingWrapper: HTMLElement;
+  private readonly labelWrapper: HTMLElement;
   private readonly leadingSlot: HTMLSlotElement;
   private readonly trailingSlot: HTMLSlotElement;
+  private readonly labelSlot: HTMLSlotElement;
 
   constructor() {
     super();
@@ -59,19 +79,23 @@ export class FivraButtonElement extends HTMLElement {
     this.buttonEl = root.querySelector('button') as HTMLButtonElement;
     this.leadingWrapper = root.querySelector('[part="leading-icon"]') as HTMLElement;
     this.trailingWrapper = root.querySelector('[part="trailing-icon"]') as HTMLElement;
+    this.labelWrapper = root.querySelector('[part="label"]') as HTMLElement;
     this.leadingSlot = this.leadingWrapper.querySelector('slot') as HTMLSlotElement;
     this.trailingSlot = this.trailingWrapper.querySelector('slot') as HTMLSlotElement;
+    this.labelSlot = this.labelWrapper.querySelector('slot') as HTMLSlotElement;
   }
 
   connectedCallback(): void {
     this.syncAll();
     this.leadingSlot.addEventListener('slotchange', this.syncSlots);
     this.trailingSlot.addEventListener('slotchange', this.syncSlots);
+    this.labelSlot.addEventListener('slotchange', this.syncSlots);
   }
 
   disconnectedCallback(): void {
     this.leadingSlot.removeEventListener('slotchange', this.syncSlots);
     this.trailingSlot.removeEventListener('slotchange', this.syncSlots);
+    this.labelSlot.removeEventListener('slotchange', this.syncSlots);
   }
 
   attributeChangedCallback(): void {
@@ -107,11 +131,8 @@ export class FivraButtonElement extends HTMLElement {
   }
 
   set disabled(value: boolean) {
-    if (value) {
-      this.setAttribute('disabled', '');
-    } else {
-      this.removeAttribute('disabled');
-    }
+    this.toggleAttribute('disabled', value);
+    this.syncDisabled();
   }
 
   get fullWidth(): boolean {
@@ -131,6 +152,48 @@ export class FivraButtonElement extends HTMLElement {
     this.setAttribute('type', value);
   }
 
+  get iconOnly(): boolean {
+    return this.hasAttribute('icon-only');
+  }
+
+  set iconOnly(value: boolean) {
+    this.toggleAttribute('icon-only', value);
+    this.syncIconOnly();
+    this.syncHasLabel();
+  }
+
+  get dropdown(): boolean {
+    return this.hasAttribute('dropdown');
+  }
+
+  set dropdown(value: boolean) {
+    this.toggleAttribute('dropdown', value);
+    this.syncDropdown();
+  }
+
+  get loading(): boolean {
+    return this.hasAttribute('loading');
+  }
+
+  set loading(value: boolean) {
+    this.toggleAttribute('loading', value);
+    this.syncLoading();
+  }
+
+  get hasLabel(): boolean {
+    const attr = this.getAttribute('has-label');
+    if (attr !== null) {
+      return attr !== 'false';
+    }
+
+    return !this.iconOnly && this.hasLabelSlotContent();
+  }
+
+  set hasLabel(value: boolean) {
+    this.setAttribute('has-label', value ? 'true' : 'false');
+    this.syncHasLabel();
+  }
+
   private syncAll = (): void => {
     this.syncVariant();
     this.syncSize();
@@ -138,6 +201,11 @@ export class FivraButtonElement extends HTMLElement {
     this.syncFullWidth();
     this.syncType();
     this.syncSlots();
+    this.syncIconOnly();
+    this.syncDropdown();
+    this.syncLoading();
+    this.syncHasLabel();
+    this.syncAriaAttributes();
   };
 
   private syncVariant(): void {
@@ -184,15 +252,92 @@ export class FivraButtonElement extends HTMLElement {
   }
 
   private syncSlots = (): void => {
-    this.toggleWrapper(this.leadingSlot, this.leadingWrapper);
-    this.toggleWrapper(this.trailingSlot, this.trailingWrapper);
+    const hasLeading = this.updateWrapper(this.leadingSlot, this.leadingWrapper);
+    const hasTrailing = this.updateWrapper(this.trailingSlot, this.trailingWrapper);
+    const hasLabel = this.updateLabel();
+
+    this.buttonEl.dataset.leadingIcon = hasLeading ? 'true' : 'false';
+    this.buttonEl.dataset.trailingIcon = hasTrailing ? 'true' : 'false';
+    this.buttonEl.dataset.slotLabel = hasLabel ? 'true' : 'false';
   };
 
-  private toggleWrapper(slot: HTMLSlotElement, wrapper: HTMLElement): void {
-    const hasContent = slot
+  private syncIconOnly(): void {
+    if (this.iconOnly) {
+      this.buttonEl.dataset.iconOnly = 'true';
+    } else {
+      delete this.buttonEl.dataset.iconOnly;
+    }
+  }
+
+  private syncDropdown(): void {
+    if (this.dropdown) {
+      this.buttonEl.dataset.dropdown = 'true';
+    } else {
+      delete this.buttonEl.dataset.dropdown;
+    }
+  }
+
+  private syncLoading(): void {
+    if (this.loading) {
+      this.buttonEl.dataset.loading = 'true';
+      this.buttonEl.setAttribute('aria-busy', 'true');
+    } else {
+      delete this.buttonEl.dataset.loading;
+      this.buttonEl.removeAttribute('aria-busy');
+    }
+  }
+
+  private syncHasLabel(): void {
+    const attr = this.getAttribute('has-label');
+    const iconOnly = this.buttonEl.dataset.iconOnly === 'true';
+    let hasLabel: boolean;
+
+    if (attr !== null) {
+      hasLabel = attr !== 'false';
+    } else {
+      hasLabel = !iconOnly && this.buttonEl.dataset.slotLabel === 'true';
+    }
+
+    this.buttonEl.dataset.hasLabel = hasLabel ? 'true' : 'false';
+  }
+
+  private syncAriaAttributes(): void {
+    const ariaLabel = this.getAttribute('aria-label');
+    const ariaLabelledBy = this.getAttribute('aria-labelledby');
+
+    if (ariaLabel !== null) {
+      this.buttonEl.setAttribute('aria-label', ariaLabel);
+    } else {
+      this.buttonEl.removeAttribute('aria-label');
+    }
+
+    if (ariaLabelledBy !== null) {
+      this.buttonEl.setAttribute('aria-labelledby', ariaLabelledBy);
+    } else {
+      this.buttonEl.removeAttribute('aria-labelledby');
+    }
+  }
+
+  private updateWrapper(slot: HTMLSlotElement, wrapper: HTMLElement): boolean {
+    const hasContent = this.hasAssignedNodes(slot);
+    wrapper.dataset.empty = hasContent ? 'false' : 'true';
+    return hasContent;
+  }
+
+  private updateLabel(): boolean {
+    const hasContent = this.hasLabelSlotContent();
+    this.labelWrapper.dataset.empty = hasContent ? 'false' : 'true';
+    return hasContent;
+  }
+
+  private hasAssignedNodes(slot: HTMLSlotElement): boolean {
+    return slot
       .assignedNodes()
       .some((node) => node.nodeType === Node.ELEMENT_NODE || (node.textContent ?? '').trim().length > 0);
-    wrapper.dataset.empty = hasContent ? 'false' : 'true';
+  }
+
+  private hasLabelSlotContent(): boolean {
+    return this.hasAssignedNodes(this.labelSlot);
   }
 }
 
