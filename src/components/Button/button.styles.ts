@@ -55,7 +55,7 @@ ${BASE_CLASS} {
   padding: var(--fivra-button-padding-y) var(--fivra-button-padding-x);
   min-height: var(--fivra-button-height);
   min-width: var(--fivra-button-height);
-  border-radius: var(--fivra-button-radius);
+  border-radius: calc(var(--fivra-button-radius) * 1px);
   border-width: calc(var(--borderwidthS) * 1px);
   border-style: solid;
   border-color: var(--fivra-button-border);
@@ -147,13 +147,29 @@ ${BASE_CLASS}[aria-disabled='true'] {
   color: var(--fivra-button-disabled-text);
 }
 
+${BASE_CLASS}[data-loading='true'] {
+  cursor: progress;
+  background-color: var(--fivra-button-bg);
+  border-color: var(--fivra-button-border);
+  color: var(--fivra-button-text);
+  box-shadow: var(--fivra-button-shadow);
+}
+
+${BASE_CLASS}[data-loading='true']:disabled,
+${BASE_CLASS}[data-loading='true'][aria-disabled='true'] {
+  background-color: var(--fivra-button-bg);
+  border-color: var(--fivra-button-border);
+  color: var(--fivra-button-text);
+  box-shadow: var(--fivra-button-shadow);
+}
+
 ${BASE_CLASS}[data-icon-only='true'] {
   --fivra-button-gap: 0;
   --fivra-button-padding-x: 0;
   width: var(--fivra-button-height);
   padding-left: 0;
   padding-right: 0;
-  border-radius: var(--radiusMax);
+  border-radius: calc(var(--radiusMax) * 1px);
 }
 
 ${BASE_CLASS}[data-has-label='false'] ${LABEL_CLASS} {
@@ -162,10 +178,6 @@ ${BASE_CLASS}[data-has-label='false'] ${LABEL_CLASS} {
 
 ${BASE_CLASS}[data-dropdown='true'] ${CARET_CLASS} {
   display: inline-flex;
-}
-
-${BASE_CLASS}[data-loading='true'] {
-  cursor: progress;
 }
 
 ${BASE_CLASS}[data-loading='true'] ${ICON_CLASS},
@@ -220,7 +232,7 @@ ${SPINNER_CLASS}::before {
   height: var(--fivra-button-spinner-size);
   border-radius: 999px;
   border: calc(var(--borderwidthS) * 1px) solid var(--borderPrimaryDisabled);
-  border-top-color: var(--textPrimaryInteractive);
+  border-top-color: var(--fivra-button-text);
   animation: fivra-button-spin 0.8s linear infinite;
 }
 

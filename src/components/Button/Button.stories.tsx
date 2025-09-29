@@ -276,7 +276,7 @@ const WebComponentPreview: React.FC = () => {
   }, []);
 
   return (
-    <fivra-button variant="secondary" size="md" dropdown loading>
+    <fivra-button variant="secondary" size="md" dropdown>
       <span slot="leading-icon" aria-hidden="true">
         ★
       </span>
