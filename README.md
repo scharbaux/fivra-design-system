@@ -74,6 +74,10 @@ Commonly used scripts are listed below. Run them with `yarn <script>`.
 - `generate:icons` – Scan `src/shared/assets/icons/**/*` and regenerate `src/shared/icons/icons.generated.ts`.
 - `optimize-icons` – Normalize SVG assets with SVGO prior to generation.
 - `generate:tokens` – Run the design token transformer (`scripts/generate-design-tokens.mjs`) to refresh `src/styles/themes/*.css` and `tokens.generated.ts`.
+- `changeset` – Launch the interactive Changesets prompt to document the change surface area and select the appropriate semver bump.
+- `version` – Apply accumulated Changesets (`changeset version`) to bump `package.json`, changelogs, and generated release metadata (`yarn run version`).
+- `release` – Publish the release defined by Changesets (used by CI; requires `NPM_TOKEN`).
+- `verify:agents` – Ensure modified directories updated their `AGENTS.md` with a new semantic-version bullet (runs automatically in CI).
 - `storybook` – Start the Storybook 9 (React + Vite) dev server with hot reload.
 - `build-storybook` – Produce a static Storybook bundle for deployment.
 - `build` – Create the distributable library bundles.
@@ -94,11 +98,17 @@ Refer to `package.json` for the full list of scripts and watch the `docs/archite
 
 Visit the published Storybook (if available) to explore live components, or run the local command above to iterate on new work.
 
+## Release & Versioning Workflow
+- Run `yarn changeset` on every PR that affects behavior, tooling, or documentation so the automated release pipeline can calculate semver bumps.
+- After committing Changeset entries, update the relevant `AGENTS.md` files with a new `<major>.<minor>[.<patch>]` bullet summarizing the change—CI uses `yarn verify:agents` to enforce this requirement.
+- Execute `yarn run version` locally to preview the resulting package version, then rerun `yarn build` and `yarn test` before pushing the release branch or triggering CI.
+- The `Release` GitHub Actions workflow runs on pushes to `main`; it installs dependencies, validates AGENTS updates, runs Changesets versioning/publish steps, re-runs tests/builds post-version bump, and uploads the updated changelog.
+
 ## Contribution Guidelines
 - Follow the Yarn/Corepack workflow described above; commits should not modify the lockfile unexpectedly.
 - Keep icons and other generated artifacts in sync by running `yarn optimize-icons` and `yarn generate:icons` before opening a PR.
 - Storybook stories should include accessibility notes, usage guidelines, and design references whenever possible.
-- Pending AGENTS guidance: repository-specific contribution instructions will live in forthcoming `AGENTS.md` files. Always review them (once present) before editing files in a given directory.
+- Review the appropriate `AGENTS.md` files for directory-specific standards before editing code or docs.
 - When architecture guides are published under `docs/architecture/`, align code structure and naming with the documented conventions.
 
 Please open issues or discussions for large proposals (e.g., new framework adapters or token schemas) so maintainers can help scope and prioritize the work.

@@ -16,9 +16,11 @@ This document augments the root `AGENTS.md`. Ensure you understand the repositor
 - Follow root standards for accuracy, tone, and completeness.
 - Whenever documentation reflects a behavior change in code, append a "Functional Changes" note in the associated change record (commit or PR) summarizing the user-facing impact.
 - Cross-link relevant component stories, scripts, and architectural docs to help teams adopt multi-framework patterns.
+- Mirror the repository release workflow by noting which Changeset entry triggered a documentation update and referencing the resulting version bump recorded in directory `AGENTS.md` files.
 
 ## Functional Changes
 - Use `<major>.<minor>[.<patch>]` labels instead of dates when recording new entries.
 - 1.0: Documented the new Button component, including React usage and custom element registration steps.
 - 1.0: Ensured Storybook pulls overview and integration MDX pages from `docs/` for sidebar visibility.
 - 1.0: Documented the theme token workflow, runtime helpers, and data-attribute switching strategy.
+- 1.1.0: Added documentation for the Changesets release pipeline, the `yarn changeset` authoring flow, and the AGENTS verification guard.

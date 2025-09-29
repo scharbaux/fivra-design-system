@@ -16,9 +16,13 @@
 - When creating a new directory, add an `AGENTS.md` that explicitly references this root file and describes any directory-specific expectations.
 - Keep child `AGENTS.md` files synchronized with root policies. If root standards change, review and update descendant instructions accordingly.
 - Record all functional or behavioral changes in the relevant directory-level `AGENTS.md` under a "Change Log" or similar section.
-- run `yarn generate:icons` then run `yarn build`.
+- Run `yarn changeset` to capture a summary and proposed semver bump for every PR that changes behavior or tooling.
+- Record the resulting version increment in the directory-specific `AGENTS.md` (see the verification guard below).
+- Run `yarn generate:icons` then run `yarn build`.
 - Always make sure `yarn build` is ✅ successful before marking the task as completed.
 - Always make sure `yarn test` has ✅ passed before marking the task as completed.
+- After applying version changes locally, rerun `yarn build` and `yarn test` to confirm the repository still compiles and the suite passes.
+- `yarn verify:agents` (invoked by CI) must succeed; ensure each modified directory's `AGENTS.md` adds a new semantic-version bullet describing the change.
 
 ## Key Documentation References
 - Tech stack details live in `docs/tech-stack.md`.
@@ -32,4 +36,5 @@
 - 1.0: Established tokens governance in `src/tokens/` (see the new `AGENTS.md` and README) and verified repository health with `yarn test` and `yarn build`.
 - 1.0: Added a Style Dictionary + Tokens Studio transform workflow; run `yarn generate:tokens` to refresh theme CSS before builds.
 - 1.0: Scoped generated Engage/Legacy CSS to `data-fivra-theme`, added theme helpers/tests, and wired `yarn generate:tokens` into build + Storybook hooks.
+- 1.1.0: Documented the Changesets-powered release workflow, required `yarn changeset` for feature work, and enforced semantic-version bullets via `scripts/verify-agents-version.mjs`.
 
