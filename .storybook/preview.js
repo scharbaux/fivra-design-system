@@ -7,6 +7,47 @@ import {
   getDefaultDesignTokenTheme,
 } from '../src/styles/themes';
 
+const DESIGN_TOKEN_LOG_PREFIX = '[Storybook][Design Tokens]';
+const SAMPLE_THEME_VARIABLES = [
+  '--radiusMax',
+  '--spacingS',
+  '--backgroundPrimaryInteractive',
+];
+
+const shouldLogDesignTokenStatus = () =>
+  typeof window !== 'undefined' && (typeof process === 'undefined' || process.env?.NODE_ENV !== 'production');
+
+const logDesignTokenStatus = (slug) => {
+  if (!shouldLogDesignTokenStatus()) {
+    return;
+  }
+
+  const root = document.documentElement;
+  const computedStyles = window.getComputedStyle(root);
+  const missingVariables = SAMPLE_THEME_VARIABLES.filter((variable) => {
+    const value = computedStyles.getPropertyValue(variable).trim();
+    return value.length === 0;
+  });
+
+  if (missingVariables.length > 0) {
+    console.warn(
+      `${DESIGN_TOKEN_LOG_PREFIX} Missing CSS custom properties for the "${slug}" theme.`,
+      { missingVariables },
+    );
+    return;
+  }
+
+  const sampleValues = SAMPLE_THEME_VARIABLES.reduce((values, variable) => {
+    values[variable] = computedStyles.getPropertyValue(variable).trim();
+    return values;
+  }, {});
+
+  console.info(
+    `${DESIGN_TOKEN_LOG_PREFIX} Applied the "${slug}" theme with resolved variables.`,
+    sampleValues,
+  );
+};
+
 /**
  * Global Storybook parameters and decorators for React stories.
  */
@@ -35,7 +76,8 @@ const ThemeProvider = ({ slug, children }) => {
       return undefined;
     }
 
-    applyDesignTokenTheme(document, slug);
+    const theme = applyDesignTokenTheme(document, slug);
+    logDesignTokenStatus(theme.slug);
 
     return () => {
       if (typeof document === 'undefined') {
@@ -43,6 +85,9 @@ const ThemeProvider = ({ slug, children }) => {
       }
 
       clearDesignTokenTheme(document);
+      if (shouldLogDesignTokenStatus()) {
+        console.info(`${DESIGN_TOKEN_LOG_PREFIX} Cleared the "${slug}" theme attribute.`);
+      }
     };
   }, [slug]);
 

@@ -1,10 +1,8 @@
-@layer fivra.tokens.engage {
-  @import url('./themes/engage.css');
-}
+@layer fivra.tokens.engage, fivra.tokens.legacy;
 
-@layer fivra.tokens.legacy {
-  @import url('./themes/legacy.css');
-}
+@import url('./themes/engage.css') layer(fivra.tokens.engage);
+
+@import url('./themes/legacy.css') layer(fivra.tokens.legacy);
 
 /*
   Theme variables are resolved against the `data-fivra-theme` attribute.
