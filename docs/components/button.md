@@ -30,11 +30,15 @@ export function SaveButton() {
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `variant` | `'primary' \| 'secondary' \| 'ghost'` | `primary` | Chooses the visual treatment: filled, outlined, or subtle. |
+| `variant` | `'primary' \| 'secondary' \| 'tertiary'` | `primary` | Chooses the visual treatment mapped to `--backgroundPrimaryInteractive`, `--backgroundNeutral0`, or a transparent tertiary surface. |
 | `size` | `'sm' \| 'md' \| 'lg'` | `md` | Adjusts typography, padding, and icon spacing. |
 | `fullWidth` | `boolean` | `false` | When `true`, sets the button width to 100% of its container. |
 | `leadingIcon` | `React.ReactNode` | `undefined` | Optional icon rendered before the label with `aria-hidden`. |
 | `trailingIcon` | `React.ReactNode` | `undefined` | Optional icon rendered after the label with `aria-hidden`. |
+| `iconOnly` | `boolean` | `false` | Removes the visible label, switches to `--radiusMax`, and requires an accessible name via `aria-label`/`aria-labelledby`. |
+| `hasLabel` | `boolean` | `undefined` | Overrides automatic label detection when providing off-screen copy or live region text. |
+| `dropdown` | `boolean` | `false` | Appends a disclosure caret to hint at menu/split button behavior. |
+| `loading` | `boolean` | `false` | Displays the centered spinner and sets `aria-busy` on the button. |
 | `...buttonProps` | `React.ButtonHTMLAttributes<HTMLButtonElement>` | – | Native button attributes such as `type`, `disabled`, `aria-pressed`, etc. |
 
 The component defaults `type="button"` to avoid accidental form submissions. Provide `type="submit"` or `type="reset"` when integrating with forms.
@@ -64,7 +68,7 @@ Slots:
 - default slot – button label.
 - `slot="trailing-icon"` – optional trailing visual.
 
-Attributes mirror the React props (`variant`, `size`, `full-width`, `disabled`, `type`). The element forwards `click`, `focus`, and `blur` behaviors to the internal `<button>` for accessibility.
+Attributes mirror the React props (`variant`, `size`, `full-width`, `disabled`, `type`, `icon-only`, `has-label`, `dropdown`, `loading`). The element forwards `click`, `focus`, and `blur` behaviors to the internal `<button>` for accessibility.
 
 ## Accessibility
 
@@ -74,13 +78,13 @@ Attributes mirror the React props (`variant`, `size`, `full-width`, `disabled`, 
 
 ## Theming
 
-Design tokens are surfaced as CSS variables on the button root (e.g., `--fivra-button-primary-bg`). Override them at the component or global level to align with product branding.
+Design tokens are surfaced as CSS variables on the button root (e.g., `--backgroundPrimaryInteractive`, `--backgroundPrimaryDisabled`, `--textPrimaryInteractive`). Override them at the component or global level to align with product branding.
 
 ```css
 .my-theme {
-  --fivra-button-primary-bg: #7c3aed;
-  --fivra-button-primary-bg-hover: #6d28d9;
-  --fivra-button-focus-ring: 0 0 0 4px rgba(124, 58, 237, 0.35);
+  --backgroundPrimaryInteractive: #7c3aed;
+  --backgroundPrimaryDisabled: #cbd5f5;
+  --textPrimaryInteractive: #ffffff;
 }
 ```
 

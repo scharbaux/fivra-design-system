@@ -9,3 +9,4 @@ This directory inherits the repository and `docs/` guidance. Keep component refe
 ## Functional Changes
 - Use `<major>.<minor>[.<patch>]` labels instead of dates when recording new entries.
 - 1.0: Authored the initial Button reference guide covering React and custom element usage.
+- 1.2.0: Documented tertiary styling, icon-only/dropdown/loading APIs, and new token references for the Button component.

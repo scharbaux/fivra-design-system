@@ -3,11 +3,13 @@ export const BUTTON_ICON_CLASS = `${BUTTON_CLASS_NAME}__icon`;
 export const BUTTON_LABEL_CLASS = `${BUTTON_CLASS_NAME}__label`;
 export const BUTTON_LEADING_ICON_CLASS = `${BUTTON_ICON_CLASS}--leading`;
 export const BUTTON_TRAILING_ICON_CLASS = `${BUTTON_ICON_CLASS}--trailing`;
+export const BUTTON_SPINNER_CLASS = `${BUTTON_CLASS_NAME}__spinner`;
+export const BUTTON_CARET_CLASS = `${BUTTON_CLASS_NAME}__caret`;
 
-export type ButtonVariant = 'primary' | 'secondary' | 'ghost';
+export type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
-export const BUTTON_VARIANTS: readonly ButtonVariant[] = ['primary', 'secondary', 'ghost'];
+export const BUTTON_VARIANTS: readonly ButtonVariant[] = ['primary', 'secondary', 'tertiary'];
 export const BUTTON_SIZES: readonly ButtonSize[] = ['sm', 'md', 'lg'];
 
 export const DEFAULT_BUTTON_VARIANT: ButtonVariant = 'primary';
@@ -16,34 +18,32 @@ export const DEFAULT_BUTTON_SIZE: ButtonSize = 'md';
 const BASE_CLASS = `.${BUTTON_CLASS_NAME}`;
 const ICON_CLASS = `.${BUTTON_ICON_CLASS}`;
 const LABEL_CLASS = `.${BUTTON_LABEL_CLASS}`;
+const SPINNER_CLASS = `.${BUTTON_SPINNER_CLASS}`;
+const CARET_CLASS = `.${BUTTON_CARET_CLASS}`;
 
 export const buttonClassStyles = `
 ${BASE_CLASS} {
   --fivra-button-font-family: inherit;
   --fivra-button-font-weight: 600;
-  --fivra-button-radius: var(--radiusMax);
+  --fivra-button-radius: var(--radiusS);
   --fivra-button-transition: background-color 160ms ease, color 160ms ease,
-    box-shadow 160ms ease, border-color 160ms ease;
-  --fivra-button-gap: calc(var(--spacingS) * 1px);
-  --fivra-button-padding-y: calc(var(--spacingS) * 1px);
-  --fivra-button-padding-x: calc(var(--spacingL) * 1px);
+    box-shadow 160ms ease, border-color 160ms ease, opacity 160ms ease;
+  --fivra-button-gap: calc(8 * 1px);
+  --fivra-button-padding-y: calc(8 * 1px);
+  --fivra-button-padding-x: calc(16 * 1px);
   --fivra-button-font-size: 0.95rem;
   --fivra-button-line-height: 1.2;
-  --fivra-button-min-height: calc(var(--spacingXl3) * 1px - var(--spacingS) * 1px);
-  --fivra-button-icon-size: var(--iconsizesL);
-  --fivra-button-primary-bg: var(--backgroundPrimaryInteractive);
-  --fivra-button-primary-bg-hover: var(--stateBrandHover);
-  --fivra-button-primary-bg-active: var(--stateBrandPress);
-  --fivra-button-primary-color: var(--backgroundNeutral0);
-  --fivra-button-secondary-bg: var(--backgroundTertiaryInteractive);
-  --fivra-button-secondary-border: var(--borderSecondaryInteractive);
-  --fivra-button-secondary-border-hover: var(--borderPrimaryInteractive);
-  --fivra-button-secondary-color: var(--textSecondaryInteractive);
-  --fivra-button-secondary-bg-hover: var(--stateBrandHover);
-  --fivra-button-secondary-bg-active: var(--stateBrandPress);
-  --fivra-button-ghost-color: var(--textPrimaryInteractive);
-  --fivra-button-ghost-bg-hover: var(--stateBrandHover);
-  --fivra-button-ghost-bg-active: var(--stateBrandPress);
+  --fivra-button-height: calc(32 * 1px);
+  --fivra-button-icon-size: var(--iconsizesM);
+  --fivra-button-spinner-size: calc(16 * 1px);
+  --fivra-button-bg: var(--backgroundPrimaryInteractive);
+  --fivra-button-bg-hover: var(--stateBrandHover);
+  --fivra-button-bg-active: var(--stateBrandPress);
+  --fivra-button-border: var(--borderPrimaryInteractive);
+  --fivra-button-text: var(--backgroundNeutral0);
+  --fivra-button-disabled-bg: var(--backgroundPrimaryDisabled);
+  --fivra-button-disabled-border: var(--borderPrimaryDisabled);
+  --fivra-button-disabled-text: var(--textPrimaryDisabled);
   --fivra-button-focus-ring-width: calc(var(--spacingXs) * 1px);
   --fivra-button-focus-ring-color: var(--stateBrandFocus);
   --fivra-button-shadow: calc(var(--shadowsMX) * 1px) calc(var(--shadowsMY) * 1px)
@@ -53,13 +53,14 @@ ${BASE_CLASS} {
   justify-content: center;
   gap: var(--fivra-button-gap);
   padding: var(--fivra-button-padding-y) var(--fivra-button-padding-x);
-  min-height: var(--fivra-button-min-height);
+  min-height: var(--fivra-button-height);
+  min-width: var(--fivra-button-height);
   border-radius: var(--fivra-button-radius);
   border-width: calc(var(--borderwidthS) * 1px);
   border-style: solid;
-  border-color: transparent;
-  background-color: var(--fivra-button-primary-bg);
-  color: var(--fivra-button-primary-color);
+  border-color: var(--fivra-button-border);
+  background-color: var(--fivra-button-bg);
+  color: var(--fivra-button-text);
   font-family: var(--fivra-button-font-family);
   font-weight: var(--fivra-button-font-weight);
   font-size: var(--fivra-button-font-size);
@@ -79,59 +80,56 @@ ${BASE_CLASS}[data-full-width='true'] {
 }
 
 ${BASE_CLASS}[data-size='sm'] {
-  --fivra-button-padding-y: calc(var(--spacingXs) * 1px + var(--spacingXs2) * 1px);
-  --fivra-button-padding-x: calc(var(--spacingM) * 1px + var(--spacingXs2) * 1px);
+  --fivra-button-padding-y: calc(4 * 1px);
+  --fivra-button-padding-x: calc(12 * 1px);
+  --fivra-button-height: calc(24 * 1px);
+  --fivra-button-radius: var(--radiusXs);
+  --fivra-button-gap: calc(4 * 1px);
+  --fivra-button-icon-size: var(--iconsizesS);
+  --fivra-button-spinner-size: calc(14 * 1px);
   --fivra-button-font-size: 0.85rem;
-  --fivra-button-min-height: calc(var(--spacingXl2) * 1px + var(--spacingXs2) * 1px);
-  --fivra-button-gap: calc(var(--spacingXs) * 1px + var(--spacingXs2) * 1px);
-  --fivra-button-icon-size: var(--iconsizesM);
 }
 
 ${BASE_CLASS}[data-size='lg'] {
-  --fivra-button-padding-y: calc(var(--spacingS) * 1px + var(--spacingXs2) * 1px);
-  --fivra-button-padding-x: calc(var(--spacingL) * 1px + var(--spacingXs) * 1px);
-  --fivra-button-font-size: 1rem;
-  --fivra-button-min-height: calc(var(--spacingXl3) * 1px - var(--spacingXs2) * 1px);
-  --fivra-button-gap: calc(var(--spacingS) * 1px + var(--spacingXs2) * 1px);
+  --fivra-button-padding-y: calc(12 * 1px);
+  --fivra-button-padding-x: calc(24 * 1px);
+  --fivra-button-height: calc(40 * 1px);
+  --fivra-button-radius: var(--radiusM);
+  --fivra-button-gap: calc(12 * 1px);
   --fivra-button-icon-size: var(--iconsizesXl);
+  --fivra-button-spinner-size: calc(20 * 1px);
+  --fivra-button-font-size: 1rem;
 }
 
 ${BASE_CLASS}[data-variant='secondary'] {
-  background-color: var(--fivra-button-secondary-bg);
-  color: var(--fivra-button-secondary-color);
-  border-color: var(--fivra-button-secondary-border);
+  --fivra-button-bg: var(--backgroundNeutral0);
+  --fivra-button-bg-hover: var(--backgroundPrimarySelected);
+  --fivra-button-bg-active: var(--stateBrandPress);
+  --fivra-button-border: var(--borderPrimaryInteractive);
+  --fivra-button-text: var(--textPrimaryInteractive);
+  --fivra-button-disabled-bg: var(--backgroundSecondaryDisabled);
+  --fivra-button-disabled-border: var(--borderPrimaryDisabled);
+  --fivra-button-disabled-text: var(--textPrimaryDisabled);
 }
 
-${BASE_CLASS}[data-variant='ghost'] {
-  background-color: transparent;
-  color: var(--fivra-button-ghost-color);
-  border-color: transparent;
+${BASE_CLASS}[data-variant='tertiary'] {
+  --fivra-button-bg: transparent;
+  --fivra-button-bg-hover: var(--backgroundPrimarySelected);
+  --fivra-button-bg-active: var(--stateBrandPress);
+  --fivra-button-border: transparent;
+  --fivra-button-text: var(--textPrimaryInteractive);
+  --fivra-button-disabled-bg: transparent;
+  --fivra-button-disabled-border: transparent;
+  --fivra-button-disabled-text: var(--textPrimaryDisabled);
 }
 
-${BASE_CLASS}:hover:not(:disabled) {
-  background-color: var(--fivra-button-primary-bg-hover);
+${BASE_CLASS}:hover:not(:disabled):not([aria-disabled='true']) {
+  background-color: var(--fivra-button-bg-hover);
 }
 
-${BASE_CLASS}[data-variant='secondary']:hover:not(:disabled) {
-  border-color: var(--fivra-button-secondary-border-hover);
-  background-color: var(--fivra-button-secondary-bg-hover);
-}
-
-${BASE_CLASS}[data-variant='ghost']:hover:not(:disabled) {
-  background-color: var(--fivra-button-ghost-bg-hover);
-}
-
-${BASE_CLASS}:active:not(:disabled) {
-  background-color: var(--fivra-button-primary-bg-active);
+${BASE_CLASS}:active:not(:disabled):not([aria-disabled='true']) {
+  background-color: var(--fivra-button-bg-active);
   transform: translateY(1px);
-}
-
-${BASE_CLASS}[data-variant='secondary']:active:not(:disabled) {
-  background-color: var(--fivra-button-secondary-bg-active);
-}
-
-${BASE_CLASS}[data-variant='ghost']:active:not(:disabled) {
-  background-color: var(--fivra-button-ghost-bg-active);
 }
 
 ${BASE_CLASS}:focus-visible {
@@ -143,8 +141,41 @@ ${BASE_CLASS}:focus-visible {
 ${BASE_CLASS}:disabled,
 ${BASE_CLASS}[aria-disabled='true'] {
   cursor: not-allowed;
-  opacity: 0.5;
   box-shadow: none;
+  background-color: var(--fivra-button-disabled-bg);
+  border-color: var(--fivra-button-disabled-border);
+  color: var(--fivra-button-disabled-text);
+}
+
+${BASE_CLASS}[data-icon-only='true'] {
+  --fivra-button-gap: 0;
+  --fivra-button-padding-x: 0;
+  width: var(--fivra-button-height);
+  padding-left: 0;
+  padding-right: 0;
+  border-radius: var(--radiusMax);
+}
+
+${BASE_CLASS}[data-has-label='false'] ${LABEL_CLASS} {
+  display: none;
+}
+
+${BASE_CLASS}[data-dropdown='true'] ${CARET_CLASS} {
+  display: inline-flex;
+}
+
+${BASE_CLASS}[data-loading='true'] {
+  cursor: progress;
+}
+
+${BASE_CLASS}[data-loading='true'] ${ICON_CLASS},
+${BASE_CLASS}[data-loading='true'] ${LABEL_CLASS},
+${BASE_CLASS}[data-loading='true'] ${CARET_CLASS} {
+  opacity: 0;
+}
+
+${BASE_CLASS}[data-loading='true'] ${SPINNER_CLASS} {
+  display: inline-flex;
 }
 
 ${ICON_CLASS} {
@@ -172,6 +203,53 @@ ${LABEL_CLASS} {
   align-items: center;
   justify-content: center;
   white-space: nowrap;
+}
+
+${SPINNER_CLASS} {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+${SPINNER_CLASS}::before {
+  content: '';
+  width: var(--fivra-button-spinner-size);
+  height: var(--fivra-button-spinner-size);
+  border-radius: 999px;
+  border: calc(var(--borderwidthS) * 1px) solid var(--borderPrimaryDisabled);
+  border-top-color: var(--textPrimaryInteractive);
+  animation: fivra-button-spin 0.8s linear infinite;
+}
+
+${CARET_CLASS} {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--fivra-button-icon-size);
+  height: var(--fivra-button-icon-size);
+  flex-shrink: 0;
+}
+
+${CARET_CLASS}::before {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: calc(var(--fivra-button-icon-size) / 3) solid transparent;
+  border-right: calc(var(--fivra-button-icon-size) / 3) solid transparent;
+  border-top: calc(var(--fivra-button-icon-size) / 3) solid currentColor;
+}
+
+@keyframes fivra-button-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 `;
 
@@ -203,7 +281,7 @@ export function ensureButtonStyles(): void {
 
   const style = document.createElement('style');
   style.dataset.fivraButtonStyles = 'true';
-  style.textContent = `${buttonClassStyles}`;
+  style.textContent = `${buttonHostStyles}${buttonClassStyles}`;
   document.head.appendChild(style);
   hasInjectedStyles = true;
 }
