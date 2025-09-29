@@ -241,4 +241,15 @@
   --caption1StrongFontSize: 12px;
   --caption1StrongLineHeight: 14px;
   --caption1StrongLetterSpacing: 0.015em;
+  --intensityBrandFocus: 0.5;
+  --intensityBrandHover: 0.24;
+  --intensityBrandActive: 0.18;
+  --intensityDarkenHover: 0.12;
+  --intensityDarkenActive: 0.16;
+  --intensityDarkenFocus: 0.16;
+  --intensityDarkenDrag: 0.24;
+  --intensityBrightenHover: 0.12;
+  --intensityBrightenActive: 0.16;
+  --intensityBrightenFocus: 0.16;
+  --intensityBrightenDrag: 0.24;
 }

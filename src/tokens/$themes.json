@@ -204,7 +204,18 @@
       "Iconsizes.xl": "71014fcfffd4c91db269b1c12ad4e2b87d0bf83e",
       "Iconsizes.xl2": "9cd4a52cf63154ca89aca084b21aae53bbe99b0b",
       "Iconsizes.xl3": "74fdceadd01bb580ab60bddc6cda4ff6998b4c0b",
-      "Iconsizes.xl4": "6b2f8735c3652cbdec1695ec2e1b6cc9b39055a9"
+      "Iconsizes.xl4": "6b2f8735c3652cbdec1695ec2e1b6cc9b39055a9",
+      "intensity.brand.focus": "c410962aad5a835f1c124e0d9872b068db571863",
+      "intensity.brand.hover": "418e9107cc5a78d5afd45d9158a142d4f20023e5",
+      "intensity.brand.active": "2a837f8261a6ff39c5aa3a6d48d872d6fdd716f2",
+      "intensity.darken.hover": "e597a5f922e8b9896411e006d39f0c502b0827d0",
+      "intensity.darken.active": "fbed0ac9c289bf7e27fa1a825bf5813b3cab2ede",
+      "intensity.darken.focus": "8bc49b4a05e593ca31ec7b08a4cc83b6d81e6251",
+      "intensity.darken.drag": "5de5e55471216a90f624994ac791d0905aeb988e",
+      "intensity.brighten.hover": "075b04755b777bf8e59b6367c20ba2e2192282a5",
+      "intensity.brighten.active": "890ea45560d0b354d90d70344cbbbe54454c2133",
+      "intensity.brighten.focus": "1359a79ede4e4d6d42bc1d3f1dce9014033176e2",
+      "intensity.brighten.drag": "b2d2c093f419df3fbbf6811e7662dc7d7513e4a0"
     },
     "$figmaModeId": "4493:0",
     "$figmaCollectionId": "VariableCollectionId:4493:1906",
@@ -444,11 +455,11 @@
       "Font Size.body.2": "2310bbcac2db39bf9a2552b75f1f0bfebbeadc2d",
       "Font Size.body.3": "594bd41685bfebbdd921e10c17a4e5b2113cabeb",
       "Font Size.caption.1": "638e7b5b09b8d982305f07ff093dd3dcbca73b43",
-      "intensity.12": "0f91adedd2a4ef13a0ac821d4fb7f07a5cd97aea",
-      "intensity.16": "d98467f57d4763dd43ce6692c905c01e64ede288",
-      "intensity.18": "8736917905cbc485480d7bed55b913f48942f46c",
-      "intensity.24": "0900e646780e90d50c401a7aa96b7737210c9af6",
-      "intensity.50": "5e700dae39825bb95513900538958baecd36fc69"
+      "opacity.12": "0f91adedd2a4ef13a0ac821d4fb7f07a5cd97aea",
+      "opacity.16": "d98467f57d4763dd43ce6692c905c01e64ede288",
+      "opacity.18": "8736917905cbc485480d7bed55b913f48942f46c",
+      "opacity.24": "0900e646780e90d50c401a7aa96b7737210c9af6",
+      "opacity.50": "5e700dae39825bb95513900538958baecd36fc69"
     },
     "$figmaModeId": "157:0",
     "$figmaCollectionId": "VariableCollectionId:157:6338",
@@ -687,11 +698,11 @@
       "Font Size.body.2": "2310bbcac2db39bf9a2552b75f1f0bfebbeadc2d",
       "Font Size.body.3": "594bd41685bfebbdd921e10c17a4e5b2113cabeb",
       "Font Size.caption.1": "638e7b5b09b8d982305f07ff093dd3dcbca73b43",
-      "intensity.12": "0f91adedd2a4ef13a0ac821d4fb7f07a5cd97aea",
-      "intensity.16": "d98467f57d4763dd43ce6692c905c01e64ede288",
-      "intensity.18": "8736917905cbc485480d7bed55b913f48942f46c",
-      "intensity.24": "0900e646780e90d50c401a7aa96b7737210c9af6",
-      "intensity.50": "5e700dae39825bb95513900538958baecd36fc69"
+      "opacity.12": "0f91adedd2a4ef13a0ac821d4fb7f07a5cd97aea",
+      "opacity.16": "d98467f57d4763dd43ce6692c905c01e64ede288",
+      "opacity.18": "8736917905cbc485480d7bed55b913f48942f46c",
+      "opacity.24": "0900e646780e90d50c401a7aa96b7737210c9af6",
+      "opacity.50": "5e700dae39825bb95513900538958baecd36fc69"
     },
     "group": "Internals"
   }

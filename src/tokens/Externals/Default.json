@@ -846,5 +846,57 @@
       "lineHeight": "14px",
       "letterSpacing": "1.5%"
     }
+  },
+  "intensity": {
+    "brand": {
+      "focus": {
+        "$type": "opacity",
+        "$value": "{opacity.50}"
+      },
+      "hover": {
+        "$type": "opacity",
+        "$value": "{opacity.24}"
+      },
+      "active": {
+        "$type": "opacity",
+        "$value": "{opacity.18}"
+      }
+    },
+    "darken": {
+      "hover": {
+        "$type": "opacity",
+        "$value": "{opacity.12}"
+      },
+      "active": {
+        "$type": "opacity",
+        "$value": "{opacity.16}"
+      },
+      "focus": {
+        "$type": "opacity",
+        "$value": "{opacity.16}"
+      },
+      "drag": {
+        "$type": "opacity",
+        "$value": "{opacity.24}"
+      }
+    },
+    "brighten": {
+      "hover": {
+        "$type": "opacity",
+        "$value": "{opacity.12}"
+      },
+      "active": {
+        "$type": "opacity",
+        "$value": "{opacity.16}"
+      },
+      "focus": {
+        "$type": "opacity",
+        "$value": "{opacity.16}"
+      },
+      "drag": {
+        "$type": "opacity",
+        "$value": "{opacity.24}"
+      }
+    }
   }
 }

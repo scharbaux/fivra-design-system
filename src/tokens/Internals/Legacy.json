@@ -1024,7 +1024,7 @@
       }
     }
   },
-  "intensity": {
+  "opacity": {
     "12": {
       "$type": "opacity",
       "$value": "12%"
