@@ -1,6 +1,7 @@
 {
   "name": "design-system-icons",
   "private": true,
+  "version": "0.1.0",
   "type": "module",
   "packageManager": "yarn@4.9.4",
   "scripts": {
@@ -8,6 +9,10 @@
     "optimize-icons": "node scripts/optimize-icons.mjs",
     "generate:icons": "node scripts/generate-icons-map.mjs",
     "generate:tokens": "node scripts/generate-design-tokens.mjs",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "changeset publish",
+    "verify:agents": "node scripts/verify-agents-version.mjs",
     "storybook": "storybook dev -p 6006",
     "prestorybook": "yarn run generate:tokens",
     "build-storybook": "storybook build",
@@ -26,6 +31,7 @@
     "react-dom": ">=18.0.0"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.29.7",
     "@mdx-js/react": "^2.3.0",
     "@storybook/addon-a11y": "^9.1.4",
     "@storybook/addon-designs": "^10.0.2",

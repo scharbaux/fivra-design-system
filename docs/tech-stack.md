@@ -33,10 +33,12 @@ This document captures the current tooling, languages, and automation that power
 - **Node.js 18.17+ (22.x recommended)** – ensures compatibility with modern ECMAScript features and Storybook tooling.
 - **Corepack** – must be enabled to manage Yarn releases bundled with Node >= 16.9.
 - **Yarn 4.9.4** – enforced via the `packageManager` field; installs should use `yarn install --immutable` or CI’s `yarn install --frozen-lockfile`.
+- **Changesets** – `@changesets/cli` captures per-PR release notes, calculates semver bumps, and powers automated publish workflows.
 
-## Continuous Integration
+## Continuous Integration & Release Automation
 - GitHub Actions workflows target Node 22, enable Corepack, install dependencies with Yarn 4, run icon optimization/generation, and deploy Storybook to GitHub Pages.
-- Artifact uploads or auto-commits ensure regenerated icon assets are preserved on CI runs.
+- The validation workflow runs `yarn verify:agents`, `yarn test`, and `yarn build` for every push/PR to guarantee semantic-version bullets accompany source edits.
+- A dedicated release workflow runs on `main`, applies `yarn run version` via Changesets, executes post-version `yarn test`/`yarn build`, uploads the generated changelog, and uses `changesets/action` to open release PRs or publish tags.
 
 ## Future Plans
 _Planned: document additional frameworks (e.g., Vue, Svelte) and any multi-framework Storybook compositions once they are introduced._

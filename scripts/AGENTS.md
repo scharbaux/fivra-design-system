@@ -16,8 +16,10 @@ This file extends the repository root `AGENTS.md`. Always review the root conven
 - Respect root testing requirements and add unit coverage for complex script behavior when feasible.
 - If a script change alters behavior or output, append a "Functional Changes" note in the associated commit or PR summarizing the impact.
 - Document new or updated commands in `docs/` so teams understand cross-framework workflows.
+- Keep the Changesets workflow and `yarn verify:agents` guard in sync with script updates; when authoring new release automation ensure the documentation and AGENTS entries mention the expected semantic-version bump process.
 
 ## Functional Changes
 - Use `<major>.<minor>[.<patch>]` labels instead of dates when recording new entries.
 - 1.0: Added `generate-design-tokens.mjs` to produce CSS themes and a manifest via Style Dictionary and Tokens Studio transforms.
 - 1.0: Updated `generate-design-tokens.mjs` to build external themes against a single internal source set, emit only public variables, and capture the set pairing in the generated manifest.
+- 1.1.0: Added `verify-agents-version.mjs` to enforce semantic-version bullets for directories touched by a PR and wired it into CI and release workflows.
