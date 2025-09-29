@@ -26,6 +26,56 @@ const slugify = (value) =>
 const ensureBanner = (content, banner) => (content.startsWith(banner) ? content : `${banner}${content}`);
 const FIVRA_THEME_ATTRIBUTE = 'data-fivra-theme';
 
+const formatPercentValue = (value) => {
+  const percent = value * 100;
+  if (!Number.isFinite(percent)) {
+    return null;
+  }
+
+  const formatted = Number.parseFloat(percent.toFixed(4)).toString();
+  return `${formatted}%`;
+};
+
+const appendIntensityCompanionTokens = (cssContent) =>
+  cssContent.replace(/(^\s*)(--intensity[A-Za-z0-9]+):\s*([0-9.]+);([ \t]*\r?\n)/gm, (match, indent, tokenName, rawValue, newline) => {
+    if (tokenName.endsWith('Percent')) {
+      return match;
+    }
+
+    const numericValue = Number.parseFloat(rawValue);
+    if (!Number.isFinite(numericValue)) {
+      return match;
+    }
+
+    const percentValue = formatPercentValue(numericValue);
+    if (!percentValue) {
+      return match;
+    }
+
+    return `${indent}${tokenName}: ${rawValue};${newline}${indent}${tokenName}Percent: ${percentValue};${newline}`;
+  });
+
+const ensureStateLayerAliases = (cssContent) => {
+  const aliases = [
+    { name: '--stateLayerBrightenBase', value: 'var(--backgroundNeutral0)' },
+    { name: '--stateLayerDarkenBase', value: 'var(--backgroundNeutral1)' },
+  ];
+
+  return cssContent.replace(/(:root[^{]*\{)([\s\S]*?)(\n\})/, (match, prefix, body, suffix) => {
+    let nextBody = body;
+    const indent = '  ';
+
+    for (const alias of aliases) {
+      if (!nextBody.includes(`${alias.name}:`)) {
+        const separator = nextBody.endsWith('\n') ? '' : '\n';
+        nextBody = `${nextBody}${separator}${indent}${alias.name}: ${alias.value};\n`;
+      }
+    }
+
+    return `${prefix}${nextBody}${suffix}`;
+  });
+};
+
 const clearGeneratedThemeArtifacts = async () => {
   await fs.mkdir(THEMES_OUTPUT_DIR, { recursive: true });
   const entries = await fs.readdir(THEMES_OUTPUT_DIR, { withFileTypes: true }).catch(() => []);
@@ -174,7 +224,8 @@ const buildStyleDictionary = async ({
 
   const cssPath = path.join(THEMES_OUTPUT_DIR, `${slug}.css`);
   const cssContent = await fs.readFile(cssPath, 'utf8');
-  const rewrittenCss = rewriteRootSelector({ cssContent, selector });
+  const augmentedCss = ensureStateLayerAliases(appendIntensityCompanionTokens(cssContent));
+  const rewrittenCss = rewriteRootSelector({ cssContent: augmentedCss, selector });
   await fs.writeFile(cssPath, ensureBanner(rewrittenCss, CSS_BANNER), 'utf8');
 
   return {
