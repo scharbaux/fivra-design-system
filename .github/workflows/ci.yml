@@ -55,5 +55,8 @@ jobs:
       - name: Run unit tests
         run: yarn test
 
+      - name: Generate icons
+        run: yarn generate:icons
+
       - name: Build package
         run: yarn build
