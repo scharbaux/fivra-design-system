@@ -12,6 +12,7 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
+    "useDefineForClassFields": false,
     "strict": true,
     "noEmit": true,
     "baseUrl": ".",

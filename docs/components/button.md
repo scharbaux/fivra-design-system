@@ -43,6 +43,44 @@ export function SaveButton() {
 
 The component defaults `type="button"` to avoid accidental form submissions. Provide `type="submit"` or `type="reset"` when integrating with forms.
 
+## Angular usage
+
+```ts
+import { NgModule } from '@angular/core';
+import { FivraButtonModule } from '@fivra/design-system/angular';
+
+@NgModule({
+  imports: [FivraButtonModule],
+})
+export class ButtonsModule {}
+```
+
+```html
+<fivra-button
+  variant="secondary"
+  size="lg"
+  [leadingIcon]="leadingIcon"
+  [dropdown]="true"
+  ariaLabel="Invite collaborators"
+>
+  Invite collaborators
+  <span fivraButtonTrailingIcon aria-hidden="true">
+    <app-icon name="chevron-down"></app-icon>
+  </span>
+</fivra-button>
+
+<ng-template #leadingIcon>
+  <app-icon name="user-plus" aria-hidden="true"></app-icon>
+</ng-template>
+```
+
+Angular bindings mirror the React props:
+
+- `variant`, `size`, `fullWidth`, `iconOnly`, `hasLabel`, `dropdown`, `loading`, `type`, and `disabled` map to the same behaviors and data attributes as the React/web component implementations.
+- Pass projected icons with the `fivraButtonLeadingIcon`/`fivraButtonTrailingIcon` directives or provide an `ng-template` via the `[leadingIcon]`/`[trailingIcon]` inputs.
+- The component exposes `focus()` and `click()` methods that proxy to the underlying `<button>` to simplify programmatic control.
+- Set `ariaLabel`/`ariaLabelledby` for icon-only buttons to maintain accessible names.
+
 ## Custom element
 
 The same implementation ships as `<fivra-button>`. Register it once at app startup:

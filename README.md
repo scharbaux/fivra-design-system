@@ -7,7 +7,7 @@ For a deeper look at the architecture decisions, see the evolving documentation 
 
 ## Goals
 - Ship a consistent, accessible, and themeable component library that mirrors the design language in Figma.
-- Support multi-framework adoption by exporting framework-agnostic tokens and web components alongside React bindings (Angular/Vue wrappers are planned).
+- Support multi-framework adoption by exporting framework-agnostic tokens and web components alongside React and Angular bindings (Vue wrappers are next on the roadmap).
 - Automate the icon and asset pipeline so generated artifacts stay in sync with Figma exports.
 - Provide a reference Storybook to surface usage examples, accessibility notes, and design guidelines.
 
@@ -18,7 +18,7 @@ For a deeper look at the architecture decisions, see the evolving documentation 
 
 ## Components
 - **Icon** – Renders generated SVG assets by name with outline/solid variants and accessibility helpers.
-- **Button** – Multi-variant action trigger available as a React component and `<fivra-button>` custom element that share styling tokens.
+- **Button** – Multi-variant action trigger available as a React component, Angular module, and `<fivra-button>` custom element that share styling tokens.
 
 ## Local Development
 ### Requirements
@@ -80,7 +80,8 @@ Commonly used scripts are listed below. Run them with `yarn <script>`.
 - `verify:agents` – Ensure modified directories updated their `AGENTS.md` with a new semantic-version bullet (runs automatically in CI).
 - `storybook` – Start the Storybook 9 (React + Vite) dev server with hot reload.
 - `build-storybook` – Produce a static Storybook bundle for deployment.
-- `build` – Create the distributable library bundles.
+- `build` – Create the distributable library bundles (React, Angular, and web components).
+- `build:angular` – Build the Angular package with `ng-packagr`.
 - `lint` / `typecheck` (coming soon) – Static analysis tasks that will be documented in the architecture guides.
 
 Refer to `package.json` for the full list of scripts and watch the `docs/architecture/` directory for deeper implementation notes.

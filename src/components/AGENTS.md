@@ -22,3 +22,4 @@ This document extends the root-level `AGENTS.md`. All contributors must read and
 - Use `<major>.<minor>[.<patch>]` labels instead of dates when recording new entries.
 - 1.0: Added the shared Button implementation (React + web component) with reusable styling primitives.
 - 1.0: Button and Icon now consume theme tokens for layout, color, and state styling; Storybook docs updated accordingly.
+- 1.8.0: Shared button tokens now power the Angular adapter exported from `src/angular/`.
