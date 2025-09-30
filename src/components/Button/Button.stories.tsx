@@ -115,7 +115,7 @@ export const Primary: Story = {
     docs: {
       description: {
         story:
-          "Primary buttons emphasize the main action using '--backgroundPrimaryInteractive' and now blend hover, focus, and press layers via `color-mix()` driven by the same accent variable.",
+          "Primary buttons emphasize the main action using '--backgroundPrimaryInteractive'. The default mixes keep brand overlays weighting the state layer and surface through `--fivra-button-hover-color`, `--fivra-button-active-color`, and `--fivra-button-focus-ring-color`.",
       },
     },
   },
@@ -130,7 +130,7 @@ export const Secondary: Story = {
     docs: {
       description: {
         story:
-          "Secondary buttons pair `--backgroundNeutral0` with `--borderPrimaryInteractive`, tinting their state layers from the accent so outline variants can adopt semantic hues.",
+          "Secondary buttons pair `--backgroundNeutral0` with `--borderPrimaryInteractive` and now reweight their hover, active, and focus mixes so the accent receives the intensity percentage. The result keeps outline tiers neutral by default while adopting semantic hues when `--fivra-button-accent` is overridden.",
       },
     },
   },
@@ -145,7 +145,7 @@ export const Tertiary: Story = {
     docs: {
       description: {
         story:
-          "Tertiary buttons stay transparent until interaction and inherit hover/press overlays from the accent color, keeping ghost actions lightweight yet brand-aware.",
+          "Tertiary buttons stay transparent until interaction and mirror the secondary overlay logic so `--fivra-button-hover-color` and friends tint directly toward the accent color.",
       },
     },
   },
@@ -248,7 +248,7 @@ export const SemanticOverrides: Story = {
     docs: {
       description: {
         story:
-          "Setting the `--fivra-button-accent` custom property enables success, warning, and error palettes while the new color-mix state layers adapt automatically. Fallback variables keep neutral overlays for browsers without color-mix support.",
+          "Setting the `--fivra-button-accent` custom property enables success, warning, and error palettes while the new per-variant color-mix state layers adapt automatically. Fallback variables keep neutral overlays for browsers without color-mix support.",
       },
     },
   },

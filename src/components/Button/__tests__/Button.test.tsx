@@ -2,6 +2,8 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
 import { Button, BUTTON_ICON_CLASS } from '@components/Button';
+import { ensureButtonStyles } from '@components/Button/button.styles';
+import { COLOR_MIX_SUPPORTS_DECLARATION } from '@styles/color-mix';
 
 describe('Button', () => {
   it('renders the provided label and defaults to type="button"', () => {
@@ -79,5 +81,54 @@ describe('Button', () => {
     expect(button).toHaveAttribute('data-loading', 'true');
     expect(button).toHaveAttribute('aria-busy', 'true');
     expect(button.querySelector('.fivra-button__spinner')).toBeInTheDocument();
+  });
+
+  it('injects brand-focused overlay mixes for primary variants', () => {
+    ensureButtonStyles();
+
+    const style = document.querySelector<HTMLStyleElement>(
+      'style[data-fivra-button-styles="true"]',
+    );
+
+    expect(style).toBeInstanceOf(HTMLStyleElement);
+    const textContent = style?.textContent ?? '';
+
+    expect(textContent).toContain(COLOR_MIX_SUPPORTS_DECLARATION);
+    expect(textContent).toContain(
+      "--fivra-button-hover-color: color-mix(in srgb, var(--stateLayerBrightenBase) var(--intensityBrandHoverPercent), var(--fivra-button-accent));",
+    );
+    expect(textContent).toContain(
+      "--fivra-button-active-color: color-mix(in srgb, var(--stateLayerDarkenBase) var(--intensityBrandActivePercent), var(--fivra-button-accent));",
+    );
+    expect(textContent).toContain(
+      "--fivra-button-focus-ring-color: color-mix(in srgb, var(--stateLayerBrightenBase) var(--intensityBrandFocusPercent), var(--fivra-button-accent));",
+    );
+  });
+
+  it('reweights neutral overlays around the accent for outline and ghost variants', () => {
+    ensureButtonStyles();
+
+    const style = document.querySelector<HTMLStyleElement>(
+      'style[data-fivra-button-styles="true"]',
+    );
+
+    expect(style).toBeInstanceOf(HTMLStyleElement);
+    const textContent = style?.textContent ?? '';
+
+    expect(textContent).toContain(
+      ".fivra-button[data-variant='secondary'] {",
+    );
+    expect(textContent).toContain(
+      "--fivra-button-hover-color: color-mix(in srgb, var(--stateLayerBrightenBase), var(--fivra-button-accent) var(--intensityBrandHoverPercent));",
+    );
+    expect(textContent).toContain(
+      "--fivra-button-active-color: color-mix(in srgb, var(--stateLayerDarkenBase), var(--fivra-button-accent) var(--intensityBrandActivePercent));",
+    );
+    expect(textContent).toContain(
+      "--fivra-button-focus-ring-color: color-mix(in srgb, var(--stateLayerBrightenBase), var(--fivra-button-accent) var(--intensityBrandFocusPercent));",
+    );
+    expect(textContent).toContain(
+      ".fivra-button[data-variant='tertiary'] {",
+    );
   });
 });

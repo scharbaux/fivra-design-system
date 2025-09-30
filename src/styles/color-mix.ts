@@ -7,6 +7,7 @@ interface ColorMixOptions {
   layerPercentage: string;
   accentColor: string;
   colorSpace?: string;
+  weightTarget?: 'layer' | 'accent';
 }
 
 export function colorMix({
@@ -14,6 +15,12 @@ export function colorMix({
   layerPercentage,
   accentColor,
   colorSpace = DEFAULT_COLOR_SPACE,
+  weightTarget = 'layer',
 }: ColorMixOptions): string {
-  return `color-mix(in ${colorSpace}, ${layerColor} ${layerPercentage}, ${accentColor})`;
+  const operands =
+    weightTarget === 'accent'
+      ? `${layerColor}, ${accentColor} ${layerPercentage}`
+      : `${layerColor} ${layerPercentage}, ${accentColor}`;
+
+  return `color-mix(in ${colorSpace}, ${operands})`;
 }
