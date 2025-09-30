@@ -7,6 +7,7 @@ export const BUTTON_LEADING_ICON_CLASS = `${BUTTON_ICON_CLASS}--leading`;
 export const BUTTON_TRAILING_ICON_CLASS = `${BUTTON_ICON_CLASS}--trailing`;
 export const BUTTON_SPINNER_CLASS = `${BUTTON_CLASS_NAME}__spinner`;
 export const BUTTON_CARET_CLASS = `${BUTTON_CLASS_NAME}__caret`;
+export const BUTTON_BALANCED_HALO_CLASS = `${BUTTON_CLASS_NAME}--balanced-halo`;
 
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
 export type ButtonSize = 'sm' | 'md' | 'lg';
@@ -22,6 +23,7 @@ const ICON_CLASS = `.${BUTTON_ICON_CLASS}`;
 const LABEL_CLASS = `.${BUTTON_LABEL_CLASS}`;
 const SPINNER_CLASS = `.${BUTTON_SPINNER_CLASS}`;
 const CARET_CLASS = `.${BUTTON_CARET_CLASS}`;
+const BALANCED_HALO_CLASS = `${BASE_CLASS}.${BUTTON_BALANCED_HALO_CLASS}`;
 
 export const buttonClassStyles = `
 ${BASE_CLASS} {
@@ -179,6 +181,27 @@ ${BASE_CLASS}[data-variant='tertiary'] {
     })};
   }
 
+  ${BALANCED_HALO_CLASS} {
+    --fivra-button-hover-halo: ${colorMix({
+      layerColor: 'var(--stateLayerBrightenBase)',
+      layerPercentage: 'var(--intensityBrandHoverPercent)',
+      accentColor: 'var(--fivra-button-accent)',
+      weightTarget: 'accent',
+    })};
+    --fivra-button-active-halo: ${colorMix({
+      layerColor: 'var(--stateLayerBrightenBase)',
+      layerPercentage: 'var(--intensityBrandActivePercent)',
+      accentColor: 'var(--fivra-button-accent)',
+      weightTarget: 'accent',
+    })};
+    --fivra-button-focus-halo: ${colorMix({
+      layerColor: 'var(--stateLayerBrightenBase)',
+      layerPercentage: 'var(--intensityBrandFocusPercent)',
+      accentColor: 'var(--fivra-button-accent)',
+      weightTarget: 'accent',
+    })};
+  }
+
   ${BASE_CLASS}[data-variant='secondary'] {
     --fivra-button-focus-ring-color: ${colorMix({
       layerColor: 'var(--stateLayerBrightenBase)',
@@ -281,6 +304,12 @@ ${BASE_CLASS}[data-variant='tertiary'] {
     box-shadow: var(--fivra-button-shadow),
       0 0 0 6px var(--fivra-button-active-halo-fallback);
     transform: translateY(1px);
+  }
+
+  ${BALANCED_HALO_CLASS} {
+    --fivra-button-hover-halo: var(--fivra-button-hover-halo-fallback);
+    --fivra-button-active-halo: var(--fivra-button-active-halo-fallback);
+    --fivra-button-focus-halo: var(--fivra-button-focus-halo-fallback);
   }
 }
 

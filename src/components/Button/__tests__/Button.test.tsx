@@ -98,7 +98,7 @@ describe('Button', () => {
       "--fivra-button-hover-color: color-mix(in srgb, var(--stateLayerBrightenBase) var(--intensityBrandHoverPercent), var(--fivra-button-accent));",
     );
     expect(textContent).toContain(
-      "--fivra-button-active-color: color-mix(in srgb, var(--stateLayerDarkenBase) var(--intensityBrandActivePercent), var(--fivra-button-accent));",
+      "--fivra-button-active-color: color-mix(in srgb, var(--stateLayerBrightenBase) var(--intensityBrandActivePercent), var(--fivra-button-accent));",
     );
     expect(textContent).toContain(
       "--fivra-button-focus-ring-color: color-mix(in srgb, var(--stateLayerBrightenBase) var(--intensityBrandFocusPercent), var(--fivra-button-accent));",
@@ -122,13 +122,57 @@ describe('Button', () => {
       "--fivra-button-hover-color: color-mix(in srgb, var(--stateLayerBrightenBase), var(--fivra-button-accent) var(--intensityBrandHoverPercent));",
     );
     expect(textContent).toContain(
-      "--fivra-button-active-color: color-mix(in srgb, var(--stateLayerDarkenBase), var(--fivra-button-accent) var(--intensityBrandActivePercent));",
+      "--fivra-button-active-color: color-mix(in srgb, var(--stateLayerBrightenBase), var(--fivra-button-accent) var(--intensityBrandActivePercent));",
     );
     expect(textContent).toContain(
       "--fivra-button-focus-ring-color: color-mix(in srgb, var(--stateLayerBrightenBase), var(--fivra-button-accent) var(--intensityBrandFocusPercent));",
     );
     expect(textContent).toContain(
       ".fivra-button[data-variant='tertiary'] {",
+    );
+  });
+
+  it('balances the primary halo toward the accent when requested', () => {
+    ensureButtonStyles();
+
+    render(
+      <>
+        <Button data-testid="default">Default Halo</Button>
+        <Button data-testid="balanced" balancedHalo>
+          Balanced Halo
+        </Button>
+      </>,
+    );
+
+    const balancedButton = screen.getByTestId('balanced');
+
+    expect(balancedButton.className).toContain('fivra-button--balanced-halo');
+
+    const style = document.querySelector<HTMLStyleElement>(
+      'style[data-fivra-button-styles="true"]',
+    );
+
+    expect(style).toBeInstanceOf(HTMLStyleElement);
+    const textContent = style?.textContent ?? '';
+
+    expect(textContent).toContain('.fivra-button.fivra-button--balanced-halo {');
+    expect(textContent).toContain(
+      "--fivra-button-hover-halo: color-mix(in srgb, var(--stateLayerBrightenBase), var(--fivra-button-accent) var(--intensityBrandHoverPercent));",
+    );
+    expect(textContent).toContain(
+      "--fivra-button-active-halo: color-mix(in srgb, var(--stateLayerBrightenBase), var(--fivra-button-accent) var(--intensityBrandActivePercent));",
+    );
+    expect(textContent).toContain(
+      "--fivra-button-focus-halo: color-mix(in srgb, var(--stateLayerBrightenBase), var(--fivra-button-accent) var(--intensityBrandFocusPercent));",
+    );
+    expect(textContent).toContain(
+      "--fivra-button-hover-halo: var(--fivra-button-hover-halo-fallback);",
+    );
+    expect(textContent).toContain(
+      "--fivra-button-active-halo: var(--fivra-button-active-halo-fallback);",
+    );
+    expect(textContent).toContain(
+      "--fivra-button-focus-halo: var(--fivra-button-focus-halo-fallback);",
     );
   });
 });

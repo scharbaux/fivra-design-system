@@ -8,6 +8,7 @@ import {
   BUTTON_TRAILING_ICON_CLASS,
   BUTTON_SPINNER_CLASS,
   BUTTON_CARET_CLASS,
+  BUTTON_BALANCED_HALO_CLASS,
   DEFAULT_BUTTON_SIZE,
   DEFAULT_BUTTON_VARIANT,
   type ButtonSize,
@@ -38,6 +39,8 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   dropdown?: boolean;
   /** Displays a spinner and marks the button as busy. */
   loading?: boolean;
+  /** Reweights the hover, active, and focus halos toward the accent color. */
+  balancedHalo?: boolean;
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(props, ref) {
@@ -51,6 +54,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(props,
     hasLabel,
     dropdown = false,
     loading = false,
+    balancedHalo = false,
     className,
     children,
     type,
@@ -86,7 +90,11 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(props,
       {...rest}
       ref={ref}
       type={buttonType}
-      className={cx(BUTTON_CLASS_NAME, className ?? undefined)}
+      className={cx(
+        BUTTON_CLASS_NAME,
+        balancedHalo && BUTTON_BALANCED_HALO_CLASS,
+        className ?? undefined,
+      )}
       data-variant={variant}
       data-size={size}
       data-full-width={fullWidth ? 'true' : undefined}
