@@ -13,3 +13,4 @@ This directory extends the repository and `src/components/` guidance for custom 
 - 1.0: Synced injected button styles with tokenized variables so the custom element reflects theme spacing, colors, and focus states.
 - 1.2.0: Synced icon-only, dropdown, loading, and tertiary variant behavior with the React adapter, including new data attributes and ARIA forwarding.
 - 1.2.1: Added overlay mix regression tests to ensure brand versus neutral button states stay aligned with the React implementation.
+- 1.3.0: Synced primary halo custom properties to weight hover, active, and focus glows toward the accent color by default, mirroring the React implementation.

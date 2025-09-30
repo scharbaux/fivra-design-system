@@ -164,18 +164,19 @@ ${BASE_CLASS}[data-variant='tertiary'] {
       layerColor: 'var(--stateLayerBrightenBase)',
       layerPercentage: 'var(--intensityBrandHoverPercent)',
       accentColor: 'var(--fivra-button-accent)',
-      weightTarget: 'layer',
+      weightTarget: 'accent',
     })};
     --fivra-button-active-halo: ${colorMix({
       layerColor: 'var(--stateLayerBrightenBase)',
       layerPercentage: 'var(--intensityBrandActivePercent)',
       accentColor: 'var(--fivra-button-accent)',
+      weightTarget: 'accent',
     })};
     --fivra-button-focus-halo: ${colorMix({
       layerColor: 'var(--stateLayerBrightenBase)',
       layerPercentage: 'var(--intensityBrandFocusPercent)',
       accentColor: 'var(--fivra-button-accent)',
-      weightTarget: 'layer',
+      weightTarget: 'accent',
     })};
   }
 
@@ -282,6 +283,7 @@ ${BASE_CLASS}[data-variant='tertiary'] {
       0 0 0 6px var(--fivra-button-active-halo-fallback);
     transform: translateY(1px);
   }
+
 }
 
 ${BASE_CLASS}:focus-visible {

@@ -98,10 +98,19 @@ describe('Button', () => {
       "--fivra-button-hover-color: color-mix(in srgb, var(--stateLayerBrightenBase) var(--intensityBrandHoverPercent), var(--fivra-button-accent));",
     );
     expect(textContent).toContain(
-      "--fivra-button-active-color: color-mix(in srgb, var(--stateLayerDarkenBase) var(--intensityBrandActivePercent), var(--fivra-button-accent));",
+      "--fivra-button-active-color: color-mix(in srgb, var(--stateLayerBrightenBase) var(--intensityBrandActivePercent), var(--fivra-button-accent));",
     );
     expect(textContent).toContain(
       "--fivra-button-focus-ring-color: color-mix(in srgb, var(--stateLayerBrightenBase) var(--intensityBrandFocusPercent), var(--fivra-button-accent));",
+    );
+    expect(textContent).toContain(
+      "--fivra-button-hover-halo: color-mix(in srgb, var(--stateLayerBrightenBase), var(--fivra-button-accent) var(--intensityBrandHoverPercent));",
+    );
+    expect(textContent).toContain(
+      "--fivra-button-active-halo: color-mix(in srgb, var(--stateLayerBrightenBase), var(--fivra-button-accent) var(--intensityBrandActivePercent));",
+    );
+    expect(textContent).toContain(
+      "--fivra-button-focus-halo: color-mix(in srgb, var(--stateLayerBrightenBase), var(--fivra-button-accent) var(--intensityBrandFocusPercent));",
     );
   });
 
@@ -122,7 +131,7 @@ describe('Button', () => {
       "--fivra-button-hover-color: color-mix(in srgb, var(--stateLayerBrightenBase), var(--fivra-button-accent) var(--intensityBrandHoverPercent));",
     );
     expect(textContent).toContain(
-      "--fivra-button-active-color: color-mix(in srgb, var(--stateLayerDarkenBase), var(--fivra-button-accent) var(--intensityBrandActivePercent));",
+      "--fivra-button-active-color: color-mix(in srgb, var(--stateLayerBrightenBase), var(--fivra-button-accent) var(--intensityBrandActivePercent));",
     );
     expect(textContent).toContain(
       "--fivra-button-focus-ring-color: color-mix(in srgb, var(--stateLayerBrightenBase), var(--fivra-button-accent) var(--intensityBrandFocusPercent));",
@@ -131,4 +140,5 @@ describe('Button', () => {
       ".fivra-button[data-variant='tertiary'] {",
     );
   });
+
 });

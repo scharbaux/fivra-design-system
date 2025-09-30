@@ -3,7 +3,6 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { Button } from "@components/Button";
 import { Icon } from "@components/Icon";
-import { defineFivraButton } from "@web-components";
 
 const SEMANTIC_TONES = ["Success", "Warning", "Error"] as const;
 type SemanticTone = (typeof SEMANTIC_TONES)[number];

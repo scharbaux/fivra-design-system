@@ -86,7 +86,10 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(props,
       {...rest}
       ref={ref}
       type={buttonType}
-      className={cx(BUTTON_CLASS_NAME, className ?? undefined)}
+      className={cx(
+        BUTTON_CLASS_NAME,
+        className ?? undefined,
+      )}
       data-variant={variant}
       data-size={size}
       data-full-width={fullWidth ? 'true' : undefined}
