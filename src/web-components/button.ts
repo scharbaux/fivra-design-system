@@ -10,7 +10,6 @@ import {
   DEFAULT_BUTTON_VARIANT,
   BUTTON_SIZES,
   BUTTON_VARIANTS,
-  BUTTON_BALANCED_HALO_CLASS,
   buttonClassStyles,
   buttonHostStyles,
 } from '@components/Button/button.styles';
@@ -59,7 +58,6 @@ export class FivraButtonElement extends HTMLElement {
       'dropdown',
       'loading',
       'has-label',
-      'balanced-halo',
       'aria-label',
       'aria-labelledby',
     ];
@@ -182,15 +180,6 @@ export class FivraButtonElement extends HTMLElement {
     this.syncLoading();
   }
 
-  get balancedHalo(): boolean {
-    return this.hasAttribute('balanced-halo');
-  }
-
-  set balancedHalo(value: boolean) {
-    this.toggleAttribute('balanced-halo', value);
-    this.syncBalancedHalo();
-  }
-
   get hasLabel(): boolean {
     const attr = this.getAttribute('has-label');
     if (attr !== null) {
@@ -215,7 +204,6 @@ export class FivraButtonElement extends HTMLElement {
     this.syncIconOnly();
     this.syncDropdown();
     this.syncLoading();
-    this.syncBalancedHalo();
     this.syncHasLabel();
     this.syncAriaAttributes();
   };
@@ -297,10 +285,6 @@ export class FivraButtonElement extends HTMLElement {
       delete this.buttonEl.dataset.loading;
       this.buttonEl.removeAttribute('aria-busy');
     }
-  }
-
-  private syncBalancedHalo(): void {
-    this.buttonEl.classList.toggle(BUTTON_BALANCED_HALO_CLASS, this.balancedHalo);
   }
 
   private syncHasLabel(): void {

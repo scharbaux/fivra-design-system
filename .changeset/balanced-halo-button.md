@@ -1,5 +1,5 @@
 ---
-"design-system-icons": minor
+"design-system-icons": patch
 ---
 
-Add a balanced halo utility and matching custom element attribute so button halos can be weighted toward the accent color with consistent fallbacks.
+Weight primary button halo custom properties toward the accent mix by default to keep hover, active, and focus glows aligned across React and web component implementations.

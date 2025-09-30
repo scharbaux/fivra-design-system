@@ -8,7 +8,6 @@ export {
   BUTTON_TRAILING_ICON_CLASS,
   BUTTON_SPINNER_CLASS,
   BUTTON_CARET_CLASS,
-  BUTTON_BALANCED_HALO_CLASS,
   buttonClassStyles,
   buttonHostStyles,
   ensureButtonStyles,

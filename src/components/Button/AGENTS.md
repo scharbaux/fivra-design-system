@@ -17,4 +17,4 @@ This directory follows the repository and `src/components/` standards. Keep shar
 - 1.5.0: Introduced halo custom properties for hover, active, and focus states to deliver consistent glow styling across implementations.
 - 1.5.1: Primary hover halo now targets the layer mix to align with the hover background weighting across implementations.
 - 1.6.0: Defaulted the button font family to the generated body token so React and web component builds use Google Sans.
-- 1.7.0: Added the balanced halo utility class with React/Web Component toggles, documentation, and tests to reweight glow mixes toward the accent color.
+- 1.7.0: Updated primary button halos to weight hover, active, and focus glows toward the accent color by default.

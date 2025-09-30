@@ -3,7 +3,6 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { Button } from "@components/Button";
 import { Icon } from "@components/Icon";
-import { defineFivraButton } from "@web-components";
 
 const SEMANTIC_TONES = ["Success", "Warning", "Error"] as const;
 type SemanticTone = (typeof SEMANTIC_TONES)[number];
@@ -42,7 +41,6 @@ const meta: Meta<typeof Button> = {
   args: {
     children: "Button",
     variant: "primary",
-    balancedHalo: false,
   },
   argTypes: {
     onClick: { action: "clicked" },
@@ -91,12 +89,6 @@ const meta: Meta<typeof Button> = {
       control: "boolean",
       description: "Displays a spinner with `aria-busy` set on the underlying `<button>`.",
       table: { category: "State" },
-    },
-    balancedHalo: {
-      control: "boolean",
-      description:
-        "Reweights the hover, active, and focus halos toward the accent color by adding the `fivra-button--balanced-halo` utility class.",
-      table: { category: "Appearance" },
     },
   },
   parameters: {
@@ -256,44 +248,6 @@ export const SemanticOverrides: Story = {
       description: {
         story:
           "Setting the `--fivra-button-accent` custom property enables success, warning, and error palettes while the new per-variant color-mix state layers adapt automatically. Fallback variables keep neutral overlays for browsers without color-mix support.",
-      },
-    },
-  },
-};
-
-const BalancedHaloPreview: React.FC = () => {
-  React.useEffect(() => {
-    defineFivraButton();
-  }, []);
-
-  return (
-    <div
-      style={{
-        display: "flex",
-        gap: "calc(var(--spacingL) * 1px)",
-        alignItems: "center",
-        flexWrap: "wrap",
-      }}
-    >
-      <Button variant="primary">Default halo</Button>
-      <Button variant="primary" balancedHalo>
-        Balanced halo
-      </Button>
-      <fivra-button balanced-halo>
-        Balanced halo (web)
-      </fivra-button>
-    </div>
-  );
-};
-
-export const BalancedHalo: Story = {
-  name: "Balanced Halo",
-  render: () => <BalancedHaloPreview />,
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Apply the `balancedHalo` prop or `balanced-halo` attribute to shift the halo custom properties toward the accent mix when primary buttons need a softer glow.",
       },
     },
   },
