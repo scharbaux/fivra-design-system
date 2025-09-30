@@ -153,6 +153,7 @@ ${BASE_CLASS}[data-variant='tertiary'] {
       layerColor: 'var(--stateLayerBrightenBase)',
       layerPercentage: 'var(--intensityBrandHoverPercent)',
       accentColor: 'var(--fivra-button-accent)',
+      weightTarget: 'layer',
     })};
     --fivra-button-active-color: ${colorMix({
       layerColor: 'var(--stateLayerDarkenBase)',
@@ -163,6 +164,7 @@ ${BASE_CLASS}[data-variant='tertiary'] {
       layerColor: 'var(--stateLayerBrightenBase)',
       layerPercentage: 'var(--intensityBrandHoverPercent)',
       accentColor: 'var(--fivra-button-accent)',
+      weightTarget: 'layer',
     })};
     --fivra-button-active-halo: ${colorMix({
       layerColor: 'var(--stateLayerDarkenBase)',
