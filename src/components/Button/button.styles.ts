@@ -1,3 +1,5 @@
+import { COLOR_MIX_SUPPORTS_DECLARATION, colorMix } from '../../styles/color-mix';
+
 export const BUTTON_CLASS_NAME = 'fivra-button';
 export const BUTTON_ICON_CLASS = `${BUTTON_CLASS_NAME}__icon`;
 export const BUTTON_LABEL_CLASS = `${BUTTON_CLASS_NAME}__label`;
@@ -36,9 +38,10 @@ ${BASE_CLASS} {
   --fivra-button-height: calc(32 * 1px);
   --fivra-button-icon-size: var(--iconsizesM);
   --fivra-button-spinner-size: calc(16 * 1px);
-  --fivra-button-bg: var(--backgroundPrimaryInteractive);
-  --fivra-button-bg-hover: var(--stateBrandHover);
-  --fivra-button-bg-active: var(--stateBrandPress);
+  --fivra-button-surface: var(--backgroundPrimaryInteractive);
+  --fivra-button-accent: var(--backgroundPrimaryInteractive);
+  --fivra-button-hover-fallback: var(--stateBrandHover);
+  --fivra-button-active-fallback: var(--stateBrandPress);
   --fivra-button-border: var(--borderPrimaryInteractive);
   --fivra-button-text: var(--backgroundNeutral0);
   --fivra-button-disabled-bg: var(--backgroundPrimaryDisabled);
@@ -59,7 +62,7 @@ ${BASE_CLASS} {
   border-width: calc(var(--borderwidthS) * 1px);
   border-style: solid;
   border-color: var(--fivra-button-border);
-  background-color: var(--fivra-button-bg);
+  background-color: var(--fivra-button-surface);
   color: var(--fivra-button-text);
   font-family: var(--fivra-button-font-family);
   font-weight: var(--fivra-button-font-weight);
@@ -102,9 +105,10 @@ ${BASE_CLASS}[data-size='lg'] {
 }
 
 ${BASE_CLASS}[data-variant='secondary'] {
-  --fivra-button-bg: var(--backgroundNeutral0);
-  --fivra-button-bg-hover: var(--backgroundPrimarySelected);
-  --fivra-button-bg-active: var(--stateBrandPress);
+  --fivra-button-surface: var(--backgroundNeutral0);
+  --fivra-button-accent: var(--textPrimaryInteractive);
+  --fivra-button-hover-fallback: var(--backgroundPrimarySelected);
+  --fivra-button-active-fallback: var(--stateBrandPress);
   --fivra-button-border: var(--borderPrimaryInteractive);
   --fivra-button-text: var(--textPrimaryInteractive);
   --fivra-button-disabled-bg: var(--backgroundSecondaryDisabled);
@@ -113,9 +117,10 @@ ${BASE_CLASS}[data-variant='secondary'] {
 }
 
 ${BASE_CLASS}[data-variant='tertiary'] {
-  --fivra-button-bg: transparent;
-  --fivra-button-bg-hover: var(--backgroundPrimarySelected);
-  --fivra-button-bg-active: var(--stateBrandPress);
+  --fivra-button-surface: transparent;
+  --fivra-button-accent: var(--textPrimaryInteractive);
+  --fivra-button-hover-fallback: var(--backgroundPrimarySelected);
+  --fivra-button-active-fallback: var(--stateBrandPress);
   --fivra-button-border: transparent;
   --fivra-button-text: var(--textPrimaryInteractive);
   --fivra-button-disabled-bg: transparent;
@@ -123,13 +128,42 @@ ${BASE_CLASS}[data-variant='tertiary'] {
   --fivra-button-disabled-text: var(--textPrimaryDisabled);
 }
 
-${BASE_CLASS}:hover:not(:disabled):not([aria-disabled='true']) {
-  background-color: var(--fivra-button-bg-hover);
+@supports (${COLOR_MIX_SUPPORTS_DECLARATION}) {
+  ${BASE_CLASS} {
+    --fivra-button-focus-ring-color: ${colorMix({
+      layerColor: 'var(--stateLayerBrightenBase)',
+      layerPercentage: 'var(--intensityBrandFocusPercent)',
+      accentColor: 'var(--fivra-button-accent)',
+    })};
+  }
+
+  ${BASE_CLASS}:hover:not(:disabled):not([aria-disabled='true']) {
+    background-color: ${colorMix({
+      layerColor: 'var(--stateLayerBrightenBase)',
+      layerPercentage: 'var(--intensityBrandHoverPercent)',
+      accentColor: 'var(--fivra-button-accent)',
+    })};
+  }
+
+  ${BASE_CLASS}:active:not(:disabled):not([aria-disabled='true']) {
+    background-color: ${colorMix({
+      layerColor: 'var(--stateLayerDarkenBase)',
+      layerPercentage: 'var(--intensityBrandActivePercent)',
+      accentColor: 'var(--fivra-button-accent)',
+    })};
+    transform: translateY(1px);
+  }
 }
 
-${BASE_CLASS}:active:not(:disabled):not([aria-disabled='true']) {
-  background-color: var(--fivra-button-bg-active);
-  transform: translateY(1px);
+@supports not (${COLOR_MIX_SUPPORTS_DECLARATION}) {
+  ${BASE_CLASS}:hover:not(:disabled):not([aria-disabled='true']) {
+    background-color: var(--fivra-button-hover-fallback);
+  }
+
+  ${BASE_CLASS}:active:not(:disabled):not([aria-disabled='true']) {
+    background-color: var(--fivra-button-active-fallback);
+    transform: translateY(1px);
+  }
 }
 
 ${BASE_CLASS}:focus-visible {
@@ -149,7 +183,7 @@ ${BASE_CLASS}[aria-disabled='true'] {
 
 ${BASE_CLASS}[data-loading='true'] {
   cursor: progress;
-  background-color: var(--fivra-button-bg);
+  background-color: var(--fivra-button-surface);
   border-color: var(--fivra-button-border);
   color: var(--fivra-button-text);
   box-shadow: var(--fivra-button-shadow);
@@ -157,7 +191,7 @@ ${BASE_CLASS}[data-loading='true'] {
 
 ${BASE_CLASS}[data-loading='true']:disabled,
 ${BASE_CLASS}[data-loading='true'][aria-disabled='true'] {
-  background-color: var(--fivra-button-bg);
+  background-color: var(--fivra-button-surface);
   border-color: var(--fivra-button-border);
   color: var(--fivra-button-text);
   box-shadow: var(--fivra-button-shadow);

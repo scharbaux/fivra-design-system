@@ -11,3 +11,4 @@ This file inherits the repository root `AGENTS.md`. Generated theme assets live 
 - 1.0: Added layered `index.css`, theme helpers, and scoped CSS selectors so `data-fivra-theme` toggles Engage/Legacy tokens.
 - 1.1.0: Corrected Storybook bundle imports to use `@import ... layer(...)` so generated theme variables resolve reliably.
 - 1.2.0: Regenerated Engage and Legacy theme CSS with percent intensity helpers and neutral state-layer aliases.
+- 1.3.0: Added a shared `color-mix` utility for components to compose state-layer overlays.

@@ -12,3 +12,4 @@ This directory follows the repository and `src/components/` standards. Keep shar
 - 1.0: Button styling variables now map directly to Engage/Legacy design tokens (backgrounds, states, spacing, radii, icon sizes).
 - 1.2.0: Added the tertiary variant, icon-only/dropdown/loading affordances, and explicit token-aligned spacing across implementations.
 - 1.2.1: Corrected radius scaling, loading-state colors, and the custom element preview to match the updated button contract.
+- 1.3.0: State layers now derive from accent-driven `color-mix()` overlays with documented semantic overrides in Storybook.

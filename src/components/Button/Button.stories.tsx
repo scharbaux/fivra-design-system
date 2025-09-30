@@ -5,6 +5,36 @@ import { Button } from "@components/Button";
 import { Icon } from "@components/Icon";
 import { defineFivraButton } from "@web-components";
 
+const SEMANTIC_TONES = ["Success", "Warning", "Error"] as const;
+type SemanticTone = (typeof SEMANTIC_TONES)[number];
+
+const createPrimarySemanticStyles = (tone: SemanticTone): React.CSSProperties =>
+  ({
+    "--fivra-button-surface": `var(--backgroundPrimary${tone})`,
+    "--fivra-button-accent": `var(--backgroundPrimary${tone})`,
+    "--fivra-button-border": `var(--borderPrimary${tone})`,
+    "--fivra-button-text": "var(--backgroundNeutral0)",
+    "--fivra-button-hover-fallback": `var(--backgroundPrimary${tone})`,
+    "--fivra-button-active-fallback": `var(--backgroundPrimary${tone})`,
+  }) as React.CSSProperties;
+
+const createSecondarySemanticStyles = (tone: SemanticTone): React.CSSProperties =>
+  ({
+    "--fivra-button-accent": `var(--textPrimary${tone})`,
+    "--fivra-button-border": `var(--borderPrimary${tone})`,
+    "--fivra-button-text": `var(--textPrimary${tone})`,
+    "--fivra-button-hover-fallback": `var(--backgroundSecondary${tone})`,
+    "--fivra-button-active-fallback": `var(--backgroundSecondary${tone})`,
+  }) as React.CSSProperties;
+
+const createTertiarySemanticStyles = (tone: SemanticTone): React.CSSProperties =>
+  ({
+    "--fivra-button-accent": `var(--textPrimary${tone})`,
+    "--fivra-button-text": `var(--textPrimary${tone})`,
+    "--fivra-button-hover-fallback": `var(--backgroundSecondary${tone})`,
+    "--fivra-button-active-fallback": `var(--backgroundSecondary${tone})`,
+  }) as React.CSSProperties;
+
 const meta: Meta<typeof Button> = {
   title: "Components/Button/React",
   component: Button,
@@ -85,7 +115,7 @@ export const Primary: Story = {
     docs: {
       description: {
         story:
-          "Primary button emphasizes the main action using '--backgroundPrimaryInteractive' with contrast text from '--backgroundNeutral0'.",
+          "Primary buttons emphasize the main action using '--backgroundPrimaryInteractive' and now blend hover, focus, and press layers via `color-mix()` driven by the same accent variable.",
       },
     },
   },
@@ -100,7 +130,7 @@ export const Secondary: Story = {
     docs: {
       description: {
         story:
-          "Secondary buttons pair `--backgroundNeutral0` with `--borderPrimaryInteractive` to deliver a neutral outline that still shares the brand hover tokens.",
+          "Secondary buttons pair `--backgroundNeutral0` with `--borderPrimaryInteractive`, tinting their state layers from the accent so outline variants can adopt semantic hues.",
       },
     },
   },
@@ -115,7 +145,7 @@ export const Tertiary: Story = {
     docs: {
       description: {
         story:
-          "Tertiary buttons stay transparent until interaction, relying on `--textPrimaryInteractive` and the selected background overlay tokens for hover and press states.",
+          "Tertiary buttons stay transparent until interaction and inherit hover/press overlays from the accent color, keeping ghost actions lightweight yet brand-aware.",
       },
     },
   },
@@ -147,6 +177,78 @@ export const DisabledStates: Story = {
       description: {
         story:
           "Disabled states pull from `--backgroundPrimaryDisabled`, `--backgroundSecondaryDisabled`, and `--textPrimaryDisabled` ensuring consistent contrast and borders via `--borderPrimaryDisabled`.",
+      },
+    },
+  },
+};
+
+export const SemanticOverrides: Story = {
+  name: "Semantic Overrides",
+  render: () => (
+    <div
+      style={{
+        display: "grid",
+        gap: "calc(var(--spacingM) * 1px)",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          gap: "calc(var(--spacingL) * 1px)",
+          flexWrap: "wrap",
+        }}
+      >
+        {SEMANTIC_TONES.map((tone) => (
+          <Button
+            key={`primary-${tone}`}
+            variant="primary"
+            style={createPrimarySemanticStyles(tone)}
+          >
+            {tone} Primary
+          </Button>
+        ))}
+      </div>
+      <div
+        style={{
+          display: "flex",
+          gap: "calc(var(--spacingL) * 1px)",
+          flexWrap: "wrap",
+        }}
+      >
+        {SEMANTIC_TONES.map((tone) => (
+          <Button
+            key={`secondary-${tone}`}
+            variant="secondary"
+            style={createSecondarySemanticStyles(tone)}
+          >
+            {tone} Secondary
+          </Button>
+        ))}
+      </div>
+      <div
+        style={{
+          display: "flex",
+          gap: "calc(var(--spacingL) * 1px)",
+          flexWrap: "wrap",
+        }}
+      >
+        {SEMANTIC_TONES.map((tone) => (
+          <Button
+            key={`tertiary-${tone}`}
+            variant="tertiary"
+            style={createTertiarySemanticStyles(tone)}
+          >
+            {tone} Tertiary
+          </Button>
+        ))}
+      </div>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Setting the `--fivra-button-accent` custom property enables success, warning, and error palettes while the new color-mix state layers adapt automatically. Fallback variables keep neutral overlays for browsers without color-mix support.",
       },
     },
   },
