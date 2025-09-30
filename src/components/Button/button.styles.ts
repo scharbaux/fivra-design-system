@@ -42,6 +42,8 @@ ${BASE_CLASS} {
   --fivra-button-accent: var(--backgroundPrimaryInteractive);
   --fivra-button-hover-fallback: var(--stateBrandHover);
   --fivra-button-active-fallback: var(--stateBrandPress);
+  --fivra-button-hover-color: var(--fivra-button-hover-fallback);
+  --fivra-button-active-color: var(--fivra-button-active-fallback);
   --fivra-button-border: var(--borderPrimaryInteractive);
   --fivra-button-text: var(--backgroundNeutral0);
   --fivra-button-disabled-bg: var(--backgroundPrimaryDisabled);
@@ -135,22 +137,66 @@ ${BASE_CLASS}[data-variant='tertiary'] {
       layerPercentage: 'var(--intensityBrandFocusPercent)',
       accentColor: 'var(--fivra-button-accent)',
     })};
-  }
-
-  ${BASE_CLASS}:hover:not(:disabled):not([aria-disabled='true']) {
-    background-color: ${colorMix({
+    --fivra-button-hover-color: ${colorMix({
       layerColor: 'var(--stateLayerBrightenBase)',
       layerPercentage: 'var(--intensityBrandHoverPercent)',
       accentColor: 'var(--fivra-button-accent)',
     })};
-  }
-
-  ${BASE_CLASS}:active:not(:disabled):not([aria-disabled='true']) {
-    background-color: ${colorMix({
+    --fivra-button-active-color: ${colorMix({
       layerColor: 'var(--stateLayerDarkenBase)',
       layerPercentage: 'var(--intensityBrandActivePercent)',
       accentColor: 'var(--fivra-button-accent)',
     })};
+  }
+
+  ${BASE_CLASS}[data-variant='secondary'] {
+    --fivra-button-focus-ring-color: ${colorMix({
+      layerColor: 'var(--stateLayerBrightenBase)',
+      layerPercentage: 'var(--intensityBrandFocusPercent)',
+      accentColor: 'var(--fivra-button-accent)',
+      weightTarget: 'accent',
+    })};
+    --fivra-button-hover-color: ${colorMix({
+      layerColor: 'var(--stateLayerBrightenBase)',
+      layerPercentage: 'var(--intensityBrandHoverPercent)',
+      accentColor: 'var(--fivra-button-accent)',
+      weightTarget: 'accent',
+    })};
+    --fivra-button-active-color: ${colorMix({
+      layerColor: 'var(--stateLayerDarkenBase)',
+      layerPercentage: 'var(--intensityBrandActivePercent)',
+      accentColor: 'var(--fivra-button-accent)',
+      weightTarget: 'accent',
+    })};
+  }
+
+  ${BASE_CLASS}[data-variant='tertiary'] {
+    --fivra-button-focus-ring-color: ${colorMix({
+      layerColor: 'var(--stateLayerBrightenBase)',
+      layerPercentage: 'var(--intensityBrandFocusPercent)',
+      accentColor: 'var(--fivra-button-accent)',
+      weightTarget: 'accent',
+    })};
+    --fivra-button-hover-color: ${colorMix({
+      layerColor: 'var(--stateLayerBrightenBase)',
+      layerPercentage: 'var(--intensityBrandHoverPercent)',
+      accentColor: 'var(--fivra-button-accent)',
+      weightTarget: 'accent',
+    })};
+    --fivra-button-active-color: ${colorMix({
+      layerColor: 'var(--stateLayerDarkenBase)',
+      layerPercentage: 'var(--intensityBrandActivePercent)',
+      accentColor: 'var(--fivra-button-accent)',
+      weightTarget: 'accent',
+    })};
+  }
+
+  ${BASE_CLASS}:hover:not(:disabled):not([aria-disabled='true']) {
+    background-color: var(--fivra-button-hover-color);
+  }
+
+  ${BASE_CLASS}:active:not(:disabled):not([aria-disabled='true']) {
+    background-color: var(--fivra-button-active-color);
     transform: translateY(1px);
   }
 }
