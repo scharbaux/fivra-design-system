@@ -15,3 +15,4 @@ This directory follows the repository and `src/components/` standards. Keep shar
 - 1.3.0: State layers now derive from accent-driven `color-mix()` overlays with documented semantic overrides in Storybook.
 - 1.4.0: Added per-variant overlay custom properties that weight neutral variants toward their accent color and documented/tested the behavior across React and web components.
 - 1.5.0: Introduced halo custom properties for hover, active, and focus states to deliver consistent glow styling across implementations.
+- 1.5.1: Primary hover halo now targets the layer mix to align with the hover background weighting across implementations.
