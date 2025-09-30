@@ -37,6 +37,7 @@ To determine whether a component should be authored as a web component or framew
 - Maintain design tokens via the Tokens Studio export consumed by `scripts/generate-design-tokens.mjs`; run `yarn generate:tokens` (or rely on `prebuild`/`prestorybook`) to regenerate `src/styles/themes/*.css` and the manifest before shipping changes.
 - Engage tokens remain the default by scoping to `:root` in `src/styles/themes/engage.css`; alternative themes (e.g., `legacy`) apply when `data-fivra-theme='<slug>'` is present on a container.
 - Import `src/styles/index.css` wherever global CSS is bundled so both Engage and Legacy layers are registered.
+- Typography tokens resolve to `'Google Sans', sans-serif`; ensure `src/styles/fonts.css` (or the packaged `styles/fonts.css`) is bundled so the family is available at runtime.
 - Generated themes expose state-layer helpers for blending effects. Every `--intensity…` token now has a `--intensity…Percent` companion that multiplies the decimal value by `100%`, and the script aliases `--stateLayerBrightenBase`/`--stateLayerDarkenBase` to the neutral backgrounds so each theme shares a consistent surface.
 - Use `color-mix()` with the percent helpers to calculate component overlays. For example:
 

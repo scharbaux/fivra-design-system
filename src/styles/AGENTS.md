@@ -13,3 +13,4 @@ This file inherits the repository root `AGENTS.md`. Generated theme assets live 
 - 1.2.0: Regenerated Engage and Legacy theme CSS with percent intensity helpers and neutral state-layer aliases.
 - 1.3.0: Added a shared `color-mix` utility for components to compose state-layer overlays.
 - 1.4.0: Extended the `color-mix` utility with accent-target weighting to support variant-specific overlay mixes.
+- 1.5.0: Added Google Sans font assets, imported `fonts.css`, and regenerated themes so typography tokens resolve to the new family.

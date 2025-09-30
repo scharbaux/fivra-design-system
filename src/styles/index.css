@@ -1,3 +1,5 @@
+@import url('./fonts.css');
+
 @layer fivra.tokens.engage, fivra.tokens.legacy;
 
 @import url('./themes/engage.css') layer(fivra.tokens.engage);

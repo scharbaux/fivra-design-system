@@ -26,3 +26,4 @@ This document augments the root `AGENTS.md`. Ensure you understand the repositor
 - 1.1.0: Added documentation for the Changesets release pipeline, the `yarn changeset` authoring flow, and the AGENTS verification guard.
 - 1.2.0: Updated Button reference materials with tertiary styling, icon-only guidance, and loading/dropdown documentation.
 - 1.3.0: Documented percent-based intensity helpers and neutral state-layer sources for generated themes.
+- 1.4.0: Added guidance for bundling Google Sans fonts via the shared typography assets.
