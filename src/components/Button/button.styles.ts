@@ -25,7 +25,7 @@ const CARET_CLASS = `.${BUTTON_CARET_CLASS}`;
 
 export const buttonClassStyles = `
 ${BASE_CLASS} {
-  --fivra-button-font-family: inherit;
+  --fivra-button-font-family: sans-serif;
   --fivra-button-font-weight: 600;
   --fivra-button-radius: var(--radiusS);
   --fivra-button-transition: background-color 160ms ease, color 160ms ease,
@@ -77,7 +77,7 @@ ${BASE_CLASS} {
   position: relative;
   user-select: none;
   appearance: none;
-  box-shadow: var(--fivra-button-shadow);
+  // box-shadow: var(--fivra-button-shadow);
 }
 
 ${BASE_CLASS}[data-full-width='true'] {
