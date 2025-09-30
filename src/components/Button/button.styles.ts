@@ -156,7 +156,7 @@ ${BASE_CLASS}[data-variant='tertiary'] {
       weightTarget: 'layer',
     })};
     --fivra-button-active-color: ${colorMix({
-      layerColor: 'var(--stateLayerDarkenBase)',
+      layerColor: 'var(--stateLayerBrightenBase)',
       layerPercentage: 'var(--intensityBrandActivePercent)',
       accentColor: 'var(--fivra-button-accent)',
     })};
@@ -167,7 +167,7 @@ ${BASE_CLASS}[data-variant='tertiary'] {
       weightTarget: 'layer',
     })};
     --fivra-button-active-halo: ${colorMix({
-      layerColor: 'var(--stateLayerDarkenBase)',
+      layerColor: 'var(--stateLayerBrightenBase)',
       layerPercentage: 'var(--intensityBrandActivePercent)',
       accentColor: 'var(--fivra-button-accent)',
     })};
@@ -175,6 +175,7 @@ ${BASE_CLASS}[data-variant='tertiary'] {
       layerColor: 'var(--stateLayerBrightenBase)',
       layerPercentage: 'var(--intensityBrandFocusPercent)',
       accentColor: 'var(--fivra-button-accent)',
+      weightTarget: 'layer',
     })};
   }
 
@@ -192,7 +193,7 @@ ${BASE_CLASS}[data-variant='tertiary'] {
       weightTarget: 'accent',
     })};
     --fivra-button-active-color: ${colorMix({
-      layerColor: 'var(--stateLayerDarkenBase)',
+      layerColor: 'var(--stateLayerBrightenBase)',
       layerPercentage: 'var(--intensityBrandActivePercent)',
       accentColor: 'var(--fivra-button-accent)',
       weightTarget: 'accent',
@@ -204,7 +205,7 @@ ${BASE_CLASS}[data-variant='tertiary'] {
       weightTarget: 'accent',
     })};
     --fivra-button-active-halo: ${colorMix({
-      layerColor: 'var(--stateLayerDarkenBase)',
+      layerColor: 'var(--stateLayerBrightenBase)',
       layerPercentage: 'var(--intensityBrandActivePercent)',
       accentColor: 'var(--fivra-button-accent)',
       weightTarget: 'accent',
@@ -231,7 +232,7 @@ ${BASE_CLASS}[data-variant='tertiary'] {
       weightTarget: 'accent',
     })};
     --fivra-button-active-color: ${colorMix({
-      layerColor: 'var(--stateLayerDarkenBase)',
+      layerColor: 'var(--stateLayerBrightenBase)',
       layerPercentage: 'var(--intensityBrandActivePercent)',
       accentColor: 'var(--fivra-button-accent)',
       weightTarget: 'accent',
@@ -243,7 +244,7 @@ ${BASE_CLASS}[data-variant='tertiary'] {
       weightTarget: 'accent',
     })};
     --fivra-button-active-halo: ${colorMix({
-      layerColor: 'var(--stateLayerDarkenBase)',
+      layerColor: 'var(--stateLayerBrightenBase)',
       layerPercentage: 'var(--intensityBrandActivePercent)',
       accentColor: 'var(--fivra-button-accent)',
       weightTarget: 'accent',
