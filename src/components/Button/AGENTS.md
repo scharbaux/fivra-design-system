@@ -14,3 +14,4 @@ This directory follows the repository and `src/components/` standards. Keep shar
 - 1.2.1: Corrected radius scaling, loading-state colors, and the custom element preview to match the updated button contract.
 - 1.3.0: State layers now derive from accent-driven `color-mix()` overlays with documented semantic overrides in Storybook.
 - 1.4.0: Added per-variant overlay custom properties that weight neutral variants toward their accent color and documented/tested the behavior across React and web components.
+- 1.5.0: Introduced halo custom properties for hover, active, and focus states to deliver consistent glow styling across implementations.

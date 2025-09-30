@@ -44,6 +44,12 @@ ${BASE_CLASS} {
   --fivra-button-active-fallback: var(--stateBrandPress);
   --fivra-button-hover-color: var(--fivra-button-hover-fallback);
   --fivra-button-active-color: var(--fivra-button-active-fallback);
+  --fivra-button-hover-halo-fallback: var(--stateBrandHover);
+  --fivra-button-active-halo-fallback: var(--stateBrandPress);
+  --fivra-button-focus-halo-fallback: var(--stateBrandFocus);
+  --fivra-button-hover-halo: var(--fivra-button-hover-halo-fallback);
+  --fivra-button-active-halo: var(--fivra-button-active-halo-fallback);
+  --fivra-button-focus-halo: var(--fivra-button-focus-halo-fallback);
   --fivra-button-border: var(--borderPrimaryInteractive);
   --fivra-button-text: var(--backgroundNeutral0);
   --fivra-button-disabled-bg: var(--backgroundPrimaryDisabled);
@@ -111,6 +117,9 @@ ${BASE_CLASS}[data-variant='secondary'] {
   --fivra-button-accent: var(--textPrimaryInteractive);
   --fivra-button-hover-fallback: var(--backgroundPrimarySelected);
   --fivra-button-active-fallback: var(--stateBrandPress);
+  --fivra-button-hover-halo-fallback: var(--backgroundPrimarySelected);
+  --fivra-button-active-halo-fallback: var(--stateBrandPress);
+  --fivra-button-focus-halo-fallback: var(--stateBrandFocus);
   --fivra-button-border: var(--borderPrimaryInteractive);
   --fivra-button-text: var(--textPrimaryInteractive);
   --fivra-button-disabled-bg: var(--backgroundSecondaryDisabled);
@@ -123,6 +132,9 @@ ${BASE_CLASS}[data-variant='tertiary'] {
   --fivra-button-accent: var(--textPrimaryInteractive);
   --fivra-button-hover-fallback: var(--backgroundPrimarySelected);
   --fivra-button-active-fallback: var(--stateBrandPress);
+  --fivra-button-hover-halo-fallback: var(--backgroundPrimarySelected);
+  --fivra-button-active-halo-fallback: var(--stateBrandPress);
+  --fivra-button-focus-halo-fallback: var(--stateBrandFocus);
   --fivra-button-border: transparent;
   --fivra-button-text: var(--textPrimaryInteractive);
   --fivra-button-disabled-bg: transparent;
@@ -147,6 +159,21 @@ ${BASE_CLASS}[data-variant='tertiary'] {
       layerPercentage: 'var(--intensityBrandActivePercent)',
       accentColor: 'var(--fivra-button-accent)',
     })};
+    --fivra-button-hover-halo: ${colorMix({
+      layerColor: 'var(--stateLayerBrightenBase)',
+      layerPercentage: 'var(--intensityBrandHoverPercent)',
+      accentColor: 'var(--fivra-button-accent)',
+    })};
+    --fivra-button-active-halo: ${colorMix({
+      layerColor: 'var(--stateLayerDarkenBase)',
+      layerPercentage: 'var(--intensityBrandActivePercent)',
+      accentColor: 'var(--fivra-button-accent)',
+    })};
+    --fivra-button-focus-halo: ${colorMix({
+      layerColor: 'var(--stateLayerBrightenBase)',
+      layerPercentage: 'var(--intensityBrandFocusPercent)',
+      accentColor: 'var(--fivra-button-accent)',
+    })};
   }
 
   ${BASE_CLASS}[data-variant='secondary'] {
@@ -165,6 +192,24 @@ ${BASE_CLASS}[data-variant='tertiary'] {
     --fivra-button-active-color: ${colorMix({
       layerColor: 'var(--stateLayerDarkenBase)',
       layerPercentage: 'var(--intensityBrandActivePercent)',
+      accentColor: 'var(--fivra-button-accent)',
+      weightTarget: 'accent',
+    })};
+    --fivra-button-hover-halo: ${colorMix({
+      layerColor: 'var(--stateLayerBrightenBase)',
+      layerPercentage: 'var(--intensityBrandHoverPercent)',
+      accentColor: 'var(--fivra-button-accent)',
+      weightTarget: 'accent',
+    })};
+    --fivra-button-active-halo: ${colorMix({
+      layerColor: 'var(--stateLayerDarkenBase)',
+      layerPercentage: 'var(--intensityBrandActivePercent)',
+      accentColor: 'var(--fivra-button-accent)',
+      weightTarget: 'accent',
+    })};
+    --fivra-button-focus-halo: ${colorMix({
+      layerColor: 'var(--stateLayerBrightenBase)',
+      layerPercentage: 'var(--intensityBrandFocusPercent)',
       accentColor: 'var(--fivra-button-accent)',
       weightTarget: 'accent',
     })};
@@ -189,14 +234,34 @@ ${BASE_CLASS}[data-variant='tertiary'] {
       accentColor: 'var(--fivra-button-accent)',
       weightTarget: 'accent',
     })};
+    --fivra-button-hover-halo: ${colorMix({
+      layerColor: 'var(--stateLayerBrightenBase)',
+      layerPercentage: 'var(--intensityBrandHoverPercent)',
+      accentColor: 'var(--fivra-button-accent)',
+      weightTarget: 'accent',
+    })};
+    --fivra-button-active-halo: ${colorMix({
+      layerColor: 'var(--stateLayerDarkenBase)',
+      layerPercentage: 'var(--intensityBrandActivePercent)',
+      accentColor: 'var(--fivra-button-accent)',
+      weightTarget: 'accent',
+    })};
+    --fivra-button-focus-halo: ${colorMix({
+      layerColor: 'var(--stateLayerBrightenBase)',
+      layerPercentage: 'var(--intensityBrandFocusPercent)',
+      accentColor: 'var(--fivra-button-accent)',
+      weightTarget: 'accent',
+    })};
   }
 
   ${BASE_CLASS}:hover:not(:disabled):not([aria-disabled='true']) {
     background-color: var(--fivra-button-hover-color);
+    box-shadow: var(--fivra-button-shadow), 0 0 0 4px var(--fivra-button-hover-halo);
   }
 
   ${BASE_CLASS}:active:not(:disabled):not([aria-disabled='true']) {
     background-color: var(--fivra-button-active-color);
+    box-shadow: var(--fivra-button-shadow), 0 0 0 6px var(--fivra-button-active-halo);
     transform: translateY(1px);
   }
 }
@@ -204,17 +269,21 @@ ${BASE_CLASS}[data-variant='tertiary'] {
 @supports not (${COLOR_MIX_SUPPORTS_DECLARATION}) {
   ${BASE_CLASS}:hover:not(:disabled):not([aria-disabled='true']) {
     background-color: var(--fivra-button-hover-fallback);
+    box-shadow: var(--fivra-button-shadow),
+      0 0 0 4px var(--fivra-button-hover-halo-fallback);
   }
 
   ${BASE_CLASS}:active:not(:disabled):not([aria-disabled='true']) {
     background-color: var(--fivra-button-active-fallback);
+    box-shadow: var(--fivra-button-shadow),
+      0 0 0 6px var(--fivra-button-active-halo-fallback);
     transform: translateY(1px);
   }
 }
 
 ${BASE_CLASS}:focus-visible {
   outline: none;
-  box-shadow: var(--fivra-button-shadow),
+  box-shadow: var(--fivra-button-shadow), 0 0 0 6px var(--fivra-button-focus-halo),
     0 0 0 var(--fivra-button-focus-ring-width) var(--fivra-button-focus-ring-color);
 }
 
