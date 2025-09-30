@@ -242,14 +242,28 @@
   --caption1StrongLineHeight: 14px;
   --caption1StrongLetterSpacing: 0.015em;
   --intensityBrandFocus: 0.5;
+  --intensityBrandFocusPercent: 50%;
   --intensityBrandHover: 0.24;
+  --intensityBrandHoverPercent: 24%;
   --intensityBrandActive: 0.18;
+  --intensityBrandActivePercent: 18%;
   --intensityDarkenHover: 0.12;
+  --intensityDarkenHoverPercent: 12%;
   --intensityDarkenActive: 0.16;
+  --intensityDarkenActivePercent: 16%;
   --intensityDarkenFocus: 0.16;
+  --intensityDarkenFocusPercent: 16%;
   --intensityDarkenDrag: 0.24;
+  --intensityDarkenDragPercent: 24%;
   --intensityBrightenHover: 0.12;
+  --intensityBrightenHoverPercent: 12%;
   --intensityBrightenActive: 0.16;
+  --intensityBrightenActivePercent: 16%;
   --intensityBrightenFocus: 0.16;
+  --intensityBrightenFocusPercent: 16%;
   --intensityBrightenDrag: 0.24;
+  --intensityBrightenDragPercent: 24%;
+  --stateLayerBrightenBase: var(--backgroundNeutral0);
+  --stateLayerDarkenBase: var(--backgroundNeutral1);
+
 }
