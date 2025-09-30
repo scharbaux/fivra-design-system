@@ -16,7 +16,7 @@ const copyDirectory = (from, to) => {
   cpSync(from, to, { recursive: true });
 };
 
-const distTargets = ['react', 'web-components'];
+const distTargets = ['react', 'web-components', 'angular'];
 
 const cssFiles = [
   ['src/styles/index.css', 'styles/index.css'],

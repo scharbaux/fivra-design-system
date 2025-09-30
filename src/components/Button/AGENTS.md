@@ -18,3 +18,4 @@ This directory follows the repository and `src/components/` standards. Keep shar
 - 1.5.1: Primary hover halo now targets the layer mix to align with the hover background weighting across implementations.
 - 1.6.0: Defaulted the button font family to the generated body token so React and web component builds use Google Sans.
 - 1.7.0: Updated primary button halos to weight hover, active, and focus glows toward the accent color by default.
+- 1.8.0: Shared button tokens now drive the Angular adapter, mirroring data attributes, slots, and helper utilities.

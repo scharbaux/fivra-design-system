@@ -25,3 +25,4 @@ This file extends the repository root `AGENTS.md`. Always review the root conven
 - 1.1.0: Added `verify-agents-version.mjs` to enforce semantic-version bullets for directories touched by a PR and wired it into CI and release workflows.
 - 1.2.0: Derived percent-based intensity helpers and state-layer base aliases in the token generation pipeline.
 - 1.3.0: Added a postbuild copy script to publish theme CSS and Google Sans font assets with each bundle.
+- 1.8.0: Expanded `copy-static-assets.mjs` to seed the Angular distribution with shared CSS and fonts.

@@ -1,10 +1,12 @@
 # Button
 
-The Button component exposes an accessible, themeable action trigger implemented both as a React component and as a standards-based custom element. Styles, variants, and sizing tokens are shared across targets so teams can mix frameworks without visual drift.
+The Button component exposes an accessible, themeable action trigger implemented as React, Angular, and standards-based custom-element adapters. Styles, variants, and sizing tokens are shared across targets so teams can mix frameworks without visual drift.
 
 - Source: [`src/components/Button/Button.tsx`](../../src/components/Button/Button.tsx)
 - Stories: [`src/components/Button/Button.stories.tsx`](../../src/components/Button/Button.stories.tsx)
 - Custom element: [`src/web-components/button.ts`](../../src/web-components/button.ts)
+- Angular module: [`src/angular/button/fivra-button.module.ts`](../../src/angular/button/fivra-button.module.ts)
+- Angular component: [`src/angular/button/fivra-button.component.ts`](../../src/angular/button/fivra-button.component.ts)
 
 ## React usage
 
@@ -42,6 +44,58 @@ export function SaveButton() {
 | `...buttonProps` | `React.ButtonHTMLAttributes<HTMLButtonElement>` | – | Native button attributes such as `type`, `disabled`, `aria-pressed`, etc. |
 
 The component defaults `type="button"` to avoid accidental form submissions. Provide `type="submit"` or `type="reset"` when integrating with forms.
+
+## Angular usage
+
+Import the Angular module once per feature shell and leverage either template inputs (`[leadingIcon]`, `[trailingIcon]`) or projection directives (`fivraButtonLeadingIcon`, `fivraButtonTrailingIcon`) to mirror the React API:
+
+```ts
+import { Component } from '@angular/core';
+import { FivraButtonModule } from 'fivra-design-system/angular';
+
+@Component({
+  selector: 'app-export-button',
+  standalone: true,
+  imports: [FivraButtonModule],
+  template: `
+    <ng-template #downloadIcon>
+      <fivra-icon name="download"></fivra-icon>
+    </ng-template>
+
+    <fivra-button
+      variant="secondary"
+      size="lg"
+      [leadingIcon]="downloadIcon"
+      dropdown
+      ariaLabel="Export report"
+    >
+      Export
+      <fivra-icon fivraButtonTrailingIcon name="chevron-down"></fivra-icon>
+    </fivra-button>
+  `,
+})
+export class ExportButtonComponent {}
+```
+
+### Inputs
+
+| Input | Type | Default | Notes |
+| --- | --- | --- | --- |
+| `variant` | `'primary' \| 'secondary' \| 'tertiary'` | `primary` | Matches the React/Web Component variants. |
+| `size` | `'sm' \| 'md' \| 'lg'` | `md` | Scales padding, height, icon sizing, and typography. |
+| `fullWidth` | `boolean` | `false` | Expands the button to fill its container. |
+| `iconOnly` | `boolean` | `false` | Collapses padding, applies pill radii, and requires an accessible name (`ariaLabel`/`ariaLabelledby`). |
+| `hasLabel` | `boolean` | `undefined` | Overrides automatic label detection when projecting visually hidden content. |
+| `dropdown` | `boolean` | `false` | Shows the disclosure caret. |
+| `loading` | `boolean` | `false` | Displays the centered spinner and applies `aria-busy`. |
+| `type` | `'button' \| 'submit' \| 'reset'` | `button` | Native button type forwarded to the inner `<button>`. |
+| `disabled` | `boolean` | `false` | Disables the inner `<button>`. |
+| `ariaLabel` | `string` | `null` | Sets `aria-label` on the inner `<button>`. |
+| `ariaLabelledby` | `string` | `null` | Sets `aria-labelledby` on the inner `<button>`. |
+| `leadingIcon` | `TemplateRef` | `undefined` | Optional icon rendered before the label. |
+| `trailingIcon` | `TemplateRef` | `undefined` | Optional icon rendered after the label. |
+
+The component also exposes imperative `focus()` and `click()` helpers that delegate to the internal `<button>`—useful for menu triggers.
 
 ## Custom element
 

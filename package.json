@@ -17,20 +17,30 @@
     "prestorybook": "yarn run generate:tokens",
     "build-storybook": "storybook build",
     "prebuild-storybook": "yarn run generate:icons && yarn run generate:tokens",
-    "build": "tsup && node scripts/copy-static-assets.mjs",
+    "build": "tsup && yarn build:angular && node scripts/copy-static-assets.mjs",
     "prebuild": "yarn run generate:tokens",
     "build:watch": "tsup --watch",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "build:angular": "ng-packagr -p ng-package.json -c tsconfig.angular.json"
   },
   "dependencies": {
-    "svgo": "^3.0.2"
+    "svgo": "^3.0.2",
+    "tslib": "^2.6.2"
   },
   "peerDependencies": {
+    "@angular/common": ">=17.0.0",
+    "@angular/core": ">=17.0.0",
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
   },
   "devDependencies": {
+    "@angular/common": "^17.3.12",
+    "@angular/compiler": "^17.3.12",
+    "@angular/compiler-cli": "^17.3.12",
+    "@angular/core": "^17.3.12",
+    "@angular/platform-browser": "^17.3.12",
+    "@angular/platform-browser-dynamic": "^17.3.12",
     "@changesets/cli": "^2.29.7",
     "@mdx-js/react": "^2.3.0",
     "@storybook/addon-a11y": "^9.1.4",
@@ -40,17 +50,48 @@
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^15.0.0",
     "@tokens-studio/sd-transforms": "^1.3.0",
+    "@types/jasmine": "^5.1.0",
     "@types/node": "^24.3.0",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.23",
     "jsdom": "^24.1.0",
+    "ng-packagr": "^17.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^7.8.1",
     "storybook": "^9.1.4",
     "style-dictionary": "^4.0.0",
     "tsup": "^8.1.0",
-    "typescript": "^5.5.0",
+    "typescript": "~5.4.5",
     "vite": "^5.0.0",
-    "vitest": "^2.0.4"
+    "vitest": "^2.0.4",
+    "zone.js": "^0.14.5"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/react/index.d.ts",
+      "default": "./dist/react/index.js"
+    },
+    "./components": {
+      "types": "./dist/react/components.d.ts",
+      "default": "./dist/react/components.js"
+    },
+    "./web-components": {
+      "types": "./dist/web-components/index.d.ts",
+      "default": "./dist/web-components/index.js"
+    },
+    "./angular": {
+      "types": "./dist/angular/index.d.ts",
+      "default": "./dist/angular/fesm2022/design-system-icons.mjs"
+    },
+    "./angular/package.json": "./dist/angular/package.json"
+  },
+  "typesVersions": {
+    "*": {
+      "angular": [
+        "dist/angular/index.d.ts"
+      ]
+    }
   }
 }

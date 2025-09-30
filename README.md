@@ -7,7 +7,7 @@ For a deeper look at the architecture decisions, see the evolving documentation 
 
 ## Goals
 - Ship a consistent, accessible, and themeable component library that mirrors the design language in Figma.
-- Support multi-framework adoption by exporting framework-agnostic tokens and web components alongside React bindings (Angular/Vue wrappers are planned).
+- Support multi-framework adoption by exporting framework-agnostic tokens with React components, an Angular package, and standards-based web components (Vue wrappers are planned).
 - Automate the icon and asset pipeline so generated artifacts stay in sync with Figma exports.
 - Provide a reference Storybook to surface usage examples, accessibility notes, and design guidelines.
 
@@ -18,7 +18,7 @@ For a deeper look at the architecture decisions, see the evolving documentation 
 
 ## Components
 - **Icon** – Renders generated SVG assets by name with outline/solid variants and accessibility helpers.
-- **Button** – Multi-variant action trigger available as a React component and `<fivra-button>` custom element that share styling tokens.
+- **Button** – Multi-variant action trigger available as a React component, Angular module (`FivraButtonModule`), and `<fivra-button>` custom element that share styling tokens.
 
 ## Local Development
 ### Requirements
@@ -62,10 +62,43 @@ Build the component package (production output):
 yarn build
 ```
 
+This generates React, Angular, and web component bundles before copying shared CSS/font assets into each distribution target.
+
 If you prefer to preview the static Storybook output, run:
 
 ```bash
 yarn build-storybook
+```
+
+## Angular Usage
+
+Install the design system package and include the Angular module wherever you bootstrap feature areas:
+
+```ts
+import { FivraButtonModule } from 'fivra-design-system/angular';
+
+@NgModule({
+  imports: [FivraButtonModule],
+})
+export class SharedUiModule {}
+```
+
+Project icons with either template inputs or attribute directives while the component keeps shared data attributes, ARIA states, and styles in sync with the React and web component implementations:
+
+```html
+<ng-template #downloadIcon>
+  <fivra-icon name="download"></fivra-icon>
+</ng-template>
+
+<fivra-button
+  variant="secondary"
+  size="lg"
+  [leadingIcon]="downloadIcon"
+  dropdown
+>
+  Export Report
+  <fivra-icon fivraButtonTrailingIcon name="chevron-down"></fivra-icon>
+</fivra-button>
 ```
 
 ## Scripts
@@ -81,6 +114,7 @@ Commonly used scripts are listed below. Run them with `yarn <script>`.
 - `storybook` – Start the Storybook 9 (React + Vite) dev server with hot reload.
 - `build-storybook` – Produce a static Storybook bundle for deployment.
 - `build` – Create the distributable library bundles.
+- `build:angular` – Run `ng-packagr` against `src/angular` to produce the Angular entry point.
 - `lint` / `typecheck` (coming soon) – Static analysis tasks that will be documented in the architecture guides.
 
 Refer to `package.json` for the full list of scripts and watch the `docs/architecture/` directory for deeper implementation notes.
