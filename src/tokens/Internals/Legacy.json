@@ -816,11 +816,11 @@
   "Font Family": {
     "Saans": {
       "$type": "fontFamilies",
-      "$value": "Saans"
+      "$value": "'Google Sans', sans-serif"
     },
     "Fallback": {
       "$type": "fontFamilies",
-      "$value": "none"
+      "$value": "sans-serif"
     }
   },
   "Line Heights": {

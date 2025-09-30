@@ -24,3 +24,4 @@ This file extends the repository root `AGENTS.md`. Always review the root conven
 - 1.0: Updated `generate-design-tokens.mjs` to build external themes against a single internal source set, emit only public variables, and capture the set pairing in the generated manifest.
 - 1.1.0: Added `verify-agents-version.mjs` to enforce semantic-version bullets for directories touched by a PR and wired it into CI and release workflows.
 - 1.2.0: Derived percent-based intensity helpers and state-layer base aliases in the token generation pipeline.
+- 1.3.0: Added a postbuild copy script to publish theme CSS and Google Sans font assets with each bundle.

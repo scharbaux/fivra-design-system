@@ -25,7 +25,7 @@ const CARET_CLASS = `.${BUTTON_CARET_CLASS}`;
 
 export const buttonClassStyles = `
 ${BASE_CLASS} {
-  --fivra-button-font-family: sans-serif;
+  --fivra-button-font-family: var(--body1FontFamily, 'Google Sans', sans-serif);
   --fivra-button-font-weight: 600;
   --fivra-button-radius: var(--radiusS);
   --fivra-button-transition: background-color 160ms ease, color 160ms ease,

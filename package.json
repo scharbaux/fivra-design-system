@@ -17,7 +17,7 @@
     "prestorybook": "yarn run generate:tokens",
     "build-storybook": "storybook build",
     "prebuild-storybook": "yarn run generate:icons && yarn run generate:tokens",
-    "build": "tsup",
+    "build": "tsup && node scripts/copy-static-assets.mjs",
     "prebuild": "yarn run generate:tokens",
     "build:watch": "tsup --watch",
     "test": "vitest run",
