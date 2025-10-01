@@ -74,7 +74,7 @@ const config: MultiFrameworkConfig = {
   },
   renderers: [
     { name: "@storybook/react" },
-    { name: "@storybook/angular" },
+    { name: "@storybook/angular/renderer-vite" },
   ],
   async viteFinal(config, { configType }) {
     const resolve = {
