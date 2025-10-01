@@ -6,6 +6,11 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: ['./vitest.setup.ts'],
+    exclude: [
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/.{idea,git,cache,output,temp}/**',
+    ],
   },
   resolve: {
     alias: {
@@ -13,6 +18,16 @@ export default defineConfig({
       '@web-components': path.resolve(__dirname, 'src/web-components'),
       '@shared': path.resolve(__dirname, 'src/shared'),
       '@styles': path.resolve(__dirname, 'src/styles'),
+    },
+  },
+  esbuild: {
+    target: 'es2020',
+    tsconfigRaw: {
+      compilerOptions: {
+        experimentalDecorators: true,
+        emitDecoratorMetadata: true,
+        useDefineForClassFields: false,
+      },
     },
   },
 });

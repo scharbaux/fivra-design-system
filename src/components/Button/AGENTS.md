@@ -18,3 +18,7 @@ This directory follows the repository and `src/components/` standards. Keep shar
 - 1.5.1: Primary hover halo now targets the layer mix to align with the hover background weighting across implementations.
 - 1.6.0: Defaulted the button font family to the generated body token so React and web component builds use Google Sans.
 - 1.7.0: Updated primary button halos to weight hover, active, and focus glows toward the accent color by default.
+- 1.8.0: Added the Angular adapter (component + directives + module) with parity tests and packaging support.
+- 1.8.1: Pointed React exports to the Angular-owned button style module so all frameworks share the same source without symlinks.
+- 1.8.2: Added a components-level barrel that re-exports the Angular-owned button styles via `@components/Button/button.styles` so every adapter shares the same import path.
+- 1.8.3: Pointed the shared tests at the canonical Angular button styles to cover the inlined color-mix helper.
