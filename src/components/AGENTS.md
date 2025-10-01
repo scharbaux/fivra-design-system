@@ -23,3 +23,4 @@ This document extends the root-level `AGENTS.md`. All contributors must read and
 - 1.0: Added the shared Button implementation (React + web component) with reusable styling primitives.
 - 1.0: Button and Icon now consume theme tokens for layout, color, and state styling; Storybook docs updated accordingly.
 - 1.8.0: Shared button tokens now power the Angular adapter exported from `src/angular/`.
+- 1.8.2: Exposed the Angular-owned button styles through a components barrel so React and custom elements import them via the `@components` alias.

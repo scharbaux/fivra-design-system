@@ -32,7 +32,7 @@ import {
   type ButtonSize,
   type ButtonVariant,
   ensureButtonStyles,
-} from './button.styles';
+} from '@components/Button/button.styles';
 
 import {
   FivraButtonLeadingIconDirective,

@@ -15,3 +15,4 @@ This directory extends the repository and `src/components/` guidance for custom 
 - 1.2.1: Added overlay mix regression tests to ensure brand versus neutral button states stay aligned with the React implementation.
 - 1.3.0: Synced primary halo custom properties to weight hover, active, and focus glows toward the accent color by default, mirroring the React implementation.
 - 1.3.1: Repointed the button element to consume the shared Angular-owned style module so all frameworks share the same tokens.
+- 1.3.2: Updated the button element to import styles from `@components/Button/button.styles`, which now re-exports the Angular module for cross-framework reuse.

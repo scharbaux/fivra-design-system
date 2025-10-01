@@ -16,10 +16,6 @@ export default defineConfig({
     alias: {
       '@components': path.resolve(__dirname, 'src/components'),
       '@web-components': path.resolve(__dirname, 'src/web-components'),
-      '@shared/button/button.styles': path.resolve(
-        __dirname,
-        'src/angular/button/button.styles.ts',
-      ),
       '@shared': path.resolve(__dirname, 'src/shared'),
       '@styles': path.resolve(__dirname, 'src/styles'),
     },
