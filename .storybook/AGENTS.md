@@ -24,3 +24,4 @@ This document augments the repository root `AGENTS.md`. Review root conventions 
 - 1.2.0: Enabled multi-renderer Storybook builds by registering the Angular renderer, wiring up the Vite plugin, and extending the preview decorator so design tokens hydrate before Angular canvases render.
 - 1.2.1: Corrected the Angular renderer registration to use the Vite renderer so Angular stories transpile and render without decorator syntax errors.
 - 1.2.2: Added the Angular Vite plugin to ensure Angular components transpile correctly during multi-renderer Storybook builds.
+- 1.2.3: Corrected the preview design token imports so Storybook applies Angular-friendly themes without runtime errors.

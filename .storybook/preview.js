@@ -2,12 +2,21 @@ import React from 'react';
 import '../src/styles/index.css';
 import * as designTokenThemes from '../src/styles/themes';
 
-const {
-  applyDesignTokenTheme,
-  clearDesignTokenTheme,
-  designTokenManifest,
-  getDefaultDesignTokenTheme,
-} = designTokenThemes;
+const { applyDesignTokenTheme, clearDesignTokenTheme, designTokenManifest } = designTokenThemes;
+
+const resolveDefaultThemeGetter = () => {
+  if (typeof designTokenThemes.getDefaultDesignTokenTheme === 'function') {
+    return designTokenThemes.getDefaultDesignTokenTheme;
+  }
+
+  const fallbackModule = designTokenThemes?.default;
+  if (fallbackModule && typeof fallbackModule.getDefaultDesignTokenTheme === 'function') {
+    return fallbackModule.getDefaultDesignTokenTheme;
+  }
+
+  return () =>
+    designTokenManifest.themes.find((theme) => theme.isDefault) ?? designTokenManifest.themes[0];
+};
 
 const DESIGN_TOKEN_LOG_PREFIX = '[Storybook][Design Tokens]';
 const SAMPLE_THEME_VARIABLES = [
@@ -54,6 +63,7 @@ const logDesignTokenStatus = (slug) => {
  * Global Storybook parameters and decorators for React stories.
  */
 
+const getDefaultDesignTokenTheme = resolveDefaultThemeGetter();
 const defaultTheme = getDefaultDesignTokenTheme();
 
 export const globalTypes = {
