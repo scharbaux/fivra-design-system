@@ -1,5 +1,6 @@
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import angular from "@analogjs/vite-plugin-angular";
 import type { StorybookConfig } from "@storybook/react-vite";
 
 type MultiFrameworkConfig = StorybookConfig & {
@@ -89,6 +90,12 @@ const config: MultiFrameworkConfig = {
       },
     };
 
+    const angularPlugins = angular();
+    const normalizedAngularPlugins = (Array.isArray(angularPlugins)
+      ? angularPlugins
+      : [angularPlugins]
+    ).filter(Boolean);
+
     // Use relative base only for production builds (Pages). Keep dev defaults.
     if (configType === "PRODUCTION") {
       return {
@@ -97,6 +104,7 @@ const config: MultiFrameworkConfig = {
         resolve,
         plugins: withAngularDocgenExclusion([
           ...(config.plugins || []),
+          ...normalizedAngularPlugins,
           {
             name: "sb-ghpages-fix-absolute-vite-inject",
             transformIndexHtml(html) {
@@ -113,7 +121,10 @@ const config: MultiFrameworkConfig = {
     return {
       ...config,
       resolve,
-      plugins: withAngularDocgenExclusion(config.plugins),
+      plugins: withAngularDocgenExclusion([
+        ...(config.plugins || []),
+        ...normalizedAngularPlugins,
+      ]),
       server: {
         ...(config.server || {}),
         watch: {

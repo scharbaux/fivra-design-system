@@ -1,11 +1,13 @@
 import React from 'react';
 import '../src/styles/index.css';
-import {
+import * as designTokenThemes from '../src/styles/themes';
+
+const {
   applyDesignTokenTheme,
   clearDesignTokenTheme,
   designTokenManifest,
   getDefaultDesignTokenTheme,
-} from '../src/styles/themes';
+} = designTokenThemes;
 
 const DESIGN_TOKEN_LOG_PREFIX = '[Storybook][Design Tokens]';
 const SAMPLE_THEME_VARIABLES = [
