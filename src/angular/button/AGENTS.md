@@ -12,3 +12,4 @@ he shared button behavior and styling.
 - 1.8.0: Added the Angular button component, directives, module, and test suite matching the shared button contract.
 - 1.8.2: Re-exported the Angular button styles through `@components/Button/button.styles` so the React and web component adapters share the same module.
 - 1.8.3: Inlined the color-mix helper within the Angular button styles to drop the `src/angular/styles` symlink dependency.
+- 1.8.4: Authored Angular Storybook stories with shared args, variants, and design token bootstrap via `ensureButtonStyles()`.

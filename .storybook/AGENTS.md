@@ -21,3 +21,4 @@ This document augments the repository root `AGENTS.md`. Review root conventions 
 - Use `<major>.<minor>[.<patch>]` labels instead of dates when recording new entries.
 - 1.0: Updated Storybook story globs to read MDX documentation from `docs/` so overview and integration pages render.
 - 1.1.0: Added design token diagnostics and cleanup logging in the preview decorator to detect missing theme CSS during development.
+- 1.2.0: Enabled multi-renderer Storybook builds by registering the Angular renderer, wiring up the Vite plugin, and extending the preview decorator so design tokens hydrate before Angular canvases render.

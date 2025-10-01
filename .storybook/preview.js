@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import '../src/styles/index.css';
 import {
   applyDesignTokenTheme,
@@ -70,24 +70,34 @@ export const globalTypes = {
   },
 };
 
-const ThemeProvider = ({ slug, children }) => {
-  useEffect(() => {
-    if (typeof document === 'undefined') {
-      return undefined;
-    }
+let activeThemeSlug = null;
 
-    const theme = applyDesignTokenTheme(document, slug);
-    logDesignTokenStatus(theme.slug);
+const applyThemeToDocument = (slug) => {
+  if (typeof document === 'undefined') {
+    return;
+  }
+
+  if (activeThemeSlug && activeThemeSlug !== slug) {
+    clearDesignTokenTheme(document);
+    if (shouldLogDesignTokenStatus()) {
+      console.info(`${DESIGN_TOKEN_LOG_PREFIX} Cleared the "${activeThemeSlug}" theme attribute.`);
+    }
+  }
+
+  const theme = applyDesignTokenTheme(document, slug);
+  activeThemeSlug = theme.slug;
+  logDesignTokenStatus(theme.slug);
+};
+
+const ThemeProvider = ({ slug, children }) => {
+  React.useEffect(() => {
+    applyThemeToDocument(slug);
 
     return () => {
-      if (typeof document === 'undefined') {
+      if (!shouldLogDesignTokenStatus()) {
         return;
       }
-
-      clearDesignTokenTheme(document);
-      if (shouldLogDesignTokenStatus()) {
-        console.info(`${DESIGN_TOKEN_LOG_PREFIX} Cleared the "${slug}" theme attribute.`);
-      }
+      console.info(`${DESIGN_TOKEN_LOG_PREFIX} Story unmounted while using the "${slug}" theme.`);
     };
   }, [slug]);
 
@@ -97,11 +107,15 @@ const ThemeProvider = ({ slug, children }) => {
 const withDesignTokenTheme = (Story, context) => {
   const slug = context.globals.theme ?? defaultTheme.slug;
 
-  return React.createElement(
-    ThemeProvider,
-    { slug },
-    React.createElement(Story),
-  );
+  applyThemeToDocument(slug);
+
+  const storyResult = Story(context.args, context);
+
+  if (React.isValidElement(storyResult)) {
+    return React.createElement(ThemeProvider, { slug }, storyResult);
+  }
+
+  return storyResult;
 };
 
 export const decorators = [withDesignTokenTheme];
