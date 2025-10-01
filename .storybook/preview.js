@@ -31,25 +31,33 @@ const getModuleExport = (module, exportName) => {
 };
 
 const resolveDesignTokenExport = (exportName, { expectFunction = false } = {}) => {
-  const namedExport = getModuleExport(designTokenThemes, exportName);
-  if (expectFunction && typeof namedExport === 'function') {
-    return namedExport;
-  }
+  const queue = [designTokenThemes];
+  const visited = new Set();
 
-  if (!expectFunction && typeof namedExport !== 'undefined') {
-    return namedExport;
-  }
-
-  const fallbackModule = getModuleExport(designTokenThemes, 'default');
-  const fallbackExport = getModuleExport(fallbackModule, exportName);
-  if (expectFunction) {
-    if (typeof fallbackExport === 'function') {
-      return fallbackExport;
+  while (queue.length > 0) {
+    const currentModule = queue.shift();
+    if (!currentModule || visited.has(currentModule)) {
+      continue;
     }
-    return null;
+
+    visited.add(currentModule);
+
+    const exportValue = getModuleExport(currentModule, exportName);
+    if (expectFunction) {
+      if (typeof exportValue === 'function') {
+        return exportValue;
+      }
+    } else if (typeof exportValue !== 'undefined') {
+      return exportValue;
+    }
+
+    const defaultExport = getModuleExport(currentModule, 'default');
+    if (defaultExport && (typeof defaultExport === 'object' || typeof defaultExport === 'function')) {
+      queue.push(defaultExport);
+    }
   }
 
-  return typeof fallbackExport !== 'undefined' ? fallbackExport : null;
+  return expectFunction ? null : null;
 };
 
 const designTokenManifest = resolveDesignTokenExport('designTokenManifest');
