@@ -11,4 +11,4 @@ export {
   buttonClassStyles,
   buttonHostStyles,
   ensureButtonStyles,
-} from './button.styles';
+} from '@shared/button/button.styles';

@@ -13,7 +13,7 @@ import {
   type ButtonSize,
   type ButtonVariant,
   ensureButtonStyles,
-} from './button.styles';
+} from '@shared/button/button.styles';
 
 function cx(...values: Array<string | undefined | false | null>): string {
   return values.filter(Boolean).join(' ');

@@ -22,6 +22,7 @@
       "@web-components": ["src/web-components/index.ts"],
       "@web-components/*": ["src/web-components/*"],
       "@shared": ["src/shared/index.ts"],
+      "@shared/button/button.styles": ["src/angular/button/button.styles.ts"],
       "@shared/*": ["src/shared/*"],
       "@styles": ["src/styles/index.css"],
       "@styles/*": ["src/styles/*"]

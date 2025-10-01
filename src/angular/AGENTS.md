@@ -10,3 +10,4 @@ n share styling and accessibility behavior with the React and web component targ
 ## Functional Changes
 - Use `<major>.<minor>[.<patch>]` labels instead of dates when recording new entries.
 - 1.8.0: Added the Angular workspace with the button module/directives and packaging configuration for `ng-packagr` builds.
+- 1.8.1: Promoted `src/angular/button/button.styles.ts` to the canonical style source and updated path aliases so other frameworks reuse it without symlinks.

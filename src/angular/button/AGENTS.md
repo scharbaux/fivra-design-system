@@ -3,7 +3,7 @@
 This directory follows the repository, `src/components/`, and `src/angular/` standards. Keep the Angular adapter in parity with t
 he shared button behavior and styling.
 
-- Rely on `ensureButtonStyles()` from `@components/Button/button.styles` so CSS stays centralized.
+- Rely on `ensureButtonStyles()` from `./button.styles` so CSS stays centralized without duplicating logic.
 - Keep DOM structure, data attributes, and ARIA behavior aligned with the React and web component implementations.
 - Update accompanying tests and documentation when adjusting the Angular API or markup.
 

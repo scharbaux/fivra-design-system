@@ -12,13 +12,12 @@
     "noEmit": false,
     "useDefineForClassFields": false,
     "types": ["node"],
-    "rootDir": "./",
+    "rootDir": "./src",
     "paths": {
-      "@components": ["src/angular/shared-components/index.ts"],
-      "@components/*": ["src/angular/shared-components/*"],
       "@web-components": ["src/web-components/index.ts"],
       "@web-components/*": ["src/web-components/*"],
       "@shared": ["src/shared/index.ts"],
+      "@shared/button/button.styles": ["src/angular/button/button.styles.ts"],
       "@shared/*": ["src/shared/*"],
       "@styles": ["src/styles/index.css"],
       "@styles/*": ["src/styles/*"]
@@ -31,9 +30,7 @@
     "compilationMode": "partial"
   },
   "include": [
-    "src/angular/**/*.ts",
-    "src/components/Button/**/*.ts",
-    "src/styles/**/*.ts"
+    "src/angular/**/*.ts"
   ],
   "exclude": [
     "src/angular/**/*.test.ts",

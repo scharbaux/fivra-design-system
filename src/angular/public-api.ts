@@ -1,2 +1,2 @@
 export * from './button';
-export { type ButtonVariant, type ButtonSize } from '@components/Button/button.styles';
+export { type ButtonVariant, type ButtonSize } from './button/button.styles';

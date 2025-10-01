@@ -1,4 +1,4 @@
-import { COLOR_MIX_SUPPORTS_DECLARATION, colorMix } from '../../styles/color-mix';
+import { COLOR_MIX_SUPPORTS_DECLARATION, colorMix } from '../styles/color-mix';
 
 export const BUTTON_CLASS_NAME = 'fivra-button';
 export const BUTTON_ICON_CLASS = `${BUTTON_CLASS_NAME}__icon`;

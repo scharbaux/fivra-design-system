@@ -12,7 +12,7 @@ import {
   BUTTON_VARIANTS,
   buttonClassStyles,
   buttonHostStyles,
-} from '@components/Button/button.styles';
+} from '@shared/button/button.styles';
 
 type ButtonVariant = (typeof BUTTON_VARIANTS)[number];
 type ButtonSize = (typeof BUTTON_SIZES)[number];
