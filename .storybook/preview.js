@@ -12,6 +12,47 @@ const SAMPLE_THEME_VARIABLES = [
 const shouldLogDesignTokenStatus = () =>
   typeof window !== 'undefined' && (typeof process === 'undefined' || process.env?.NODE_ENV !== 'production');
 
+const logDesignTokenDebug = (message, details) => {
+  if (!shouldLogDesignTokenStatus()) {
+    return;
+  }
+
+  if (typeof details === 'undefined') {
+    console.info(`${DESIGN_TOKEN_LOG_PREFIX} ${message}`);
+    return;
+  }
+
+  console.info(`${DESIGN_TOKEN_LOG_PREFIX} ${message}`, details);
+};
+
+const describeExportValue = (value) => {
+  if (value === undefined) {
+    return { type: 'undefined' };
+  }
+
+  if (value === null) {
+    return { type: 'null' };
+  }
+
+  if (typeof value === 'function') {
+    return { type: 'function', name: value.name || '(anonymous)' };
+  }
+
+  if (Array.isArray(value)) {
+    return { type: 'array', length: value.length };
+  }
+
+  if (typeof value === 'object') {
+    try {
+      return { type: 'object', keys: Object.keys(value) };
+    } catch (error) {
+      return { type: 'object', keys: [], error: error instanceof Error ? error.message : String(error) };
+    }
+  }
+
+  return { type: typeof value, value };
+};
+
 const getModuleExport = (module, exportName) => {
   if (!module) {
     return undefined;
@@ -45,14 +86,17 @@ const resolveDesignTokenExport = (exportName, { expectFunction = false } = {}) =
     const exportValue = getModuleExport(currentModule, exportName);
     if (expectFunction) {
       if (typeof exportValue === 'function') {
+        logDesignTokenDebug(`Resolved "${exportName}" as a callable export.`, describeExportValue(exportValue));
         return exportValue;
       }
     } else if (typeof exportValue !== 'undefined') {
+      logDesignTokenDebug(`Resolved "${exportName}" export.`, describeExportValue(exportValue));
       return exportValue;
     }
 
     const defaultExport = getModuleExport(currentModule, 'default');
     if (defaultExport && (typeof defaultExport === 'object' || typeof defaultExport === 'function')) {
+      logDesignTokenDebug(`Queued default export while searching for "${exportName}".`, describeExportValue(defaultExport));
       queue.push(defaultExport);
     }
   }
@@ -72,6 +116,14 @@ const applyDesignTokenTheme = resolveDesignTokenExport('applyDesignTokenTheme', 
 });
 const clearDesignTokenTheme = resolveDesignTokenExport('clearDesignTokenTheme', {
   expectFunction: true,
+});
+
+logDesignTokenDebug('Design token manifest resolution summary.', {
+  themes: Array.isArray(designTokenManifest.themes)
+    ? designTokenManifest.themes.map((theme) => ({ slug: theme.slug, isDefault: Boolean(theme.isDefault) }))
+    : null,
+  applyDesignTokenTheme: describeExportValue(applyDesignTokenTheme),
+  clearDesignTokenTheme: describeExportValue(clearDesignTokenTheme),
 });
 
 if (!applyDesignTokenTheme || !clearDesignTokenTheme) {

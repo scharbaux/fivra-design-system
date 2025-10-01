@@ -27,3 +27,4 @@ This document augments the repository root `AGENTS.md`. Review root conventions 
 - 1.2.3: Corrected the preview design token imports so Storybook applies Angular-friendly themes without runtime errors.
 - 1.2.4: Hardened the preview design token loader to handle interop mismatches when resolving the manifest in multi-renderer builds.
 - 1.2.5: Expanded the preview design token loader to traverse nested default exports so manifests resolve reliably in dev canvases.
+- 1.2.6: Added configuration and preview debug logging to diagnose Angular renderer and design token manifest resolution issues.

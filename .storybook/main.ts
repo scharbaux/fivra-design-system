@@ -3,6 +3,22 @@ import { fileURLToPath } from "node:url";
 import angular from "@analogjs/vite-plugin-angular";
 import type { StorybookConfig } from "@storybook/react-vite";
 
+const CONFIG_LOG_PREFIX = "[Storybook][Config]";
+const logStorybookConfigDebug = (message: string, details?: Record<string, unknown>) => {
+  if (process.env.STORYBOOK_DEBUG === "false") {
+    return;
+  }
+
+  if (typeof details === "undefined") {
+    // eslint-disable-next-line no-console
+    console.info(`${CONFIG_LOG_PREFIX} ${message}`);
+    return;
+  }
+
+  // eslint-disable-next-line no-console
+  console.info(`${CONFIG_LOG_PREFIX} ${message}`, details);
+};
+
 type MultiFrameworkConfig = StorybookConfig & {
   /**
    * Storybook multi-renderer support is still stabilising, so the generic
@@ -96,8 +112,21 @@ const config: MultiFrameworkConfig = {
       : [angularPlugins]
     ).filter(Boolean);
 
+    logStorybookConfigDebug("Resolved Angular Vite plugin entries.", {
+      pluginCount: normalizedAngularPlugins.length,
+      pluginNames: normalizedAngularPlugins.map((plugin) => plugin?.name ?? "(anonymous)"),
+    });
+
+    logStorybookConfigDebug(`Preparing Vite configuration for ${configType} mode.`, {
+      aliasKeys: Object.keys(resolve.alias ?? {}),
+    });
+
     // Use relative base only for production builds (Pages). Keep dev defaults.
     if (configType === "PRODUCTION") {
+      logStorybookConfigDebug("Applying production Storybook Vite overrides.", {
+        base: "./",
+      });
+
       return {
         ...config,
         base: "./",
@@ -118,6 +147,10 @@ const config: MultiFrameworkConfig = {
       };
     }
     // Strengthen file watching for Windows/VM/network drives
+    logStorybookConfigDebug("Applying development Storybook Vite overrides.", {
+      watch: { usePolling: true, interval: 200 },
+    });
+
     return {
       ...config,
       resolve,
