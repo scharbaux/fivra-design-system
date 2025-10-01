@@ -2,8 +2,10 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
 import { Button, BUTTON_ICON_CLASS } from '@components/Button';
-import { ensureButtonStyles } from '../button.styles';
-import { COLOR_MIX_SUPPORTS_DECLARATION } from '@styles/color-mix';
+import {
+  COLOR_MIX_SUPPORTS_DECLARATION,
+  ensureButtonStyles,
+} from '../button.styles';
 
 describe('Button', () => {
   it('renders the provided label and defaults to type="button"', () => {
