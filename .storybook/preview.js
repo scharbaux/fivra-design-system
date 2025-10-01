@@ -2,22 +2,6 @@ import React from 'react';
 import '../src/styles/index.css';
 import * as designTokenThemes from '../src/styles/themes';
 
-const { applyDesignTokenTheme, clearDesignTokenTheme, designTokenManifest } = designTokenThemes;
-
-const resolveDefaultThemeGetter = () => {
-  if (typeof designTokenThemes.getDefaultDesignTokenTheme === 'function') {
-    return designTokenThemes.getDefaultDesignTokenTheme;
-  }
-
-  const fallbackModule = designTokenThemes?.default;
-  if (fallbackModule && typeof fallbackModule.getDefaultDesignTokenTheme === 'function') {
-    return fallbackModule.getDefaultDesignTokenTheme;
-  }
-
-  return () =>
-    designTokenManifest.themes.find((theme) => theme.isDefault) ?? designTokenManifest.themes[0];
-};
-
 const DESIGN_TOKEN_LOG_PREFIX = '[Storybook][Design Tokens]';
 const SAMPLE_THEME_VARIABLES = [
   '--radiusMax',
@@ -27,6 +11,78 @@ const SAMPLE_THEME_VARIABLES = [
 
 const shouldLogDesignTokenStatus = () =>
   typeof window !== 'undefined' && (typeof process === 'undefined' || process.env?.NODE_ENV !== 'production');
+
+const getModuleExport = (module, exportName) => {
+  if (!module) {
+    return undefined;
+  }
+
+  try {
+    return Reflect.get(module, exportName);
+  } catch (error) {
+    if (shouldLogDesignTokenStatus()) {
+      console.warn(
+        `${DESIGN_TOKEN_LOG_PREFIX} Failed to read the "${exportName}" export from the design token module.`,
+        error,
+      );
+    }
+    return undefined;
+  }
+};
+
+const resolveDesignTokenExport = (exportName, { expectFunction = false } = {}) => {
+  const namedExport = getModuleExport(designTokenThemes, exportName);
+  if (expectFunction && typeof namedExport === 'function') {
+    return namedExport;
+  }
+
+  if (!expectFunction && typeof namedExport !== 'undefined') {
+    return namedExport;
+  }
+
+  const fallbackModule = getModuleExport(designTokenThemes, 'default');
+  const fallbackExport = getModuleExport(fallbackModule, exportName);
+  if (expectFunction) {
+    if (typeof fallbackExport === 'function') {
+      return fallbackExport;
+    }
+    return null;
+  }
+
+  return typeof fallbackExport !== 'undefined' ? fallbackExport : null;
+};
+
+const designTokenManifest = resolveDesignTokenExport('designTokenManifest');
+if (!designTokenManifest?.themes) {
+  throw new Error(
+    '[Storybook][Design Tokens] Unable to load the design token manifest from "src/styles/themes".',
+  );
+}
+
+const applyDesignTokenTheme = resolveDesignTokenExport('applyDesignTokenTheme', {
+  expectFunction: true,
+});
+const clearDesignTokenTheme = resolveDesignTokenExport('clearDesignTokenTheme', {
+  expectFunction: true,
+});
+
+if (!applyDesignTokenTheme || !clearDesignTokenTheme) {
+  throw new Error(
+    '[Storybook][Design Tokens] Failed to load the apply/clear theme helpers from "src/styles/themes".',
+  );
+}
+
+const resolveDefaultThemeGetter = () => {
+  const namedGetter = resolveDesignTokenExport('getDefaultDesignTokenTheme', {
+    expectFunction: true,
+  });
+  if (namedGetter) {
+    return namedGetter;
+  }
+
+  return () =>
+    designTokenManifest.themes.find((theme) => theme.isDefault) ?? designTokenManifest.themes[0];
+};
 
 const logDesignTokenStatus = (slug) => {
   if (!shouldLogDesignTokenStatus()) {
