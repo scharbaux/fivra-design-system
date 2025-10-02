@@ -29,12 +29,12 @@ To determine whether a component should be authored as a web component or framew
 
 ## Multi-Framework Storybook Composition
 - The React workspace under `.storybook/` owns the primary manager and registers framework refs. Angular and Vue live in `storybooks/<framework>/.storybook` and expose their own build outputs.
-- Development: run `yarn storybook:compose` to launch all three workspaces together. The script starts React on port 6006, Angular on 6007, and Vue on 6008, ensuring the refs in `main.ts` resolve to live dev servers when `STORYBOOK_REF_MODE=dev`.
-- Static hosting: `yarn build-storybook` chains the Angular/Vue builds, runs the React build with `STORYBOOK_REF_MODE=static`, and copies the generated assets into `storybook-static/{angular,vue}` via `scripts/copy-storybook-refs.mjs`. The manager entry sets `window.STORYBOOK_REFS` so GitHub Pages (or any static host) serves the composed bundles without extra configuration.
+- Development: run `yarn storybook` to launch all three workspaces together. The script starts React on port 6006, Angular on 6007, and Vue on 6008 so the refs declared in `.storybook/main.ts` resolve to live dev servers when `STORYBOOK_REF_MODE=dev`. Override `STORYBOOK_ANGULAR_URL` or `STORYBOOK_VUE_URL` when pointing at remote builds.
+- Static hosting: `yarn build-storybook` chains the Angular/Vue builds, runs the React build with `STORYBOOK_REF_MODE=static`, and copies the generated assets into `storybook-static/{angular,vue}` via `scripts/copy-storybook-refs.mjs`. The manager relies on the exported `refs` configuration so GitHub Pages (or any static host) serves the composed bundles without extra configuration.
 - Adding a new framework Storybook:
   1. Scaffold `storybooks/<framework>/.storybook/` with its own `main.ts` and `preview` configuration.
   2. Add `storybook:<framework>` and `build-storybook:<framework>` scripts that mirror the Angular/Vue setup, assigning a unique dev port.
-  3. Update `.storybook/main.ts` to append a ref with a nested `title` (e.g., `Components/Button/<Framework>`), and extend `.storybook/refs-manager-entry.ts` plus `scripts/copy-storybook-refs.mjs` to recognise the new id.
+  3. Update `.storybook/main.ts` to append a ref with a nested `title` (e.g., `React`, `Angular`, `Vue`), and extend `scripts/copy-storybook-refs.mjs` to recognise the new id.
   4. Document the workflow in `README.md`, `docs/tech-stack.md`, and the relevant `AGENTS.md` files so contributors know how to launch and host the additional workspace.
 
 ## Lifecycle Constraints

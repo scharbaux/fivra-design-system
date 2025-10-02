@@ -50,16 +50,16 @@ yarn generate:icons
 yarn generate:tokens
 ```
 
-Run Storybook for local development (React workspace only):
+Run the composed Storybook experience for React, Angular, and Vue on ports 6006/6007/6008:
 
 ```bash
 yarn storybook
 ```
 
-To compose the React, Angular, and Vue Storybooks side-by-side, use the orchestrated workflow:
+If you need to focus on the React workspace alone, run:
 
 ```bash
-yarn storybook:compose
+yarn storybook:react
 ```
 
 Build the component package (production output):
@@ -74,6 +74,16 @@ If you prefer to preview the static Storybook output, run:
 yarn build-storybook
 ```
 
+The composed manager reads URLs from environment variables when you need to point at remote Storybook deployments (e.g., a shared Angular build running in CI):
+
+```bash
+# Override the Angular ref (defaults to http://localhost:6007)
+STORYBOOK_ANGULAR_URL="https://design-system-angular.example.com" yarn storybook
+
+# Override the Vue ref (defaults to http://localhost:6008)
+STORYBOOK_VUE_URL="https://design-system-vue.example.com" yarn storybook
+```
+
 ## Scripts
 Commonly used scripts are listed below. Run them with `yarn <script>`.
 
@@ -84,8 +94,8 @@ Commonly used scripts are listed below. Run them with `yarn <script>`.
 - `version` – Apply accumulated Changesets (`changeset version`) to bump `package.json`, changelogs, and generated release metadata (`yarn run version`).
 - `release` – Publish the release defined by Changesets (used by CI; requires `NPM_TOKEN`).
 - `verify:agents` – Ensure modified directories updated their `AGENTS.md` with a new semantic-version bullet (runs automatically in CI).
-- `storybook` – Start the Storybook 9 (React + Vite) dev server with hot reload.
-- `storybook:compose` – Launch the React, Angular, and Vue Storybook instances together (ports 6006/6007/6008) so refs resolve locally.
+- `storybook` – Launch the React, Angular, and Vue Storybook instances together (ports 6006/6007/6008) so refs resolve locally.
+- `storybook:react` – Start the Storybook 9 (React + Vite) dev server with hot reload.
 - `build-storybook` – Produce the static Storybook bundle and copy the Angular/Vue builds into `storybook-static/{angular,vue}` for composition.
 - `build` – Create the distributable library bundles (React, Angular, and web components).
 - `build:angular` – Build the Angular package with `ng-packagr`.

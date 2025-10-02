@@ -15,10 +15,10 @@ This document captures the current tooling, languages, and automation that power
 ## Storybook Setup
 - Stories live under `src/**/*.stories.@(js|jsx|mjs|ts|tsx)` and `src/**/*.mdx`.
 - Addons: Docs, Accessibility, and Designs for embedded Figma references.
-- Production builds adjust `base: './'`, rewrite the Vite mocker entry to support GitHub Pages hosting, and inject Storybook refs so the Angular/Vue static bundles load from `storybook-static/{angular,vue}`.
+- Production builds adjust `base: './'`, rewrite the Vite mocker entry to support GitHub Pages hosting, and rely on Storybook refs so the Angular/Vue static bundles load from `storybook-static/{angular,vue}`.
 - Development server enables Vite polling (`usePolling: true`, `interval: 200`) to improve reliability on networked filesystems.
-- Multi-framework composition: the root `.storybook/main.ts` registers refs for Angular (`http://localhost:6007`) and Vue (`http://localhost:6008`) when `STORYBOOK_REF_MODE=dev`, and falls back to relative URLs during static builds. The manager entry mirrors this setup at runtime.
-- `yarn storybook:compose` runs the React, Angular, and Vue workspaces together via `concurrently` so designers can switch between implementations from a single sidebar.
+- Multi-framework composition: the root `.storybook/main.ts` registers refs for React, Angular (`http://localhost:6007`), and Vue (`http://localhost:6008`) when `STORYBOOK_REF_MODE=dev`, and falls back to relative URLs during static builds. Override `STORYBOOK_ANGULAR_URL` or `STORYBOOK_VUE_URL` to point at remote Storybook deployments.
+- `yarn storybook` runs the React, Angular, and Vue workspaces together via `concurrently` so designers can switch between implementations from a single sidebar.
 
 ## Icon Workflow
 1. **Optimization** – `yarn optimize-icons` runs `scripts/optimize-icons.mjs` to recursively optimize SVG files in `src/shared/assets/icons`, retaining `viewBox` attributes and replacing literal `fill`/`stroke` colors with `currentColor`.
