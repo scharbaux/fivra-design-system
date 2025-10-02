@@ -62,7 +62,7 @@ If you need to focus on the React workspace alone, run:
 yarn storybook:react
 ```
 
-This command disables the Angular and Vue refs by default. Opt back into composition by setting the `STORYBOOK_COMPOSE_ANGULAR` and `STORYBOOK_COMPOSE_VUE` environment variables to `true` when invoking the script.
+This command disables the Angular and Vue refs by default. Use `yarn storybook:react:compose` when you want the React manager to boot with the Angular and Vue refs without starting their dev servers separately.
 
 Build the component package (production output):
 
@@ -85,8 +85,8 @@ STORYBOOK_ANGULAR_URL="https://design-system-angular.example.com" yarn storybook
 # Override the Vue ref (defaults to http://localhost:6008)
 STORYBOOK_VUE_URL="https://design-system-vue.example.com" yarn storybook
 
-# Opt back into composition while using `yarn storybook:react`
-STORYBOOK_COMPOSE_ANGULAR=true STORYBOOK_COMPOSE_VUE=true yarn storybook:react
+# Launch the React manager with local refs only (no Angular/Vue dev servers)
+yarn storybook:react:compose
 ```
 
 ## Scripts
@@ -101,6 +101,7 @@ Commonly used scripts are listed below. Run them with `yarn <script>`.
 - `verify:agents` – Ensure modified directories updated their `AGENTS.md` with a new semantic-version bullet (runs automatically in CI).
 - `storybook` – Launch the React, Angular, and Vue Storybook instances together (ports 6006/6007/6008) so refs resolve locally.
 - `storybook:react` – Start the Storybook 9 (React + Vite) dev server with hot reload.
+- `storybook:react:compose` – Run the React manager with composition enabled (Angular/Vue refs) without booting the other dev servers.
 - `build-storybook` – Produce the static Storybook bundle and copy the Angular/Vue builds into `storybook-static/{angular,vue}` for composition.
 - `build` – Create the distributable library bundles (React, Angular, and web components).
 - `build:angular` – Build the Angular package with `ng-packagr`.
