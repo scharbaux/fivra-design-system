@@ -37,4 +37,5 @@
 - 1.0: Added a Style Dictionary + Tokens Studio transform workflow; run `yarn generate:tokens` to refresh theme CSS before builds.
 - 1.0: Scoped generated Engage/Legacy CSS to `data-fivra-theme`, added theme helpers/tests, and wired `yarn generate:tokens` into build + Storybook hooks.
 - 1.1.0: Documented the Changesets-powered release workflow, required `yarn changeset` for feature work, and enforced semantic-version bullets via `scripts/verify-agents-version.mjs`.
+- 1.1.1: Added a compose-friendly React Storybook script, refreshed README guidance, and noted the tooling alignment.
 
