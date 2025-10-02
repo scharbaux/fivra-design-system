@@ -2,7 +2,7 @@ import { CommonModule } from "@angular/common";
 import type { Meta, StoryObj } from "@storybook/angular";
 import { moduleMetadata } from "@storybook/angular";
 
-import { FivraButtonComponent, FivraButtonModule } from "../../../src/angular/button";
+import { FivraButtonComponent, FivraButtonModule } from "@internal/angular/button";
 import {
   type ButtonSize,
   type ButtonVariant,

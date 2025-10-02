@@ -1,5 +1,5 @@
 import React from "react";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { Icon } from "@components";
 import { icons as ICONS } from "@shared/icons/icons.generated";

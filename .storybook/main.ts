@@ -12,6 +12,47 @@ const storybookDir = dirname(fileURLToPath(import.meta.url));
 const resolveAliasPath = (relativePath: string) =>
   resolve(storybookDir, relativePath);
 
+const getRefMode = () => {
+  const explicitMode = process.env.STORYBOOK_REF_MODE;
+  if (explicitMode === "static" || explicitMode === "dev") {
+    return explicitMode;
+  }
+
+  return process.env.NODE_ENV === "production" ? "static" : "dev";
+};
+
+const refMode = getRefMode();
+const isStaticRefMode = refMode === "static";
+
+const angularDevUrl =
+  process.env.STORYBOOK_ANGULAR_URL ?? "http://localhost:6007";
+const vueDevUrl =
+  process.env.STORYBOOK_VUE_URL ?? "http://localhost:6008";
+const angularStaticUrl =
+  process.env.STORYBOOK_ANGULAR_STATIC_URL ?? "./angular";
+const vueStaticUrl = process.env.STORYBOOK_VUE_STATIC_URL ?? "./vue";
+
+const includeAngularRef = process.env.STORYBOOK_COMPOSE_ANGULAR !== "false";
+const includeVueRef = process.env.STORYBOOK_COMPOSE_VUE !== "false";
+
+const refs: StorybookConfig["refs"] = {};
+
+if (includeAngularRef) {
+  refs.angular = {
+    title: "Components/Button/Angular",
+    url: isStaticRefMode ? angularStaticUrl : angularDevUrl,
+    expanded: true,
+  };
+}
+
+if (includeVueRef) {
+  refs.vue = {
+    title: "Components/Button/Vue",
+    url: isStaticRefMode ? vueStaticUrl : vueDevUrl,
+    expanded: true,
+  };
+}
+
 const config: StorybookConfig = {
   stories: [
     "../docs/**/*.mdx",
@@ -26,6 +67,18 @@ const config: StorybookConfig = {
   framework: {
     name: "@storybook/react-vite",
     options: {},
+  },
+  refs,
+  managerEntries: async (existingEntries = []) => {
+    const resolvedEntries =
+      typeof existingEntries === "function"
+        ? await existingEntries()
+        : existingEntries;
+
+    return [
+      ...(resolvedEntries ?? []),
+      resolveAliasPath("./refs-manager-entry.ts"),
+    ];
   },
   async viteFinal(config, { configType }) {
     const resolve = {

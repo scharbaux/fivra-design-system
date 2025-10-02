@@ -11,6 +11,7 @@ This document augments the repository root `AGENTS.md`. Review root conventions 
 - Keep production (`build-storybook`) and development (`storybook dev`) behaviors aligned; test both when altering config.
 - When updating addons or frameworks, validate compatibility with our accessibility, docs, and design tooling before committing.
 - Document notable configuration changes in PR descriptions and cross-reference related updates under `src/stories/` when behavior changes.
+- Use `yarn storybook:compose` to validate Storybook refs locally; the command launches the React, Angular, and Vue workspaces together on ports 6006/6007/6008.
 
 ## Review Checklist
 - Ensure `yarn storybook`, `yarn build-storybook`, and TypeScript type checks succeed after modifying configuration.
@@ -22,3 +23,5 @@ This document augments the repository root `AGENTS.md`. Review root conventions 
 - 1.0: Updated Storybook story globs to read MDX documentation from `docs/` so overview and integration pages render.
 - 1.1.0: Added design token diagnostics and cleanup logging in the preview decorator to detect missing theme CSS during development.
 - 1.2.0: Split the configuration so the React workspace lives here while Angular stories load from `storybooks/angular/.storybook`.
+- 1.3.0: Introduced Storybook composition refs, the runtime manager entry, and the `storybook:compose`/`build-storybook` orchestration workflow.
+- 1.3.1: Updated preview typing to reference `@storybook/react-vite` after running the automigration tooling.

@@ -50,10 +50,16 @@ yarn generate:icons
 yarn generate:tokens
 ```
 
-Run Storybook for local development:
+Run Storybook for local development (React workspace only):
 
 ```bash
 yarn storybook
+```
+
+To compose the React, Angular, and Vue Storybooks side-by-side, use the orchestrated workflow:
+
+```bash
+yarn storybook:compose
 ```
 
 Build the component package (production output):
@@ -79,7 +85,8 @@ Commonly used scripts are listed below. Run them with `yarn <script>`.
 - `release` – Publish the release defined by Changesets (used by CI; requires `NPM_TOKEN`).
 - `verify:agents` – Ensure modified directories updated their `AGENTS.md` with a new semantic-version bullet (runs automatically in CI).
 - `storybook` – Start the Storybook 9 (React + Vite) dev server with hot reload.
-- `build-storybook` – Produce a static Storybook bundle for deployment.
+- `storybook:compose` – Launch the React, Angular, and Vue Storybook instances together (ports 6006/6007/6008) so refs resolve locally.
+- `build-storybook` – Produce the static Storybook bundle and copy the Angular/Vue builds into `storybook-static/{angular,vue}` for composition.
 - `build` – Create the distributable library bundles (React, Angular, and web components).
 - `build:angular` – Build the Angular package with `ng-packagr`.
 - `lint` / `typecheck` (coming soon) – Static analysis tasks that will be documented in the architecture guides.
@@ -94,7 +101,8 @@ Refer to `package.json` for the full list of scripts and watch the `docs/archite
 ## Storybook Usage
 - Storybook 9 runs on Vite 5 with the `@storybook/react-vite` framework.
 - Accessibility, documentation, and design review workflows are supported via `@storybook/addon-a11y`, `@storybook/addon-docs`, and `@storybook/addon-designs`.
-- Production builds set `base: './'` and include a Vite transform to ensure assets resolve correctly on GitHub Pages deployments.
+- Production builds set `base: './'`, include a Vite transform to ensure assets resolve correctly on GitHub Pages deployments, and wire Storybook refs to static Angular/Vue directories for hosted composition.
+- The composed Angular (`http://localhost:6007`) and Vue (`http://localhost:6008`) workspaces surface under `Components/Button/{Angular,Vue}` in the sidebar when the refs are running.
 - Icon galleries and component examples automatically consume the generated icon map; rerun `yarn generate:icons` when assets change.
 
 Visit the published Storybook (if available) to explore live components, or run the local command above to iterate on new work.
