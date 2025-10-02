@@ -1,6 +1,6 @@
 import React from 'react';
 import '../src/styles/index.css';
-import * as designTokenThemes from '../src/styles/themes';
+import * as designTokenModule from '../src/styles/themes';
 
 const DESIGN_TOKEN_LOG_PREFIX = '[Storybook][Design Tokens]';
 const SAMPLE_THEME_VARIABLES = [
@@ -71,8 +71,17 @@ const getModuleExport = (module, exportName) => {
   }
 };
 
+const describeModuleCandidates = (candidates) =>
+  candidates.map((candidate) => {
+    const summary = describeExportValue(candidate);
+    if (summary.type === 'object') {
+      summary.keys = summary.keys?.slice(0, 10);
+    }
+    return summary;
+  });
+
 const resolveDesignTokenExport = (exportName, { expectFunction = false } = {}) => {
-  const queue = [designTokenThemes];
+  const queue = [designTokenModule];
   const visited = new Set();
 
   while (queue.length > 0) {
@@ -96,10 +105,40 @@ const resolveDesignTokenExport = (exportName, { expectFunction = false } = {}) =
 
     const defaultExport = getModuleExport(currentModule, 'default');
     if (defaultExport && (typeof defaultExport === 'object' || typeof defaultExport === 'function')) {
-      logDesignTokenDebug(`Queued default export while searching for "${exportName}".`, describeExportValue(defaultExport));
+      logDesignTokenDebug(
+        `Queued default export while searching for "${exportName}".`,
+        describeExportValue(defaultExport),
+      );
       queue.push(defaultExport);
     }
+
+    if (typeof currentModule === 'object' && currentModule !== null) {
+      const nestedCandidates = [];
+
+      if ('module' in currentModule && typeof currentModule.module === 'object') {
+        nestedCandidates.push(currentModule.module);
+      }
+
+      if ('exports' in currentModule && typeof currentModule.exports === 'object') {
+        nestedCandidates.push(currentModule.exports);
+      }
+
+      for (const candidate of nestedCandidates) {
+        if (candidate && (typeof candidate === 'object' || typeof candidate === 'function')) {
+          logDesignTokenDebug(
+            `Queued CommonJS interop candidate while searching for "${exportName}".`,
+            describeExportValue(candidate),
+          );
+          queue.push(candidate);
+        }
+      }
+    }
   }
+
+  logDesignTokenDebug(
+    `Exhausted module candidates without resolving "${exportName}".`,
+    describeModuleCandidates([...visited]),
+  );
 
   return expectFunction ? null : null;
 };
