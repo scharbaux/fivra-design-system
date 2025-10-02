@@ -62,6 +62,8 @@ If you need to focus on the React workspace alone, run:
 yarn storybook:react
 ```
 
+This command disables the Angular and Vue refs by default. Opt back into composition by setting the `STORYBOOK_COMPOSE_ANGULAR` and `STORYBOOK_COMPOSE_VUE` environment variables to `true` when invoking the script.
+
 Build the component package (production output):
 
 ```bash
@@ -82,6 +84,9 @@ STORYBOOK_ANGULAR_URL="https://design-system-angular.example.com" yarn storybook
 
 # Override the Vue ref (defaults to http://localhost:6008)
 STORYBOOK_VUE_URL="https://design-system-vue.example.com" yarn storybook
+
+# Opt back into composition while using `yarn storybook:react`
+STORYBOOK_COMPOSE_ANGULAR=true STORYBOOK_COMPOSE_VUE=true yarn storybook:react
 ```
 
 ## Scripts

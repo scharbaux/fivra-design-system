@@ -24,6 +24,28 @@ const getRefMode = () => {
 const refMode = getRefMode();
 const isStaticRefMode = refMode === "static";
 
+const parseEnvToggle = (value: string | undefined, defaultValue: boolean) => {
+  if (value === undefined) {
+    return defaultValue;
+  }
+
+  const normalized = value.trim().toLowerCase();
+  if (["false", "0", "off", "no"].includes(normalized)) {
+    return false;
+  }
+  if (["true", "1", "on", "yes"].includes(normalized)) {
+    return true;
+  }
+
+  return defaultValue;
+};
+
+const composeAngular = parseEnvToggle(
+  process.env.STORYBOOK_COMPOSE_ANGULAR,
+  true,
+);
+const composeVue = parseEnvToggle(process.env.STORYBOOK_COMPOSE_VUE, true);
+
 const reactDevUrl =
   process.env.STORYBOOK_REACT_URL ?? "http://localhost:6006";
 const angularDevUrl =
@@ -40,14 +62,22 @@ export const refs: StorybookConfig["refs"] = {
     title: "React",
     url: isStaticRefMode ? reactStaticUrl : reactDevUrl,
   },
-  angular: {
-    title: "Angular",
-    url: isStaticRefMode ? angularStaticUrl : angularDevUrl,
-  },
-  vue: {
-    title: "Vue",
-    url: isStaticRefMode ? vueStaticUrl : vueDevUrl,
-  },
+  ...(composeAngular
+    ? {
+        angular: {
+          title: "Angular",
+          url: isStaticRefMode ? angularStaticUrl : angularDevUrl,
+        },
+      }
+    : {}),
+  ...(composeVue
+    ? {
+        vue: {
+          title: "Vue",
+          url: isStaticRefMode ? vueStaticUrl : vueDevUrl,
+        },
+      }
+    : {}),
 };
 
 const config: StorybookConfig = {

@@ -19,7 +19,7 @@
     "version": "changeset version",
     "release": "changeset publish",
     "verify:agents": "node scripts/verify-agents-version.mjs",
-    "storybook:react": "cross-env STORYBOOK_REF_MODE=dev storybook dev -p 6006",
+    "storybook:react": "cross-env STORYBOOK_REF_MODE=dev STORYBOOK_COMPOSE_ANGULAR=false STORYBOOK_COMPOSE_VUE=false storybook dev -p 6006",
     "prestorybook:react": "yarn run generate:tokens",
     "storybook:angular": "cross-env STORYBOOK_REF_MODE=dev NG_CLI_ANALYTICS=false ng run design-system-storybook:start-storybook --port 6007 --ci",
     "prestorybook:angular": "yarn run generate:tokens",
