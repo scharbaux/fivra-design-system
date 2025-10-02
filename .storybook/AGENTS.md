@@ -12,6 +12,7 @@ This document augments the repository root `AGENTS.md`. Review root conventions 
 - When updating addons or frameworks, validate compatibility with our accessibility, docs, and design tooling before committing.
 - Document notable configuration changes in PR descriptions and cross-reference related updates under `src/stories/` when behavior changes.
 - Use `yarn storybook` to validate Storybook refs locally; the command launches the React, Angular, and Vue workspaces together on ports 6006/6007/6008.
+- Toggle Angular/Vue composition by setting `STORYBOOK_COMPOSE_ANGULAR` and `STORYBOOK_COMPOSE_VUE` (defaults to `true` for the composed workflow).
 
 ## Review Checklist
 - Ensure `yarn storybook`, `yarn build-storybook`, and TypeScript type checks succeed after modifying configuration.
@@ -26,3 +27,4 @@ This document augments the repository root `AGENTS.md`. Review root conventions 
 - 1.3.0: Introduced Storybook composition refs, the runtime manager entry, and the `storybook:compose`/`build-storybook` orchestration workflow.
 - 1.3.1: Updated preview typing to reference `@storybook/react-vite` after running the automigration tooling.
 - 1.4.0: Simplified refs configuration and promoted the composed workflow to `yarn storybook`.
+- 1.5.0: Reintroduced environment toggles so the React manager only composes Angular/Vue refs when explicitly enabled.
