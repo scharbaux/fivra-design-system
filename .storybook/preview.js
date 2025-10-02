@@ -80,7 +80,13 @@ const describeModuleCandidates = (candidates) =>
     return summary;
   });
 
-const resolveDesignTokenExport = (exportName, { expectFunction = false } = {}) => {
+const resolveDesignTokenExport = (
+  exportName,
+  {
+    expectFunction = false,
+    coerceValue,
+  } = {},
+) => {
   const queue = [designTokenModule];
   const visited = new Set();
 
@@ -92,13 +98,30 @@ const resolveDesignTokenExport = (exportName, { expectFunction = false } = {}) =
 
     visited.add(currentModule);
 
-    const exportValue = getModuleExport(currentModule, exportName);
+    let exportValue = getModuleExport(currentModule, exportName);
+    if (typeof coerceValue === 'function') {
+      try {
+        const coercedValue = coerceValue(exportValue);
+        if (typeof coercedValue !== 'undefined') {
+          exportValue = coercedValue;
+        }
+      } catch (error) {
+        logDesignTokenDebug(
+          `Coercion failed while resolving "${exportName}".`,
+          {
+            error: error instanceof Error ? error.message : String(error),
+            original: describeExportValue(exportValue),
+          },
+        );
+      }
+    }
+
     if (expectFunction) {
       if (typeof exportValue === 'function') {
         logDesignTokenDebug(`Resolved "${exportName}" as a callable export.`, describeExportValue(exportValue));
         return exportValue;
       }
-    } else if (typeof exportValue !== 'undefined') {
+    } else if (typeof exportValue !== 'undefined' && exportValue !== null) {
       logDesignTokenDebug(`Resolved "${exportName}" export.`, describeExportValue(exportValue));
       return exportValue;
     }
@@ -143,7 +166,42 @@ const resolveDesignTokenExport = (exportName, { expectFunction = false } = {}) =
   return expectFunction ? null : null;
 };
 
-const designTokenManifest = resolveDesignTokenExport('designTokenManifest');
+const coerceDesignTokenManifest = (value) => {
+  if (value && typeof value === 'object' && 'themes' in value) {
+    return value;
+  }
+
+  if (typeof value === 'function') {
+    try {
+      const result = value();
+      if (result && typeof result === 'object' && 'themes' in result) {
+        logDesignTokenDebug('Invoked manifest factory function while resolving design tokens.', {
+          factory: describeExportValue(value),
+          result: describeExportValue(result),
+        });
+        return result;
+      }
+    } catch (error) {
+      logDesignTokenDebug('Manifest factory invocation failed.', {
+        error: error instanceof Error ? error.message : String(error),
+        factory: describeExportValue(value),
+      });
+      return undefined;
+    }
+  }
+
+  if (value && typeof value === 'object' && typeof value.then === 'function') {
+    logDesignTokenDebug('Encountered an async manifest export. Storybook requires synchronous manifest resolution.', {
+      promiseKeys: describeExportValue(value),
+    });
+  }
+
+  return undefined;
+};
+
+const designTokenManifest = resolveDesignTokenExport('designTokenManifest', {
+  coerceValue: coerceDesignTokenManifest,
+});
 if (!designTokenManifest?.themes) {
   throw new Error(
     '[Storybook][Design Tokens] Unable to load the design token manifest from "src/styles/themes".',

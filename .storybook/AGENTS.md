@@ -29,3 +29,4 @@ This document augments the repository root `AGENTS.md`. Review root conventions 
 - 1.2.5: Expanded the preview design token loader to traverse nested default exports so manifests resolve reliably in dev canvases.
 - 1.2.6: Added configuration and preview debug logging to diagnose Angular renderer and design token manifest resolution issues.
 - 1.2.7: Hardened Storybook preview initialization by exploring CommonJS fallbacks when resolving design token helpers.
+- 1.2.8: Coerced Storybook design token manifest resolution to evaluate factory-style exports before canvases render.
