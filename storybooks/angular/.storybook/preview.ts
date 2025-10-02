@@ -1,12 +1,10 @@
 import type { Preview } from "@storybook/angular";
-
-import "../../../src/styles/index.css";
 import {
   applyDesignTokenTheme,
   clearDesignTokenTheme,
   designTokenManifest,
   getDefaultDesignTokenTheme,
-} from "../../../src/styles/themes";
+} from "@styles/themes";
 
 const DESIGN_TOKEN_LOG_PREFIX = "[Storybook][Design Tokens]";
 const SAMPLE_THEME_VARIABLES = [
@@ -52,8 +50,12 @@ const logDesignTokenStatus = (slug: string) => {
 
 const defaultTheme = getDefaultDesignTokenTheme();
 
-const withDesignTokenTheme: NonNullable<Preview["decorators"]>[number] = (story, context) => {
-  const slug = (context.globals.theme as string) ?? defaultTheme.slug;
+type ThemeSlug = (typeof designTokenManifest.themes)[number]["slug"];
+type StoryFn = () => unknown;
+type StoryContext = { globals: Record<string, unknown> };
+
+const withDesignTokenTheme = (story: StoryFn, context: StoryContext) => {
+  const slug = (context.globals.theme as ThemeSlug | undefined) ?? defaultTheme.slug;
 
   if (typeof document !== "undefined") {
     clearDesignTokenTheme(document);
@@ -80,7 +82,7 @@ const preview: Preview = {
       },
     },
   },
-  decorators: [withDesignTokenTheme],
+  decorators: [withDesignTokenTheme as unknown as any],
   parameters: {
     actions: { argTypesRegex: "^on[A-Z].*" },
     controls: {

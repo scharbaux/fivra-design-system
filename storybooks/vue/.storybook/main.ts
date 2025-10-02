@@ -39,9 +39,9 @@ const config: StorybookConfig = {
           ...(config.plugins ?? []),
           {
             name: "sb-ghpages-fix-absolute-vite-inject",
-            transformIndexHtml(html: string) {
+            transformIndexHtml(html) {
               return html.replace(
-                /src="\\/vite-inject-mocker-entry\\.js"/g,
+                /src="\/vite-inject-mocker-entry\.js"/g,
                 'src="./vite-inject-mocker-entry.js"',
               );
             },

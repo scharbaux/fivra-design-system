@@ -15,8 +15,10 @@ This document captures the current tooling, languages, and automation that power
 ## Storybook Setup
 - Stories live under `src/**/*.stories.@(js|jsx|mjs|ts|tsx)` and `src/**/*.mdx`.
 - Addons: Docs, Accessibility, and Designs for embedded Figma references.
-- Production builds adjust `base: './'` and rewrite the Vite mocker entry to support GitHub Pages hosting.
+- Production builds adjust `base: './'`, rewrite the Vite mocker entry to support GitHub Pages hosting, and inject Storybook refs so the Angular/Vue static bundles load from `storybook-static/{angular,vue}`.
 - Development server enables Vite polling (`usePolling: true`, `interval: 200`) to improve reliability on networked filesystems.
+- Multi-framework composition: the root `.storybook/main.ts` registers refs for Angular (`http://localhost:6007`) and Vue (`http://localhost:6008`) when `STORYBOOK_REF_MODE=dev`, and falls back to relative URLs during static builds. The manager entry mirrors this setup at runtime.
+- `yarn storybook:compose` runs the React, Angular, and Vue workspaces together via `concurrently` so designers can switch between implementations from a single sidebar.
 
 ## Icon Workflow
 1. **Optimization** – `yarn optimize-icons` runs `scripts/optimize-icons.mjs` to recursively optimize SVG files in `src/shared/assets/icons`, retaining `viewBox` attributes and replacing literal `fill`/`stroke` colors with `currentColor`.
@@ -41,4 +43,4 @@ This document captures the current tooling, languages, and automation that power
 - A dedicated release workflow runs on `main`, applies `yarn run version` via Changesets, executes post-version `yarn test`/`yarn build`, uploads the generated changelog, and uses `changesets/action` to open release PRs or publish tags.
 
 ## Future Plans
-_Planned: document additional frameworks (e.g., Vue, Svelte) and any multi-framework Storybook compositions once they are introduced._
+- Document how additional frameworks (e.g., Svelte) can plug into the Storybook composition pattern established for Angular and Vue.

@@ -20,3 +20,4 @@ This guide supplements the repository root `AGENTS.md`. Review the root standard
 ## Functional Changes
 - Use `<major>.<minor>[.<patch>]` labels instead of dates when recording new entries.
 - 1.0: Added Button stories covering React usage, variants, sizes, icons, and responsive layouts.
+- 1.1.0: Migrated shared story typings to `@storybook/react-vite` following the Storybook 9 automigration.

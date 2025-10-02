@@ -95,6 +95,10 @@ const ThemeProvider = ({ slug, children }) => {
 };
 
 const withDesignTokenTheme = (Story, context) => {
+  if (context.parameters?.refId) {
+    return React.createElement(Story);
+  }
+
   const slug = context.globals.theme ?? defaultTheme.slug;
 
   return React.createElement(
@@ -106,7 +110,7 @@ const withDesignTokenTheme = (Story, context) => {
 
 export const decorators = [withDesignTokenTheme];
 
-/** @type { import('@storybook/react').Preview } */
+/** @type { import('@storybook/react-vite').Preview } */
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
   controls: {
@@ -121,6 +125,11 @@ export const parameters = {
         'Docs',
         ['Welcome', '*'],
         'Components',
+        [
+          'Button',
+          ['React', 'Angular', 'Vue', '*'],
+          '*',
+        ],
         'Gallery',
         '*',
       ],

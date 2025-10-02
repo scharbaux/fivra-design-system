@@ -22,3 +22,4 @@ This directory follows the repository and `src/components/` standards. Keep shar
 - 1.8.1: Pointed React exports to the Angular-owned button style module so all frameworks share the same source without symlinks.
 - 1.8.2: Added a components-level barrel that re-exports the Angular-owned button styles via `@components/Button/button.styles` so every adapter shares the same import path.
 - 1.8.3: Pointed the shared tests at the canonical Angular button styles to cover the inlined color-mix helper.
+- 1.8.4: Updated Button stories to import `Meta`/`StoryObj` from `@storybook/react-vite` so typings match the composed framework.
