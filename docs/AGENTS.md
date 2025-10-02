@@ -29,3 +29,4 @@ This document augments the root `AGENTS.md`. Ensure you understand the repositor
 - 1.4.0: Added guidance for bundling Google Sans fonts via the shared typography assets.
 - 1.8.0: Documented Angular consumption patterns for the Button component alongside existing React and web component usage.
 - 1.9.0: Captured the multi-framework Storybook composition model, including build orchestration and local dev commands.
+- 1.10.0: Documented the `yarn storybook` workflow and remote ref overrides.

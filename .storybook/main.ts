@@ -24,34 +24,31 @@ const getRefMode = () => {
 const refMode = getRefMode();
 const isStaticRefMode = refMode === "static";
 
+const reactDevUrl =
+  process.env.STORYBOOK_REACT_URL ?? "http://localhost:6006";
 const angularDevUrl =
-  process.env.STORYBOOK_ANGULAR_URL ?? "http://localhost:6007";
+  process.env.STORYBOOK_ANGULAR_URL ?? "http://localhost:6007"; // Override STORYBOOK_ANGULAR_URL to point at a remote Angular Storybook.
 const vueDevUrl =
-  process.env.STORYBOOK_VUE_URL ?? "http://localhost:6008";
+  process.env.STORYBOOK_VUE_URL ?? "http://localhost:6008"; // Override STORYBOOK_VUE_URL to point at a remote Vue Storybook.
+const reactStaticUrl = process.env.STORYBOOK_REACT_STATIC_URL ?? "./";
 const angularStaticUrl =
   process.env.STORYBOOK_ANGULAR_STATIC_URL ?? "./angular";
 const vueStaticUrl = process.env.STORYBOOK_VUE_STATIC_URL ?? "./vue";
 
-const includeAngularRef = process.env.STORYBOOK_COMPOSE_ANGULAR !== "false";
-const includeVueRef = process.env.STORYBOOK_COMPOSE_VUE !== "false";
-
-const refs: StorybookConfig["refs"] = {};
-
-if (includeAngularRef) {
-  refs.angular = {
-    title: "Components/Button/Angular",
+export const refs: StorybookConfig["refs"] = {
+  react: {
+    title: "React",
+    url: isStaticRefMode ? reactStaticUrl : reactDevUrl,
+  },
+  angular: {
+    title: "Angular",
     url: isStaticRefMode ? angularStaticUrl : angularDevUrl,
-    expanded: true,
-  };
-}
-
-if (includeVueRef) {
-  refs.vue = {
-    title: "Components/Button/Vue",
+  },
+  vue: {
+    title: "Vue",
     url: isStaticRefMode ? vueStaticUrl : vueDevUrl,
-    expanded: true,
-  };
-}
+  },
+};
 
 const config: StorybookConfig = {
   stories: [
@@ -69,17 +66,6 @@ const config: StorybookConfig = {
     options: {},
   },
   refs,
-  managerEntries: async (existingEntries = []) => {
-    const resolvedEntries =
-      typeof existingEntries === "function"
-        ? await existingEntries()
-        : existingEntries;
-
-    return [
-      ...(resolvedEntries ?? []),
-      resolveAliasPath("./refs-manager-entry.ts"),
-    ];
-  },
   async viteFinal(config, { configType }) {
     const resolve = {
       ...(config.resolve || {}),
