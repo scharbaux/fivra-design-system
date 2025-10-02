@@ -1,0 +1,10 @@
+# Angular Storybook Configuration Guidelines
+
+This directory inherits the repository root, `storybooks/AGENTS.md`, and `storybooks/angular/AGENTS.md` standards. Apply the same configuration practices documented in `.storybook/AGENTS.md` while adapting them to the Angular renderer.
+
+- Author configuration in TypeScript with explicit `StorybookConfig` typings.
+- Keep addon, alias, and builder settings aligned with the React workspace so shared imports resolve consistently.
+- Update the change log below whenever Storybook behavior changes for Angular consumers.
+
+## Functional Changes
+- 1.2.0: Added Storybook 9 Angular configuration with shared Vite aliases and production base handling.
