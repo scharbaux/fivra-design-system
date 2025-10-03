@@ -8,3 +8,4 @@ This directory inherits guidance from the repository root, `storybooks/AGENTS.md
 
 ## Functional Changes
 - 1.2.0: Added Angular Button stories that reuse shared styles and React-aligned controls.
+- 1.5.4: Ensured button stories supply `moduleMetadata` within the shared render helper so `<fivra-button>` loads without NG0303 errors.
