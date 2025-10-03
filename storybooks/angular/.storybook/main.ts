@@ -1,5 +1,6 @@
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { loadAngularPlugin } from "./angular-vite-plugin";
 import type { StorybookConfig } from "@storybook/angular";
 
 /**
@@ -22,6 +23,11 @@ const config: StorybookConfig = {
     builder: "@storybook/builder-vite",
   },
   async viteFinal(config, { configType }) {
+    const angular = await loadAngularPlugin();
+    const angularPlugin = angular({
+      tsconfig: resolveFromRoot("storybooks/angular/tsconfig.storybook.json"),
+    });
+
     const resolveConfig = {
       ...(config.resolve ?? {}),
       alias: {
@@ -41,6 +47,13 @@ const config: StorybookConfig = {
         "Access-Control-Allow-Origin": "http://localhost:6006",
         "Access-Control-Allow-Credentials": "true",
       },
+      fs: {
+        ...(config.server?.fs ?? {}),
+        allow: [
+          ...(config.server?.fs?.allow ?? []),
+          resolveFromRoot("src"),
+        ],
+      },
     };
 
     if (configType === "PRODUCTION") {
@@ -51,6 +64,7 @@ const config: StorybookConfig = {
         server: serverConfig,
         plugins: [
           ...(config.plugins ?? []),
+          angularPlugin,
           {
             name: "sb-ghpages-fix-absolute-vite-inject",
             transformIndexHtml(html) {
@@ -74,6 +88,7 @@ const config: StorybookConfig = {
           interval: 200,
         },
       },
+      plugins: [...(config.plugins ?? []), angularPlugin],
     };
   },
 };
