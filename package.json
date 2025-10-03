@@ -26,7 +26,7 @@
     "prestorybook:angular": "yarn run generate:tokens",
     "storybook:vue": "storybook dev -p 6008 -c storybooks/vue/.storybook",
     "prestorybook:vue": "yarn run generate:tokens",
-    "storybook": "concurrently --kill-others-on-fail --names react,angular,vue \"yarn storybook:react:compose\" \"yarn storybook:angular\" \"yarn storybook:vue\"",
+    "storybook": "concurrently --kill-others-on-fail --names angular,vue,react \"yarn storybook:angular\" \"yarn storybook:vue\" \"wait-on tcp:6007 tcp:6008 && yarn storybook:react:compose\"",
     "prestorybook": "yarn run generate:tokens",
     "build-storybook": "yarn run build-storybook:compose",
     "prebuild-storybook": "yarn run generate:icons && yarn run generate:tokens",
@@ -100,6 +100,7 @@
     "vite": "^6.2.5",
     "vitest": "^2.0.4",
     "vue": "^3.5.12",
+    "wait-on": "^7.2.0",
     "zone.js": "^0.14.7"
   }
 }

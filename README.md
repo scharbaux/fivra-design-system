@@ -50,7 +50,9 @@ yarn generate:icons
 yarn generate:tokens
 ```
 
-Run the composed Storybook experience for React, Angular, and Vue on ports 6006/6007/6008:
+Run the composed Storybook experience for React, Angular, and Vue on ports 6006/6007/6008. The script boots the Angular and Vue
+dev servers first and waits for them to respond before composing the React manager so the tabs populate as soon as the window
+opens:
 
 ```bash
 yarn storybook
@@ -99,7 +101,8 @@ Commonly used scripts are listed below. Run them with `yarn <script>`.
 - `version` – Apply accumulated Changesets (`changeset version`) to bump `package.json`, changelogs, and generated release metadata (`yarn run version`).
 - `release` – Publish the release defined by Changesets (used by CI; requires `NPM_TOKEN`).
 - `verify:agents` – Ensure modified directories updated their `AGENTS.md` with a new semantic-version bullet (runs automatically in CI).
-- `storybook` – Launch the React, Angular, and Vue Storybook instances together (ports 6006/6007/6008) so refs resolve locally.
+- `storybook` – Launch the React, Angular, and Vue Storybook instances together (ports 6006/6007/6008). The script waits for the
+  Angular and Vue dev servers to report ready before composing the React manager so refs resolve locally.
 - `storybook:react` – Start the Storybook 9 (React + Vite) dev server with hot reload.
 - `storybook:react:compose` – Run the React manager with composition enabled (Angular/Vue refs) without booting the other dev servers.
 - `build-storybook` – Produce the static Storybook bundle and copy the Angular/Vue builds into `storybook-static/{angular,vue}` for composition.

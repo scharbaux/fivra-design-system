@@ -29,7 +29,10 @@ To determine whether a component should be authored as a web component or framew
 
 ## Multi-Framework Storybook Composition
 - The React workspace under `.storybook/` owns the primary manager and registers framework refs. Angular and Vue live in `storybooks/<framework>/.storybook` and expose their own build outputs.
-- Development: run `yarn storybook` to launch all three workspaces together. The script starts React on port 6006, Angular on 6007, and Vue on 6008 so the refs declared in `.storybook/main.ts` resolve to live dev servers when `STORYBOOK_REF_MODE=dev`. Override `STORYBOOK_ANGULAR_URL` or `STORYBOOK_VUE_URL` when pointing at remote builds.
+- Development: run `yarn storybook` to launch all three workspaces together. Angular (6007) and Vue (6008) boot first, and the
+  script waits for them to report ready before starting the React manager on 6006 so the refs declared in `.storybook/main.ts`
+  resolve to live dev servers when `STORYBOOK_REF_MODE=dev`. Override `STORYBOOK_ANGULAR_URL` or `STORYBOOK_VUE_URL` when pointing
+  at remote builds.
 - Static hosting: `yarn build-storybook` chains the Angular/Vue builds, runs the React build with `STORYBOOK_REF_MODE=static`, and copies the generated assets into `storybook-static/{angular,vue}` via `scripts/copy-storybook-refs.mjs`. The manager relies on the exported `refs` configuration so GitHub Pages (or any static host) serves the composed bundles without extra configuration.
 - Adding a new framework Storybook:
   1. Scaffold `storybooks/<framework>/.storybook/` with its own `main.ts` and `preview` configuration.
