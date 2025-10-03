@@ -30,3 +30,4 @@ This document augments the root `AGENTS.md`. Ensure you understand the repositor
 - 1.8.0: Documented Angular consumption patterns for the Button component alongside existing React and web component usage.
 - 1.9.0: Captured the multi-framework Storybook composition model, including build orchestration and local dev commands.
 - 1.10.0: Documented the `yarn storybook` workflow and remote ref overrides.
+- 1.11.0: Clarified that `yarn storybook` waits for Angular/Vue dev servers before composing the React manager.
