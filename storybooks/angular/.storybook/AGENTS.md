@@ -13,3 +13,4 @@ This directory inherits the repository root, `storybooks/AGENTS.md`, and `storyb
 - 1.5.3: Expanded the Vite dev server allow-list to cover the Angular workspace root and prevent 403s.
 - 1.5.4: Injected `STORYBOOK_ANGULAR_OPTIONS` via Vite `define` so Angular framework options propagate without runtime errors.
 - 1.5.5: Ensured the Angular Storybook runtime loads Zone.js and forwards `framework.options` to Vite so bootstrap works without NG0908.
+- 1.5.6: Imported the shared design system stylesheet into the preview to restore theming for Angular stories.
