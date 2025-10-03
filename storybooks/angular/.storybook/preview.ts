@@ -1,3 +1,4 @@
+import "zone.js";
 import type { Preview } from "@storybook/angular";
 import {
   applyDesignTokenTheme,

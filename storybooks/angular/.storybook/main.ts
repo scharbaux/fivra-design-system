@@ -13,28 +13,33 @@ const angularWorkspaceRoot = resolve(storybookDir, "..");
 
 const resolveFromRoot = (relativePath: string) => resolve(repoRoot, relativePath);
 
-const angularFrameworkOptions: Record<string, unknown> = {};
-
-const config: StorybookConfig = {
+const storybookConfig: StorybookConfig = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
   addons: ["@storybook/addon-docs", "@storybook/addon-a11y", "@storybook/addon-designs"],
   framework: {
     name: "@storybook/angular",
-    options: angularFrameworkOptions,
+    options: {},
   },
   core: {
     builder: "@storybook/builder-vite",
   },
-  async viteFinal(config, { configType }) {
+  async viteFinal(viteConfig, options) {
+    const { configType } = options;
     const angular = await loadAngularPlugin();
     const angularPlugin = angular({
       tsconfig: resolveFromRoot("storybooks/angular/tsconfig.storybook.json"),
     });
 
+    const angularFrameworkOptions = (
+      (options?.framework?.options ??
+        storybookConfig.framework?.options ??
+        {}) as Record<string, unknown>
+    );
+
     const resolveConfig = {
-      ...(config.resolve ?? {}),
+      ...(viteConfig.resolve ?? {}),
       alias: {
-        ...(config.resolve?.alias ?? {}),
+        ...(viteConfig.resolve?.alias ?? {}),
         "@components": resolveFromRoot("src/components"),
         "@web-components": resolveFromRoot("src/web-components"),
         "@shared": resolveFromRoot("src/shared"),
@@ -45,39 +50,39 @@ const config: StorybookConfig = {
 
     const allowList = Array.from(
       new Set([
-        ...(config.server?.fs?.allow ?? []),
+        ...(viteConfig.server?.fs?.allow ?? []),
         resolveFromRoot("src"),
         angularWorkspaceRoot,
       ]),
     );
 
     const serverConfig = {
-      ...(config.server ?? {}),
+      ...(viteConfig.server ?? {}),
       headers: {
-        ...(config.server?.headers ?? {}),
+        ...(viteConfig.server?.headers ?? {}),
         "Access-Control-Allow-Origin": "http://localhost:6006",
         "Access-Control-Allow-Credentials": "true",
       },
       fs: {
-        ...(config.server?.fs ?? {}),
+        ...(viteConfig.server?.fs ?? {}),
         allow: allowList,
       },
     };
 
     const defineConfig = {
-      ...(config.define ?? {}),
+      ...(viteConfig.define ?? {}),
       STORYBOOK_ANGULAR_OPTIONS: JSON.stringify(angularFrameworkOptions),
     };
 
     if (configType === "PRODUCTION") {
       return {
-        ...config,
+        ...viteConfig,
         base: "./",
         define: defineConfig,
         resolve: resolveConfig,
         server: serverConfig,
         plugins: [
-          ...(config.plugins ?? []),
+          ...(viteConfig.plugins ?? []),
           angularPlugin,
           {
             name: "sb-ghpages-fix-absolute-vite-inject",
@@ -93,7 +98,7 @@ const config: StorybookConfig = {
     }
 
     return {
-      ...config,
+      ...viteConfig,
       define: defineConfig,
       resolve: resolveConfig,
       server: {
@@ -103,9 +108,9 @@ const config: StorybookConfig = {
           interval: 200,
         },
       },
-      plugins: [...(config.plugins ?? []), angularPlugin],
+      plugins: [...(viteConfig.plugins ?? []), angularPlugin],
     };
   },
 };
 
-export default config;
+export default storybookConfig;
