@@ -1,6 +1,5 @@
 import { CommonModule } from "@angular/common";
 import type { Meta, StoryObj } from "@storybook/angular";
-import { moduleMetadata } from "@storybook/angular";
 
 import { FivraButtonComponent, FivraButtonModule } from "@internal/angular/button";
 import {
@@ -63,6 +62,9 @@ const defaultRender = (args: ButtonStoryArgs) => {
   const ariaLabel = ariaLabelOverride ?? rest.ariaLabel ?? null;
 
   return {
+    moduleMetadata: {
+      imports: [CommonModule, FivraButtonModule],
+    },
     props: {
       ...rest,
       style: style ?? null,
@@ -96,11 +98,6 @@ const meta: Meta<ButtonStoryArgs> = {
   title: "Components/Button/Angular",
   component: FivraButtonComponent,
   tags: ["autodocs"],
-  decorators: [
-    moduleMetadata({
-      imports: [CommonModule, FivraButtonModule],
-    }),
-  ],
   args: {
     children: "Button",
     variant: "primary",

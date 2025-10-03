@@ -15,3 +15,5 @@ This workspace inherits the repository root and `storybooks/AGENTS.md` guidance.
 - 1.5.1: Added CORS headers to the Vite dev server so React can compose the Angular ref without sidebar errors.
 - 1.5.2: Wired the Angular Vite plugin and dev server allow-list so internal Angular packages load in Storybook.
 - 1.5.3: Forced the Storybook TypeScript config into full AOT mode so Ivy metadata is emitted without JIT during static builds.
+- 1.5.4: Routed button stories through an inline `moduleMetadata` helper so Angular modules register during Storybook renders.
+- 1.5.5: Simplified the button story metadata to only import `FivraButtonModule`, removing redundant decorators that caused NG0303 warnings.
