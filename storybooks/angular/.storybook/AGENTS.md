@@ -10,3 +10,4 @@ This directory inherits the repository root, `storybooks/AGENTS.md`, and `storyb
 - 1.2.0: Added Storybook 9 Angular configuration with shared Vite aliases and production base handling.
 - 1.5.0: Switched the Angular Storybook config to `viteFinal` with shared server and production tweaks.
 - 1.5.2: Added the Angular Vite plugin loader to ensure internal Angular packages compile in Storybook.
+- 1.5.3: Expanded the Vite dev server allow-list to cover the Angular workspace root and prevent 403s.

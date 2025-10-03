@@ -9,6 +9,7 @@ import type { StorybookConfig } from "@storybook/angular";
  */
 const storybookDir = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(storybookDir, "../../..");
+const angularWorkspaceRoot = resolve(storybookDir, "..");
 
 const resolveFromRoot = (relativePath: string) => resolve(repoRoot, relativePath);
 
@@ -40,6 +41,14 @@ const config: StorybookConfig = {
       },
     };
 
+    const allowList = Array.from(
+      new Set([
+        ...(config.server?.fs?.allow ?? []),
+        resolveFromRoot("src"),
+        angularWorkspaceRoot,
+      ]),
+    );
+
     const serverConfig = {
       ...(config.server ?? {}),
       headers: {
@@ -49,10 +58,7 @@ const config: StorybookConfig = {
       },
       fs: {
         ...(config.server?.fs ?? {}),
-        allow: [
-          ...(config.server?.fs?.allow ?? []),
-          resolveFromRoot("src"),
-        ],
+        allow: allowList,
       },
     };
 
