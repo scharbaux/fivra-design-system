@@ -52,7 +52,7 @@ jobs:
         run: yarn optimize-icons
 
       - name: Pre-Build
-        run: yarn prebuid
+        run: yarn prebuild
 
       - name: Build frameworks
         run: yarn build
