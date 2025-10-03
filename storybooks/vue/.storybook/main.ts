@@ -30,6 +30,19 @@ const config: StorybookConfig = {
       },
     };
 
+    const existingCors = config.server?.cors;
+    const corsConfig =
+      typeof existingCors === "object" && existingCors !== null
+        ? {
+            ...existingCors,
+            origin: true,
+            credentials: true,
+          }
+        : {
+            origin: true,
+            credentials: true,
+          };
+
     const serverConfig = {
       ...(config.server ?? {}),
       headers: {
@@ -37,6 +50,7 @@ const config: StorybookConfig = {
         "Access-Control-Allow-Origin": "http://localhost:6006",
         "Access-Control-Allow-Credentials": "true",
       },
+      cors: corsConfig,
     };
 
     if (configType === "PRODUCTION") {

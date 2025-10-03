@@ -56,6 +56,19 @@ const storybookConfig: StorybookConfig = {
       ]),
     );
 
+    const existingCors = viteConfig.server?.cors;
+    const corsConfig =
+      typeof existingCors === "object" && existingCors !== null
+        ? {
+            ...existingCors,
+            origin: true,
+            credentials: true,
+          }
+        : {
+            origin: true,
+            credentials: true,
+          };
+
     const serverConfig = {
       ...(viteConfig.server ?? {}),
       headers: {
@@ -63,6 +76,7 @@ const storybookConfig: StorybookConfig = {
         "Access-Control-Allow-Origin": "http://localhost:6006",
         "Access-Control-Allow-Credentials": "true",
       },
+      cors: corsConfig,
       fs: {
         ...(viteConfig.server?.fs ?? {}),
         allow: allowList,
