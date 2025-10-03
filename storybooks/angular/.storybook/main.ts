@@ -34,11 +34,21 @@ const config: StorybookConfig = {
       },
     };
 
+    const serverConfig = {
+      ...(config.server ?? {}),
+      headers: {
+        ...(config.server?.headers ?? {}),
+        "Access-Control-Allow-Origin": "http://localhost:6006",
+        "Access-Control-Allow-Credentials": "true",
+      },
+    };
+
     if (configType === "PRODUCTION") {
       return {
         ...config,
         base: "./",
         resolve: resolveConfig,
+        server: serverConfig,
         plugins: [
           ...(config.plugins ?? []),
           {
@@ -58,7 +68,7 @@ const config: StorybookConfig = {
       ...config,
       resolve: resolveConfig,
       server: {
-        ...(config.server ?? {}),
+        ...serverConfig,
         watch: {
           usePolling: true,
           interval: 200,
