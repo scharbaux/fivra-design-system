@@ -48,6 +48,15 @@ jobs:
       - name: Generate icons map
         run: yarn run generate:icons
 
+      - name: Optimize generated icons
+        run: yarn optimize-icons
+
+      - name: Pre-Build
+        run: yarn prebuid
+
+      - name: Build frameworks
+        run: yarn build
+
       - name: Build Storybook
         run: yarn build-storybook
 
