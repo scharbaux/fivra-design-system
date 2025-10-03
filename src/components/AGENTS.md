@@ -25,3 +25,4 @@ This document extends the root-level `AGENTS.md`. All contributors must read and
 - 1.8.0: Shared button tokens now power the Angular adapter exported from `src/angular/`.
 - 1.8.2: Exposed the Angular-owned button styles through a components barrel so React and custom elements import them via the `@components` alias.
 - 1.8.3: Swapped Storybook story typings to the `@storybook/react-vite` framework package after the automigration.
+- 1.8.4: Updated the Icon component to merge CSS token sizes into inline styles, added tests, and expanded stories to demonstrate token-driven sizing overrides.
