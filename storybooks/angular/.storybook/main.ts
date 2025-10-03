@@ -2,6 +2,10 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { StorybookConfig } from "@storybook/angular";
 
+/**
+ * Storybook configuration for the Angular workspace using the Vite builder.
+ * Mirrors the React and Vue setups so aliases, addons, and production tweaks stay aligned.
+ */
 const storybookDir = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(storybookDir, "../../..");
 
@@ -14,12 +18,14 @@ const config: StorybookConfig = {
     name: "@storybook/angular",
     options: {},
   },
-  async webpackFinal(baseConfig) {
-    const updatedConfig = { ...baseConfig };
-    updatedConfig.resolve = {
-      ...(baseConfig.resolve ?? {}),
+  core: {
+    builder: "@storybook/builder-vite",
+  },
+  async viteFinal(config, { configType }) {
+    const resolveConfig = {
+      ...(config.resolve ?? {}),
       alias: {
-        ...(baseConfig.resolve?.alias ?? {}),
+        ...(config.resolve?.alias ?? {}),
         "@components": resolveFromRoot("src/components"),
         "@web-components": resolveFromRoot("src/web-components"),
         "@shared": resolveFromRoot("src/shared"),
@@ -28,7 +34,37 @@ const config: StorybookConfig = {
       },
     };
 
-    return updatedConfig;
+    if (configType === "PRODUCTION") {
+      return {
+        ...config,
+        base: "./",
+        resolve: resolveConfig,
+        plugins: [
+          ...(config.plugins ?? []),
+          {
+            name: "sb-ghpages-fix-absolute-vite-inject",
+            transformIndexHtml(html) {
+              return html.replace(
+                /src="\/vite-inject-mocker-entry\.js"/g,
+                'src="./vite-inject-mocker-entry.js"',
+              );
+            },
+          },
+        ],
+      };
+    }
+
+    return {
+      ...config,
+      resolve: resolveConfig,
+      server: {
+        ...(config.server ?? {}),
+        watch: {
+          usePolling: true,
+          interval: 200,
+        },
+      },
+    };
   },
 };
 
