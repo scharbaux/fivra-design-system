@@ -10,3 +10,4 @@ This directory inherits guidance from the repository root, `storybooks/AGENTS.md
 - 1.2.0: Added Angular Button stories that reuse shared styles and React-aligned controls.
 - 1.5.4: Ensured button stories supply `moduleMetadata` within the shared render helper so `<fivra-button>` loads without NG0303 errors.
 - 1.5.5: Removed redundant module decorators in favor of the render helper's imports to eliminate lingering NG0303 warnings.
+- 1.5.6: Added a shared decorator plus render metadata combo so Angular button stories load styles consistently across composed previews.

@@ -17,3 +17,4 @@ This workspace inherits the repository root and `storybooks/AGENTS.md` guidance.
 - 1.5.3: Forced the Storybook TypeScript config into full AOT mode so Ivy metadata is emitted without JIT during static builds.
 - 1.5.4: Routed button stories through an inline `moduleMetadata` helper so Angular modules register during Storybook renders.
 - 1.5.5: Simplified the button story metadata to only import `FivraButtonModule`, removing redundant decorators that caused NG0303 warnings.
+- 1.5.6: Reintroduced the shared button story decorator alongside the render metadata so Angular previews retain styles without NG0303 errors during composition.

@@ -1,5 +1,6 @@
 import { CommonModule } from "@angular/common";
 import type { Meta, StoryObj } from "@storybook/angular";
+import { moduleMetadata } from "@storybook/angular";
 
 import { FivraButtonComponent, FivraButtonModule } from "@internal/angular/button";
 import {
@@ -57,14 +58,16 @@ const createTertiarySemanticStyles = (tone: SemanticTone): Record<string, string
   "--fivra-button-active-fallback": `var(--backgroundSecondary${tone})`,
 });
 
+const resolveModuleMetadata = () => ({
+  imports: [CommonModule, FivraButtonModule],
+});
+
 const defaultRender = (args: ButtonStoryArgs) => {
   const { children, style, onClick, "aria-label": ariaLabelOverride, ...rest } = args;
   const ariaLabel = ariaLabelOverride ?? rest.ariaLabel ?? null;
 
   return {
-    moduleMetadata: {
-      imports: [CommonModule, FivraButtonModule],
-    },
+    moduleMetadata: resolveModuleMetadata(),
     props: {
       ...rest,
       style: style ?? null,
@@ -98,6 +101,7 @@ const meta: Meta<ButtonStoryArgs> = {
   title: "Components/Button/Angular",
   component: FivraButtonComponent,
   tags: ["autodocs"],
+  decorators: [moduleMetadata(resolveModuleMetadata())],
   args: {
     children: "Button",
     variant: "primary",
