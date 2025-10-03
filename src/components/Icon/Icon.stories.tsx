@@ -130,6 +130,54 @@ export const Sizes: Story = {
   },
 };
 
+export const TokenOverride: Story = {
+  args: {
+    name: defaultIcon,
+    variant: "outline",
+    color: "var(--textPrimaryInteractive)",
+  },
+  render: (args) => (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "calc(var(--spacingM) * 1px)",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "calc(var(--spacingS) * 1px)",
+          "--icon-size": "var(--iconsizesL)",
+        } as React.CSSProperties}
+      >
+        <span style={{ fontSize: "0.875rem" }}>Default token</span>
+        <Icon {...args} size="var(--icon-size)" />
+      </div>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "calc(var(--spacingS) * 1px)",
+          "--icon-size": "48px",
+        } as React.CSSProperties}
+      >
+        <span style={{ fontSize: "0.875rem" }}>Overridden to 48px</span>
+        <Icon {...args} size="var(--icon-size)" />
+      </div>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Shows how CSS custom properties can drive icon sizing. Each row reuses the same '--icon-size' token while the wrapper adjusts its value.",
+      },
+    },
+  },
+};
+
 export const Colors: Story = {
   args: {
     name: defaultIcon,

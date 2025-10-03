@@ -18,6 +18,12 @@
       "@internal/angular/*": ["src/angular/*"]
     }
   },
+  "angularCompilerOptions": {
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true,
+    "compilationMode": "full"
+  },
   "include": [
     "../../src/angular/**/*.ts",
     "../../src/components/**/*.ts",
