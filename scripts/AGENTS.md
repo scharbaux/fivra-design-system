@@ -27,3 +27,4 @@ This file extends the repository root `AGENTS.md`. Always review the root conven
 - 1.3.0: Added a postbuild copy script to publish theme CSS and Google Sans font assets with each bundle.
 - 1.4.0: Extended the postbuild copy script to include the Angular distribution directory.
 - 1.5.0: Added `copy-storybook-refs.mjs` to sync Angular/Vue Storybook builds into the composed static output.
+- 1.6.0: Ensured composed Storybook copies emit a `.nojekyll` marker so framework JSON manifests serve correctly on Pages.

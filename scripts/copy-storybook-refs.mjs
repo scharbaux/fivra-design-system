@@ -1,4 +1,4 @@
-import { access, cp, mkdir, rm } from "node:fs/promises";
+import { access, cp, mkdir, rm, writeFile } from "node:fs/promises";
 import { constants } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -55,6 +55,10 @@ const run = async () => {
   for (const framework of frameworks) {
     await copyFrameworkStorybook(framework);
   }
+
+  const noJekyllPath = join(staticDir, ".nojekyll");
+  await writeFile(noJekyllPath, "");
+  console.info(`[storybook][compose] Ensured ${noJekyllPath} exists`);
 };
 
 run().catch((error) => {
