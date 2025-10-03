@@ -13,12 +13,14 @@ const angularWorkspaceRoot = resolve(storybookDir, "..");
 
 const resolveFromRoot = (relativePath: string) => resolve(repoRoot, relativePath);
 
+const angularFrameworkOptions: Record<string, unknown> = {};
+
 const config: StorybookConfig = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
   addons: ["@storybook/addon-docs", "@storybook/addon-a11y", "@storybook/addon-designs"],
   framework: {
     name: "@storybook/angular",
-    options: {},
+    options: angularFrameworkOptions,
   },
   core: {
     builder: "@storybook/builder-vite",
@@ -62,10 +64,16 @@ const config: StorybookConfig = {
       },
     };
 
+    const defineConfig = {
+      ...(config.define ?? {}),
+      STORYBOOK_ANGULAR_OPTIONS: JSON.stringify(angularFrameworkOptions),
+    };
+
     if (configType === "PRODUCTION") {
       return {
         ...config,
         base: "./",
+        define: defineConfig,
         resolve: resolveConfig,
         server: serverConfig,
         plugins: [
@@ -86,6 +94,7 @@ const config: StorybookConfig = {
 
     return {
       ...config,
+      define: defineConfig,
       resolve: resolveConfig,
       server: {
         ...serverConfig,
