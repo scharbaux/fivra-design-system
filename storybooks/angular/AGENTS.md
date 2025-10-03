@@ -13,3 +13,4 @@ This workspace inherits the repository root and `storybooks/AGENTS.md` guidance.
 - 1.4.0: Adopted the Angular CLI Storybook builders (start/build) via `ng run` to satisfy the SB 9 migration checks.
 - 1.5.0: Migrated the Angular Storybook workspace to the Vite builder and aligned the scripts with the React/Vue setups.
 - 1.5.1: Added CORS headers to the Vite dev server so React can compose the Angular ref without sidebar errors.
+- 1.5.2: Wired the Angular Vite plugin and dev server allow-list so internal Angular packages load in Storybook.
