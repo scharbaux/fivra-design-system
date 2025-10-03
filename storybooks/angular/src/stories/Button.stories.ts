@@ -63,6 +63,10 @@ const defaultRender = (args: ButtonStoryArgs) => {
   const ariaLabel = ariaLabelOverride ?? rest.ariaLabel ?? null;
 
   return {
+    moduleMetadata: {
+      imports: [CommonModule, FivraButtonModule],
+      declarations: [FivraButtonComponent],
+    },
     props: {
       ...rest,
       style: style ?? null,
