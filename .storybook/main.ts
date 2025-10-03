@@ -46,22 +46,15 @@ const composeAngular = parseEnvToggle(
 );
 const composeVue = parseEnvToggle(process.env.STORYBOOK_COMPOSE_VUE, true);
 
-const reactDevUrl =
-  process.env.STORYBOOK_REACT_URL ?? "http://localhost:6006";
 const angularDevUrl =
   process.env.STORYBOOK_ANGULAR_URL ?? "http://localhost:6007"; // Override STORYBOOK_ANGULAR_URL to point at a remote Angular Storybook.
 const vueDevUrl =
   process.env.STORYBOOK_VUE_URL ?? "http://localhost:6008"; // Override STORYBOOK_VUE_URL to point at a remote Vue Storybook.
-const reactStaticUrl = process.env.STORYBOOK_REACT_STATIC_URL ?? "./";
 const angularStaticUrl =
   process.env.STORYBOOK_ANGULAR_STATIC_URL ?? "./angular";
 const vueStaticUrl = process.env.STORYBOOK_VUE_STATIC_URL ?? "./vue";
 
 export const refs: StorybookConfig["refs"] = {
-  react: {
-    title: "React",
-    url: isStaticRefMode ? reactStaticUrl : reactDevUrl,
-  },
   ...(composeAngular
     ? {
         angular: {
