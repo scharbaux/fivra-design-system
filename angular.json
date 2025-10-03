@@ -5,30 +5,7 @@
     "design-system-storybook": {
       "projectType": "application",
       "root": "storybooks/angular",
-      "sourceRoot": "storybooks/angular/src",
-      "architect": {
-        "start-storybook": {
-          "builder": "@storybook/angular:start-storybook",
-          "options": {
-            "configDir": "storybooks/angular/.storybook",
-            "port": 6007,
-            "tsConfig": "storybooks/angular/tsconfig.storybook.json",
-            "ci": true,
-            "compodoc": false,
-            "styles": ["src/styles/index.css"]
-          }
-        },
-        "build-storybook": {
-          "builder": "@storybook/angular:build-storybook",
-          "options": {
-            "configDir": "storybooks/angular/.storybook",
-            "outputDir": "storybooks/angular/storybook-static",
-            "tsConfig": "storybooks/angular/tsconfig.storybook.json",
-            "compodoc": false,
-            "styles": ["src/styles/index.css"]
-          }
-        }
-      }
+      "sourceRoot": "storybooks/angular/src"
     }
   },
   "cli": {
