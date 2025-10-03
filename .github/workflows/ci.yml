@@ -52,11 +52,11 @@ jobs:
           VERIFY_AGENTS_BASE: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || format('origin/{0}', github.event.repository.default_branch) }}
         run: yarn verify:agents
 
-      - name: Run unit tests
-        run: yarn test
-
       - name: Generate icons
         run: yarn generate:icons
+
+      - name: Run unit tests
+        run: yarn test
 
       - name: Build package
         run: yarn build
