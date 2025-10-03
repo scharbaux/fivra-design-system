@@ -100,20 +100,37 @@ const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(props, ref) {
   };
 
   const computedSize = toPx(size);
+  const isTokenSize = typeof size === 'string';
+  const providedWidth = (svgProps as any).width;
+  const providedHeight = (svgProps as any).height;
+
+  const existingStyle = style as React.CSSProperties | undefined;
+  const mergedStyle: React.CSSProperties | undefined =
+    isTokenSize && computedSize
+      ? {
+          ...existingStyle,
+          ...(existingStyle?.width == null && providedWidth == null
+            ? { width: computedSize }
+            : {}),
+          ...(existingStyle?.height == null && providedHeight == null
+            ? { height: computedSize }
+            : {}),
+        }
+      : existingStyle;
 
   // Default to filled shapes for both variants to preserve
   // flattened outlines exported from design tools.
   const defaultFill = (svgProps as any).fill ?? 'currentColor';
 
   const baseSvgProps: React.SVGProps<SVGSVGElement> = {
-    width: (svgProps as any).width ?? computedSize,
-    height: (svgProps as any).height ?? computedSize,
+    width: providedWidth ?? (isTokenSize ? undefined : computedSize),
+    height: providedHeight ?? (isTokenSize ? undefined : computedSize),
     color,
     fill: defaultFill,
     viewBox: (viewBoxProp as any) ?? (svgProps as any).viewBox ?? DEFAULT_VIEWBOX,
     xmlns: 'http://www.w3.org/2000/svg',
     className,
-    style,
+    style: mergedStyle,
     ref: ref as any,
     ...(commonAriaProps as any),
   };
@@ -139,8 +156,8 @@ const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(props, ref) {
       const wrapperStyle: React.CSSProperties = {
         display: 'inline-block',
         lineHeight: 0,
-        width: baseSvgProps.width as any,
-        height: baseSvgProps.height as any,
+        ...(baseSvgProps.width ? { width: baseSvgProps.width as any } : {}),
+        ...(baseSvgProps.height ? { height: baseSvgProps.height as any } : {}),
         color: baseSvgProps.color as any,
         ...(baseSvgProps.style || {}),
       };
@@ -171,8 +188,8 @@ const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(props, ref) {
       const wrapperStyle: React.CSSProperties = {
         display: 'inline-block',
         lineHeight: 0,
-        width: baseSvgProps.width as any,
-        height: baseSvgProps.height as any,
+        ...(baseSvgProps.width ? { width: baseSvgProps.width as any } : {}),
+        ...(baseSvgProps.height ? { height: baseSvgProps.height as any } : {}),
         color: baseSvgProps.color as any,
         ...(baseSvgProps.style || {}),
       };
