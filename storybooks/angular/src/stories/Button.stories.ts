@@ -12,7 +12,6 @@ import {
   SEMANTIC_TONES,
   createButtonSemanticStyleFactories,
 } from "@components/Button/story-helpers";
-
 ensureButtonStyles();
 
 const {
@@ -36,18 +35,111 @@ type ButtonStoryArgs = {
   ariaLabel?: string | null;
   ariaLabelledby?: string | null;
   ariaHaspopup?: string | null;
-  ariaExpanded?: boolean | null;
+  ariaExpanded?: string | boolean | null;
+  "aria-expanded"?: string;
   "aria-label"?: string;
   leadingIcon?: unknown;
   trailingIcon?: unknown;
   onClick?: (event: MouseEvent) => void;
 };
 
-const defaultRender = (args: ButtonStoryArgs) => {
-  const { children, style, onClick, "aria-label": ariaLabelOverride, ...rest } = args;
-  const ariaLabel = ariaLabelOverride ?? rest.ariaLabel ?? null;
+type AngularStoryRenderResult = {
+  moduleMetadata?: Record<string, unknown>;
+  props?: Record<string, unknown>;
+  styles?: string[];
+  template?: string;
+  component?: unknown;
+  onReady?: (element: HTMLElement) => void;
+  onDestroy?: () => void;
+};
+
+const applyWebComponentLightDomShim = (root: HTMLElement): (() => void) | undefined => {
+  const Constructor = customElements.get("fivra-button") as CustomElementConstructor | undefined;
+
+  if (!Constructor) {
+    return undefined;
+  }
+
+  const pruneHost = (host: Element | DocumentFragment) => {
+    if (!(host instanceof HTMLElement) || !(host instanceof Constructor)) {
+      return;
+    }
+
+    const fallbackButton = host.querySelector<HTMLButtonElement>(":scope > button.fivra-button");
+
+    fallbackButton?.remove();
+  };
+
+  const inspectNode = (node: Node) => {
+    if (node instanceof HTMLElement) {
+      if (node.matches("fivra-button")) {
+        pruneHost(node);
+      }
+
+      node.querySelectorAll("fivra-button").forEach((nestedHost) => {
+        pruneHost(nestedHost);
+      });
+    } else if (node instanceof DocumentFragment) {
+      node.querySelectorAll("fivra-button").forEach((nestedHost) => {
+        pruneHost(nestedHost);
+      });
+    }
+  };
+
+  inspectNode(root);
+
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      mutation.addedNodes.forEach((addedNode) => {
+        inspectNode(addedNode);
+      });
+    });
+  });
+
+  observer.observe(root, { childList: true, subtree: true });
+
+  return () => {
+    observer.disconnect();
+  };
+};
+
+const withWebComponentLightDomShim = (story: AngularStoryRenderResult): AngularStoryRenderResult => {
+  let cleanup: (() => void) | undefined;
 
   return {
+    ...story,
+    onReady: (element: HTMLElement) => {
+      cleanup?.();
+      const maybeCleanup = applyWebComponentLightDomShim(element);
+
+      if (maybeCleanup) {
+        cleanup = maybeCleanup;
+      }
+
+      story.onReady?.(element);
+    },
+    onDestroy: () => {
+      cleanup?.();
+      cleanup = undefined;
+
+      story.onDestroy?.();
+    },
+  };
+};
+
+const defaultRender = (args: ButtonStoryArgs) => {
+  const {
+    children,
+    style,
+    onClick,
+    "aria-label": ariaLabelOverride,
+    "aria-expanded": ariaExpandedOverride,
+    ...rest
+  } = args;
+  const ariaLabel = ariaLabelOverride ?? rest.ariaLabel ?? null;
+  const ariaExpanded = ariaExpandedOverride ?? rest.ariaExpanded ?? null;
+
+  return withWebComponentLightDomShim({
     moduleMetadata: {
       imports: [CommonModule, FivraButtonModule],
     },
@@ -56,6 +148,7 @@ const defaultRender = (args: ButtonStoryArgs) => {
       style: style ?? null,
       children,
       ariaLabel,
+      ariaExpanded,
       onClick,
     },
     template: `
@@ -72,12 +165,27 @@ const defaultRender = (args: ButtonStoryArgs) => {
         [ngStyle]="style"
         [ariaLabel]="ariaLabel"
         [ariaLabelledby]="ariaLabelledby"
+        [ariaHaspopup]="ariaHaspopup"
+        [ariaExpanded]="ariaExpanded"
+        [attr.variant]="variant"
+        [attr.size]="size"
+        [attr.full-width]="fullWidth ? '' : null"
+        [attr.icon-only]="iconOnly ? '' : null"
+        [attr.has-label]="hasLabel === null || hasLabel === undefined ? null : hasLabel ? 'true' : 'false'"
+        [attr.dropdown]="dropdown ? '' : null"
+        [attr.loading]="loading ? '' : null"
+        [attr.type]="type ?? null"
+        [attr.disabled]="disabled ? '' : null"
+        [attr.aria-label]="ariaLabel"
+        [attr.aria-labelledby]="ariaLabelledby"
+        [attr.aria-haspopup]="ariaHaspopup ?? (dropdown ? 'menu' : null)"
+        [attr.aria-expanded]="ariaExpanded"
         (click)="onClick?.($event)"
       >
         <ng-container *ngIf="children">{{ children }}</ng-container>
       </fivra-button>
     `,
-  };
+  });
 };
 
 const meta: Meta<ButtonStoryArgs> = {
@@ -129,13 +237,13 @@ const meta: Meta<ButtonStoryArgs> = {
     hasLabel: {
       control: "boolean",
       description:
-        "Override automatic label detection when rendering screen-reader-only copy. When unset, adapters trim the projected content to determine whether a visible label exists.",
+        "Override automatic label detection when rendering screen-reader-only copy. When unset, adapters trim the rendered children to determine whether a visible label exists.",
       table: { category: "Accessibility" },
     },
     dropdown: {
       control: "boolean",
       description:
-        "Appends a disclosure caret for menu triggers and defaults `aria-haspopup=\"menu\"`. Provide `ariaExpanded` when you control disclosure state.",
+        "Appends a disclosure caret for menu triggers and defaults `aria-haspopup=\"menu\"`. Provide `aria-expanded` when you control disclosure state.",
       table: { category: "Appearance" },
     },
     loading: {
@@ -205,22 +313,23 @@ export const Tertiary: Story = {
 };
 
 export const DisabledStates: Story = {
-  render: () => ({
-    template: `
-      <div
-        style="
-          display: flex;
-          gap: calc(var(--spacingL) * 1px);
-          align-items: center;
-          flex-wrap: wrap;
-        "
-      >
-        <fivra-button variant="primary" disabled>Primary</fivra-button>
-        <fivra-button variant="secondary" disabled>Secondary</fivra-button>
-        <fivra-button variant="tertiary" disabled>Tertiary</fivra-button>
-      </div>
-    `,
-  }),
+  render: () =>
+    withWebComponentLightDomShim({
+      template: `
+        <div
+          style="
+            display: flex;
+            gap: calc(var(--spacingL) * 1px);
+            align-items: center;
+            flex-wrap: wrap;
+          "
+        >
+          <fivra-button variant="primary" disabled>Primary</fivra-button>
+          <fivra-button variant="secondary" disabled>Secondary</fivra-button>
+          <fivra-button variant="tertiary" disabled>Tertiary</fivra-button>
+        </div>
+      `,
+    }),
   parameters: {
     docs: {
       description: {
@@ -233,51 +342,52 @@ export const DisabledStates: Story = {
 
 export const SemanticOverrides: Story = {
   name: "Semantic Overrides",
-  render: () => ({
-    props: {
-      tones: SEMANTIC_TONES,
-      createPrimarySemanticStyles,
-      createSecondarySemanticStyles,
-      createTertiarySemanticStyles,
-    },
-    template: `
-      <div style="display: grid; gap: calc(var(--spacingM) * 1px);">
-        <div
-          style="display: flex; gap: calc(var(--spacingL) * 1px); flex-wrap: wrap;"
-        >
-          <fivra-button
-            *ngFor="let tone of tones"
-            variant="primary"
-            [ngStyle]="createPrimarySemanticStyles(tone)"
+  render: () =>
+    withWebComponentLightDomShim({
+      props: {
+        tones: SEMANTIC_TONES,
+        createPrimarySemanticStyles,
+        createSecondarySemanticStyles,
+        createTertiarySemanticStyles,
+      },
+      template: `
+        <div style="display: grid; gap: calc(var(--spacingM) * 1px);">
+          <div
+            style="display: flex; gap: calc(var(--spacingL) * 1px); flex-wrap: wrap;"
           >
-            {{ tone }} Primary
-          </fivra-button>
-        </div>
-        <div
-          style="display: flex; gap: calc(var(--spacingL) * 1px); flex-wrap: wrap;"
-        >
-          <fivra-button
-            *ngFor="let tone of tones"
-            variant="secondary"
-            [ngStyle]="createSecondarySemanticStyles(tone)"
+            <fivra-button
+              *ngFor="let tone of tones"
+              variant="primary"
+              [ngStyle]="createPrimarySemanticStyles(tone)"
+            >
+              {{ tone }} Primary
+            </fivra-button>
+          </div>
+          <div
+            style="display: flex; gap: calc(var(--spacingL) * 1px); flex-wrap: wrap;"
           >
-            {{ tone }} Secondary
-          </fivra-button>
-        </div>
-        <div
-          style="display: flex; gap: calc(var(--spacingL) * 1px); flex-wrap: wrap;"
-        >
-          <fivra-button
-            *ngFor="let tone of tones"
-            variant="tertiary"
-            [ngStyle]="createTertiarySemanticStyles(tone)"
+            <fivra-button
+              *ngFor="let tone of tones"
+              variant="secondary"
+              [ngStyle]="createSecondarySemanticStyles(tone)"
+            >
+              {{ tone }} Secondary
+            </fivra-button>
+          </div>
+          <div
+            style="display: flex; gap: calc(var(--spacingL) * 1px); flex-wrap: wrap;"
           >
-            {{ tone }} Tertiary
-          </fivra-button>
+            <fivra-button
+              *ngFor="let tone of tones"
+              variant="tertiary"
+              [ngStyle]="createTertiarySemanticStyles(tone)"
+            >
+              {{ tone }} Tertiary
+            </fivra-button>
+          </div>
         </div>
-      </div>
-    `,
-  }),
+      `,
+    }),
   parameters: {
     docs: {
       description: {
@@ -296,7 +406,7 @@ export const WithIcons: Story = {
     const { "aria-label": ariaLabelOverride, ariaLabel, ...rest } = args;
     const resolvedAriaLabel = ariaLabelOverride ?? ariaLabel ?? null;
 
-    return {
+    return withWebComponentLightDomShim({
       props: {
         ...rest,
         ariaLabel: resolvedAriaLabel,
@@ -321,16 +431,26 @@ export const WithIcons: Story = {
           [ariaLabelledby]="ariaLabelledby"
           [leadingIcon]="leadingIconTemplate"
           [trailingIcon]="trailingIconTemplate"
+          [attr.variant]="variant"
+          [attr.size]="size"
+          [attr.full-width]="fullWidth ? '' : null"
+          [attr.icon-only]="iconOnly ? '' : null"
+          [attr.dropdown]="dropdown ? '' : null"
+          [attr.loading]="loading ? '' : null"
+          [attr.type]="type ?? null"
+          [attr.disabled]="disabled ? '' : null"
+          [attr.aria-label]="ariaLabel"
+          [attr.aria-labelledby]="ariaLabelledby"
         >
           {{ children }}
         </fivra-button>
       `,
-    };
+    });
   },
   parameters: {
     docs: {
       description: {
-        story: "Demonstrates leading and trailing icon slots using Angular templates.",
+        story: "Demonstrates leading and trailing icon slots using the shared Icon component.",
       },
     },
   },
@@ -354,9 +474,9 @@ export const Sizes: Story = {
           flex-wrap: wrap;
         "
       >
-        <fivra-button [variant]="variant" size="sm">Small</fivra-button>
-        <fivra-button [variant]="variant" size="md">Medium</fivra-button>
-        <fivra-button [variant]="variant" size="lg">Large</fivra-button>
+        <fivra-button [variant]="variant" size="sm" [attr.variant]="variant">Small</fivra-button>
+        <fivra-button [variant]="variant" size="md" [attr.variant]="variant">Medium</fivra-button>
+        <fivra-button [variant]="variant" size="lg" [attr.variant]="variant">Large</fivra-button>
       </div>
     `,
   }),
@@ -386,6 +506,9 @@ export const FullWidth: Story = {
           [variant]="variant"
           [size]="size"
           [fullWidth]="fullWidth"
+          [attr.variant]="variant"
+          [attr.size]="size"
+          [attr.full-width]="fullWidth ? '' : null"
         >
           {{ children }}
         </fivra-button>
@@ -405,13 +528,13 @@ export const Dropdown: Story = {
   args: {
     children: "Menu",
     dropdown: true,
-    ariaExpanded: false,
+    "aria-expanded": "false",
   },
   parameters: {
     docs: {
       description: {
         story:
-          "Dropdown mode adds a built-in caret, applies `aria-haspopup=\"menu\"` by default, and works with an `ariaExpanded` override when the disclosure state is controlled externally.",
+          "Dropdown mode adds a built-in caret, applies `aria-haspopup=\"menu\"` by default, and works with an `aria-expanded` override when the menu state is controlled externally.",
       },
     },
   },
@@ -452,6 +575,8 @@ export const IconOnly: Story = {
         [iconOnly]="iconOnly"
         [ariaLabel]="ariaLabel"
         [leadingIcon]="leadingIconTemplate"
+        [attr.icon-only]="iconOnly ? '' : null"
+        [attr.aria-label]="ariaLabel"
       ></fivra-button>
     `,
   }),
@@ -464,3 +589,4 @@ export const IconOnly: Story = {
     },
   },
 };
+

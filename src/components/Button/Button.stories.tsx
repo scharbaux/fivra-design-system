@@ -394,6 +394,7 @@ declare global {
         variant?: string;
         size?: string;
         type?: string;
+        dropdown?: boolean;
       };
     }
   }
