@@ -215,7 +215,8 @@ const defaultRender = (args: VueButtonStoryArgs) => {
 };
 
 const meta: Meta<VueButtonStoryArgs> = {
-  title: "Components/Button/Vue",
+  title: "Atomics/Button",
+  id: "atomics-button-vue",
   component: FivraButtonPreview,
   tags: ["autodocs"],
   args: {

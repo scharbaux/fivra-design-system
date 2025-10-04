@@ -189,7 +189,8 @@ const defaultRender = (args: ButtonStoryArgs) => {
 };
 
 const meta: Meta<ButtonStoryArgs> = {
-  title: "Components/Button/Angular",
+  title: "Atomics/Button",
+  id: "atomics-button-angular",
   component: FivraButtonComponent,
   tags: ["autodocs"],
   decorators: [
