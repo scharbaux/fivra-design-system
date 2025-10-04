@@ -60,6 +60,8 @@ export class FivraButtonElement extends HTMLElement {
       'has-label',
       'aria-label',
       'aria-labelledby',
+      'aria-haspopup',
+      'aria-expanded',
     ];
   }
 
@@ -304,6 +306,8 @@ export class FivraButtonElement extends HTMLElement {
   private syncAriaAttributes(): void {
     const ariaLabel = this.getAttribute('aria-label');
     const ariaLabelledBy = this.getAttribute('aria-labelledby');
+    const ariaHasPopup = this.getAttribute('aria-haspopup');
+    const ariaExpanded = this.getAttribute('aria-expanded');
 
     if (ariaLabel !== null) {
       this.buttonEl.setAttribute('aria-label', ariaLabel);
@@ -315,6 +319,20 @@ export class FivraButtonElement extends HTMLElement {
       this.buttonEl.setAttribute('aria-labelledby', ariaLabelledBy);
     } else {
       this.buttonEl.removeAttribute('aria-labelledby');
+    }
+
+    if (ariaHasPopup !== null) {
+      this.buttonEl.setAttribute('aria-haspopup', ariaHasPopup);
+    } else if (this.dropdown) {
+      this.buttonEl.setAttribute('aria-haspopup', 'menu');
+    } else {
+      this.buttonEl.removeAttribute('aria-haspopup');
+    }
+
+    if (ariaExpanded !== null) {
+      this.buttonEl.setAttribute('aria-expanded', ariaExpanded);
+    } else {
+      this.buttonEl.removeAttribute('aria-expanded');
     }
   }
 

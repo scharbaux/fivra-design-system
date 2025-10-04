@@ -25,3 +25,7 @@ This directory follows the repository and `src/components/` standards. Keep shar
 - 1.8.4: Updated Button stories to import `Meta`/`StoryObj` from `@storybook/react-vite` so typings match the composed framework.
 - 1.8.5: React Storybook now imports `defineFivraButton()` from `@web-components` and guards duplicate registration in the custom element preview.
 - 1.8.6: Extracted shared Storybook semantic style helpers for React and Angular button stories to keep palettes aligned.
+- 1.8.7: Documented the component contract, canonical references, and cross-linked the docs reference page for easier maintenance.
+- 1.8.8: Added Storybook (React/Angular/Vue) and Playwright visual regression references to the contract for update tracking.
+- 1.9.0: Harmonized label detection, dropdown aria defaults, and cross-framework stories/tests to lock the shared button contract.
+- 1.9.1: Enabled Angular Storybook JIT builds and Playwright baselines so dropdown/loading coverage exercises the shared aria defaults.

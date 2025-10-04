@@ -82,7 +82,49 @@ describe('Button', () => {
     expect(button).toHaveAttribute('data-dropdown', 'true');
     expect(button).toHaveAttribute('data-loading', 'true');
     expect(button).toHaveAttribute('aria-busy', 'true');
+    expect(button).toHaveAttribute('aria-haspopup', 'menu');
     expect(button.querySelector('.fivra-button__spinner')).toBeInTheDocument();
+  });
+
+  it('derives hasLabel from trimmed children unless overridden', () => {
+    const { rerender } = render(<Button>{'   '}</Button>);
+
+    const button = screen.getByRole('button');
+    expect(button).toHaveAttribute('data-has-label', 'false');
+
+    rerender(
+      <Button hasLabel>{'   '}</Button>,
+    );
+
+    expect(button).toHaveAttribute('data-has-label', 'true');
+  });
+
+  it('defaults aria-haspopup to "menu" for dropdown buttons and respects overrides', () => {
+    const { rerender } = render(<Button dropdown>Menu</Button>);
+
+    let button = screen.getByRole('button', { name: 'Menu' });
+    expect(button).toHaveAttribute('aria-haspopup', 'menu');
+    expect(button).not.toHaveAttribute('aria-expanded');
+
+    rerender(
+      <Button dropdown aria-haspopup="listbox" aria-expanded="true">
+        Menu
+      </Button>,
+    );
+
+    button = screen.getByRole('button', { name: 'Menu' });
+    expect(button).toHaveAttribute('aria-haspopup', 'listbox');
+    expect(button).toHaveAttribute('aria-expanded', 'true');
+
+    rerender(
+      <Button dropdown aria-expanded="false">
+        Menu
+      </Button>,
+    );
+
+    button = screen.getByRole('button', { name: 'Menu' });
+    expect(button).toHaveAttribute('aria-haspopup', 'menu');
+    expect(button).toHaveAttribute('aria-expanded', 'false');
   });
 
   it('injects brand-focused overlay mixes for primary variants', () => {

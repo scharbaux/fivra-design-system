@@ -33,6 +33,8 @@ type VueButtonStoryArgs = {
   style?: Record<string, string> | null;
   ariaLabel?: string | null;
   ariaLabelledby?: string | null;
+  ariaHaspopup?: string | null;
+  ariaExpanded?: boolean | null;
   leadingIcon?: unknown;
   trailingIcon?: unknown;
   onClick?: (event: MouseEvent) => void;
@@ -73,6 +75,8 @@ const FivraButtonPreview = defineComponent({
     },
     ariaLabel: { type: String as PropType<string | null>, default: null },
     ariaLabelledby: { type: String as PropType<string | null>, default: null },
+    ariaHaspopup: { type: String as PropType<string | null>, default: null },
+    ariaExpanded: { type: Boolean as PropType<boolean | null>, default: null },
     leadingIcon: { type: null as unknown as PropType<unknown>, default: undefined },
     trailingIcon: { type: null as unknown as PropType<unknown>, default: undefined },
     onClick: { type: Function as PropType<((event: MouseEvent) => void) | undefined> },
@@ -89,6 +93,14 @@ const FivraButtonPreview = defineComponent({
       }
 
       return Boolean(props.children?.trim?.());
+    });
+
+    const resolvedAriaHaspopup = computed(() => {
+      if (props.ariaHaspopup) {
+        return props.ariaHaspopup;
+      }
+
+      return props.dropdown ? "menu" : null;
     });
 
     const handleClick = (event: MouseEvent) => {
@@ -111,12 +123,19 @@ const FivraButtonPreview = defineComponent({
           disabled: props.disabled || props.loading,
           "data-variant": props.variant ?? "primary",
           "data-size": props.size ?? "md",
-          "data-full-width": props.fullWidth ? "true" : "false",
-          "data-icon-only": props.iconOnly ? "true" : "false",
+          "data-full-width": props.fullWidth ? "true" : undefined,
+          "data-icon-only": props.iconOnly ? "true" : undefined,
           "data-has-label": resolvedHasLabel.value ? "true" : "false",
+          "data-dropdown": props.dropdown ? "true" : undefined,
+          "data-loading": props.loading ? "true" : undefined,
           style: props.style ?? undefined,
           "aria-label": props.ariaLabel ?? undefined,
           "aria-labelledby": props.ariaLabelledby ?? undefined,
+          "aria-haspopup": resolvedAriaHaspopup.value ?? undefined,
+          "aria-expanded":
+            props.ariaExpanded === null || props.ariaExpanded === undefined
+              ? undefined
+              : String(props.ariaExpanded),
           onClick: handleClick,
         },
         [
@@ -211,12 +230,14 @@ const meta: Meta<VueButtonStoryArgs> = {
     },
     hasLabel: {
       control: "boolean",
-      description: "Override automatic label detection when rendering screen-reader-only copy.",
+      description:
+        "Override automatic label detection when rendering screen-reader-only copy. When unset, adapters trim the slotted content to determine whether a visible label exists.",
       table: { category: "Accessibility" },
     },
     dropdown: {
       control: "boolean",
-      description: "Appends a disclosure caret for menu triggers.",
+      description:
+        "Appends a disclosure caret for menu triggers and defaults `aria-haspopup=\"menu\"`. Provide `ariaExpanded` when you control disclosure state.",
       table: { category: "Appearance" },
     },
     loading: {
@@ -334,6 +355,22 @@ export const WithIcons: Story = {
       description: {
         story:
           "Leading and trailing icon slots currently render placeholder stars. Replace them with the Vue Icon component when it becomes available.",
+      },
+    },
+  },
+};
+
+export const Dropdown: Story = {
+  args: {
+    children: "Menu",
+    dropdown: true,
+    ariaExpanded: false,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Dropdown mode adds a built-in caret, applies `aria-haspopup=\"menu\"` by default, and works with an `ariaExpanded` override when the disclosure state is controlled externally.",
       },
     },
   },

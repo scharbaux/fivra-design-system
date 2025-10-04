@@ -35,6 +35,8 @@ type ButtonStoryArgs = {
   style?: Record<string, string> | null;
   ariaLabel?: string | null;
   ariaLabelledby?: string | null;
+  ariaHaspopup?: string | null;
+  ariaExpanded?: boolean | null;
   "aria-label"?: string;
   leadingIcon?: unknown;
   trailingIcon?: unknown;
@@ -48,7 +50,6 @@ const defaultRender = (args: ButtonStoryArgs) => {
   return {
     moduleMetadata: {
       imports: [CommonModule, FivraButtonModule],
-      declarations: [FivraButtonComponent],
     },
     props: {
       ...rest,
@@ -127,12 +128,14 @@ const meta: Meta<ButtonStoryArgs> = {
     },
     hasLabel: {
       control: "boolean",
-      description: "Override automatic label detection when rendering screen-reader-only copy.",
+      description:
+        "Override automatic label detection when rendering screen-reader-only copy. When unset, adapters trim the projected content to determine whether a visible label exists.",
       table: { category: "Accessibility" },
     },
     dropdown: {
       control: "boolean",
-      description: "Appends a disclosure caret for menu triggers.",
+      description:
+        "Appends a disclosure caret for menu triggers and defaults `aria-haspopup=\"menu\"`. Provide `ariaExpanded` when you control disclosure state.",
       table: { category: "Appearance" },
     },
     loading: {
@@ -402,12 +405,13 @@ export const Dropdown: Story = {
   args: {
     children: "Menu",
     dropdown: true,
+    ariaExpanded: false,
   },
   parameters: {
     docs: {
       description: {
         story:
-          "Dropdown mode adds a built-in caret to communicate nested actions while still supporting manual icon slots if needed.",
+          "Dropdown mode adds a built-in caret, applies `aria-haspopup=\"menu\"` by default, and works with an `ariaExpanded` override when the disclosure state is controlled externally.",
       },
     },
   },

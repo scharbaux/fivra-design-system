@@ -11,3 +11,5 @@ This directory extends the repository root `AGENTS.md`. Use Playwright-based vis
 ## Functional Changes
 - Use `<major>.<minor>[.<patch>]` labels instead of dates when recording new entries.
 - 1.0: Introduced Playwright-powered visual regression tests targeting the Button Storybook stories and committed baselines.
+- 1.1.0: Added Angular dropdown/loading stories to the button visual suite to guard harmonized caret/spinner behavior.
+- 1.1.1: Updated the harness to target Angular via JIT-enabled Storybook refs and captured dropdown/loading baselines.

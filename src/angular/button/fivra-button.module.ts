@@ -8,8 +8,12 @@ import {
 } from './fivra-button.directives';
 
 @NgModule({
-  imports: [CommonModule],
-  declarations: [FivraButtonComponent, FivraButtonLeadingIconDirective, FivraButtonTrailingIconDirective],
+  imports: [
+    CommonModule,
+    FivraButtonComponent,
+    FivraButtonLeadingIconDirective,
+    FivraButtonTrailingIconDirective,
+  ],
   exports: [FivraButtonComponent, FivraButtonLeadingIconDirective, FivraButtonTrailingIconDirective],
 })
 export class FivraButtonModule {}

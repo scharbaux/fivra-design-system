@@ -8,3 +8,5 @@ This directory inherits guidance from the repository root, `storybooks/AGENTS.md
 
 ## Functional Changes
 - 1.3.0: Added placeholder Vue button stories that load shared styles and expose the established controls.
+- 1.4.0: Extended placeholder stories with dropdown coverage, aria fallback messaging, and updated props to mirror the harmonized button contract.
+- 1.4.1: Mirrored the Angular/React controls for `ariaHaspopup`/`ariaExpanded` so the placeholder docs track the latest button contract.

@@ -28,12 +28,14 @@ import { FivraButtonComponent, FivraButtonModule } from '../../button';
       [loading]="loading"
       [type]="type"
       [disabled]="disabled"
+      [ariaHaspopup]="ariaHaspopup"
+      [ariaExpanded]="ariaExpanded"
       [ariaLabel]="ariaLabel"
       [ariaLabelledby]="ariaLabelledby"
       [leadingIcon]="useLeadingTemplate ? leadingIconTpl : null"
       [trailingIcon]="useTrailingTemplate ? trailingIconTpl : null"
     >
-      <ng-container *ngIf="showLabel">Primary action</ng-container>
+      <ng-container *ngIf="showLabel">{{ labelText }}</ng-container>
       <ng-container *ngIf="useLeadingDirective">
         <span fivraButtonLeadingIcon>LD</span>
       </ng-container>
@@ -60,9 +62,12 @@ class ButtonHostComponent {
   loading = false;
   type: 'button' | 'submit' | 'reset' | undefined = undefined;
   disabled = false;
+  ariaHaspopup: string | null | undefined = undefined;
+  ariaExpanded: boolean | null | undefined = undefined;
   ariaLabel: string | null | undefined = undefined;
   ariaLabelledby: string | null | undefined = undefined;
   showLabel = true;
+  labelText = 'Primary action';
   useLeadingDirective = false;
   useTrailingDirective = false;
   useLeadingTemplate = false;
@@ -127,6 +132,7 @@ describe('FivraButtonComponent', () => {
     expect(button.dataset.dropdown).toBeUndefined();
     expect(button.dataset.loading).toBeUndefined();
     expect(button.getAttribute('aria-busy')).toBeNull();
+    expect(button.getAttribute('aria-haspopup')).toBeNull();
 
     const leading = queryLeadingWrapper();
     const trailing = queryTrailingWrapper();
@@ -137,8 +143,8 @@ describe('FivraButtonComponent', () => {
     expect(leading?.getAttribute('data-empty')).toBe('true');
     expect(trailing?.getAttribute('data-empty')).toBe('true');
     expect(label?.getAttribute('data-empty')).toBeNull();
-    expect(caret).toBeTruthy();
-    expect(spinner).toBeTruthy();
+    expect(caret).toBeNull();
+    expect(spinner).toBeNull();
   });
 
   it('applies variant, size, and type inputs', () => {
@@ -168,14 +174,22 @@ describe('FivraButtonComponent', () => {
     expect(button.dataset.iconOnly).toBe('true');
     expect(button.getAttribute('aria-busy')).toBe('true');
     expect(button.disabled).toBe(true);
+    expect(button.getAttribute('aria-haspopup')).toBe('menu');
+    expect(queryCaret()).not.toBeNull();
+    expect(querySpinner()).not.toBeNull();
 
     hostComponent.iconOnly = false;
     hostComponent.loading = false;
+    hostComponent.dropdown = false;
     await flushChanges();
 
     expect(button.dataset.iconOnly).toBeUndefined();
     expect(button.dataset.loading).toBeUndefined();
+    expect(button.dataset.dropdown).toBeUndefined();
     expect(button.getAttribute('aria-busy')).toBeNull();
+    expect(button.getAttribute('aria-haspopup')).toBeNull();
+    expect(queryCaret()).toBeNull();
+    expect(querySpinner()).toBeNull();
   });
 
   it('respects hasLabel overrides and MutationObserver updates', async () => {
@@ -183,6 +197,18 @@ describe('FivraButtonComponent', () => {
     const label = queryLabelWrapper();
     expect(button.dataset.hasLabel).toBe('true');
     expect(label?.getAttribute('data-empty')).toBeNull();
+
+    hostComponent.labelText = '   ';
+    await flushChanges();
+
+    expect(button.dataset.hasLabel).toBe('false');
+    expect(queryLabelWrapper()?.getAttribute('data-empty')).toBe('true');
+
+    hostComponent.labelText = 'Submit';
+    await flushChanges();
+
+    expect(button.dataset.hasLabel).toBe('true');
+    expect(queryLabelWrapper()?.getAttribute('data-empty')).toBeNull();
 
     hostComponent.showLabel = false;
     await flushChanges();
@@ -195,6 +221,11 @@ describe('FivraButtonComponent', () => {
 
     expect(button.dataset.hasLabel).toBe('true');
     expect(queryLabelWrapper()?.getAttribute('data-empty')).toBeNull();
+
+    hostComponent.hasLabel = null;
+    await flushChanges();
+
+    expect(button.dataset.hasLabel).toBe('false');
   });
 
   it('toggles icon wrappers when projecting content via directives', async () => {
@@ -222,6 +253,29 @@ describe('FivraButtonComponent', () => {
     expect(queryTrailingWrapper()?.querySelector('.template-trailing')).toBeTruthy();
     expect(queryLeadingWrapper()?.getAttribute('data-empty')).toBeNull();
     expect(queryTrailingWrapper()?.getAttribute('data-empty')).toBeNull();
+  });
+
+  it('falls back to aria-haspopup="menu" and forwards aria-expanded overrides', async () => {
+    hostComponent.dropdown = true;
+    await flushChanges();
+
+    const button = queryButton();
+    expect(button.getAttribute('aria-haspopup')).toBe('menu');
+    expect(button.getAttribute('aria-expanded')).toBeNull();
+
+    hostComponent.ariaHaspopup = 'listbox';
+    hostComponent.ariaExpanded = true;
+    await flushChanges();
+
+    expect(button.getAttribute('aria-haspopup')).toBe('listbox');
+    expect(button.getAttribute('aria-expanded')).toBe('true');
+
+    hostComponent.ariaHaspopup = null;
+    hostComponent.ariaExpanded = undefined;
+    await flushChanges();
+
+    expect(button.getAttribute('aria-haspopup')).toBe('menu');
+    expect(button.getAttribute('aria-expanded')).toBeNull();
   });
 
   it('supports aria-label attributes and focus/click helpers', async () => {
