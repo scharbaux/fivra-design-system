@@ -14,3 +14,4 @@ This directory inherits guidance from the repository root, `storybooks/AGENTS.md
 - 1.6.1: Added explicit `ariaHaspopup`/`ariaExpanded` controls and refreshed docs to describe the new adapter defaults surfaced in visual tests.
 - 1.6.2: Synced button stories with the React baseline, refreshed docs/args, and added the web component preview.
 - 1.6.3: Patched the Angular stories to hide duplicate native markup when the `<fivra-button>` custom element is registered.
+- 1.6.4: Replaced the CSS shim with a DOM-level cleanup so Storybook prunes duplicate light DOM buttons once `<fivra-button>` is registered.
