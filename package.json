@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "packageManager": "yarn@4.9.4",
+  "packageManager": "yarn@4.10.3",
   "browserslist": [
     "> 0.5%",
     "last 2 versions",

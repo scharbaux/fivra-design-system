@@ -61,5 +61,15 @@ jobs:
       - name: Run visual regression tests
         run: yarn visual:test
 
+      - name: Upload visual regression artifacts
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-regression-artifacts
+          if-no-files-found: warn
+          path: |
+            playwright-report/
+            test-results/**
+
       - name: Build package
         run: yarn build
