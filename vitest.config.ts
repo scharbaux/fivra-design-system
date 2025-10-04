@@ -10,6 +10,7 @@ export default defineConfig({
       '**/node_modules/**',
       '**/dist/**',
       '**/.{idea,git,cache,output,temp}/**',
+      'visual-tests/**',
     ],
   },
   resolve: {
