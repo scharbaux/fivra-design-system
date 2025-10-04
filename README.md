@@ -101,6 +101,7 @@ Commonly used scripts are listed below. Run them with `yarn <script>`.
 - `version` – Apply accumulated Changesets (`changeset version`) to bump `package.json`, changelogs, and generated release metadata (`yarn run version`).
 - `release` – Publish the release defined by Changesets (used by CI; requires `NPM_TOKEN`).
 - `verify:agents` – Ensure modified directories updated their `AGENTS.md` with a new semantic-version bullet (runs automatically in CI).
+- `visual:test` – Build the composed static Storybook, install Playwright browsers if needed, and execute the headless visual regression suite.
 - `storybook` – Launch the React, Angular, and Vue Storybook instances together (ports 6006/6007/6008). The script waits for the
   Angular and Vue dev servers to report ready before composing the React manager so refs resolve locally.
 - `storybook:react` – Start the Storybook 9 (React + Vite) dev server with hot reload.

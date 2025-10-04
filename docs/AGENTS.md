@@ -31,3 +31,4 @@ This document augments the root `AGENTS.md`. Ensure you understand the repositor
 - 1.9.0: Captured the multi-framework Storybook composition model, including build orchestration and local dev commands.
 - 1.10.0: Documented the `yarn storybook` workflow and remote ref overrides.
 - 1.11.0: Clarified that `yarn storybook` waits for Angular/Vue dev servers before composing the React manager.
+- 1.12.0: Documented the Playwright visual regression workflow and how to refresh Storybook baselines.

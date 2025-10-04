@@ -8,3 +8,4 @@ This directory follows the repository root `AGENTS.md`. Use it to house framewor
 
 ## Functional Changes
 - 1.2.0: Added the Angular Storybook workspace with dedicated configuration and shared asset guidance.
+- 1.3.0: Documented the Angular button `moduleMetadata` fix to keep framework workspaces aligned.

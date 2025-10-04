@@ -62,3 +62,75 @@ describe('FivraButtonElement styles', () => {
   });
 
 });
+
+describe('FivraButtonElement behavior', () => {
+  beforeAll(() => {
+    defineFivraButton();
+  });
+
+  afterEach(() => {
+    document.body.innerHTML = '';
+  });
+
+  const waitForUpdates = async () => {
+    await new Promise((resolve) => setTimeout(resolve, 0));
+  };
+
+  it('syncs dropdown data attributes and aria fallbacks', async () => {
+    const element = document.createElement('fivra-button') as FivraButtonElement;
+    element.setAttribute('dropdown', '');
+    element.textContent = 'Menu';
+    document.body.appendChild(element);
+
+    await waitForUpdates();
+
+    const button = element.shadowRoot?.querySelector('button');
+    expect(button?.dataset.dropdown).toBe('true');
+    expect(button?.getAttribute('aria-haspopup')).toBe('menu');
+    expect(button?.getAttribute('aria-expanded')).toBeNull();
+
+    element.setAttribute('aria-haspopup', 'listbox');
+    element.setAttribute('aria-expanded', 'true');
+
+    await waitForUpdates();
+
+    expect(button?.getAttribute('aria-haspopup')).toBe('listbox');
+    expect(button?.getAttribute('aria-expanded')).toBe('true');
+
+    element.removeAttribute('aria-haspopup');
+    element.removeAttribute('aria-expanded');
+    element.removeAttribute('dropdown');
+
+    await waitForUpdates();
+
+    expect(button?.dataset.dropdown).toBeUndefined();
+    expect(button?.getAttribute('aria-haspopup')).toBeNull();
+  });
+
+  it('derives hasLabel from trimmed slot content with override support', async () => {
+    const whitespaceElement = document.createElement('fivra-button') as FivraButtonElement;
+    whitespaceElement.textContent = '   ';
+    document.body.appendChild(whitespaceElement);
+
+    await waitForUpdates();
+
+    const whitespaceButton = whitespaceElement.shadowRoot?.querySelector('button');
+    expect(whitespaceButton?.dataset.hasLabel).toBe('false');
+
+    whitespaceElement.remove();
+
+    const labelElement = document.createElement('fivra-button') as FivraButtonElement;
+    labelElement.textContent = 'Submit';
+    document.body.appendChild(labelElement);
+
+    await waitForUpdates();
+
+    const labelButton = labelElement.shadowRoot?.querySelector('button');
+    expect(labelButton?.dataset.hasLabel).toBe('true');
+
+    labelElement.setAttribute('has-label', 'false');
+    await waitForUpdates();
+
+    expect(labelButton?.dataset.hasLabel).toBe('false');
+  });
+});

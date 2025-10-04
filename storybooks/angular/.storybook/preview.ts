@@ -1,3 +1,4 @@
+import "@angular/compiler";
 import "zone.js";
 import "../../../src/styles/index.css";
 import type { Preview } from "@storybook/angular";

@@ -44,5 +44,12 @@ This document captures the current tooling, languages, and automation that power
 - The validation workflow runs `yarn verify:agents`, `yarn test`, and `yarn build` for every push/PR to guarantee semantic-version bullets accompany source edits.
 - A dedicated release workflow runs on `main`, applies `yarn run version` via Changesets, executes post-version `yarn test`/`yarn build`, uploads the generated changelog, and uses `changesets/action` to open release PRs or publish tags.
 
+## Visual Regression Testing
+- **Playwright** (`@playwright/test@^1.50.1`) drives headless Chromium against the composed static Storybook output.
+- `yarn visual:test` builds Storybook, installs the Chromium browser if needed, and executes specs in `visual-tests/` that capture deterministic screenshots for the Button stories (primary, secondary, tertiary, loading, icon-only, dropdown, and icon variants).
+- Baseline images live under `visual-tests/__screenshots__/` and are excluded from npm publishing via `.npmignore`.
+- When intentional visual changes are made, run `yarn visual:test --update-snapshots` to refresh baselines, inspect the generated diffs locally, and commit the updated images alongside the code change.
+- CI executes `yarn visual:test` so regressions fail the workflow; keep Storybook builds healthy so the server started by Playwright can serve the iframe stories.
+
 ## Future Plans
 - Document how additional frameworks (e.g., Svelte) can plug into the Storybook composition pattern established for Angular and Vue.

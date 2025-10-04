@@ -40,6 +40,32 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   loading?: boolean;
 }
 
+function hasLabelContent(children: React.ReactNode): boolean {
+  return React.Children.toArray(children).some((child) => {
+    if (typeof child === 'string') {
+      return child.trim().length > 0;
+    }
+
+    if (typeof child === 'number') {
+      return true;
+    }
+
+    if (React.isValidElement(child)) {
+      if (child.type === React.Fragment) {
+        return hasLabelContent(child.props.children);
+      }
+
+      if ('children' in child.props) {
+        return hasLabelContent(child.props.children);
+      }
+
+      return true;
+    }
+
+    return false;
+  });
+}
+
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(props, ref) {
   const {
     variant = DEFAULT_BUTTON_VARIANT,
@@ -56,6 +82,8 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(props,
     type,
     'aria-label': ariaLabel,
     'aria-labelledby': ariaLabelledBy,
+    'aria-haspopup': ariaHasPopup,
+    'aria-expanded': ariaExpanded,
     ...rest
   } = props;
 
@@ -78,8 +106,13 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(props,
   }, [ariaLabel, ariaLabelledBy, iconOnly]);
 
   const resolvedHasLabel =
-    typeof hasLabel === 'boolean' ? hasLabel : Boolean(children) && !iconOnly;
+    typeof hasLabel === 'boolean'
+      ? hasLabel
+      : iconOnly
+        ? false
+        : hasLabelContent(children);
   const buttonType = type ?? 'button';
+  const resolvedAriaHasPopup = ariaHasPopup ?? (dropdown ? 'menu' : undefined);
 
   return (
     <button
@@ -99,6 +132,8 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(props,
       data-loading={loading ? 'true' : undefined}
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
+      aria-haspopup={resolvedAriaHasPopup}
+      aria-expanded={ariaExpanded}
       aria-busy={loading || undefined}
     >
       {loading ? <span className={BUTTON_SPINNER_CLASS} aria-hidden="true" /> : null}

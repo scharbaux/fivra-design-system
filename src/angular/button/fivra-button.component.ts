@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   AfterContentInit,
   AfterViewInit,
@@ -87,11 +88,17 @@ function isButtonSize(value: unknown): value is ButtonSize {
       [attr.data-loading]="loading ? 'true' : null"
       [attr.aria-label]="ariaLabel ?? null"
       [attr.aria-labelledby]="ariaLabelledby ?? null"
+      [attr.aria-haspopup]="resolvedAriaHaspopup"
+      [attr.aria-expanded]="ariaExpanded ?? null"
       [attr.aria-busy]="loading ? 'true' : null"
       [disabled]="disabled"
       [class]="buttonClassName"
     >
-      <span class="{{ spinnerClassName }}" aria-hidden="true"></span>
+      <span
+        *ngIf="loading"
+        class="{{ spinnerClassName }}"
+        aria-hidden="true"
+      ></span>
       <span
         class="{{ leadingIconClassName }}"
         aria-hidden="true"
@@ -115,11 +122,17 @@ function isButtonSize(value: unknown): value is ButtonSize {
         <ng-container *ngIf="trailingIconTemplate" [ngTemplateOutlet]="trailingIconTemplate"></ng-container>
         <ng-content select="[fivraButtonTrailingIcon]"></ng-content>
       </span>
-      <span class="{{ caretClassName }}" aria-hidden="true"></span>
+      <span *ngIf="dropdown" class="{{ caretClassName }}" aria-hidden="true"></span>
     </button>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [
+    CommonModule,
+    FivraButtonLeadingIconDirective,
+    FivraButtonTrailingIconDirective,
+  ],
 })
 export class FivraButtonComponent
   implements OnInit, AfterContentInit, AfterViewInit, OnDestroy
@@ -149,6 +162,8 @@ export class FivraButtonComponent
   private hasProjectedTrailingIcon = false;
   private hasProjectedLabel = false;
   private labelObserver?: MutationObserver;
+  private _ariaHaspopup: string | null = null;
+  private _ariaExpanded: string | null = null;
 
   @ContentChildren(FivraButtonLeadingIconDirective, { descendants: true })
   private leadingIconDirectives?: QueryList<FivraButtonLeadingIconDirective>;
@@ -258,6 +273,28 @@ export class FivraButtonComponent
   ariaLabelledby: string | null | undefined;
 
   @Input()
+  set ariaHaspopup(value: string | null | undefined) {
+    this._ariaHaspopup = value ?? null;
+    this.cdr.markForCheck();
+  }
+  get ariaHaspopup(): string | null {
+    return this._ariaHaspopup;
+  }
+
+  @Input()
+  set ariaExpanded(value: BooleanInput) {
+    if (value == null) {
+      this._ariaExpanded = null;
+    } else {
+      this._ariaExpanded = coerceBooleanProperty(value) ? 'true' : 'false';
+    }
+    this.cdr.markForCheck();
+  }
+  get ariaExpanded(): string | null {
+    return this._ariaExpanded;
+  }
+
+  @Input()
   set leadingIcon(value: TemplateRef<unknown> | null | undefined) {
     this._leadingIconTemplate = value ?? null;
     this.updateIconPresence();
@@ -293,6 +330,10 @@ export class FivraButtonComponent
     }
 
     return this.hasProjectedLabel;
+  }
+
+  get resolvedAriaHaspopup(): string | null {
+    return this._ariaHaspopup ?? (this.dropdown ? 'menu' : null);
   }
 
   ngOnInit(): void {

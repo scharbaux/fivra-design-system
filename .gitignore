@@ -5,5 +5,7 @@ dist/
 .angular/
 src/icons.generated.ts
 src/shared/icons/icons.generated.ts
+playwright-report/
+test-results/
 *.log
 .yarn/install-state.gz

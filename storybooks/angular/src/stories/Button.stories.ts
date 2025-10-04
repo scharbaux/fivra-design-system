@@ -8,11 +8,18 @@ import {
   type ButtonVariant,
   ensureButtonStyles,
 } from "@components/Button/button.styles";
+import {
+  SEMANTIC_TONES,
+  createButtonSemanticStyleFactories,
+} from "@components/Button/story-helpers";
 
 ensureButtonStyles();
 
-const SEMANTIC_TONES = ["Success", "Warning", "Error"] as const;
-type SemanticTone = (typeof SEMANTIC_TONES)[number];
+const {
+  createPrimarySemanticStyles,
+  createSecondarySemanticStyles,
+  createTertiarySemanticStyles,
+} = createButtonSemanticStyleFactories<Record<string, string>>((overrides) => overrides);
 
 type ButtonStoryArgs = {
   children?: string;
@@ -28,41 +35,22 @@ type ButtonStoryArgs = {
   style?: Record<string, string> | null;
   ariaLabel?: string | null;
   ariaLabelledby?: string | null;
+  ariaHaspopup?: string | null;
+  ariaExpanded?: boolean | null;
   "aria-label"?: string;
   leadingIcon?: unknown;
   trailingIcon?: unknown;
   onClick?: (event: MouseEvent) => void;
 };
 
-const createPrimarySemanticStyles = (tone: SemanticTone): Record<string, string> => ({
-  "--fivra-button-surface": `var(--backgroundPrimary${tone})`,
-  "--fivra-button-accent": `var(--backgroundPrimary${tone})`,
-  "--fivra-button-border": `var(--borderPrimary${tone})`,
-  "--fivra-button-text": "var(--backgroundNeutral0)",
-  "--fivra-button-hover-fallback": `var(--backgroundPrimary${tone})`,
-  "--fivra-button-active-fallback": `var(--backgroundPrimary${tone})`,
-});
-
-const createSecondarySemanticStyles = (tone: SemanticTone): Record<string, string> => ({
-  "--fivra-button-accent": `var(--textPrimary${tone})`,
-  "--fivra-button-border": `var(--borderPrimary${tone})`,
-  "--fivra-button-text": `var(--textPrimary${tone})`,
-  "--fivra-button-hover-fallback": `var(--backgroundSecondary${tone})`,
-  "--fivra-button-active-fallback": `var(--backgroundSecondary${tone})`,
-});
-
-const createTertiarySemanticStyles = (tone: SemanticTone): Record<string, string> => ({
-  "--fivra-button-accent": `var(--textPrimary${tone})`,
-  "--fivra-button-text": `var(--textPrimary${tone})`,
-  "--fivra-button-hover-fallback": `var(--backgroundSecondary${tone})`,
-  "--fivra-button-active-fallback": `var(--backgroundSecondary${tone})`,
-});
-
 const defaultRender = (args: ButtonStoryArgs) => {
   const { children, style, onClick, "aria-label": ariaLabelOverride, ...rest } = args;
   const ariaLabel = ariaLabelOverride ?? rest.ariaLabel ?? null;
 
   return {
+    moduleMetadata: {
+      imports: [CommonModule, FivraButtonModule],
+    },
     props: {
       ...rest,
       style: style ?? null,
@@ -140,12 +128,14 @@ const meta: Meta<ButtonStoryArgs> = {
     },
     hasLabel: {
       control: "boolean",
-      description: "Override automatic label detection when rendering screen-reader-only copy.",
+      description:
+        "Override automatic label detection when rendering screen-reader-only copy. When unset, adapters trim the projected content to determine whether a visible label exists.",
       table: { category: "Accessibility" },
     },
     dropdown: {
       control: "boolean",
-      description: "Appends a disclosure caret for menu triggers.",
+      description:
+        "Appends a disclosure caret for menu triggers and defaults `aria-haspopup=\"menu\"`. Provide `ariaExpanded` when you control disclosure state.",
       table: { category: "Appearance" },
     },
     loading: {
@@ -415,12 +405,13 @@ export const Dropdown: Story = {
   args: {
     children: "Menu",
     dropdown: true,
+    ariaExpanded: false,
   },
   parameters: {
     docs: {
       description: {
         story:
-          "Dropdown mode adds a built-in caret to communicate nested actions while still supporting manual icon slots if needed.",
+          "Dropdown mode adds a built-in caret, applies `aria-haspopup=\"menu\"` by default, and works with an `ariaExpanded` override when the disclosure state is controlled externally.",
       },
     },
   },

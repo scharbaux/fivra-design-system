@@ -28,6 +28,7 @@ const storybookConfig: StorybookConfig = {
     const angular = await loadAngularPlugin();
     const angularPlugin = angular({
       tsconfig: resolveFromRoot("storybooks/angular/tsconfig.storybook.json"),
+      jit: true,
     });
 
     const angularFrameworkOptions = (
