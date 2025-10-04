@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { Button } from "@components/Button";
 import { Icon } from "@components/Icon";
+import { defineFivraButton } from "@web-components";
 
 const SEMANTIC_TONES = ["Success", "Warning", "Error"] as const;
 type SemanticTone = (typeof SEMANTIC_TONES)[number];
@@ -373,7 +374,9 @@ export const IconOnly: Story = {
 
 const WebComponentPreview: React.FC = () => {
   React.useEffect(() => {
-    defineFivraButton();
+    if (!customElements.get("fivra-button")) {
+      defineFivraButton();
+    }
   }, []);
 
   return (
