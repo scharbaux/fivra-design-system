@@ -121,3 +121,4 @@ Slots: `leading-icon`, default, and `trailing-icon` provide icon/labelling parit
 - 1.8.8: Added Storybook (React/Angular/Vue) and Playwright visual regression references to the contract for update tracking.
 - 1.9.0: Harmonized label detection, dropdown aria defaults, and cross-framework stories/tests to lock the shared button contract.
 - 1.9.1: Enabled Angular Storybook JIT builds and Playwright baselines so dropdown/loading coverage exercises the shared aria defaults.
+- 1.9.2: Fixed `dropdown` type definition in the Web Component story.
