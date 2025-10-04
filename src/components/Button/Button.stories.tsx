@@ -3,37 +3,17 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { Button } from "@components/Button";
 import { Icon } from "@components/Icon";
+import {
+  SEMANTIC_TONES,
+  createButtonSemanticStyleFactories,
+} from "@components/Button/story-helpers";
 import { defineFivraButton } from "@web-components";
 
-const SEMANTIC_TONES = ["Success", "Warning", "Error"] as const;
-type SemanticTone = (typeof SEMANTIC_TONES)[number];
-
-const createPrimarySemanticStyles = (tone: SemanticTone): React.CSSProperties =>
-  ({
-    "--fivra-button-surface": `var(--backgroundPrimary${tone})`,
-    "--fivra-button-accent": `var(--backgroundPrimary${tone})`,
-    "--fivra-button-border": `var(--borderPrimary${tone})`,
-    "--fivra-button-text": "var(--backgroundNeutral0)",
-    "--fivra-button-hover-fallback": `var(--backgroundPrimary${tone})`,
-    "--fivra-button-active-fallback": `var(--backgroundPrimary${tone})`,
-  }) as React.CSSProperties;
-
-const createSecondarySemanticStyles = (tone: SemanticTone): React.CSSProperties =>
-  ({
-    "--fivra-button-accent": `var(--textPrimary${tone})`,
-    "--fivra-button-border": `var(--borderPrimary${tone})`,
-    "--fivra-button-text": `var(--textPrimary${tone})`,
-    "--fivra-button-hover-fallback": `var(--backgroundSecondary${tone})`,
-    "--fivra-button-active-fallback": `var(--backgroundSecondary${tone})`,
-  }) as React.CSSProperties;
-
-const createTertiarySemanticStyles = (tone: SemanticTone): React.CSSProperties =>
-  ({
-    "--fivra-button-accent": `var(--textPrimary${tone})`,
-    "--fivra-button-text": `var(--textPrimary${tone})`,
-    "--fivra-button-hover-fallback": `var(--backgroundSecondary${tone})`,
-    "--fivra-button-active-fallback": `var(--backgroundSecondary${tone})`,
-  }) as React.CSSProperties;
+const {
+  createPrimarySemanticStyles,
+  createSecondarySemanticStyles,
+  createTertiarySemanticStyles,
+} = createButtonSemanticStyleFactories<React.CSSProperties>((overrides) => overrides);
 
 const meta: Meta<typeof Button> = {
   title: "Components/Button/React",

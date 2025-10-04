@@ -24,3 +24,4 @@ This directory follows the repository and `src/components/` standards. Keep shar
 - 1.8.3: Pointed the shared tests at the canonical Angular button styles to cover the inlined color-mix helper.
 - 1.8.4: Updated Button stories to import `Meta`/`StoryObj` from `@storybook/react-vite` so typings match the composed framework.
 - 1.8.5: React Storybook now imports `defineFivraButton()` from `@web-components` and guards duplicate registration in the custom element preview.
+- 1.8.6: Extracted shared Storybook semantic style helpers for React and Angular button stories to keep palettes aligned.
