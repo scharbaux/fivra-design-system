@@ -8,21 +8,21 @@ type StoryConfig = {
 };
 
 const buttonStories: StoryConfig[] = [
-  { id: "components-button-react--primary", name: "primary" },
-  { id: "components-button-react--secondary", name: "secondary" },
-  { id: "components-button-react--tertiary", name: "tertiary" },
-  { id: "components-button-react--with-icons", name: "with-icons" },
-  { id: "components-button-react--dropdown", name: "dropdown" },
-  { id: "components-button-react--loading", name: "loading" },
-  { id: "components-button-react--icon-only", name: "icon-only" },
+  { id: "atomics-button-react--primary", name: "primary" },
+  { id: "atomics-button-react--secondary", name: "secondary" },
+  { id: "atomics-button-react--tertiary", name: "tertiary" },
+  { id: "atomics-button-react--with-icons", name: "with-icons" },
+  { id: "atomics-button-react--dropdown", name: "dropdown" },
+  { id: "atomics-button-react--loading", name: "loading" },
+  { id: "atomics-button-react--icon-only", name: "icon-only" },
   {
-    id: "components-button-angular--dropdown",
+    id: "atomics-button-angular--dropdown",
     name: "angular-dropdown",
     composePath: "angular",
     framework: "angular",
   },
   {
-    id: "components-button-angular--loading",
+    id: "atomics-button-angular--loading",
     name: "angular-loading",
     composePath: "angular",
     framework: "angular",

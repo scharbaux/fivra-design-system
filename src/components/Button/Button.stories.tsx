@@ -16,7 +16,8 @@ const {
 } = createButtonSemanticStyleFactories<React.CSSProperties>((overrides) => overrides);
 
 const meta: Meta<typeof Button> = {
-  title: "Components/Button/React",
+  title: "Atomics/Button",
+  id: "atomics-button-react",
   component: Button,
   tags: ["autodocs"],
   args: {

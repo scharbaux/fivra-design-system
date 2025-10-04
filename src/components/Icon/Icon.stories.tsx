@@ -10,7 +10,8 @@ const defaultIcon = iconNames.includes("chevron-right")
   : iconNames[0] ?? "";
 
 const meta: Meta<typeof Icon> = {
-  title: "Components/Icon/React",
+  title: "Atomics/Icon",
+  id: "atomics-icon-react",
   component: Icon,
   tags: ["autodocs"],
   argTypes: {

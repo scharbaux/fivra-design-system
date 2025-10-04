@@ -11,3 +11,4 @@ This directory inherits guidance from the repository root, `storybooks/AGENTS.md
 - 1.4.0: Extended placeholder stories with dropdown coverage, aria fallback messaging, and updated props to mirror the harmonized button contract.
 - 1.4.1: Mirrored the Angular/React controls for `ariaHaspopup`/`ariaExpanded` so the placeholder docs track the latest button contract.
 - 1.4.2: Replaced placeholder button stories with React-parity coverage, semantic helpers, and the web component preview.
+- 1.4.3: Updated Button stories to `Atomics/Button` with an explicit meta ID to align with the shared taxonomy and composed refs.
