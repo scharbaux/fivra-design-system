@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "packageManager": "yarn@4.9.4",
+  "packageManager": "yarn@4.10.3",
   "browserslist": [
     "> 0.5%",
     "last 2 versions",
@@ -36,7 +36,7 @@
     "build-storybook:vue": "storybook build -c storybooks/vue/.storybook -o storybooks/vue/storybook-static",
     "prebuild-storybook:vue": "yarn run generate:icons && yarn run generate:tokens",
     "build-storybook:compose": "yarn run build-storybook:angular && yarn run build-storybook:vue && yarn run build-storybook:root && node scripts/copy-storybook-refs.mjs",
-    "previsual:test": "playwright install --with-deps chromium",
+    "previsual:test": "playwright install --with-deps chromium chromium-headless-shell",
     "visual:test": "yarn run build-storybook:compose && playwright test",
     "build": "tsup && yarn build:angular && node scripts/copy-static-assets.mjs",
     "prebuild": "yarn run generate:tokens",

@@ -10,7 +10,14 @@ export default defineConfig({
     "{snapshotDir}/{testFileDir}/{testFileName}-snapshots/{arg}{ext}",
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
-  reporter: process.env.CI ? [["list"], ["github"]] : "list",
+  reporter: process.env.CI
+    ? [
+        ["list"],
+        ["github"],
+        ["html", { outputFolder: "playwright-report", open: "never" }],
+      ]
+    : [["list"], ["html", { outputFolder: "playwright-report", open: "never" }]],
+  outputDir: "test-results",
   timeout: 30_000,
   expect: {
     toHaveScreenshot: {
