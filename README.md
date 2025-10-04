@@ -122,7 +122,7 @@ Refer to `package.json` for the full list of scripts and watch the `docs/archite
 - Storybook 9 runs on Vite 5 with the `@storybook/react-vite` framework.
 - Accessibility, documentation, and design review workflows are supported via `@storybook/addon-a11y`, `@storybook/addon-docs`, and `@storybook/addon-designs`.
 - Production builds set `base: './'`, include a Vite transform to ensure assets resolve correctly on GitHub Pages deployments, and wire Storybook refs to static Angular/Vue directories for hosted composition.
-- The composed Angular (`http://localhost:6007`) and Vue (`http://localhost:6008`) workspaces surface under `Components/Button/{Angular,Vue}` in the sidebar when the refs are running.
+- The composed Angular (`http://localhost:6007`) and Vue (`http://localhost:6008`) workspaces surface under `Atomics/Button` in the sidebar when the refs are running, preserving parity with the React stories.
 - Icon galleries and component examples automatically consume the generated icon map; rerun `yarn generate:icons` when assets change.
 
 Visit the published Storybook (if available) to explore live components, or run the local command above to iterate on new work.
