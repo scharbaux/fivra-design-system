@@ -8,11 +8,18 @@ import {
   type ButtonVariant,
   ensureButtonStyles,
 } from "@components/Button/button.styles";
+import {
+  SEMANTIC_TONES,
+  createButtonSemanticStyleFactories,
+} from "@components/Button/story-helpers";
 
 ensureButtonStyles();
 
-const SEMANTIC_TONES = ["Success", "Warning", "Error"] as const;
-type SemanticTone = (typeof SEMANTIC_TONES)[number];
+const {
+  createPrimarySemanticStyles,
+  createSecondarySemanticStyles,
+  createTertiarySemanticStyles,
+} = createButtonSemanticStyleFactories<Record<string, string>>((overrides) => overrides);
 
 type ButtonStoryArgs = {
   children?: string;
@@ -33,30 +40,6 @@ type ButtonStoryArgs = {
   trailingIcon?: unknown;
   onClick?: (event: MouseEvent) => void;
 };
-
-const createPrimarySemanticStyles = (tone: SemanticTone): Record<string, string> => ({
-  "--fivra-button-surface": `var(--backgroundPrimary${tone})`,
-  "--fivra-button-accent": `var(--backgroundPrimary${tone})`,
-  "--fivra-button-border": `var(--borderPrimary${tone})`,
-  "--fivra-button-text": "var(--backgroundNeutral0)",
-  "--fivra-button-hover-fallback": `var(--backgroundPrimary${tone})`,
-  "--fivra-button-active-fallback": `var(--backgroundPrimary${tone})`,
-});
-
-const createSecondarySemanticStyles = (tone: SemanticTone): Record<string, string> => ({
-  "--fivra-button-accent": `var(--textPrimary${tone})`,
-  "--fivra-button-border": `var(--borderPrimary${tone})`,
-  "--fivra-button-text": `var(--textPrimary${tone})`,
-  "--fivra-button-hover-fallback": `var(--backgroundSecondary${tone})`,
-  "--fivra-button-active-fallback": `var(--backgroundSecondary${tone})`,
-});
-
-const createTertiarySemanticStyles = (tone: SemanticTone): Record<string, string> => ({
-  "--fivra-button-accent": `var(--textPrimary${tone})`,
-  "--fivra-button-text": `var(--textPrimary${tone})`,
-  "--fivra-button-hover-fallback": `var(--backgroundSecondary${tone})`,
-  "--fivra-button-active-fallback": `var(--backgroundSecondary${tone})`,
-});
 
 const defaultRender = (args: ButtonStoryArgs) => {
   const { children, style, onClick, "aria-label": ariaLabelOverride, ...rest } = args;
