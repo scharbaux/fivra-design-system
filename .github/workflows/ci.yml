@@ -58,6 +58,9 @@ jobs:
       - name: Run unit tests
         run: yarn test
 
+      - name: Run previsual regression tests
+        run: yarn previsual:test
+
       - name: Run visual regression tests
         run: yarn visual:test
 
