@@ -5,6 +5,8 @@ This directory extends the repository root `AGENTS.md`. Use Playwright-based vis
 - Keep tests deterministic by disabling animations and waiting for Storybook frames to render before capturing screenshots.
 - Store baseline images under `__screenshots__/` alongside the spec so Playwright manages updates consistently.
 - Regenerate baselines intentionally with `yarn visual:test --update-snapshots` and review diffs before committing.
+- Baseline filenames must stay platform-agnostic; avoid OS-specific suffixes by relying on the configured `snapshotPathTemplate`.
+- Whenever a visual diff is expected, refresh every affected baseline before merging so shared snapshots pass locally and in CI.
 - Document any new scenarios covered here in the contributor docs so the team understands the workflow.
 - Record notable updates in the "Functional Changes" section below.
 
@@ -14,3 +16,4 @@ This directory extends the repository root `AGENTS.md`. Use Playwright-based vis
 - 1.1.0: Added Angular dropdown/loading stories to the button visual suite to guard harmonized caret/spinner behavior.
 - 1.1.1: Updated the harness to target Angular via JIT-enabled Storybook refs and captured dropdown/loading baselines.
 - 1.1.2: Wait for `document.fonts.ready` (plus a frame tick) before capturing button stories so Google Sans always applies; refresh baselines after Playwright browsers finish installing.
+- 1.1.3: Dropped OS-specific filename suffixes, refreshed shared baselines, and documented the cross-platform workflow.

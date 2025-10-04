@@ -6,6 +6,8 @@ const baseURL = process.env.VISUAL_TEST_BASE_URL ?? `http://127.0.0.1:${storyboo
 export default defineConfig({
   testDir: "./visual-tests",
   snapshotDir: "./visual-tests/__screenshots__",
+  snapshotPathTemplate:
+    "{snapshotDir}/{testFileDir}/{testFileName}-snapshots/{arg}{ext}",
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
   reporter: process.env.CI ? [["list"], ["github"]] : "list",
