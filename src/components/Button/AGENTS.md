@@ -85,14 +85,17 @@ _Outputs_: `focus()` and `click()` methods proxy to the internal button for host
 
 Slots: `leading-icon`, default, and `trailing-icon` provide icon/labelling parity with other frameworks. Methods `focus()`, `click()`, and `blur()` are forwarded to the internal button.
 
-### Canonical references
+-### Canonical references
 
 - React stories: [`Button.stories.tsx`](./Button.stories.tsx)
 - React tests: [`__tests__/Button.test.tsx`](./__tests__/Button.test.tsx)
+- Angular stories: [`../../storybooks/angular/src/stories/Button.stories.ts`](../../storybooks/angular/src/stories/Button.stories.ts)
 - Angular implementation: [`../../angular/button/fivra-button.component.ts`](../../angular/button/fivra-button.component.ts)
 - Angular tests: [`../../angular/button/__tests__/fivra-button.component.test.ts`](../../angular/button/__tests__/fivra-button.component.test.ts)
+- Vue preview stories: [`../../storybooks/vue/src/stories/Button.stories.ts`](../../storybooks/vue/src/stories/Button.stories.ts)
 - Web component: [`../../web-components/button.ts`](../../web-components/button.ts)
 - Web component tests: [`../../web-components/__tests__/button.test.ts`](../../web-components/__tests__/button.test.ts)
+- Visual regression tests: [`../../visual-tests/button.spec.ts`](../../visual-tests/button.spec.ts)
 - Documentation: [`../../docs/components/button.md`](../../docs/components/button.md)
 
 ## Functional Changes
@@ -115,3 +118,4 @@ Slots: `leading-icon`, default, and `trailing-icon` provide icon/labelling parit
 - 1.8.5: React Storybook now imports `defineFivraButton()` from `@web-components` and guards duplicate registration in the custom element preview.
 - 1.8.6: Extracted shared Storybook semantic style helpers for React and Angular button stories to keep palettes aligned.
 - 1.8.7: Documented the component contract, canonical references, and cross-linked the docs reference page for easier maintenance.
+- 1.8.8: Added Storybook (React/Angular/Vue) and Playwright visual regression references to the contract for update tracking.
