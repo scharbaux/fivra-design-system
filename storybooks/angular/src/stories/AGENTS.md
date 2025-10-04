@@ -16,3 +16,4 @@ This directory inherits guidance from the repository root, `storybooks/AGENTS.md
 - 1.6.3: Patched the Angular stories to hide duplicate native markup when the `<fivra-button>` custom element is registered.
 - 1.6.4: Replaced the CSS shim with a DOM-level cleanup so Storybook prunes duplicate light DOM buttons once `<fivra-button>` is registered.
 - 1.6.5: Removed the Angular web component story and related light DOM cleanup shim after confirming the nested button regression persists upstream.
+- 1.6.6: Deprecated Web Component from Angular stories.
