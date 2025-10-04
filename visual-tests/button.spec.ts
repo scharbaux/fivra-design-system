@@ -42,6 +42,10 @@ async function loadStory(page: Page, story: StoryConfig) {
     document.body.style.margin = "0";
     document.documentElement.style.setProperty("color-scheme", "light");
   });
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+    await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+  });
 }
 
 test.describe("Button visual regressions", () => {
