@@ -19,3 +19,4 @@ This directory extends the repository root `AGENTS.md`. Use Playwright-based vis
 - 1.1.2: Wait for `document.fonts.ready` (plus a frame tick) before capturing button stories so Google Sans always applies; refresh baselines after Playwright browsers finish installing.
 - 1.1.3: Dropped OS-specific filename suffixes, refreshed shared baselines, and documented the cross-platform workflow.
 - 1.1.4: Publish HTML reports and diff image bundles when Playwright visual tests fail so reviewers can audit regressions quickly.
+- 1.1.5: Require the full Chromium toolchain (including `chromium-headless-shell`) before running tests and remind contributors to refresh baselines after the install completes.
