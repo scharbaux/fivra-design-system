@@ -122,3 +122,4 @@ Slots: `leading-icon`, default, and `trailing-icon` provide icon/labelling parit
 - 1.9.0: Harmonized label detection, dropdown aria defaults, and cross-framework stories/tests to lock the shared button contract.
 - 1.9.1: Enabled Angular Storybook JIT builds and Playwright baselines so dropdown/loading coverage exercises the shared aria defaults.
 - 1.9.2: Retitled the Button stories to `Atomics/Button` and set explicit story IDs for cross-framework Storybook composition.
+- 1.9.3: Fixed `dropdown` type definition in the Web Component story.
