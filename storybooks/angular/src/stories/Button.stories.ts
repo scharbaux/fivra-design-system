@@ -45,6 +45,14 @@ type ButtonStoryArgs = {
   onClick?: (event: MouseEvent) => void;
 };
 
+const storyButtonStyles = [
+  `
+    fivra-button:defined > .fivra-button {
+      display: none;
+    }
+  `,
+];
+
 const defaultRender = (args: ButtonStoryArgs) => {
   const {
     children,
@@ -69,6 +77,7 @@ const defaultRender = (args: ButtonStoryArgs) => {
       ariaExpanded,
       onClick,
     },
+    styles: storyButtonStyles,
     template: `
       <fivra-button
         [variant]="variant"
@@ -85,6 +94,19 @@ const defaultRender = (args: ButtonStoryArgs) => {
         [ariaLabelledby]="ariaLabelledby"
         [ariaHaspopup]="ariaHaspopup"
         [ariaExpanded]="ariaExpanded"
+        [attr.variant]="variant"
+        [attr.size]="size"
+        [attr.full-width]="fullWidth ? '' : null"
+        [attr.icon-only]="iconOnly ? '' : null"
+        [attr.has-label]="hasLabel === null || hasLabel === undefined ? null : hasLabel ? 'true' : 'false'"
+        [attr.dropdown]="dropdown ? '' : null"
+        [attr.loading]="loading ? '' : null"
+        [attr.type]="type ?? null"
+        [attr.disabled]="disabled ? '' : null"
+        [attr.aria-label]="ariaLabel"
+        [attr.aria-labelledby]="ariaLabelledby"
+        [attr.aria-haspopup]="ariaHaspopup ?? (dropdown ? 'menu' : null)"
+        [attr.aria-expanded]="ariaExpanded"
         (click)="onClick?.($event)"
       >
         <ng-container *ngIf="children">{{ children }}</ng-container>
@@ -219,6 +241,7 @@ export const Tertiary: Story = {
 
 export const DisabledStates: Story = {
   render: () => ({
+    styles: storyButtonStyles,
     template: `
       <div
         style="
@@ -253,6 +276,7 @@ export const SemanticOverrides: Story = {
       createSecondarySemanticStyles,
       createTertiarySemanticStyles,
     },
+    styles: storyButtonStyles,
     template: `
       <div style="display: grid; gap: calc(var(--spacingM) * 1px);">
         <div
@@ -314,6 +338,7 @@ export const WithIcons: Story = {
         ...rest,
         ariaLabel: resolvedAriaLabel,
       },
+      styles: storyButtonStyles,
       template: `
         <ng-template #leadingIconTemplate>
           <span aria-hidden="true">⬇</span>
@@ -334,6 +359,16 @@ export const WithIcons: Story = {
           [ariaLabelledby]="ariaLabelledby"
           [leadingIcon]="leadingIconTemplate"
           [trailingIcon]="trailingIconTemplate"
+          [attr.variant]="variant"
+          [attr.size]="size"
+          [attr.full-width]="fullWidth ? '' : null"
+          [attr.icon-only]="iconOnly ? '' : null"
+          [attr.dropdown]="dropdown ? '' : null"
+          [attr.loading]="loading ? '' : null"
+          [attr.type]="type ?? null"
+          [attr.disabled]="disabled ? '' : null"
+          [attr.aria-label]="ariaLabel"
+          [attr.aria-labelledby]="ariaLabelledby"
         >
           {{ children }}
         </fivra-button>
@@ -358,6 +393,7 @@ export const Sizes: Story = {
     props: {
       ...args,
     },
+    styles: storyButtonStyles,
     template: `
       <div
         style="
@@ -367,9 +403,9 @@ export const Sizes: Story = {
           flex-wrap: wrap;
         "
       >
-        <fivra-button [variant]="variant" size="sm">Small</fivra-button>
-        <fivra-button [variant]="variant" size="md">Medium</fivra-button>
-        <fivra-button [variant]="variant" size="lg">Large</fivra-button>
+        <fivra-button [variant]="variant" size="sm" [attr.variant]="variant">Small</fivra-button>
+        <fivra-button [variant]="variant" size="md" [attr.variant]="variant">Medium</fivra-button>
+        <fivra-button [variant]="variant" size="lg" [attr.variant]="variant">Large</fivra-button>
       </div>
     `,
   }),
@@ -393,12 +429,16 @@ export const FullWidth: Story = {
     props: {
       ...args,
     },
+    styles: storyButtonStyles,
     template: `
       <div style="width: 320px;">
         <fivra-button
           [variant]="variant"
           [size]="size"
           [fullWidth]="fullWidth"
+          [attr.variant]="variant"
+          [attr.size]="size"
+          [attr.full-width]="fullWidth ? '' : null"
         >
           {{ children }}
         </fivra-button>
@@ -457,6 +497,7 @@ export const IconOnly: Story = {
       ...args,
       ariaLabel: args["aria-label"] ?? args.ariaLabel ?? null,
     },
+    styles: storyButtonStyles,
     template: `
       <ng-template #leadingIconTemplate>
         <span aria-hidden="true">→</span>
@@ -465,6 +506,8 @@ export const IconOnly: Story = {
         [iconOnly]="iconOnly"
         [ariaLabel]="ariaLabel"
         [leadingIcon]="leadingIconTemplate"
+        [attr.icon-only]="iconOnly ? '' : null"
+        [attr.aria-label]="ariaLabel"
       ></fivra-button>
     `,
   }),

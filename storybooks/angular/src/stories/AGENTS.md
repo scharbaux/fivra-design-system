@@ -13,3 +13,4 @@ This directory inherits guidance from the repository root, `storybooks/AGENTS.md
 - 1.6.0: Documented dropdown aria defaults, added `ariaExpanded` args, and aligned stories with the harmonized button contract.
 - 1.6.1: Added explicit `ariaHaspopup`/`ariaExpanded` controls and refreshed docs to describe the new adapter defaults surfaced in visual tests.
 - 1.6.2: Synced button stories with the React baseline, refreshed docs/args, and added the web component preview.
+- 1.6.3: Patched the Angular stories to hide duplicate native markup when the `<fivra-button>` custom element is registered.
