@@ -12,3 +12,4 @@ This directory inherits guidance from the repository root, `storybooks/AGENTS.md
 - 1.5.5: Button stories now import shared semantic style factories from `src/components/Button/story-helpers.ts` to match React palettes.
 - 1.6.0: Documented dropdown aria defaults, added `ariaExpanded` args, and aligned stories with the harmonized button contract.
 - 1.6.1: Added explicit `ariaHaspopup`/`ariaExpanded` controls and refreshed docs to describe the new adapter defaults surfaced in visual tests.
+- 1.6.2: Synced button stories with the React baseline, refreshed docs/args, and added the web component preview.

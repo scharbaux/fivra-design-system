@@ -12,6 +12,7 @@ import {
   SEMANTIC_TONES,
   createButtonSemanticStyleFactories,
 } from "@components/Button/story-helpers";
+import { defineFivraButton } from "@web-components";
 
 ensureButtonStyles();
 
@@ -36,7 +37,8 @@ type ButtonStoryArgs = {
   ariaLabel?: string | null;
   ariaLabelledby?: string | null;
   ariaHaspopup?: string | null;
-  ariaExpanded?: boolean | null;
+  ariaExpanded?: string | boolean | null;
+  "aria-expanded"?: string;
   "aria-label"?: string;
   leadingIcon?: unknown;
   trailingIcon?: unknown;
@@ -44,8 +46,16 @@ type ButtonStoryArgs = {
 };
 
 const defaultRender = (args: ButtonStoryArgs) => {
-  const { children, style, onClick, "aria-label": ariaLabelOverride, ...rest } = args;
+  const {
+    children,
+    style,
+    onClick,
+    "aria-label": ariaLabelOverride,
+    "aria-expanded": ariaExpandedOverride,
+    ...rest
+  } = args;
   const ariaLabel = ariaLabelOverride ?? rest.ariaLabel ?? null;
+  const ariaExpanded = ariaExpandedOverride ?? rest.ariaExpanded ?? null;
 
   return {
     moduleMetadata: {
@@ -56,6 +66,7 @@ const defaultRender = (args: ButtonStoryArgs) => {
       style: style ?? null,
       children,
       ariaLabel,
+      ariaExpanded,
       onClick,
     },
     template: `
@@ -72,6 +83,8 @@ const defaultRender = (args: ButtonStoryArgs) => {
         [ngStyle]="style"
         [ariaLabel]="ariaLabel"
         [ariaLabelledby]="ariaLabelledby"
+        [ariaHaspopup]="ariaHaspopup"
+        [ariaExpanded]="ariaExpanded"
         (click)="onClick?.($event)"
       >
         <ng-container *ngIf="children">{{ children }}</ng-container>
@@ -129,13 +142,13 @@ const meta: Meta<ButtonStoryArgs> = {
     hasLabel: {
       control: "boolean",
       description:
-        "Override automatic label detection when rendering screen-reader-only copy. When unset, adapters trim the projected content to determine whether a visible label exists.",
+        "Override automatic label detection when rendering screen-reader-only copy. When unset, adapters trim the rendered children to determine whether a visible label exists.",
       table: { category: "Accessibility" },
     },
     dropdown: {
       control: "boolean",
       description:
-        "Appends a disclosure caret for menu triggers and defaults `aria-haspopup=\"menu\"`. Provide `ariaExpanded` when you control disclosure state.",
+        "Appends a disclosure caret for menu triggers and defaults `aria-haspopup=\"menu\"`. Provide `aria-expanded` when you control disclosure state.",
       table: { category: "Appearance" },
     },
     loading: {
@@ -330,7 +343,7 @@ export const WithIcons: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Demonstrates leading and trailing icon slots using Angular templates.",
+        story: "Demonstrates leading and trailing icon slots using the shared Icon component.",
       },
     },
   },
@@ -405,13 +418,13 @@ export const Dropdown: Story = {
   args: {
     children: "Menu",
     dropdown: true,
-    ariaExpanded: false,
+    "aria-expanded": "false",
   },
   parameters: {
     docs: {
       description: {
         story:
-          "Dropdown mode adds a built-in caret, applies `aria-haspopup=\"menu\"` by default, and works with an `ariaExpanded` override when the disclosure state is controlled externally.",
+          "Dropdown mode adds a built-in caret, applies `aria-haspopup=\"menu\"` by default, and works with an `aria-expanded` override when the menu state is controlled externally.",
       },
     },
   },
@@ -460,6 +473,36 @@ export const IconOnly: Story = {
       description: {
         story:
           "Icon-only buttons collapse to a circular hit area via `--radiusMax`. Remember to supply an accessible `aria-label`.",
+      },
+    },
+  },
+};
+
+const ensureWebComponentDefined = () => {
+  if (!customElements.get("fivra-button")) {
+    defineFivraButton();
+  }
+};
+
+export const WebComponent: Story = {
+  name: "Web Component",
+  render: () => {
+    ensureWebComponentDefined();
+
+    return {
+      template: `
+        <fivra-button variant="secondary" size="md" dropdown>
+          <span slot="leading-icon" aria-hidden="true">★</span>
+          Web component
+        </fivra-button>
+      `,
+    };
+  },
+  parameters: {
+    controls: { disable: true },
+    docs: {
+      description: {
+        story: "Custom element preview. Call `defineFivraButton()` before first render to register `<fivra-button>`.",
       },
     },
   },
