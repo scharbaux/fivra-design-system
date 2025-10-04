@@ -2,6 +2,8 @@
 
 The Button component exposes an accessible, themeable action trigger implemented both as a React component and as a standards-based custom element. Styles, variants, and sizing tokens are shared across targets so teams can mix frameworks without visual drift.
 
+Refer to the [Button component contract](../../src/components/Button/AGENTS.md#component-contract) for the authoritative list of variants, sizes, accessibility requirements, and framework-specific props. Update that contract alongside this page when behavior shifts.
+
 - Source: [`src/components/Button/Button.tsx`](../../src/components/Button/Button.tsx)
 - Stories: [`src/components/Button/Button.stories.tsx`](../../src/components/Button/Button.stories.tsx)
 - Custom element: [`src/web-components/button.ts`](../../src/web-components/button.ts)
