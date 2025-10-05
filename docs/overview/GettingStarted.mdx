@@ -18,7 +18,7 @@ corepack --version || echo "Corepack bundled with Node"
 yarn -v || echo "Use Corepack to activate Yarn 4"
 ```
 
-> **Tip:** Aligning with the CI toolchain prevents mismatched lockfiles or Storybook builder warnings. See the [tech stack overview](../tech-stack.md) for the full dependency matrix.
+> **Tip:** Aligning with the CI toolchain prevents mismatched lockfiles or Storybook builder warnings. See the [tech stack overview](./TechStack.mdx) for the full dependency matrix.
 
 ## Activate Corepack & Yarn
 
@@ -42,7 +42,7 @@ yarn generate:tokens
 ```
 
 - `generate:icons` scans `src/shared/assets/icons/**/*` and rebuilds the typed registry consumed by stories.
-- `generate:tokens` runs the design token transformer described in the [design token workflow](../tech-stack.md#design-token--theme-workflow) so the Engage and Legacy themes stay in sync with the docs.
+- `generate:tokens` runs the design token transformer described in the [design token workflow](./TechStack.mdx#design-token-theme-workflow) so the Engage and Legacy themes stay in sync with the docs.
 
 > **Heads up:** Token regeneration is also wired into `prebuild` and `prestorybook`, but running it explicitly keeps local Storybook sessions consistent after pulling new design exports.
 
@@ -66,7 +66,7 @@ yarn storybook:react
 yarn storybook:react:compose
 ```
 
-> Override refs with environment variables when consuming remote builds: set `STORYBOOK_ANGULAR_URL` or `STORYBOOK_VUE_URL` before running the command. The [multi-framework composition guide](../component-architecture.md#multi-framework-storybook-composition) dives deeper into the topology.
+> Override refs with environment variables when consuming remote builds: set `STORYBOOK_ANGULAR_URL` or `STORYBOOK_VUE_URL` before running the command. The [multi-framework composition guide](./ComponentArchitecture.mdx#multi-framework-storybook-composition) dives deeper into the topology.
 
 Need a static preview? Build Storybook and inspect `storybook-static/`:
 
@@ -87,5 +87,5 @@ For release preparation and governance, follow the `yarn changeset` and `yarn ve
 ## Next steps
 
 - Explore the [Welcome overview](./Welcome.mdx) to understand the icon pipeline feeding Storybook.
-- Review framework-specific implementation notes in the [Component Architecture](../component-architecture.md) guide.
+- Review framework-specific implementation notes in the [Component Architecture](./ComponentArchitecture.mdx) guide.
 - Browse the [`storybooks/`](../../storybooks/) directory for individual framework configuration and CI-ready composition settings.

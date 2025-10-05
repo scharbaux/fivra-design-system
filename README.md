@@ -3,7 +3,7 @@
 ## Overview
 The Fivra Design System packages reusable tokens, icons, components, and documentation that are synchronized with the Fivra product experience. It replaces earlier demo content (including the "Figma Icon Exporter" prototype) with a production-focused library that can be consumed by React, Angular, Vue, or standards-based web components. In addition to UI primitives, the repository includes a Storybook instance that demonstrates implementation guidance and provides designers and engineers with a shared reference.
 
-For a deeper look at the architecture decisions, see the evolving documentation in [`docs/tech-stack.md`](docs/tech-stack.md) and forthcoming guides under `docs/architecture/` (coming soon).
+For a deeper look at the architecture decisions, see the evolving documentation in [`docs/overview/TechStack.mdx`](docs/overview/TechStack.mdx) and forthcoming guides under `docs/architecture/` (coming soon).
 
 ## Goals
 - Ship a consistent, accessible, and themeable component library that mirrors the design language in Figma.
@@ -12,7 +12,7 @@ For a deeper look at the architecture decisions, see the evolving documentation 
 - Provide a reference Storybook to surface usage examples, accessibility notes, and design guidelines.
 
 ## Tech Stack
-- **Language & Tooling**: TypeScript, Vite, Storybook 9, Yarn 4 (via Corepack), SVGO, and modern linting/formatting tooling. The living stack is documented in [`docs/tech-stack.md`](docs/tech-stack.md).
+- **Language & Tooling**: TypeScript, Vite, Storybook 9, Yarn 4 (via Corepack), SVGO, and modern linting/formatting tooling. The living stack is documented in [`docs/overview/TechStack.mdx`](docs/overview/TechStack.mdx).
 - **Build Targets**: ESM packages for direct consumption, generated icon maps, and Storybook static builds for documentation.
 - **Planned Deliverables**: Framework-specific entry points (React today, Angular/Vue wrappers next), and web-component bundles for direct browser consumption.
 

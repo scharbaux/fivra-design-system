@@ -25,8 +25,8 @@
 - `yarn verify:agents` (invoked by CI) must succeed; ensure each modified directory's `AGENTS.md` adds a new semantic-version bullet describing the change.
 
 ## Key Documentation References
-- Tech stack details live in `docs/tech-stack.md`.
-- Component architecture guidance is maintained in `docs/component-architecture.md`.
+- Tech stack details live in `docs/overview/TechStack.mdx`.
+- Component architecture guidance is maintained in `docs/overview/ComponentArchitecture.mdx`.
 - Product overview and integration guides reside under `docs/overview/` and `docs/integrations/` respectively.
 - When implementing features that alter technology choices, architectural boundaries, integration contracts, or documented component behavior, update the corresponding documents alongside your code changes.
 

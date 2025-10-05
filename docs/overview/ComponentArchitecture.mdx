@@ -1,0 +1,113 @@
+import { Meta, Title, Subtitle } from '@storybook/addon-docs/blocks';
+
+<Meta title="Overview/Component Architecture" />
+
+<Title>Component Architecture</Title>
+
+<Subtitle>Guiding principles for shipping multi-framework primitives and shared Storybook docs</Subtitle>
+
+Fivra components balance framework-specific ergonomics with a shared core that keeps tokens, accessibility, and behaviors aligned. Use this guide when planning new primitives or refactoring existing ones so React, Angular, Vue, and web component implementations evolve together.
+
+## Icon implementation audit
+
+The current React `Icon` component accepts multiple source formats (components, elements, inline SVG strings, declarative path definitions) and normalizes variant aliases such as `fill`/`solid` and `stroke`/`outline`. It forwards accessibility attributes, converts numeric `size` props to pixel strings, falls back to a default `viewBox` when needed, and logs warnings for unsupported entries in development. Runtime logic handles both inline SVG rendering and sanitized string injection.
+
+While ergonomic for React, several behaviors lean on React-only features like `forwardRef`, `cloneElement`, JSX composition, and prop merging. These responsibilities should migrate into a framework-agnostic core that handles registry lookups, normalization, and variant resolution, with thin adapters translating props/events into React, Angular, or Vue conventions.
+
+## Component categorization
+
+Use these dimensions when deciding between web components and framework-specific modules:
+
+1. **Statefulness & lifecycle complexity** — Stateless primitives (icons, avatars, badges) fit well as web components; complex forms or data tables often require framework modules.
+2. **Theming requirements** — CSS custom properties and shared tokens favor web components, while deep integration with framework theming APIs may require dedicated implementations.
+3. **Accessibility patterns** — Choose web components when semantics map cleanly to HTML/ARIA. Prefer framework modules when focus management or router integrations depend on framework hooks.
+4. **Performance & bundle size** — Highly reused primitives should avoid duplicated logic via shared web components. Heavy components can stay framework-specific to leverage tree-shaking.
+
+## Design principles
+
+- **Single source of truth** — Centralize tokens, motion curves, and shared logic in framework-agnostic modules.
+- **Progressive enhancement** — Ensure web components render meaningful HTML/CSS by default, layering interactivity when required.
+- **Adapter pattern** — Provide thin React/Angular/Vue wrappers that translate props, slots, and events to the custom element surface.
+- **Separation of concerns** — Keep styling independent from data logic; avoid embedding application behavior in shared primitives.
+- **Accessible by design** — Bake ARIA roles, labels, focus management, and keyboard interactions into the base implementations.
+- **Composable & extensible** — Expose slots and prop hooks so teams can extend behavior without forking.
+
+## Multi-framework Storybook composition
+
+- The React workspace under `.storybook/` owns the primary manager and registers framework refs. Angular and Vue workspaces live in `storybooks/<framework>/.storybook` with their own builds.
+- Development: run `yarn storybook` to launch Angular (6007) and Vue (6008) servers first; the script waits for them before starting the React manager on 6006 so refs resolve immediately when `STORYBOOK_REF_MODE=dev`. Override `STORYBOOK_ANGULAR_URL` or `STORYBOOK_VUE_URL` to compose remote builds.
+- Static hosting: `yarn build-storybook` chains Angular/Vue builds, runs the React build with `STORYBOOK_REF_MODE=static`, and copies generated assets into `storybook-static/{angular,vue}` via `scripts/copy-storybook-refs.mjs`. The manager consumes the exported `refs` configuration so static hosts serve the composed bundles.
+- Adding a new framework:
+  1. Scaffold `storybooks/<framework>/.storybook/` with local `main.ts` and preview config.
+  2. Add `storybook:<framework>` and `build-storybook:<framework>` scripts mirroring Angular/Vue with a unique dev port.
+  3. Update `.storybook/main.ts` to append a ref with a nested `title`, and extend `scripts/copy-storybook-refs.mjs` to recognize the new id.
+  4. Document the workflow in `README.md`, `docs/overview/TechStack.mdx`, and relevant `AGENTS.md` files so contributors understand launch and hosting steps.
+
+## Lifecycle constraints
+
+- **Web components** — Avoid storing framework-managed state inside custom elements; accept attributes/properties and emit DOM events. Use lifecycle callbacks for subscriptions and keep updates idempotent.
+- **React** — Prefer functional components with hooks. Derive state from props and bridge attribute/property updates to web components via `useEffect`.
+- **Angular** — Wrap custom elements in Angular components/directives with `ChangeDetectionStrategy.OnPush`. Reserve Angular services for Angular-specific modules.
+- **Vue** — Provide SFC wrappers that map props and listeners to custom element APIs. Reach for `defineCustomElement` only when full Vue lifecycles are necessary.
+
+## Theming & accessibility
+
+- Maintain tokens via the Tokens Studio export consumed by `scripts/generate-design-tokens.mjs`; run `yarn generate:tokens` (or rely on `prebuild`/`prestorybook`) to refresh `src/styles/themes/*.css` and the manifest before shipping.
+- Engage tokens scope to `:root`; alternative themes apply when `data-fivra-theme='<slug>'` appears on a container. Import `src/styles/index.css` to register both Engage and Legacy layers.
+- Typography defaults to `'Google Sans', sans-serif`; ensure `src/styles/fonts.css` (or the published equivalent) ships alongside components.
+- Generated themes expose percent-based intensity helpers and neutral state-layer sources. Use `color-mix()` with helpers such as:
+
+  ```css
+  color-mix(
+    in srgb,
+    var(--stateLayerBrightenBase) var(--intensityBrandHoverPercent),
+    var(--backgroundPrimaryBrand)
+  );
+  ```
+
+- Use helpers from `src/styles/themes/index.ts` (`applyDesignTokenTheme`, `clearDesignTokenTheme`, `FIVRA_THEME_ATTRIBUTE`) to toggle themes across frameworks.
+- Guarantee every interactive component exposes ARIA labels, focus indicators, and keyboard shortcuts consistently. Document how to override CSS variables, even when Shadow DOM encapsulation is enabled.
+- Map design tokens into framework theming systems (Angular CDK, Vue style bindings) while keeping CSS variables authoritative.
+
+## Distribution strategy
+
+| Target | Packaging | Entry points | Notes |
+| --- | --- | --- | --- |
+| Web components | Bundle ES modules and type definitions with Vite/Rollup. Publish as `@fivra/ds-web-components` with side-effect-free modules for tree-shaking. | `dist/web-components/index.js` | Include `defineCustomElements()` loader and CSS assets. |
+| React | Provide direct React components and wrappers around web components in `@fivra/ds-react`. Emit CJS + ESM bundles with `.d.ts` files via Rollup/TSUP. | `dist/react/index.js` | Auto-register web components where needed, but prefer explicit `registerIcons()` APIs. |
+| Angular | Ship via `ng-packagr` emitting Ivy-compatible output. Wrap custom elements in modules (`FivraIconModule`, etc.). | `dist/angular/index.mjs` | Document peer dependencies such as `@angular/core` and `@angular/common`. |
+| Vue | Output Vue SFC wrappers and optional custom elements using `defineCustomElement`. | `dist/vue/index.mjs` | Offer a plugin for global registration (`app.use(FivraDesignSystem)`). |
+
+## Tooling requirements
+
+- **Shared tooling** — TypeScript project references, ESLint, Prettier, Storybook (or Ladle) for demos, Style Dictionary/Tokens Studio for design tokens.
+- **Web components** — Lit or vanilla TS + Rollup, open-wc testing, Playwright for visual regression.
+- **React** — TSX support via TSUP/Vite, React Testing Library + Jest, Storybook stories capable of mounting custom elements or React implementations.
+- **Angular** — `ng-packagr`, Jest or Karma with TestBed, Cypress for integrations with web components.
+- **Vue** — Vite builds, Vue Test Utils + Vitest, Cypress component testing for slots and reactivity.
+- **CI/CD** — Yarn workspaces, Changesets-driven versioning, automated semantic release pipelines per package.
+
+## Minimizing lifecycle complexity
+
+- Keep business logic out of web components; expose events and let consuming apps handle state machines.
+- Prefer stateless web components that accept computed data via attributes/properties. When internal state is unavoidable, guard updates with lightweight stores rather than framework-specific solutions.
+- Centralize DOM measurements or imperative behaviors in shared utilities invoked from adapters.
+- Use adapter utilities to translate framework-specific props (`className`, `@Input`) into custom element attributes.
+- Maintain a compatibility matrix for browser support and delegate polyfills to consuming applications to avoid duplication.
+
+## Initial component roadmap
+
+| Component | Recommended implementation | Rationale | Dependencies / shared primitives |
+| --- | --- | --- | --- |
+| Icon | Web component core + React/Angular/Vue adapters | Stateless registry already exists; extract shared module. | Icon registry loader, design tokens for colors. |
+| Button | Web component | High reuse; primarily stylistic with slot-based icon/label support. | Focus ring utility, size tokens, disabled-state logic. |
+| Badge / Tag | Web component | Presentational with minimal interactivity. | Color scale, typography tokens. |
+| Avatar | Web component + adapters | Handles image fallback logic with minimal framework dependencies. | Image loader utility, skeleton primitive. |
+| Tooltip | Framework-specific modules | Requires framework portal/overlay APIs and lifecycle hooks. | Positioning engine, focus trap utility. |
+| Modal / Dialog | Hybrid: web component core with framework-controlled open state | Needs focus trapping and scroll lock; adapters manage state. | Overlay manager, accessibility utilities. |
+| Form Field (Input, Select) | Framework-specific first, web component later | Must integrate with form bindings (`ngModel`, controlled inputs, `v-model`). | Validation messaging, localization utilities. |
+| Data Table | Framework-specific | Heavy state (sorting, pagination, virtualization) differs per framework. | Data store abstraction, pagination controls. |
+| Toast / Notification | Web component registry with framework service adapters | DOM container render, framework services trigger toasts. | Animation tokens, announcement utility. |
+| Layout Grid | Web component | CSS-driven layout ensures consistent gutters across frameworks. | Responsive breakpoint tokens. |
+
+Review this roadmap quarterly as design priorities evolve and shared token infrastructure matures.
