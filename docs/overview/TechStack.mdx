@@ -1,0 +1,63 @@
+import { Meta, Title, Subtitle } from '@storybook/addon-docs/blocks';
+
+<Meta title="Overview/Tech Stack" />
+
+<Title>Tech Stack</Title>
+
+<Subtitle>Tooling, automation, and framework support powering the Fivra Design System</Subtitle>
+
+The design system leans on a modern TypeScript toolchain, automated asset pipelines, and a multi-framework Storybook that doubles as contributor documentation. Keep this reference in sync with repository updates so new teammates can quickly understand how the stack fits together.
+
+## Languages & frameworks
+
+- **TypeScript 5.5+** — primary language for components, scripts, and Storybook configuration.
+- **React 18** — default authoring surface for stories and icon primitives (`react@^18.2.0`, `react-dom@^18.2.0`).
+- **MDX** — rich documentation format rendered inside Storybook (`@mdx-js/react`).
+
+## Build & bundling tooling
+
+- **Vite 5** — Vite drives the React Storybook builder through `@storybook/react-vite`, enabling fast local dev and static builds.
+- **Storybook 9** — primary workbench with accessibility and design addons wired in.
+- **SVGO 3** — CLI optimization step for SVG assets (`svgo@^3.0.2`).
+
+## Storybook composition workflow
+
+Storybook sources docs from `docs/**/*.mdx` and component stories from `src/components/**/*.stories.*`. The React workspace under `.storybook/` registers framework refs and manages composition:
+
+- Development runs `yarn storybook`, which starts Angular (6007) and Vue (6008) dev servers, waits for them to report ready, and then boots the React manager on 6006 so the sidebar loads all frameworks immediately.
+- Production builds set `base: './'`, rewrite Vite's injected mocker entry for GitHub Pages, and rely on Storybook refs to serve Angular/Vue static bundles from `storybook-static/{angular,vue}`.
+- Toggle `STORYBOOK_REF_MODE` between `dev` and `static` to control ref URLs. Override `STORYBOOK_ANGULAR_URL` and `STORYBOOK_VUE_URL` when composing remote deployments.
+
+## Icon workflow
+
+1. **Optimization** — `yarn optimize-icons` runs `scripts/optimize-icons.mjs` to recursively optimize SVGs in `src/shared/assets/icons`, preserving `viewBox` attributes and normalizing `fill`/`stroke` to `currentColor`.
+2. **Generation** — `yarn generate:icons` executes `scripts/generate-icons-map.mjs`, scanning `src/shared/assets/icons` and emitting `src/shared/icons/icons.generated.ts` with outline and solid variants (customizable via `package.json#iconsGenerator.variants`).
+3. **Storybook hooks** — `prebuild-storybook` regenerates icons before static builds so Storybook always ships the latest assets.
+
+## Design token & theme workflow
+
+1. **Token transformation** — `yarn generate:tokens` calls `scripts/generate-design-tokens.mjs`, reading the Tokens Studio bundle to output CSS themes (`src/styles/themes/engage.css`, `legacy.css`) and the runtime manifest (`tokens.generated.ts`).
+2. **Selector scoping** — Engage tokens scope to both `:root` and `[data-fivra-theme='engage']`, while other themes target their specific `data-fivra-theme` values. Import `src/styles/index.css` to register every layer.
+3. **Automated hooks** — `prebuild` and `prestorybook` invoke token generation automatically so builds and Storybook stay synchronized.
+4. **Runtime helpers** — `src/styles/themes/index.ts` re-exports manifest data, helper utilities, and the `FIVRA_THEME_ATTRIBUTE` constant for toggling themes across frameworks.
+
+## Tooling requirements
+
+- **Node.js 18.17+ (22.x recommended)** — aligns with CI and Storybook expectations.
+- **Corepack** — manage Yarn releases bundled with Node ≥ 16.9 (`corepack enable`).
+- **Yarn 4.9.4** — enforced via `packageManager`; install dependencies with `yarn install --immutable` (or CI's `--frozen-lockfile`).
+- **Changesets** — `@changesets/cli` records release notes, proposes semver bumps, and powers automated publish workflows.
+
+## Continuous integration & release automation
+
+GitHub Actions workflows target Node 22, enable Corepack, install dependencies with Yarn 4, run icon optimization/generation, and deploy Storybook to GitHub Pages. Validation runs `yarn verify:agents`, `yarn test`, and `yarn build` on every push or PR to ensure semantic-version bullets accompany source edits. A dedicated release workflow applies `yarn run version` via Changesets, re-runs `yarn test`/`yarn build`, publishes tags, and uploads changelog artifacts.
+
+## Visual regression testing
+
+- **Playwright (`@playwright/test@^1.50.1`)** drives headless Chromium against the composed static Storybook output.
+- `yarn visual:test` builds Storybook, installs Chromium if necessary, and runs specs in `visual-tests/` that capture deterministic screenshots for Button stories (primary, secondary, tertiary, loading, icon-only, dropdown, and icon variants).
+- Baselines live in `visual-tests/__screenshots__/` and stay out of npm packages via `.npmignore`. Refresh them with `yarn visual:test --update-snapshots` when intentional visual changes occur.
+
+## What’s next
+
+Future iterations will document how additional frameworks (e.g., Svelte) integrate with the Storybook composition pattern established for Angular and Vue.
