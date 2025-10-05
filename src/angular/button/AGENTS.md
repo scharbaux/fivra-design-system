@@ -14,3 +14,4 @@ he shared button behavior and styling.
 - 1.8.3: Inlined the color-mix helper within the Angular button styles to drop the `src/angular/styles` symlink dependency.
 - 1.9.0: Synced boolean coercion, label detection, and dropdown aria fallbacks with the shared button contract; expanded tests to cover the behavior.
 - 1.9.1: Converted the component/directives to standalone, exposed ariaHaspopup/ariaExpanded inputs, and wired Storybook JIT so Angular builds fuel the shared visual tests.
+- 1.9.2: Mirrored host inline styles onto the internal button element and added coverage for CSS custom property overrides.

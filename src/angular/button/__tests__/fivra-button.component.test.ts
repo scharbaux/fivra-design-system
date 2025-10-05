@@ -278,6 +278,18 @@ describe('FivraButtonComponent', () => {
     expect(button.getAttribute('aria-expanded')).toBeNull();
   });
 
+  it('forwards host inline styles to the internal button', async () => {
+    const hostElement = fixture.nativeElement.querySelector('fivra-button') as HTMLElement;
+    const button = queryButton();
+
+    hostElement.style.setProperty('--fivra-button-accent', 'rgb(12, 244, 33)');
+
+    await flushChanges();
+
+    const computed = getComputedStyle(button);
+    expect(computed.getPropertyValue('--fivra-button-accent').trim()).toBe('rgb(12, 244, 33)');
+  });
+
   it('supports aria-label attributes and focus/click helpers', async () => {
     const button = queryButton();
     const clickSpy = vi.fn();
