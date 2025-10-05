@@ -2,55 +2,51 @@ import { Meta, Title, Subtitle } from '@storybook/addon-docs/blocks';
 
 <Meta title="Foundations/Welcome" />
 
-<Title>Design System Icons — Welcome</Title>
+<Title>Fivra Design System — Welcome</Title>
 
-<Subtitle>Single Source of Truth (SSoT) for product icons</Subtitle>
+<Subtitle>Multi-framework tokens, icons, and components composed in one Storybook</Subtitle>
 
-This repository demonstrates a practical Single Source of Truth for SVG icons exported from Figma. Icons are exported programmatically via the [Figma Icon Exporter](https://www.figma.com/community/plugin/1533548616572213704/figma-icon-exporter) plugin, opened as a pull request, then normalized and mapped for consumption in code and documentation.
+The Fivra Design System packages reusable design tokens, icons, and UI components that stay aligned with the production product experience. The library prioritizes parity across React, Angular, Vue, and standards-based web components so teams can consume the same visual language wherever they build. Storybook acts as the shared reference—composing framework workspaces alongside architectural docs—while automated icon and token pipelines keep assets synchronized with Figma exports.
 
-> Figma Icon Exporter plugin [Documentation](https://sofian-design.github.io/fivra/).
+## Design system scope
+
+- Source of truth for typography, color, spacing, and motion tokens that compile into framework-neutral CSS custom properties.
+- End-to-end icon workflow that ingests SVGs from Figma, optimizes them, and ships typed icon maps ready for code consumption.
+- Production-ready component implementations with consistent variants, accessibility affordances, and shared styling primitives.
+
+## Supported frameworks
+
+- **React** — Primary authoring surface housed in `src/components`, exported through the package entry points, and documented in Storybook.
+- **Angular** — Library bundle produced via `ng-packagr` with stories running inside the composed Angular workspace.
+- **Vue** — Vite-powered workspace with Button examples that exercise the same tokens and icon utilities.
+- **Web components** — `<fivra-*>` custom elements consume the generated tokens for standards-based integration.
+
+## Components available today
+
+- **Button** — Multi-variant trigger covering leading/trailing icon slots, loading, and icon-only affordances across frameworks.
+- **Icon** — Typed React component that renders generated outline and solid glyphs with accessible labeling helpers.
+
+Additional primitives will follow the same shared token contract so new frameworks inherit identical behavior and styling.
+
+## Token and icon pipeline
+
+Design tokens originate from Style Dictionary transforms (`yarn generate:tokens`) that output CSS themes and TypeScript manifests. The icon pipeline (`yarn generate:icons`) reads SVG exports, runs SVGO-based optimization, and regenerates the icon map consumed by components and documentation. These scripts power both the library builds and Storybook previews, keeping every workspace synchronized.
+
+## Storybook composition workflow
+
+Run `yarn storybook` to boot the React manager and automatically compose the Angular and Vue refs. The script waits for each framework workspace before opening the UI so the sidebar immediately reflects every available story. Use the `STORYBOOK_ANGULAR_URL` and `STORYBOOK_VUE_URL` environment variables when targeting remote deployments, or `yarn storybook:react:compose` to point the React manager at existing refs without starting additional dev servers.
 
 ## What’s in here
 
-- Collection of SVGs organized by style and category: `src/shared/assets/icons/{outline|solid}/{category}/name.svg`
-- A generator that builds a typed icons map: `yarn generate:icons` → `src/shared/icons/icons.generated.ts`
-- An `Icon` React component that renders icons by name and style
-- A `Button` primitive with shared React and `<fivra-button>` implementations
-- An Icons Gallery with filters, search and click‑to‑copy
-- CI workflows that optimize icons, keep the generated map in sync, and deploy Storybook
-
-## Typical flow
-
-1. Designers export icons from Figma using the Figma Icon Exporter plugin (see the “Figma Plugin” page).
-2. The plugin creates a PR with raw SVGs.
-3. GitHub Actions runs:
-   - `optimize-icons` (SVGO pass, color normalization).
-   - `generate:icons` (produces `src/shared/icons/icons.generated.ts`).
-   - Auto‑commits the results back to the PR branch (or uploads a patch for forks).
-4. On merge, Storybook builds and deploys to GitHub Pages.
-
-## Using the Icon component
-
-```tsx
-import { Icon } from 'your-icons-package';
-
-export function Example() {
-  return (
-    <>
-      <Icon name="chevron-right" variant="outline" size={24} color="#334155" />
-      <Icon name="chevron-right" variant="solid" size={24} color="#334155" />
-    </>
-  );
-}
-```
-
-Notes:
-
-- Outline thickness is baked into the `outline` assets. The component intentionally does not expose stroke/strokeWidth props.
-- Colors are applied via `fill="currentColor"`; set the `color` prop (or CSS `color`) to theme icons.
-- The generator preserves `fill-rule`/`clip-rule` and ignores `<defs>` clip paths to avoid “solid square” rendering.
+- React stories located under `src/components/*/*.stories.tsx`, including `Atomics/Button` and `Atomics/Icon` for the primary implementations.
+- Angular workspace in `storybooks/angular`, surfacing `Atomics/Button` via the composed Angular Storybook.
+- Vue workspace in `storybooks/vue`, exposing the matching `Atomics/Button` coverage.
+- Shared gallery docs and utilities under `src/stories`, such as the `Gallery/Icons` search and copy experience.
 
 ## Explore
 
-- “Atomics/Icon” — usage and examples.
-- “Gallery/Icons” — browse/search all icons; click to copy an icon name.
+- React → `Atomics/Button` and `Atomics/Icon` for usage, props, and accessibility guidance.
+- Angular → `Atomics/Button` (requires the Angular workspace to be running or composed via refs).
+- Vue → `Atomics/Button` stories that demonstrate the same tokens and icon slots.
+- Gallery → `Gallery/Icons` to browse, filter, and copy generated glyph names.
+- Docs → “Integrations/Figma Plugin” for end-to-end export automation details.

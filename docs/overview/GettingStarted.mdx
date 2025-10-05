@@ -1,0 +1,91 @@
+import { Meta, Title, Subtitle } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundations/Getting Started" />
+
+<Title>Getting Started</Title>
+
+<Subtitle>Prep your environment and compose the multi-framework Storybook</Subtitle>
+
+## Confirm your environment
+
+- Node.js 18.17+ (Node 22.x recommended for parity with CI)
+- Corepack (bundled with Node \u2265 16.9)
+- Yarn 4.9.4 (activated through Corepack)
+
+```bash
+node -v
+corepack --version || echo "Corepack bundled with Node"
+yarn -v || echo "Use Corepack to activate Yarn 4"
+```
+
+> **Tip:** Aligning with the CI toolchain prevents mismatched lockfiles or Storybook builder warnings. See the [tech stack overview](./TechStack.mdx) for the full dependency matrix.
+
+## Activate Corepack & Yarn
+
+Enable Corepack once per machine, then pin Yarn 4.9.4 so scripts run with the same plug-and-play features Storybook expects:
+
+```bash
+corepack enable
+corepack prepare yarn@4.9.4 --activate
+```
+
+> **Why Corepack?** Corepack keeps Yarn locked to the repository's supported version and avoids global installations that can drift over time.
+
+## Install dependencies & generate assets
+
+The Storybook experience depends on generated icon and token artifacts. Install packages and refresh both pipelines before launching:
+
+```bash
+yarn install --immutable
+yarn generate:icons
+yarn generate:tokens
+```
+
+- `generate:icons` scans `src/shared/assets/icons/**/*` and rebuilds the typed registry consumed by stories.
+- `generate:tokens` runs the design token transformer described in the [design token workflow](./TechStack.mdx#design-token-theme-workflow) so the Engage and Legacy themes stay in sync with the docs.
+
+> **Heads up:** Token regeneration is also wired into `prebuild` and `prestorybook`, but running it explicitly keeps local Storybook sessions consistent after pulling new design exports.
+
+## Run Storybook
+
+Launch the composed workspace to preview React, Angular, and Vue stories together. The React manager waits for the other frameworks so tabs populate immediately:
+
+```bash
+yarn storybook
+```
+
+- React manager: http://localhost:6006
+- Angular workspace: http://localhost:6007
+- Vue workspace: http://localhost:6008
+
+Use targeted scripts when you only need part of the stack:
+
+```bash
+yarn storybook:react
+# Compose remote refs without booting local Angular/Vue dev servers
+yarn storybook:react:compose
+```
+
+> Override refs with environment variables when consuming remote builds: set `STORYBOOK_ANGULAR_URL` or `STORYBOOK_VUE_URL` before running the command. The [multi-framework composition guide](./ComponentArchitecture.mdx#multi-framework-storybook-composition) dives deeper into the topology.
+
+Need a static preview? Build Storybook and inspect `storybook-static/`:
+
+```bash
+yarn build-storybook
+```
+
+## Generator & verification scripts
+
+Keep these commands handy while iterating on documentation or stories:
+
+- `yarn optimize-icons` – normalize SVGs prior to regeneration.
+- `yarn visual:test` – run Playwright visual baselines against the composed static Storybook.
+- `yarn build` – produce distributable packages; useful when validating story-driven component tweaks.
+
+For release preparation and governance, follow the `yarn changeset` and `yarn verify:agents` workflow outlined in the [repository README](../../README.md) and `docs/AGENTS.md`. Together they ensure Storybook updates stay in sync with shipped packages and directory change logs.
+
+## Next steps
+
+- Explore the [Welcome overview](./Welcome.mdx) to understand the icon pipeline feeding Storybook.
+- Review framework-specific implementation notes in the [Component Architecture](./ComponentArchitecture.mdx) guide.
+- Browse the [`storybooks/`](../../storybooks/) directory for individual framework configuration and CI-ready composition settings.
