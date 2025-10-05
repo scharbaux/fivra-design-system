@@ -21,6 +21,8 @@
 - Run `yarn generate:icons` then run `yarn build`.
 - Always make sure `yarn build` is ✅ successful before marking the task as completed.
 - Always make sure `yarn test` has ✅ passed before marking the task as completed.
+- Always run `yarn build`, `yarn test`, and `yarn verify:agents` locally before considering the task complete so navigation and
+  governance updates stay in sync.
 - After applying version changes locally, rerun `yarn build` and `yarn test` to confirm the repository still compiles and the suite passes.
 - `yarn verify:agents` (invoked by CI) must succeed; ensure each modified directory's `AGENTS.md` adds a new semantic-version bullet describing the change.
 
