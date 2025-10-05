@@ -26,6 +26,8 @@ interface TokenRow extends RawTokenRow {
   alias?: string;
   cssVariable: string;
   values: Record<string, unknown>;
+  compositeValues?: Record<string, Record<string, unknown>>;
+  displayPath?: string;
 }
 
 type TokenDictionary = Record<string, unknown>;
@@ -226,10 +228,167 @@ function normalizeTypographyValue(value: unknown): string | undefined {
   return value;
 }
 
-function buildRows(): TokenRow[] {
-  const rawRows = flattenTokens(externalTokens as TokenDictionary);
+function formatLength(value: unknown): string | undefined {
+  if (value == null) {
+    return undefined;
+  }
 
-  return rawRows.map((row) => {
+  if (typeof value === 'number') {
+    return `${value}px`;
+  }
+
+  return String(value);
+}
+
+function formatCompositeAlias(properties: RawTokenRow[]): string | undefined {
+  const segments = properties
+    .map((property) => {
+      const propertyName = property.path[property.path.length - 1];
+      const alias = formatAlias(property.reference) ?? (property.reference != null ? String(property.reference) : undefined);
+
+      if (!alias) {
+        return undefined;
+      }
+
+      return `${propertyName}: ${alias}`;
+    })
+    .filter(Boolean) as string[];
+
+  if (!segments.length) {
+    return undefined;
+  }
+
+  return segments.join(' | ');
+}
+
+function formatCompositeDisplayPath(type: string | undefined, basePath: string[]): string | undefined {
+  if (!type || !compositeTokenTypes.has(type)) {
+    return undefined;
+  }
+
+  return [type, ...basePath].join('.');
+}
+
+function formatCompositeRawValue(type: string | undefined, values: Record<string, unknown>): string {
+  if (type === 'typography') {
+    const declarations: string[] = [];
+    const family = values.fontFamily;
+    const weight = values.fontWeight;
+    const size = formatLength(values.fontSize);
+    const lineHeight = formatLength(values.lineHeight);
+    const letterSpacing = formatLength(values.letterSpacing);
+
+    if (family) {
+      declarations.push(`font-family: ${family};`);
+    }
+
+    if (weight) {
+      declarations.push(`font-weight: ${weight};`);
+    }
+
+    if (size) {
+      declarations.push(`font-size: ${size};`);
+    }
+
+    if (lineHeight) {
+      declarations.push(`line-height: ${lineHeight};`);
+    }
+
+    if (letterSpacing) {
+      declarations.push(`letter-spacing: ${letterSpacing};`);
+    }
+
+    return declarations.join(' ');
+  }
+
+  if (type === 'boxShadow') {
+    const x = formatLength(values.x) ?? '0';
+    const y = formatLength(values.y) ?? '0';
+    const blur = formatLength(values.blur) ?? '0';
+    const spread = formatLength(values.spread) ?? '0';
+    const color = values.color ?? 'transparent';
+
+    return `box-shadow: ${[x, y, blur, spread, color].join(' ')};`;
+  }
+
+  return JSON.stringify(values);
+}
+
+export function buildRows(): TokenRow[] {
+  const rawRows = flattenTokens(externalTokens as TokenDictionary);
+  const compositeGroups = new Map<
+    string,
+    {
+      basePath: string[];
+      type?: string;
+      description?: string;
+      properties: RawTokenRow[];
+    }
+  >();
+  const order: Array<{ key: string; composite: boolean; row?: RawTokenRow }> = [];
+
+  rawRows.forEach((row) => {
+    const isComposite = row.type && compositeTokenTypes.has(row.type);
+
+    if (isComposite) {
+      const key = row.basePath.join('.');
+      if (!compositeGroups.has(key)) {
+        compositeGroups.set(key, {
+          basePath: row.basePath,
+          type: row.type,
+          description: row.description,
+          properties: [],
+        });
+        order.push({ key, composite: true });
+      }
+
+      compositeGroups.get(key)!.properties.push(row);
+
+      return;
+    }
+
+    order.push({ key: row.path.join('.'), composite: false, row });
+  });
+
+  return order.map((entry) => {
+    if (entry.composite) {
+      const group = compositeGroups.get(entry.key);
+
+      if (!group) {
+        throw new Error(`Missing composite group for ${entry.key}`);
+      }
+
+      const compositeValues: Record<string, Record<string, unknown>> = {};
+      const values: Record<string, string> = {};
+
+      designTokenManifest.themes.forEach((theme) => {
+        const themeData = themeDataBySlug[theme.slug] ?? {};
+        const resolvedProperties: Record<string, unknown> = {};
+
+        group.properties.forEach((propertyRow) => {
+          const propertyName = propertyRow.path[propertyRow.path.length - 1];
+          resolvedProperties[propertyName] = resolveReference(propertyRow.reference, themeData);
+        });
+
+        compositeValues[theme.slug] = resolvedProperties;
+        values[theme.slug] = formatCompositeRawValue(group.type, resolvedProperties);
+      });
+
+      return {
+        path: group.basePath,
+        basePath: group.basePath,
+        type: group.type,
+        reference: group.properties.map((propertyRow) => propertyRow.reference),
+        description: group.description,
+        alias: formatCompositeAlias(group.properties),
+        cssVariable: toCssVariable(group.basePath),
+        values,
+        compositeValues,
+        displayPath: formatCompositeDisplayPath(group.type, group.basePath),
+      } satisfies TokenRow;
+    }
+
+    const row = entry.row!;
     const cssVariable = toCssVariable(row.path);
     const alias = formatAlias(row.reference);
 
@@ -247,7 +406,7 @@ function buildRows(): TokenRow[] {
       alias,
       cssVariable,
       values,
-    };
+    } satisfies TokenRow;
   });
 }
 
@@ -266,23 +425,25 @@ const rowsByCategory = rows.reduce<Record<string, TokenRow[]>>((acc, row) => {
 const compositeValuesByTheme: Record<string, Record<string, Record<string, unknown>>> = {};
 
 designTokenManifest.themes.forEach((theme) => {
-  const themeRows: Record<string, Record<string, unknown>> = {};
-  rows.forEach((row) => {
-    const compositeKey = getCompositeKey(row);
+  compositeValuesByTheme[theme.slug] = {};
+});
 
-    if (!compositeKey) {
+rows.forEach((row) => {
+  const compositeKey = getCompositeKey(row);
+
+  if (!compositeKey || !row.compositeValues) {
+    return;
+  }
+
+  designTokenManifest.themes.forEach((theme) => {
+    const valuesForTheme = row.compositeValues?.[theme.slug];
+
+    if (!valuesForTheme) {
       return;
     }
 
-    if (!themeRows[compositeKey]) {
-      themeRows[compositeKey] = {};
-    }
-
-    const property = row.path[row.path.length - 1];
-    themeRows[compositeKey][property] = row.values[theme.slug];
+    compositeValuesByTheme[theme.slug][compositeKey] = valuesForTheme;
   });
-
-  compositeValuesByTheme[theme.slug] = themeRows;
 });
 
 function Specimen({ row, theme }: { row: TokenRow; theme: ThemeSlug }): ReactNode {
@@ -487,7 +648,7 @@ function TokensTable() {
                       {categoryRows.map((row) => (
                         <tr key={`${theme.slug}-${row.path.join('.')}`}>
                           <td style={cellStyle}>
-                            <code>{row.path.join('.')}</code>
+                            <code>{row.displayPath ?? row.path.join('.')}</code>
                             {row.description ? (
                               <div style={{ color: '#706e7b', fontSize: '0.8rem', marginTop: '0.25rem' }}>{row.description}</div>
                             ) : null}
