@@ -28,3 +28,4 @@ This document augments the repository root `AGENTS.md`. Review root conventions 
 - 1.3.1: Updated preview typing to reference `@storybook/react-vite` after running the automigration tooling.
 - 1.4.0: Simplified refs configuration and promoted the composed workflow to `yarn storybook`.
 - 1.5.0: Reintroduced environment toggles so the React manager only composes Angular/Vue refs when explicitly enabled.
+- 1.6.0: Reordered the docs navigation hierarchy in `preview.js` so Welcome, Overview, and Foundations pages precede component stories.
