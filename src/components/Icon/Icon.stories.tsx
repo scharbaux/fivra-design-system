@@ -1,6 +1,7 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
+import { Box } from "@components/Box";
 import { Icon } from "@components";
 import { icons as ICONS } from "@shared/icons/icons.generated";
 
@@ -108,18 +109,12 @@ export const Sizes: Story = {
     color: "var(--textSecondaryInteractive)",
   },
   render: (args) => (
-    <div
-      style={{
-        display: "flex",
-        gap: "calc(var(--spacingL) * 1px)",
-        alignItems: "center",
-      }}
-    >
+    <Box display="flex" gap="spacing-l" alignItems="center">
       <Icon {...args} size="var(--iconsizesS)" />
       <Icon {...args} size="var(--iconsizesM)" />
       <Icon {...args} size="var(--iconsizesXl2)" />
       <Icon {...args} size="var(--iconsizesXl3)" />
-    </div>
+    </Box>
   ),
   parameters: {
     docs: {
@@ -138,36 +133,26 @@ export const TokenOverride: Story = {
     color: "var(--textPrimaryInteractive)",
   },
   render: (args) => (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "calc(var(--spacingM) * 1px)",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "calc(var(--spacingS) * 1px)",
-          "--icon-size": "var(--iconsizesL)",
-        } as React.CSSProperties}
+    <Box display="flex" flexDirection="column" gap="spacing-m">
+      <Box
+        display="flex"
+        alignItems="center"
+        gap="spacing-s"
+        style={{ "--icon-size": "var(--iconsizesL)" } as React.CSSProperties}
       >
         <span style={{ fontSize: "0.875rem" }}>Default token</span>
         <Icon {...args} size="var(--icon-size)" />
-      </div>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "calc(var(--spacingS) * 1px)",
-          "--icon-size": "48px",
-        } as React.CSSProperties}
+      </Box>
+      <Box
+        display="flex"
+        alignItems="center"
+        gap="spacing-s"
+        style={{ "--icon-size": "48px" } as React.CSSProperties}
       >
         <span style={{ fontSize: "0.875rem" }}>Overridden to 48px</span>
         <Icon {...args} size="var(--icon-size)" />
-      </div>
-    </div>
+      </Box>
+    </Box>
   ),
   parameters: {
     docs: {
@@ -186,12 +171,12 @@ export const Colors: Story = {
     size: "var(--iconsizesXl2)",
   },
   render: (args) => (
-    <div style={{ display: "flex", gap: "calc(var(--spacingL) * 1px)" }}>
+    <Box display="flex" gap="spacing-l">
       <Icon {...args} color="var(--textPrimaryInteractive)" />
       <Icon {...args} color="var(--textPrimarySuccess)" />
       <Icon {...args} color="var(--textPrimaryWarning)" />
       <Icon {...args} color="var(--textPrimaryError)" />
-    </div>
+    </Box>
   ),
   parameters: {
     docs: {

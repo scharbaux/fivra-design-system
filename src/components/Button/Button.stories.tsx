@@ -1,6 +1,7 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
+import { Box } from "@components/Box";
 import { Button } from "@components/Button";
 import { Icon } from "@components/Icon";
 import {
@@ -136,14 +137,7 @@ export const Tertiary: Story = {
 
 export const DisabledStates: Story = {
   render: () => (
-    <div
-      style={{
-        display: "flex",
-        gap: "calc(var(--spacingL) * 1px)",
-        alignItems: "center",
-        flexWrap: "wrap",
-      }}
-    >
+    <Box display="flex" gap="spacing-l" alignItems="center" flexWrap="wrap">
       <Button variant="primary" disabled>
         Primary
       </Button>
@@ -153,7 +147,7 @@ export const DisabledStates: Story = {
       <Button variant="tertiary" disabled>
         Tertiary
       </Button>
-    </div>
+    </Box>
   ),
   parameters: {
     docs: {
@@ -168,19 +162,8 @@ export const DisabledStates: Story = {
 export const SemanticOverrides: Story = {
   name: "Semantic Overrides",
   render: () => (
-    <div
-      style={{
-        display: "grid",
-        gap: "calc(var(--spacingM) * 1px)",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          gap: "calc(var(--spacingL) * 1px)",
-          flexWrap: "wrap",
-        }}
-      >
+    <Box display="grid" gap="spacing-m">
+      <Box display="flex" gap="spacing-l" flexWrap="wrap">
         {SEMANTIC_TONES.map((tone) => (
           <Button
             key={`primary-${tone}`}
@@ -190,14 +173,8 @@ export const SemanticOverrides: Story = {
             {tone} Primary
           </Button>
         ))}
-      </div>
-      <div
-        style={{
-          display: "flex",
-          gap: "calc(var(--spacingL) * 1px)",
-          flexWrap: "wrap",
-        }}
-      >
+      </Box>
+      <Box display="flex" gap="spacing-l" flexWrap="wrap">
         {SEMANTIC_TONES.map((tone) => (
           <Button
             key={`secondary-${tone}`}
@@ -207,14 +184,8 @@ export const SemanticOverrides: Story = {
             {tone} Secondary
           </Button>
         ))}
-      </div>
-      <div
-        style={{
-          display: "flex",
-          gap: "calc(var(--spacingL) * 1px)",
-          flexWrap: "wrap",
-        }}
-      >
+      </Box>
+      <Box display="flex" gap="spacing-l" flexWrap="wrap">
         {SEMANTIC_TONES.map((tone) => (
           <Button
             key={`tertiary-${tone}`}
@@ -224,8 +195,8 @@ export const SemanticOverrides: Story = {
             {tone} Tertiary
           </Button>
         ))}
-      </div>
-    </div>
+      </Box>
+    </Box>
   ),
   parameters: {
     docs: {
@@ -258,14 +229,7 @@ export const Sizes: Story = {
     variant: "primary",
   },
   render: (args) => (
-    <div
-      style={{
-        display: "flex",
-        gap: "calc(var(--spacingL) * 1px)",
-        alignItems: "center",
-        flexWrap: "wrap",
-      }}
-    >
+    <Box display="flex" gap="spacing-l" alignItems="center" flexWrap="wrap">
       <Button {...args} size="sm">
         Small
       </Button>
@@ -275,7 +239,7 @@ export const Sizes: Story = {
       <Button {...args} size="lg">
         Large
       </Button>
-    </div>
+    </Box>
   ),
   parameters: {
     docs: {
@@ -294,9 +258,9 @@ export const FullWidth: Story = {
     variant: "primary",
   },
   render: (args) => (
-    <div style={{ width: 320 }}>
+    <Box width={320}>
       <Button {...args} />
-    </div>
+    </Box>
   ),
   parameters: {
     docs: {
