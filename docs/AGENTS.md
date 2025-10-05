@@ -33,3 +33,4 @@ This document augments the root `AGENTS.md`. Ensure you understand the repositor
 - 1.11.0: Clarified that `yarn storybook` waits for Angular/Vue dev servers before composing the React manager.
 - 1.12.0: Documented the Playwright visual regression workflow and how to refresh Storybook baselines.
 - 1.12.1: Updated the Welcome overview to reference the Icon stories under the Atomics taxonomy.
+- 1.12.2: Documented the semantic tokens overview page and TokensTable specimen guidance sourced from generated tokens data.
