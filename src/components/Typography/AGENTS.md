@@ -11,3 +11,4 @@ This directory inherits the repository root `AGENTS.md` along with `src/componen
 ## Functional Changes
 - Use `<major>.<minor>[.<patch>]` labels instead of dates when recording new entries.
 - 1.0.0: Introduced the React `Typography` component with shared style injector, tests, and stories consuming Engage theme tokens.
+- 1.0.1: Replaced React Storybook layout wrappers with the Box primitive to share spacing utilities across examples.
