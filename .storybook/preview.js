@@ -123,14 +123,19 @@ export const parameters = {
     storySort: {
       order: [
         'Docs',
-        ['Welcome', '*'],
+        [
+          'Welcome',
+          'Overview',
+          ['Getting Started', 'Tech Stack', 'Component Architecture'],
+          'Foundations',
+          ['Design Tokens', 'Icons Library'],
+        ],
         'Components',
         [
           'Button',
           ['React', 'Angular', 'Vue', '*'],
           '*',
         ],
-        'Gallery',
         '*',
       ],
     },

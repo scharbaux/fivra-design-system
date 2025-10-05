@@ -31,7 +31,7 @@ const ALL_META: IconRecord[] = [...OUTLINE_META, ...SOLID_META];
 const ALL_CATEGORIES = Array.from(new Set(ALL_META.map((i) => i.category))).sort();
 
 const meta: Meta = {
-  title: "Gallery/Icons",
+  title: "Docs/Foundations/Icons Library",
   argTypes: {
     variant: {
       control: { type: "inline-radio" },
@@ -47,7 +47,7 @@ const meta: Meta = {
     docs: {
       description: {
         story:
-          "Browse all icons with filters. Click any tile to copy the icon name for use in the Icon component's `name` prop.",
+          "Browse the Icons Library with filters. Click any tile to copy the icon name for use in the Icon component's `name` prop.",
       },
     },
     design: {
