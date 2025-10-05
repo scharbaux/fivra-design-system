@@ -7,6 +7,7 @@ import {
   Component,
   ContentChildren,
   ElementRef,
+  Renderer2,
   inject,
   Input,
   OnDestroy,
@@ -138,6 +139,8 @@ export class FivraButtonComponent
   implements OnInit, AfterContentInit, AfterViewInit, OnDestroy
 {
   private readonly cdr = inject(ChangeDetectorRef);
+  private readonly hostElementRef = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly renderer = inject(Renderer2);
 
   readonly buttonClassName = BUTTON_CLASS_NAME;
   readonly spinnerClassName = BUTTON_SPINNER_CLASS;
@@ -162,6 +165,7 @@ export class FivraButtonComponent
   private hasProjectedTrailingIcon = false;
   private hasProjectedLabel = false;
   private labelObserver?: MutationObserver;
+  private hostStyleObserver?: MutationObserver;
   private _ariaHaspopup: string | null = null;
   private _ariaExpanded: string | null = null;
 
@@ -338,6 +342,7 @@ export class FivraButtonComponent
 
   ngOnInit(): void {
     ensureButtonStyles();
+    this.observeHostInlineStyles();
   }
 
   ngAfterContentInit(): void {
@@ -376,6 +381,7 @@ export class FivraButtonComponent
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
     this.labelObserver?.disconnect();
+    this.hostStyleObserver?.disconnect();
   }
 
   focus(options?: FocusOptions): void {
@@ -434,5 +440,40 @@ export class FivraButtonComponent
     } else {
       this.cdr.markForCheck();
     }
+  }
+
+  private syncHostInlineStyles(): void {
+    const hostElement = this.hostElementRef.nativeElement;
+    const button = this.buttonElement?.nativeElement;
+
+    if (!button) {
+      return;
+    }
+
+    const hostStyle = hostElement.getAttribute('style');
+
+    if (hostStyle === null) {
+      this.renderer.removeAttribute(button, 'style');
+      return;
+    }
+
+    this.renderer.setAttribute(button, 'style', hostStyle);
+  }
+
+  private observeHostInlineStyles(): void {
+    const hostElement = this.hostElementRef.nativeElement;
+
+    this.hostStyleObserver?.disconnect();
+
+    this.hostStyleObserver = new MutationObserver(() => {
+      this.syncHostInlineStyles();
+    });
+
+    this.hostStyleObserver.observe(hostElement, {
+      attributes: true,
+      attributeFilter: ['style'],
+    });
+
+    this.syncHostInlineStyles();
   }
 }
