@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
+import { Box } from '@components/Box';
 import { Typography } from '@components/Typography';
 import { TYPOGRAPHY_VARIANTS } from './typography.styles';
 
@@ -61,11 +62,11 @@ export const BodyCopy: Story = {
 
 export const Headings: Story = {
   render: () => (
-    <div style={{ display: 'grid', gap: 'calc(var(--spacingM) * 1px)' }}>
+    <Box display="grid" gap="spacing-m">
       <Typography variant="heading-1">Heading 1</Typography>
       <Typography variant="heading-2">Heading 2</Typography>
       <Typography variant="heading-3">Heading 3</Typography>
-    </div>
+    </Box>
   ),
   parameters: {
     docs: {
@@ -79,14 +80,14 @@ export const Headings: Story = {
 
 export const EmphasisAndLinks: Story = {
   render: () => (
-    <div style={{ display: 'grid', gap: 'calc(var(--spacingS) * 1px)' }}>
+    <Box display="grid" gap="spacing-s">
       <Typography variant="body-1-strong">Body 1 strong emphasizes supporting copy.</Typography>
       <Typography variant="body-2-strong">Body 2 strong with compact letter spacing.</Typography>
       <Typography variant="body-2-link" as="a" href="#">
         Body 2 link uses interactive tokens and can render as an anchor.
       </Typography>
       <Typography variant="caption-1">Caption 1 suits tertiary UI metadata.</Typography>
-    </div>
+    </Box>
   ),
   parameters: {
     docs: {
