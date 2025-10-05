@@ -149,11 +149,11 @@ function resolveRadiusValue(value: BoxOwnProps<React.ElementType>['borderRadius'
 
   if (typeof value === 'string') {
     if (isRadiusToken(value)) {
-      return `var(${toCssVariableName(value)})`;
+      return `calc(var(${toCssVariableName(value)}) * 1px)`;
     }
 
     if (isDesignToken(value) && value.startsWith('radius-')) {
-      return `var(${toCssVariableName(value)})`;
+      return `calc(var(${toCssVariableName(value)}) * 1px)`;
     }
 
     return value;

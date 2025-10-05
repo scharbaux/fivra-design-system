@@ -59,7 +59,7 @@ describe('Box', () => {
 
     const element = screen.getByTestId('token-box');
     expect(element.style.backgroundColor).toBe('var(--backgroundNeutral0)');
-    expect(element.style.borderRadius).toBe('var(--radiusM)');
+    expect(element.style.borderRadius).toBe('calc(var(--radiusM) * 1px)');
   });
 
   it('wires display and flexbox helpers', () => {

@@ -2,6 +2,9 @@ import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { Box } from '@components/Box';
+import { Typography } from '@components/Typography';
+import { Button } from '@components/Button';
+import { Icon } from '@components/Icon';
 
 const meta: Meta<typeof Box> = {
   title: 'Atomics/Box',
@@ -86,10 +89,10 @@ export const FlexAlignment: Story = {
         Start
       </Box>
       <Box display="flex" gap="spacing-s" alignItems="center">
-        <Box backgroundColor="background-primary-interactive" color="background-neutral-0" p="spacing-xs" borderRadius="radius-xs">
+        <Box backgroundColor="background-primary-interactive" color="background-neutral-0" p="spacing-xs" borderRadius="radius-xs" width="200px" display="flex" alignItems="flex-start">
           Flex child
         </Box>
-        <Box backgroundColor="background-secondary-interactive" color="text-neutral-1" p="spacing-xs" borderRadius="radius-xs">
+        <Box backgroundColor="background-secondary-interactive" color="text-neutral-6" p="spacing-xs" borderRadius="radius-xs" width="200px" display="flex" justifyContent="center">
           Aligns center
         </Box>
       </Box>
@@ -108,13 +111,13 @@ export const FlexAlignment: Story = {
 export const BackgroundUtilities: Story = {
   render: () => (
     <Box display="grid" gap="spacing-m" p="spacing-m" backgroundColor="background-neutral-6" borderRadius="radius-l">
-      <Box backgroundColor="background-primary-interactive" color="background-neutral-0" p="spacing-m" borderRadius="radius-m">
+      <Box backgroundColor="background-primary-interactive" color="text-neutral-6" p="spacing-m" borderRadius="radius-m">
         Primary background
       </Box>
-      <Box backgroundColor="background-secondary-interactive" color="text-neutral-1" p="spacing-m" borderRadius="radius-m">
+      <Box backgroundColor="background-secondary-interactive" color="text-neutral-6" p="spacing-m" borderRadius="radius-m">
         Secondary background
       </Box>
-      <Box backgroundColor="background-tertiary-interactive" color="background-neutral-0" p="spacing-m" borderRadius="radius-m">
+      <Box backgroundColor="background-tertiary-interactive" color="text-neutral-1" p="spacing-m" borderRadius="radius-m">
         Tertiary background
       </Box>
     </Box>
@@ -131,21 +134,30 @@ export const BackgroundUtilities: Story = {
 
 export const NestedComposition: Story = {
   render: () => (
-    <Box display="grid" gap="spacing-l" p="spacing-l" backgroundColor="background-neutral-6" borderRadius="radius-l">
-      <Box display="grid" gap="spacing-s" backgroundColor="background-neutral-0" borderRadius="radius-m" p="spacing-m">
-        <Box as="h3" style={{ margin: 0, fontWeight: 600 }}>
-          Card title
+    <Box display="grid" gap="spacing-l" p="spacing-l" backgroundColor="background-neutral-6" borderRadius="radius-l" justifyContent="center">
+      <Box display="grid" gap="spacing-l" backgroundColor="background-neutral-0" borderRadius="radius-m" p="spacing-xl" width="400px">
+        <Box display="flex" justifyContent="space-between">
+          <Typography variant="body-1-strong">Card title</Typography>
+          <Button
+            aria-label="Close modal"
+            iconOnly
+            leadingIcon={<Icon aria-hidden="true" name="close" variant="outline"/>}
+            onClick={() => {}}
+            variant="tertiary"
+          >
+            Button
+          </Button>
         </Box>
         <Box color="text-neutral-2">
-          Reusable layout primitive enables nested shells without bespoke wrappers, ensuring consistent spacing and token usage.
+          <Typography variant="body-2-long">Reusable layout primitive enables nested shells without bespoke wrappers, ensuring consistent spacing and token usage.</Typography>
         </Box>
-        <Box display="flex" gap="spacing-s" justifyContent="flex-end">
-          <Box as="button" type="button" backgroundColor="background-primary-interactive" color="background-neutral-0" px="spacing-m" py="spacing-s" borderRadius="radius-s" style={{ border: 'none', cursor: 'pointer' }}>
-            Action
-          </Box>
-          <Box as="button" type="button" backgroundColor="background-neutral-0" color="text-neutral-2" px="spacing-m" py="spacing-s" borderRadius="radius-s" style={{ border: '1px solid var(--borderNeutral4)', cursor: 'pointer' }}>
+        <Box display="flex" gap="spacing-s" justifyContent="space-between" style={{borderTop: '1px solid var(--borderNeutral5)'}} pt="spacing-m">
+          <Button variant="secondary">
             Cancel
-          </Box>
+          </Button>
+          <Button variant="primary">
+            Primary Action
+          </Button>
         </Box>
       </Box>
     </Box>
