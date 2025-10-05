@@ -34,3 +34,4 @@ This document augments the root `AGENTS.md`. Ensure you understand the repositor
 - 1.12.0: Documented the Playwright visual regression workflow and how to refresh Storybook baselines.
 - 1.12.1: Updated the Welcome overview to reference the Icon stories under the Atomics taxonomy.
 - 1.12.2: Documented the semantic tokens overview page and TokensTable specimen guidance sourced from generated tokens data.
+- 1.12.3: Migrated the Tech Stack and Component Architecture narratives into Overview MDX pages and refreshed cross-links for the new locations.
