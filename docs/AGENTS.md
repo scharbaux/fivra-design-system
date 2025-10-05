@@ -38,3 +38,4 @@ This document augments the root `AGENTS.md`. Ensure you understand the repositor
 - 1.12.4: Migrated the Tech Stack and Component Architecture narratives into Overview MDX pages and refreshed cross-links for the new locations.
 - 1.13.0: Reorganized Storybook docs into `Docs/Welcome`, `Docs/Overview/*`, and `Docs/Foundations/*`, aligning slugs and navigation with the new sidebar structure.
 - 1.13.1: Moved the Design Tokens reference, TokensTable specimen, and Icons Library story into `docs/foundations` for centralized foundations coverage.
+- 1.13.2: Added Chromatic and Tokens Studio integration placeholders and updated the Figma plugin documentation metadata.
