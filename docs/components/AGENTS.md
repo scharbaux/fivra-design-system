@@ -13,3 +13,4 @@ This directory inherits the repository and `docs/` guidance. Keep component refe
 - 1.8.0: Added Angular usage guidance for the Button component, covering modules, directives, and template projection APIs.
 - 1.8.1: Cross-linked the Button docs to the component contract so updates stay synchronized across references.
 - 1.8.2: Noted canonical Storybook and visual test references in the Button contract for doc maintainers.
+- 1.9.0: Documented the Typography primitive, covering variant mapping, accessibility, and token references.
