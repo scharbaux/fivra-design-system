@@ -74,6 +74,13 @@ export const refs: StorybookConfig["refs"] = {
     : {}),
 };
 
+const docsMdxPluginOptions = {
+  remarkPlugins: [remarkGfm],
+  mdxCompileOptions: {
+    remarkPlugins: [remarkGfm],
+  },
+} as const;
+
 const config: StorybookConfig = {
   stories: [
     "../docs/**/*.mdx",
@@ -90,13 +97,11 @@ const config: StorybookConfig = {
     options: {},
   },
   docs: {
-    mdxPluginOptions: {
-      remarkPlugins: [remarkGfm],
-      mdxCompileOptions: {
-        remarkPlugins: [remarkGfm],
-      },
-    },
-  },
+    mdxPluginOptions: docsMdxPluginOptions,
+    // Storybook's published DocsOptions type omits mdxPluginOptions even though
+    // the preset consumes it at runtime. Cast to keep type-checking happy while
+    // still forwarding the plugin configuration.
+  } as unknown as StorybookConfig["docs"],
   refs,
   async viteFinal(config, { configType }) {
     const resolve = {
