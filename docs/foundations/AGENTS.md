@@ -10,3 +10,4 @@ This directory inherits all requirements from `../AGENTS.md`. Follow the reposit
 ## Functional Changes
 - Use `<major>.<minor>[.<patch>]` labels instead of dates when recording new entries.
 - 1.13.1: Moved the Design Tokens MDX page, TokensTable specimen, and Icons Library story into `docs/foundations` to align with the sidebar restructuring.
+- 1.13.2: Updated foundations docs to use the MDX3 `@storybook/blocks` entry points so remark-gfm renders tables correctly.

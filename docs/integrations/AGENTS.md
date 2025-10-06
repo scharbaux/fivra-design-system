@@ -10,3 +10,4 @@ This file extends the root `AGENTS.md` and `docs/AGENTS.md`. Follow those polici
 ## Functional Changes
 - Use `<major>.<minor>[.<patch>]` labels when recording updates.
 - 1.0.0: Added governance for integration docs, refreshed the Figma plugin meta title, and stubbed Chromatic and Tokens Studio guides.
+- 1.1.0: Switched integration docs to MDX3 `@storybook/blocks` so remark plugins like GFM render tables consistently.
