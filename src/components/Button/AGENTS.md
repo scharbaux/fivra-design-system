@@ -124,3 +124,4 @@ Slots: `leading-icon`, default, and `trailing-icon` provide icon/labelling parit
 - 1.9.2: Retitled the Button stories to `Atomics/Button` and set explicit story IDs for cross-framework Storybook composition.
 - 1.9.3: Fixed `dropdown` type definition in the Web Component story.
 - 1.9.4: Updated React Storybook examples to wrap layout scaffolding with the Box primitive for shared spacing tokens.
+- 1.9.5: Updated Button stories icons related examples and adjusted colors.
