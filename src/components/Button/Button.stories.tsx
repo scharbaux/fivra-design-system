@@ -211,8 +211,8 @@ export const SemanticOverrides: Story = {
 export const WithIcons: Story = {
   args: {
     children: "Download",
-    leadingIcon: <Icon name="chevron-right" variant="solid" aria-hidden="true" />,
-    trailingIcon: <Icon name="chevron-right" variant="outline" aria-hidden="true" />,
+    leadingIcon: <Icon color="textNeutral6" name="chevron-left" variant="solid" aria-hidden="true" />,
+    trailingIcon: <Icon color="textNeutral6" name="chevron-right" variant="solid" aria-hidden="true" />,
   },
   parameters: {
     docs: {
@@ -307,7 +307,7 @@ export const IconOnly: Story = {
   args: {
     iconOnly: true,
     'aria-label': 'Next',
-    leadingIcon: <Icon name="chevron-right" variant="outline" aria-hidden="true" />,
+    leadingIcon: <Icon color="textNeutral6" name="chevron-right" variant="solid" aria-hidden="true" />,
   },
   render: (args) => <Button {...args} />,
   parameters: {
@@ -330,7 +330,7 @@ const WebComponentPreview: React.FC = () => {
   return (
     <fivra-button variant="secondary" size="md" dropdown>
       <span slot="leading-icon" aria-hidden="true">
-        ★
+        😺
       </span>
       Web component
     </fivra-button>
