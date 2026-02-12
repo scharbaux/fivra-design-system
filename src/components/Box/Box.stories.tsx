@@ -141,7 +141,7 @@ export const NestedComposition: Story = {
           <Button
             aria-label="Close modal"
             iconOnly
-            leadingIcon={<Icon aria-hidden="true" name="close" variant="outline"/>}
+            leadingIcon={<Icon aria-hidden="true" name="close" variant="outline" />}
             onClick={() => {}}
             variant="tertiary"
           >

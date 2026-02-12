@@ -20,6 +20,8 @@ import { FivraButtonComponent, FivraButtonModule } from '../../button';
   template: `
     <fivra-button
       [variant]="variant"
+      [color]="color"
+      [label]="label"
       [size]="size"
       [fullWidth]="fullWidth"
       [iconOnly]="iconOnly"
@@ -54,6 +56,8 @@ import { FivraButtonComponent, FivraButtonModule } from '../../button';
 })
 class ButtonHostComponent {
   variant: ButtonVariant | undefined = DEFAULT_BUTTON_VARIANT;
+  color: 'primary-success' | 'primary-warning' | 'primary-error' | undefined = undefined;
+  label: string | undefined = undefined;
   size: ButtonSize | undefined = DEFAULT_BUTTON_SIZE;
   fullWidth = false;
   iconOnly = false;
@@ -288,6 +292,27 @@ describe('FivraButtonComponent', () => {
 
     const computed = getComputedStyle(button);
     expect(computed.getPropertyValue('--fivra-button-accent').trim()).toBe('rgb(12, 244, 33)');
+  });
+
+  it('renders label input when no projected label is provided', async () => {
+    hostComponent.showLabel = false;
+    hostComponent.label = 'Continue';
+    await flushChanges();
+
+    const button = queryButton();
+    expect(button.textContent).toContain('Continue');
+  });
+
+  it('applies semantic color aliases via the color input', async () => {
+    hostComponent.variant = 'secondary';
+    hostComponent.color = 'primary-success';
+    hostComponent.showLabel = false;
+    hostComponent.label = 'Continue';
+    await flushChanges();
+
+    const button = queryButton();
+    const computed = getComputedStyle(button);
+    expect(computed.getPropertyValue('--fivra-button-accent').trim()).toBe('var(--textPrimarySuccess)');
   });
 
   it('supports aria-label attributes and focus/click helpers', async () => {

@@ -20,6 +20,11 @@ describe('Button', () => {
     expect(button).not.toHaveAttribute('data-full-width');
   });
 
+  it('renders label prop when children are not provided', () => {
+    render(<Button label="Save changes" />);
+    expect(screen.getByRole('button', { name: 'Save changes' })).toBeInTheDocument();
+  });
+
   it('supports variant, size, and fullWidth props', () => {
     render(
       <Button variant="tertiary" size="lg" fullWidth>
@@ -53,6 +58,32 @@ describe('Button', () => {
       expect(wrapper).toHaveAttribute('aria-hidden', 'true');
       expect((wrapper as HTMLElement).className).toContain(BUTTON_ICON_CLASS);
     });
+  });
+
+  it('renders shared icons when leadingIconName/trailingIconName are provided', () => {
+    const { container } = render(
+      <Button leadingIconName="chevron-left" trailingIconName="chevron-right">
+        Download
+      </Button>,
+    );
+
+    expect(container.querySelector(`.${BUTTON_ICON_CLASS} svg`)).toBeTruthy();
+  });
+
+  it('applies semantic color aliases without requiring inline style props', () => {
+    render(<Button variant="secondary" color="primary-success" label="Continue" />);
+
+    const button = screen.getByRole('button', { name: 'Continue' });
+    expect(button.style.getPropertyValue('--fivra-button-accent')).toBe('var(--textPrimarySuccess)');
+    expect(button.style.getPropertyValue('--fivra-button-border')).toBe('var(--borderPrimarySuccess)');
+  });
+
+  it('applies semantic color aliases without requiring inline style props', () => {
+    render(<Button variant="secondary" color="primary-success" label="Continue" />);
+
+    const button = screen.getByRole('button', { name: 'Continue' });
+    expect(button.style.getPropertyValue('--fivra-button-accent')).toBe('var(--textPrimarySuccess)');
+    expect(button.style.getPropertyValue('--fivra-button-border')).toBe('var(--borderPrimarySuccess)');
   });
 
   it('forwards click events', () => {

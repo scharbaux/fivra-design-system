@@ -17,3 +17,6 @@ This directory extends the repository and `src/components/` guidance for custom 
 - 1.3.1: Repointed the button element to consume the shared Angular-owned style module so all frameworks share the same tokens.
 - 1.3.2: Updated the button element to import styles from `@components/Button/button.styles`, which now re-exports the Angular module for cross-framework reuse.
 - 1.4.0: Added trimmed label detection, dropdown aria fallbacks, and unit tests mirroring the shared button contract.
+- 1.5.0: Added semantic palette attributes to apply success/warning/error styling without manual CSS custom property wiring.
+- 1.6.0: Added `label`, semantic `color`, and direct color override attributes (`surface-color`, `border-color`, `text-color`, `accent-color`) for copy-pasteable consumption without inline style objects.
+- 1.6.1: Removed redundant `tone` attribute in favor of extensible `color` presets.

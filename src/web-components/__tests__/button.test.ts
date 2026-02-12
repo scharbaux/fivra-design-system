@@ -133,4 +133,53 @@ describe('FivraButtonElement behavior', () => {
 
     expect(labelButton?.dataset.hasLabel).toBe('false');
   });
+
+  it('applies semantic color aliases via the color attribute', async () => {
+    const element = document.createElement('fivra-button') as FivraButtonElement;
+    element.setAttribute('variant', 'secondary');
+    element.setAttribute('color', 'primary-success');
+    element.textContent = 'Continue';
+    document.body.appendChild(element);
+
+    await waitForUpdates();
+
+    const button = element.shadowRoot?.querySelector('button') as HTMLButtonElement | null;
+    expect(button?.style.getPropertyValue('--fivra-button-accent')).toBe('var(--textPrimarySuccess)');
+    expect(button?.style.getPropertyValue('--fivra-button-border')).toBe('var(--borderPrimarySuccess)');
+
+    element.setAttribute('variant', 'primary');
+    await waitForUpdates();
+
+    expect(button?.style.getPropertyValue('--fivra-button-surface')).toBe('var(--backgroundPrimarySuccess)');
+
+    element.removeAttribute('color');
+    await waitForUpdates();
+
+    expect(button?.style.getPropertyValue('--fivra-button-accent')).toBe('');
+  });
+
+  it('renders label text from the label attribute when the slot is empty', async () => {
+    const element = document.createElement('fivra-button') as FivraButtonElement;
+    element.setAttribute('label', 'Continue');
+    document.body.appendChild(element);
+
+    await waitForUpdates();
+
+    const button = element.shadowRoot?.querySelector('button') as HTMLButtonElement | null;
+    expect(button?.dataset.hasLabel).toBe('true');
+    expect(element.shadowRoot?.querySelector('[data-label-text]')?.textContent).toBe('Continue');
+  });
+
+  it('applies semantic color aliases via the color attribute', async () => {
+    const element = document.createElement('fivra-button') as FivraButtonElement;
+    element.setAttribute('variant', 'secondary');
+    element.setAttribute('color', 'primary-success');
+    element.setAttribute('label', 'Continue');
+    document.body.appendChild(element);
+
+    await waitForUpdates();
+
+    const button = element.shadowRoot?.querySelector('button') as HTMLButtonElement | null;
+    expect(button?.style.getPropertyValue('--fivra-button-accent')).toBe('var(--textPrimarySuccess)');
+  });
 });

@@ -38,11 +38,20 @@ This directory follows the repository and `src/components/` standards. Keep shar
 
 | Prop | Type | Default | Notes |
 | --- | --- | --- | --- |
+| `label` | `React.ReactNode` | `undefined` | Visible label content. Prefer this for straightforward usage. |
+| `children` | `React.ReactNode` | `undefined` | Advanced: custom content; takes precedence over `label`. |
 | `variant` | `'primary' \| 'secondary' \| 'tertiary'` | `'primary'` | Maps to variant tokens listed above. |
+| `color` | `'primary-success' \| 'primary-warning' \| 'primary-error'` | `undefined` | Semantic palette alias. Prefer for docs examples. |
+| `surfaceColor` | `string` | `undefined` | Overrides `--fivra-button-surface` using a design token string (e.g., `background-primary-success`). |
+| `borderColor` | `string` | `undefined` | Overrides `--fivra-button-border` using a design token string (e.g., `border-primary-success`). |
+| `textColor` | `string` | `undefined` | Overrides `--fivra-button-text` using a design token string (e.g., `text-primary-success`). |
+| `accentColor` | `string` | `undefined` | Overrides `--fivra-button-accent` (drives state layers). |
 | `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Adjusts typography, padding, and icon spacing tokens. |
 | `fullWidth` | `boolean` | `false` | Sets `data-full-width` and expands to container width. |
 | `leadingIcon` | `React.ReactNode` | `undefined` | Rendered with `aria-hidden="true"` before the label. |
+| `leadingIconName` | `string` | `undefined` | Convenience: renders the shared Icon before the label (uses `currentColor`). |
 | `trailingIcon` | `React.ReactNode` | `undefined` | Rendered with `aria-hidden="true"` after the label. |
+| `trailingIconName` | `string` | `undefined` | Convenience: renders the shared Icon after the label (uses `currentColor`). |
 | `iconOnly` | `boolean` | `false` | Applies max radius and enforces accessible naming. |
 | `hasLabel` | `boolean` | `undefined` | Overrides automatic label detection when using visually hidden copy. |
 | `dropdown` | `boolean` | `false` | Adds caret indicator and toggles disclosure data attributes. |
@@ -53,7 +62,13 @@ This directory follows the repository and `src/components/` standards. Keep shar
 
 | Input | Type | Default | Notes |
 | --- | --- | --- | --- |
+| `label` | `string` | `undefined` | Visible label content when no projected label is provided. |
 | `variant` | `'primary' \| 'secondary' \| 'tertiary'` | `'primary'` | Mirrors React variant behavior. |
+| `color` | `'primary-success' \| 'primary-warning' \| 'primary-error'` | `undefined` | Semantic palette alias. Prefer for docs examples. |
+| `surfaceColor` | `string` | `undefined` | Overrides `--fivra-button-surface` using a design token string. |
+| `borderColor` | `string` | `undefined` | Overrides `--fivra-button-border` using a design token string. |
+| `textColor` | `string` | `undefined` | Overrides `--fivra-button-text` using a design token string. |
+| `accentColor` | `string` | `undefined` | Overrides `--fivra-button-accent` (drives state layers). |
 | `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Synchronizes spacing/typography tokens. |
 | `fullWidth` | `boolean` | `false` | Applies `data-full-width` and sets `display: block`. |
 | `iconOnly` | `boolean` | `false` | Requires `ariaLabel`/`ariaLabelledby`. |
@@ -73,7 +88,13 @@ _Outputs_: `focus()` and `click()` methods proxy to the internal button for host
 
 | Attribute | Type | Default | Notes |
 | --- | --- | --- | --- |
+| `label` | `string` | – | Visible label content when no slotted label is provided. |
 | `variant` | `primary \| secondary \| tertiary` | `primary` | Controls variant tokens. |
+| `color` | `primary-success \| primary-warning \| primary-error` | – | Semantic palette alias. Prefer for docs examples. |
+| `surface-color` | `string` | – | Overrides `--fivra-button-surface` using a design token string. |
+| `border-color` | `string` | – | Overrides `--fivra-button-border` using a design token string. |
+| `text-color` | `string` | – | Overrides `--fivra-button-text` using a design token string. |
+| `accent-color` | `string` | – | Overrides `--fivra-button-accent` (drives state layers). |
 | `size` | `sm \| md \| lg` | `md` | Adjusts size tokens. |
 | `full-width` | boolean attribute | `false` | Stretches to container width. |
 | `icon-only` | boolean attribute | `false` | Requires accessible name. |
@@ -125,3 +146,11 @@ Slots: `leading-icon`, default, and `trailing-icon` provide icon/labelling parit
 - 1.9.3: Fixed `dropdown` type definition in the Web Component story.
 - 1.9.4: Updated React Storybook examples to wrap layout scaffolding with the Box primitive for shared spacing tokens.
 - 1.9.5: Updated Button stories icons related examples and adjusted colors.
+- 1.9.6: Updated React Storybook docs-source snippets to be copy-paste friendly for semantic overrides and icon usage.
+- 1.10.0: Added semantic palette APIs (success/warning/error) across adapters and introduced React `leadingIconName`/`trailingIconName` convenience props.
+- 1.11.0: Added `label` and semantic `color` plus direct color override props (`surfaceColor`, `borderColor`, `textColor`, `accentColor`) to make consumption copy-paste friendly without inline style objects.
+- 1.11.1: Removed redundant `tone` APIs in favor of `color` presets (extensible for future preset bundles).
+- 1.11.2: Generated the Semantic Overrides docs snippet from the same spec driving the specimen to prevent drift and standardized semantic labels to title case.
+- 1.11.3: Simplified the Semantic Overrides story to a single explicit example list while still deriving the docs snippet from the rendered specimen data.
+- 1.11.4: Moved Button multi-example layouts (disabled, sizes, full-width) into Storybook decorators so docs snippets show copy-pasteable `<Button />` instances instead of layout wrappers or args spreads.
+- 1.11.5: Removed the Semantic Overrides manual docs source constant by using a decorator-based grid layout with Storybook dynamic source generation.

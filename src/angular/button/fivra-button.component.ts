@@ -35,6 +35,8 @@ import {
   type ButtonVariant,
   ensureButtonStyles,
 } from '@components/Button/button.styles';
+import type { ButtonColor, ButtonSemanticStyleOverrides } from './color-overrides';
+import { createButtonColorOverrides } from './color-overrides';
 
 import {
   FivraButtonLeadingIconDirective,
@@ -72,6 +74,66 @@ function isButtonVariant(value: unknown): value is ButtonVariant {
 
 function isButtonSize(value: unknown): value is ButtonSize {
   return BUTTON_SIZES.includes(value as ButtonSize);
+}
+
+function isButtonColor(value: unknown): value is ButtonColor {
+  return value === 'primary-success' || value === 'primary-warning' || value === 'primary-error';
+}
+
+const TONE_STYLE_VARS: Array<keyof ButtonSemanticStyleOverrides> = [
+  '--fivra-button-surface',
+  '--fivra-button-accent',
+  '--fivra-button-border',
+  '--fivra-button-text',
+  '--fivra-button-hover-fallback',
+  '--fivra-button-active-fallback',
+];
+
+type DirectStyleKey =
+  | '--fivra-button-surface'
+  | '--fivra-button-accent'
+  | '--fivra-button-border'
+  | '--fivra-button-text';
+
+const DIRECT_STYLE_VARS: DirectStyleKey[] = [
+  '--fivra-button-surface',
+  '--fivra-button-accent',
+  '--fivra-button-border',
+  '--fivra-button-text',
+];
+
+function capitalizeTokenSegment(segment: string): string {
+  if (!segment) {
+    return segment;
+  }
+
+  return segment[0].toUpperCase() + segment.slice(1);
+}
+
+function toCssVariableName(token: string): string {
+  const [first, ...rest] = token.split('-');
+  const suffix = rest.map(capitalizeTokenSegment).join('');
+  return `--${first}${suffix}`;
+}
+
+function isDesignToken(value: string): boolean {
+  return /^[a-z]+(?:-[a-z0-9]+)+$/i.test(value);
+}
+
+function resolveColorValue(value: string | null | undefined): string | null {
+  if (!value) {
+    return null;
+  }
+
+  if (value.startsWith('var(') || value.startsWith('calc(')) {
+    return value;
+  }
+
+  if (isDesignToken(value)) {
+    return `var(${toCssVariableName(value)})`;
+  }
+
+  return value;
 }
 
 @Component({
@@ -113,6 +175,7 @@ function isButtonSize(value: unknown): value is ButtonSize {
         class="{{ labelClassName }}"
         [attr.data-empty]="resolvedHasLabel ? null : 'true'"
       >
+        <ng-container *ngIf="!hasProjectedLabel && label">{{ label }}</ng-container>
         <ng-content></ng-content>
       </span>
       <span
@@ -153,17 +216,23 @@ export class FivraButtonComponent
   private _variant: ButtonVariant = DEFAULT_BUTTON_VARIANT;
   private _size: ButtonSize = DEFAULT_BUTTON_SIZE;
   private _type: ButtonType = 'button';
+  private _color: ButtonColor | null = null;
   private _fullWidth = false;
   private _iconOnly = false;
   private _dropdown = false;
   private _loading = false;
   private _disabled = false;
+  private _label: string | null = null;
+  private _surfaceColor: string | null = null;
+  private _borderColor: string | null = null;
+  private _textColor: string | null = null;
+  private _accentColor: string | null = null;
   private _hasLabelOverride: boolean | null = null;
   private _leadingIconTemplate: TemplateRef<unknown> | null = null;
   private _trailingIconTemplate: TemplateRef<unknown> | null = null;
   private hasProjectedLeadingIcon = false;
   private hasProjectedTrailingIcon = false;
-  private hasProjectedLabel = false;
+  hasProjectedLabel = false;
   private labelObserver?: MutationObserver;
   private hostStyleObserver?: MutationObserver;
   private _ariaHaspopup: string | null = null;
@@ -184,10 +253,70 @@ export class FivraButtonComponent
   @Input()
   set variant(value: ButtonVariant | string | null | undefined) {
     this._variant = isButtonVariant(value) ? (value as ButtonVariant) : DEFAULT_BUTTON_VARIANT;
+    this.applyVisualOverrides();
     this.cdr.markForCheck();
   }
   get variant(): ButtonVariant {
     return this._variant;
+  }
+
+  @Input()
+  set color(value: ButtonColor | string | null | undefined) {
+    this._color = isButtonColor(value) ? (value as ButtonColor) : null;
+    this.applyVisualOverrides();
+    this.cdr.markForCheck();
+  }
+  get color(): ButtonColor | null {
+    return this._color;
+  }
+
+  @Input()
+  set label(value: string | null | undefined) {
+    this._label = value ?? null;
+    this.cdr.markForCheck();
+  }
+  get label(): string | null {
+    return this._label;
+  }
+
+  @Input()
+  set surfaceColor(value: string | null | undefined) {
+    this._surfaceColor = value ?? null;
+    this.applyVisualOverrides();
+    this.cdr.markForCheck();
+  }
+  get surfaceColor(): string | null {
+    return this._surfaceColor;
+  }
+
+  @Input()
+  set borderColor(value: string | null | undefined) {
+    this._borderColor = value ?? null;
+    this.applyVisualOverrides();
+    this.cdr.markForCheck();
+  }
+  get borderColor(): string | null {
+    return this._borderColor;
+  }
+
+  @Input()
+  set textColor(value: string | null | undefined) {
+    this._textColor = value ?? null;
+    this.applyVisualOverrides();
+    this.cdr.markForCheck();
+  }
+  get textColor(): string | null {
+    return this._textColor;
+  }
+
+  @Input()
+  set accentColor(value: string | null | undefined) {
+    this._accentColor = value ?? null;
+    this.applyVisualOverrides();
+    this.cdr.markForCheck();
+  }
+  get accentColor(): string | null {
+    return this._accentColor;
   }
 
   @Input()
@@ -333,7 +462,7 @@ export class FivraButtonComponent
       return false;
     }
 
-    return this.hasProjectedLabel;
+    return this.hasProjectedLabel || Boolean(this._label && this._label.trim().length > 0);
   }
 
   get resolvedAriaHaspopup(): string | null {
@@ -343,6 +472,7 @@ export class FivraButtonComponent
   ngOnInit(): void {
     ensureButtonStyles();
     this.observeHostInlineStyles();
+    this.applyVisualOverrides();
   }
 
   ngAfterContentInit(): void {
@@ -450,14 +580,54 @@ export class FivraButtonComponent
       return;
     }
 
-    const hostStyle = hostElement.getAttribute('style');
+    // Use cssText to capture styles applied via Renderer2/setProperty even when
+    // the serialized style attribute isn't updated (e.g., in some DOM shims/tests).
+    const hostStyle = hostElement.style.cssText;
 
-    if (hostStyle === null) {
+    if (!hostStyle || hostStyle.trim().length === 0) {
       this.renderer.removeAttribute(button, 'style');
       return;
     }
 
     this.renderer.setAttribute(button, 'style', hostStyle);
+  }
+
+  private applyVisualOverrides(): void {
+    const hostElement = this.hostElementRef.nativeElement;
+
+    // Clear semantic layer vars first, then re-apply derived overrides.
+    for (const key of TONE_STYLE_VARS) {
+      hostElement.style.removeProperty(key);
+    }
+
+    const semantic = this._color
+      ? createButtonColorOverrides(this._variant, this._color)
+      : null;
+
+    if (semantic) {
+      for (const key of TONE_STYLE_VARS) {
+        const value = semantic[key];
+        if (value) {
+          hostElement.style.setProperty(key, value);
+        }
+      }
+    }
+
+    const direct: Record<DirectStyleKey, string | null> = {
+      '--fivra-button-surface': resolveColorValue(this._surfaceColor),
+      '--fivra-button-border': resolveColorValue(this._borderColor),
+      '--fivra-button-text': resolveColorValue(this._textColor),
+      '--fivra-button-accent': resolveColorValue(this._accentColor),
+    };
+
+    for (const key of DIRECT_STYLE_VARS) {
+      const value = direct[key];
+      if (value) {
+        hostElement.style.setProperty(key, value);
+      }
+    }
+
+    this.syncHostInlineStyles();
   }
 
   private observeHostInlineStyles(): void {
