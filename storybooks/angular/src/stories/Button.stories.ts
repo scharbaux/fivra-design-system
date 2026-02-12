@@ -7,8 +7,8 @@ import {
   type ButtonSize,
   type ButtonVariant,
   ensureButtonStyles,
-} from "@components/Button/button.styles";
-import type { ButtonColor } from "@components/Button/color-overrides";
+} from "@shared/button/button.styles";
+import type { ButtonColor } from "@shared/button/color-overrides";
 ensureButtonStyles();
 
 const TONES = ["success", "warning", "error"] as const;

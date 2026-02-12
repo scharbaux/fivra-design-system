@@ -13,3 +13,4 @@ n share styling and accessibility behavior with the React and web component targ
 - 1.8.1: Promoted `src/angular/button/button.styles.ts` to the canonical style source and updated path aliases so other frameworks reuse it without symlinks.
 - 1.8.2: Kept the canonical button styles under `src/angular/button` while exporting them through the `@components` alias for cross-framework parity.
 - 1.8.3: Inlined the button color-mix helper so Angular builds no longer rely on a `src/angular/styles` symlink.
+- 1.8.4: Updated Angular public exports to reference local button style types instead of the @components alias indirection.

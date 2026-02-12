@@ -3,7 +3,7 @@
 This directory follows the repository, `src/components/`, and `src/angular/` standards. Keep the Angular adapter in parity with t
 he shared button behavior and styling.
 
-- Rely on `ensureButtonStyles()` from `@components/Button/button.styles` so CSS stays centralized without duplicating logic.
+- Rely on `ensureButtonStyles()` from the local `./button.styles` module so Angular packaging stays self-contained.
 - Keep DOM structure, data attributes, and ARIA behavior aligned with the React and web component implementations.
 - Update accompanying tests and documentation when adjusting the Angular API or markup.
 
@@ -22,3 +22,5 @@ he shared button behavior and styling.
 - 1.11.3: Updated variant tint sourcing so secondary uses border color and tertiary uses text color for hover/active state-layer mixes.
 - 1.11.4: Adjusted hover/active color-mix operand order so the variant tint color is the weighted first operand, matching expected state rendering.
 - 1.11.5: Applied variant-specific hover/active mix ordering so primary remains layer-first while secondary and tertiary are tint-first.
+- 1.12.0: Mirrored the button style, state-layer, and color-override modules with `src/shared/button` while keeping Angular-local sources for `ng-packagr` rootDir compatibility.
+- 1.12.1: Updated the Angular button adapter and tests to consume local button style modules directly instead of the @components alias bridge.

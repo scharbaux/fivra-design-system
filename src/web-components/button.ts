@@ -12,9 +12,9 @@ import {
   BUTTON_VARIANTS,
   buttonClassStyles,
   buttonHostStyles,
-} from '@components/Button/button.styles';
-import type { ButtonColor, ButtonSemanticStyleOverrides } from '@components/Button/color-overrides';
-import { createButtonColorOverrides } from '@components/Button/color-overrides';
+} from '@shared/button/button.styles';
+import type { ButtonColor, ButtonSemanticStyleOverrides } from '@shared/button/color-overrides';
+import { createButtonColorOverrides } from '@shared/button/color-overrides';
 
 type ButtonVariant = (typeof BUTTON_VARIANTS)[number];
 type ButtonSize = (typeof BUTTON_SIZES)[number];

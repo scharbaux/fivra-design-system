@@ -5,6 +5,7 @@ This directory follows the repository and `src/components/` standards. Keep shar
 - Prefer data attributes over brittle class name selectors when syncing styles between frameworks.
 - Mirror any API changes in the accompanying Storybook stories, tests, and documentation during the same change.
 - Update the "Functional Changes" section below with a short note when behavior or public API changes.
+- Treat `src/shared/button/` as the canonical home for shared button style/state/color modules.
 
 ## Component Contract
 
@@ -132,8 +133,8 @@ Slots: `leading-icon`, default, and `trailing-icon` provide icon/labelling parit
 - 1.6.0: Defaulted the button font family to the generated body token so React and web component builds use Google Sans.
 - 1.7.0: Updated primary button halos to weight hover, active, and focus glows toward the accent color by default.
 - 1.8.0: Added the Angular adapter (component + directives + module) with parity tests and packaging support.
-- 1.8.1: Pointed React exports to the Angular-owned button style module so all frameworks share the same source without symlinks.
-- 1.8.2: Added a components-level barrel that re-exports the Angular-owned button styles via `@components/Button/button.styles` so every adapter shares the same import path.
+- 1.8.1: Pointed React exports to a single shared button style source so all frameworks shared the same source without symlinks.
+- 1.8.2: Added a components-level barrel so every adapter could import button styles through a unified path.
 - 1.8.3: Pointed the shared tests at the canonical Angular button styles to cover the inlined color-mix helper.
 - 1.8.4: Updated Button stories to import `Meta`/`StoryObj` from `@storybook/react-vite` so typings match the composed framework.
 - 1.8.5: React Storybook now imports `defineFivraButton()` from `@web-components` and guards duplicate registration in the custom element preview.
@@ -160,3 +161,7 @@ Slots: `leading-icon`, default, and `trailing-icon` provide icon/labelling parit
 - 1.11.9: Corrected hover/active color-mix ordering to weight the variant tint color first, aligning rendered hover states with expected intensity behavior.
 - 1.11.10: Split hover/active mix ordering by variant so primary keeps layer-first blending while secondary/tertiary use tint-first blending.
 - 1.11.11: Replaced hardcoded Storybook color option arrays with shared generated token options sourced from `@styles/themes/storybook-token-options.generated`.
+- 1.12.0: Moved canonical button style/state-layer/color-override modules into src/shared/button and left adapter-level files as compatibility re-exports for incremental migration.
+- 1.12.1: Updated Button internals and tests to consume semantic color overrides through the new shared button core while preserving compatibility re-exports.
+- 1.12.2: Removed `src/components/Button` compatibility shim files (`button.styles.ts`, `color-overrides.ts`) after migrating internal consumers to `@shared/button/*`.
+- 1.12.3: Cleaned AGENTS history wording to reflect the current shared-button-core model centered on `src/shared/button`.

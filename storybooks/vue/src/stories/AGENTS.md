@@ -15,3 +15,4 @@ This directory inherits guidance from the repository root, `storybooks/AGENTS.md
 - 1.5.0: Updated the semantic override story to use the shared semantic palette API instead of style factories so the example matches end-user consumption.
 - 1.6.0: Updated stories to prefer the `label` prop and semantic `color` alias for copy-pasteable consumer-facing examples.
 - 1.6.1: Removed redundant `tone` story props after consolidating semantic presets under `color`.
+- 1.6.2: Migrated Vue Button stories to use shared button style and color override modules from src/shared/button.

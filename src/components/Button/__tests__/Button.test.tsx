@@ -5,7 +5,7 @@ import { Button, BUTTON_ICON_CLASS } from '@components/Button';
 import {
   COLOR_MIX_SUPPORTS_DECLARATION,
   ensureButtonStyles,
-} from '../button.styles';
+} from '@shared/button/button.styles';
 
 describe('Button', () => {
   it('renders the provided label and defaults to type="button"', () => {

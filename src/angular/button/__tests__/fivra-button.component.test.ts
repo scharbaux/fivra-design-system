@@ -13,7 +13,7 @@ import {
   DEFAULT_BUTTON_VARIANT,
   type ButtonSize,
   type ButtonVariant,
-} from '@components/Button/button.styles';
+} from '../button.styles';
 import { FivraButtonComponent, FivraButtonModule } from '../../button';
 
 @Component({

@@ -13,9 +13,9 @@ import {
   type ButtonSize,
   type ButtonVariant,
   ensureButtonStyles,
-} from './button.styles';
-import type { ButtonColor } from './color-overrides';
-import { createButtonColorOverrides } from './color-overrides';
+} from '@shared/button/button.styles';
+import type { ButtonColor } from '@shared/button/color-overrides';
+import { createButtonColorOverrides } from '@shared/button/color-overrides';
 import { Icon } from '@components/Icon';
 
 function cx(...values: Array<string | undefined | false | null>): string {

@@ -15,9 +15,6 @@
     "rootDir": "./src/angular",
     "paths": {
       "@components": ["src/components/index.ts"],
-      "@components/Button/button.styles": [
-        "src/angular/button/button.styles.ts"
-      ],
       "@components/*": ["src/components/*"],
       "@web-components": ["src/web-components/index.ts"],
       "@web-components/*": ["src/web-components/*"],

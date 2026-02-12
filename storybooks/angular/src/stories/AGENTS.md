@@ -21,3 +21,4 @@ This directory inherits guidance from the repository root, `storybooks/AGENTS.md
 - 1.7.0: Updated the semantic override story to use the shared semantic palette API instead of `ngStyle` factories so the example matches end-user consumption.
 - 1.8.0: Updated stories to prefer the `label` input and semantic `color` alias for copy-pasteable consumer-facing examples.
 - 1.8.1: Removed redundant `tone` story controls after consolidating semantic presets under `color`.
+- 1.8.2: Updated Angular Button stories to read shared style and color types from src/shared/button for cross-framework parity.

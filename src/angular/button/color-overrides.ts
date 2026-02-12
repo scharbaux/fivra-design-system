@@ -1,5 +1,7 @@
 import type { ButtonVariant } from './button.styles';
 
+// `color` is a preset identifier for commonly desired color configurations.
+// Keep it as a closed union so docs and TS autocomplete stay clear.
 export type ButtonColor =
   | 'primary-success'
   | 'primary-warning'

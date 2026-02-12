@@ -34,7 +34,7 @@ import {
   type ButtonSize,
   type ButtonVariant,
   ensureButtonStyles,
-} from '@components/Button/button.styles';
+} from './button.styles';
 import type { ButtonColor, ButtonSemanticStyleOverrides } from './color-overrides';
 import { createButtonColorOverrides } from './color-overrides';
 
