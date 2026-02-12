@@ -15,3 +15,5 @@ This directory inherits the repository root `AGENTS.md` and `src/components/AGEN
 - 1.0.0: Introduced the token-driven Box primitive with spacing shorthands, style injector, tests, stories, and documentation.
 - 1.3.1: Fixed `borderRadius` token resolution to apply pixel units (`calc(var(--radius*) * 1px)`), aligning with spacing and border width behavior.
 - 1.3.2: Refined the Storybook nested composition example markup so icon usage matches current Button/Icon consumption patterns.
+- 1.3.3: Added centralized token-backed Storybook select controls for Box props (spacing, colors, radius, border width, shadow presets, and polymorphic/layout options).
+- 1.3.4: Added `shadow-{level}` preset support (`shadow-s|m|l`) and corrected border-width token variable mapping to `--borderwidth*` names.

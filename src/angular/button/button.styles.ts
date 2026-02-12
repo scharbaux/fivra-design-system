@@ -1,30 +1,9 @@
-const DEFAULT_COLOR_SPACE = 'srgb';
+import {
+  COLOR_MIX_SUPPORTS_DECLARATION,
+  createInteractiveStateLayerMixes,
+} from './state-layer-mix';
 
-export const COLOR_MIX_SUPPORTS_DECLARATION =
-  'color: color-mix(in srgb, #000 0%, #fff 100%)';
-
-interface ColorMixOptions {
-  layerColor: string;
-  layerPercentage: string;
-  accentColor: string;
-  colorSpace?: string;
-  weightTarget?: 'layer' | 'accent';
-}
-
-export function colorMix({
-  layerColor,
-  layerPercentage,
-  accentColor,
-  colorSpace = DEFAULT_COLOR_SPACE,
-  weightTarget = 'layer',
-}: ColorMixOptions): string {
-  const operands =
-    weightTarget === 'accent'
-      ? `${layerColor}, ${accentColor} ${layerPercentage}`
-      : `${layerColor} ${layerPercentage}, ${accentColor}`;
-
-  return `color-mix(in ${colorSpace}, ${operands})`;
-}
+export { COLOR_MIX_SUPPORTS_DECLARATION };
 
 export const BUTTON_CLASS_NAME = 'fivra-button';
 export const BUTTON_ICON_CLASS = `${BUTTON_CLASS_NAME}__icon`;
@@ -48,6 +27,15 @@ const ICON_CLASS = `.${BUTTON_ICON_CLASS}`;
 const LABEL_CLASS = `.${BUTTON_LABEL_CLASS}`;
 const SPINNER_CLASS = `.${BUTTON_SPINNER_CLASS}`;
 const CARET_CLASS = `.${BUTTON_CARET_CLASS}`;
+const PRIMARY_BUTTON_STATE_MIXES = createInteractiveStateLayerMixes({
+  tintColor: 'var(--fivra-button-state-tint)',
+  focusColor: 'var(--fivra-button-focus-accent)',
+  interactionOrder: 'layer-first',
+});
+const SECONDARY_TERTIARY_BUTTON_STATE_MIXES = createInteractiveStateLayerMixes({
+  tintColor: 'var(--fivra-button-state-tint)',
+  focusColor: 'var(--fivra-button-focus-accent)',
+});
 
 export const buttonClassStyles = `
 ${BASE_CLASS} {
@@ -66,6 +54,8 @@ ${BASE_CLASS} {
   --fivra-button-spinner-size: calc(16 * 1px);
   --fivra-button-surface: var(--backgroundPrimaryInteractive);
   --fivra-button-accent: var(--backgroundPrimaryInteractive);
+  --fivra-button-state-tint: var(--fivra-button-surface);
+  --fivra-button-focus-accent: var(--backgroundPrimaryInteractive);
   --fivra-button-hover-fallback: var(--stateBrandHover);
   --fivra-button-active-fallback: var(--stateBrandPress);
   --fivra-button-hover-color: var(--fivra-button-hover-fallback);
@@ -141,6 +131,7 @@ ${BASE_CLASS}[data-size='lg'] {
 ${BASE_CLASS}[data-variant='secondary'] {
   --fivra-button-surface: var(--backgroundNeutral0);
   --fivra-button-accent: var(--textPrimaryInteractive);
+  --fivra-button-state-tint: var(--fivra-button-border);
   --fivra-button-hover-fallback: var(--backgroundPrimarySelected);
   --fivra-button-active-fallback: var(--stateBrandPress);
   --fivra-button-hover-halo-fallback: var(--backgroundPrimarySelected);
@@ -156,6 +147,7 @@ ${BASE_CLASS}[data-variant='secondary'] {
 ${BASE_CLASS}[data-variant='tertiary'] {
   --fivra-button-surface: transparent;
   --fivra-button-accent: var(--textPrimaryInteractive);
+  --fivra-button-state-tint: var(--fivra-button-text);
   --fivra-button-hover-fallback: var(--backgroundPrimarySelected);
   --fivra-button-active-fallback: var(--stateBrandPress);
   --fivra-button-hover-halo-fallback: var(--backgroundPrimarySelected);
@@ -170,118 +162,20 @@ ${BASE_CLASS}[data-variant='tertiary'] {
 
 @supports (${COLOR_MIX_SUPPORTS_DECLARATION}) {
   ${BASE_CLASS} {
-    --fivra-button-focus-ring-color: ${colorMix({
-      layerColor: 'var(--stateLayerBrightenBase)',
-      layerPercentage: 'var(--intensityBrandFocusPercent)',
-      accentColor: 'var(--fivra-button-accent)',
-    })};
-    --fivra-button-hover-color: ${colorMix({
-      layerColor: 'var(--stateLayerBrightenBase)',
-      layerPercentage: 'var(--intensityBrandHoverPercent)',
-      accentColor: 'var(--fivra-button-accent)',
-      weightTarget: 'layer',
-    })};
-    --fivra-button-active-color: ${colorMix({
-      layerColor: 'var(--stateLayerBrightenBase)',
-      layerPercentage: 'var(--intensityBrandActivePercent)',
-      accentColor: 'var(--fivra-button-accent)',
-    })};
-    --fivra-button-hover-halo: ${colorMix({
-      layerColor: 'var(--stateLayerBrightenBase)',
-      layerPercentage: 'var(--intensityBrandHoverPercent)',
-      accentColor: 'var(--fivra-button-accent)',
-      weightTarget: 'accent',
-    })};
-    --fivra-button-active-halo: ${colorMix({
-      layerColor: 'var(--stateLayerBrightenBase)',
-      layerPercentage: 'var(--intensityBrandActivePercent)',
-      accentColor: 'var(--fivra-button-accent)',
-      weightTarget: 'accent',
-    })};
-    --fivra-button-focus-halo: ${colorMix({
-      layerColor: 'var(--stateLayerBrightenBase)',
-      layerPercentage: 'var(--intensityBrandFocusPercent)',
-      accentColor: 'var(--fivra-button-accent)',
-      weightTarget: 'accent',
-    })};
+    --fivra-button-focus-ring-color: ${PRIMARY_BUTTON_STATE_MIXES.focusRingColor};
+    --fivra-button-hover-color: ${PRIMARY_BUTTON_STATE_MIXES.hoverColor};
+    --fivra-button-active-color: ${PRIMARY_BUTTON_STATE_MIXES.activeColor};
+    --fivra-button-hover-halo: ${PRIMARY_BUTTON_STATE_MIXES.hoverHalo};
+    --fivra-button-active-halo: ${PRIMARY_BUTTON_STATE_MIXES.activeHalo};
+    --fivra-button-focus-halo: ${PRIMARY_BUTTON_STATE_MIXES.focusHalo};
   }
 
-  ${BASE_CLASS}[data-variant='secondary'] {
-    --fivra-button-focus-ring-color: ${colorMix({
-      layerColor: 'var(--stateLayerBrightenBase)',
-      layerPercentage: 'var(--intensityBrandFocusPercent)',
-      accentColor: 'var(--fivra-button-accent)',
-      weightTarget: 'accent',
-    })};
-    --fivra-button-hover-color: ${colorMix({
-      layerColor: 'var(--stateLayerBrightenBase)',
-      layerPercentage: 'var(--intensityBrandHoverPercent)',
-      accentColor: 'var(--fivra-button-accent)',
-      weightTarget: 'accent',
-    })};
-    --fivra-button-active-color: ${colorMix({
-      layerColor: 'var(--stateLayerBrightenBase)',
-      layerPercentage: 'var(--intensityBrandActivePercent)',
-      accentColor: 'var(--fivra-button-accent)',
-      weightTarget: 'accent',
-    })};
-    --fivra-button-hover-halo: ${colorMix({
-      layerColor: 'var(--stateLayerBrightenBase)',
-      layerPercentage: 'var(--intensityBrandHoverPercent)',
-      accentColor: 'var(--fivra-button-accent)',
-      weightTarget: 'accent',
-    })};
-    --fivra-button-active-halo: ${colorMix({
-      layerColor: 'var(--stateLayerBrightenBase)',
-      layerPercentage: 'var(--intensityBrandActivePercent)',
-      accentColor: 'var(--fivra-button-accent)',
-      weightTarget: 'accent',
-    })};
-    --fivra-button-focus-halo: ${colorMix({
-      layerColor: 'var(--stateLayerBrightenBase)',
-      layerPercentage: 'var(--intensityBrandFocusPercent)',
-      accentColor: 'var(--fivra-button-accent)',
-      weightTarget: 'accent',
-    })};
-  }
-
+  ${BASE_CLASS}[data-variant='secondary'],
   ${BASE_CLASS}[data-variant='tertiary'] {
-    --fivra-button-focus-ring-color: ${colorMix({
-      layerColor: 'var(--stateLayerBrightenBase)',
-      layerPercentage: 'var(--intensityBrandFocusPercent)',
-      accentColor: 'var(--fivra-button-accent)',
-      weightTarget: 'accent',
-    })};
-    --fivra-button-hover-color: ${colorMix({
-      layerColor: 'var(--stateLayerBrightenBase)',
-      layerPercentage: 'var(--intensityBrandHoverPercent)',
-      accentColor: 'var(--fivra-button-accent)',
-      weightTarget: 'accent',
-    })};
-    --fivra-button-active-color: ${colorMix({
-      layerColor: 'var(--stateLayerBrightenBase)',
-      layerPercentage: 'var(--intensityBrandActivePercent)',
-      accentColor: 'var(--fivra-button-accent)',
-      weightTarget: 'accent',
-    })};
-    --fivra-button-hover-halo: ${colorMix({
-      layerColor: 'var(--stateLayerBrightenBase)',
-      layerPercentage: 'var(--intensityBrandHoverPercent)',
-      accentColor: 'var(--fivra-button-accent)',
-      weightTarget: 'accent',
-    })};
-    --fivra-button-active-halo: ${colorMix({
-      layerColor: 'var(--stateLayerBrightenBase)',
-      layerPercentage: 'var(--intensityBrandActivePercent)',
-      accentColor: 'var(--fivra-button-accent)',
-      weightTarget: 'accent',
-    })};
-    --fivra-button-focus-halo: ${colorMix({
-      layerColor: 'var(--stateLayerBrightenBase)',
-      layerPercentage: 'var(--intensityBrandFocusPercent)',
-      accentColor: 'var(--fivra-button-accent)',
-      weightTarget: 'accent',
-    })};
+    --fivra-button-hover-color: ${SECONDARY_TERTIARY_BUTTON_STATE_MIXES.hoverColor};
+    --fivra-button-active-color: ${SECONDARY_TERTIARY_BUTTON_STATE_MIXES.activeColor};
+    --fivra-button-hover-halo: ${SECONDARY_TERTIARY_BUTTON_STATE_MIXES.hoverHalo};
+    --fivra-button-active-halo: ${SECONDARY_TERTIARY_BUTTON_STATE_MIXES.activeHalo};
   }
 
   ${BASE_CLASS}:hover:not(:disabled):not([aria-disabled='true']) {

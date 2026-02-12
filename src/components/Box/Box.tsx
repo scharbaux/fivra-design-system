@@ -94,6 +94,20 @@ function toCssVariableName(token: string): string {
   return `--${first}${suffix}`;
 }
 
+function toPascalToken(value: string): string {
+  return value
+    .split('-')
+    .filter(Boolean)
+    .map(capitalizeTokenSegment)
+    .join('');
+}
+
+function toBorderWidthCssVariableName(token: string): string {
+  const segments = token.split('-');
+  const scale = segments.slice(2).map(capitalizeTokenSegment).join('');
+  return `--borderwidth${scale}`;
+}
+
 function resolveSpacingValue(value: BoxSpacingValue | undefined): string | undefined {
   if (value === undefined) {
     return undefined;
@@ -175,11 +189,11 @@ function resolveBorderWidthValue(
 
   if (typeof value === 'string') {
     if (isBorderWidthToken(value)) {
-      return `calc(var(${toCssVariableName(value)}) * 1px)`;
+      return `calc(var(${toBorderWidthCssVariableName(value)}) * 1px)`;
     }
 
     if (isDesignToken(value) && value.startsWith('border-width-')) {
-      return `calc(var(${toCssVariableName(value)}) * 1px)`;
+      return `calc(var(${toBorderWidthCssVariableName(value)}) * 1px)`;
     }
 
     return value;
@@ -218,6 +232,13 @@ function resolveBoxShadowValue(value: React.CSSProperties['boxShadow']): React.C
   }
 
   if (isDesignToken(value) && value.startsWith('shadow-')) {
+    const preset = value.slice('shadow-'.length);
+    const level = toPascalToken(preset);
+
+    if (level) {
+      return `calc(var(--shadows${level}X) * 1px) calc(var(--shadows${level}Y) * 1px) calc(var(--shadows${level}Blur) * 1px) calc(var(--shadows${level}Spread) * 1px) var(--shadows${level}Color)`;
+    }
+
     return `var(${toCssVariableName(value)})`;
   }
 

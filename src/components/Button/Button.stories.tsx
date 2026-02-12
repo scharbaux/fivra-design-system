@@ -3,7 +3,22 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { Box } from "@components/Box";
 import { Button } from "@components/Button";
+import { icons as ICONS } from "@shared/icons/icons.generated";
+import {
+  backgroundColorTokenOptions,
+  borderColorTokenOptions,
+  textColorTokenOptions,
+} from "@styles/themes/storybook-token-options.generated";
 import { defineFivraButton } from "@web-components";
+
+const iconNames = Object.keys(ICONS).sort();
+
+const DEFAULT_OPTION = "(default)";
+const SURFACE_COLOR_OPTIONS = [DEFAULT_OPTION, ...backgroundColorTokenOptions] as const;
+const BORDER_COLOR_OPTIONS = [DEFAULT_OPTION, ...borderColorTokenOptions] as const;
+const TEXT_COLOR_OPTIONS = [DEFAULT_OPTION, ...textColorTokenOptions] as const;
+
+const ICON_NAME_OPTIONS = ["(none)", ...iconNames] as const;
 
 const meta: Meta<typeof Button> = {
   title: "Atomics/Button",
@@ -36,17 +51,29 @@ const meta: Meta<typeof Button> = {
       table: { category: "Appearance" },
     },
     surfaceColor: {
-      control: "text",
+      control: "select",
+      options: SURFACE_COLOR_OPTIONS,
+      mapping: {
+        "(default)": undefined,
+      },
       description: "Overrides the surface color via a design token string (e.g., `background-primary-success`).",
       table: { category: "Appearance" },
     },
     borderColor: {
-      control: "text",
+      control: "select",
+      options: BORDER_COLOR_OPTIONS,
+      mapping: {
+        "(default)": undefined,
+      },
       description: "Overrides the border color via a design token string (e.g., `border-primary-success`).",
       table: { category: "Appearance" },
     },
     textColor: {
-      control: "text",
+      control: "select",
+      options: TEXT_COLOR_OPTIONS,
+      mapping: {
+        "(default)": undefined,
+      },
       description: "Overrides the text color via a design token string (e.g., `text-primary-success`).",
       table: { category: "Appearance" },
     },
@@ -60,7 +87,11 @@ const meta: Meta<typeof Button> = {
       description: "Optional icon rendered before the label.",
     },
     leadingIconName: {
-      control: "text",
+      control: "select",
+      options: ICON_NAME_OPTIONS,
+      mapping: {
+        "(none)": undefined,
+      },
       description: "Icon name rendered before the label using the shared Icon component.",
       table: { category: "Appearance" },
     },
@@ -69,7 +100,11 @@ const meta: Meta<typeof Button> = {
       description: "Optional icon rendered after the label.",
     },
     trailingIconName: {
-      control: "text",
+      control: "select",
+      options: ICON_NAME_OPTIONS,
+      mapping: {
+        "(none)": undefined,
+      },
       description: "Icon name rendered after the label using the shared Icon component.",
       table: { category: "Appearance" },
     },

@@ -154,3 +154,9 @@ Slots: `leading-icon`, default, and `trailing-icon` provide icon/labelling parit
 - 1.11.3: Simplified the Semantic Overrides story to a single explicit example list while still deriving the docs snippet from the rendered specimen data.
 - 1.11.4: Moved Button multi-example layouts (disabled, sizes, full-width) into Storybook decorators so docs snippets show copy-pasteable `<Button />` instances instead of layout wrappers or args spreads.
 - 1.11.5: Removed the Semantic Overrides manual docs source constant by using a decorator-based grid layout with Storybook dynamic source generation.
+- 1.11.6: Updated React Storybook controls so `surfaceColor`, `borderColor`, `textColor`, `leadingIconName`, and `trailingIconName` use token/icon dropdowns with explicit defaults.
+- 1.11.7: Updated button state-layer styling to tint hover/active overlays from `surfaceColor` while keeping focus overlays pinned to the primary accent, and refreshed style-generation tests.
+- 1.11.8: Made state-layer tint source variant-aware (`surface` for primary, `border` for secondary, `text` for tertiary) so hover/active colors remain expressive across all variants.
+- 1.11.9: Corrected hover/active color-mix ordering to weight the variant tint color first, aligning rendered hover states with expected intensity behavior.
+- 1.11.10: Split hover/active mix ordering by variant so primary keeps layer-first blending while secondary/tertiary use tint-first blending.
+- 1.11.11: Replaced hardcoded Storybook color option arrays with shared generated token options sourced from `@styles/themes/storybook-token-options.generated`.

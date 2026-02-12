@@ -44,82 +44,6 @@ type AngularStoryRenderResult = {
   styles?: string[];
   template?: string;
   component?: unknown;
-  onReady?: (element: HTMLElement) => void;
-  onDestroy?: () => void;
-};
-
-const applyWebComponentLightDomShim = (root: HTMLElement): (() => void) | undefined => {
-  const Constructor = customElements.get("fivra-button") as CustomElementConstructor | undefined;
-
-  if (!Constructor) {
-    return undefined;
-  }
-
-  const pruneHost = (host: Element | DocumentFragment) => {
-    if (!(host instanceof HTMLElement) || !(host instanceof Constructor)) {
-      return;
-    }
-
-    const fallbackButton = host.querySelector<HTMLButtonElement>(":scope > button.fivra-button");
-
-    fallbackButton?.remove();
-  };
-
-  const inspectNode = (node: Node) => {
-    if (node instanceof HTMLElement) {
-      if (node.matches("fivra-button")) {
-        pruneHost(node);
-      }
-
-      node.querySelectorAll("fivra-button").forEach((nestedHost) => {
-        pruneHost(nestedHost);
-      });
-    } else if (node instanceof DocumentFragment) {
-      node.querySelectorAll("fivra-button").forEach((nestedHost) => {
-        pruneHost(nestedHost);
-      });
-    }
-  };
-
-  inspectNode(root);
-
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      mutation.addedNodes.forEach((addedNode) => {
-        inspectNode(addedNode);
-      });
-    });
-  });
-
-  observer.observe(root, { childList: true, subtree: true });
-
-  return () => {
-    observer.disconnect();
-  };
-};
-
-const withWebComponentLightDomShim = (story: AngularStoryRenderResult): AngularStoryRenderResult => {
-  let cleanup: (() => void) | undefined;
-
-  return {
-    ...story,
-    onReady: (element: HTMLElement) => {
-      cleanup?.();
-      const maybeCleanup = applyWebComponentLightDomShim(element);
-
-      if (maybeCleanup) {
-        cleanup = maybeCleanup;
-      }
-
-      story.onReady?.(element);
-    },
-    onDestroy: () => {
-      cleanup?.();
-      cleanup = undefined;
-
-      story.onDestroy?.();
-    },
-  };
 };
 
 const defaultRender = (args: ButtonStoryArgs) => {
@@ -134,7 +58,7 @@ const defaultRender = (args: ButtonStoryArgs) => {
   const ariaLabel = ariaLabelOverride ?? rest.ariaLabel ?? null;
   const ariaExpanded = ariaExpandedOverride ?? rest.ariaExpanded ?? null;
 
-  return withWebComponentLightDomShim({
+  return {
     moduleMetadata: {
       imports: [CommonModule, FivraButtonModule],
     },
@@ -181,7 +105,7 @@ const defaultRender = (args: ButtonStoryArgs) => {
         (click)="onClick?.($event)"
       ></fivra-button>
     `,
-  });
+  };
 };
 
 const meta: Meta<ButtonStoryArgs> = {

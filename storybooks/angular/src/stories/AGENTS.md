@@ -17,6 +17,7 @@ This directory inherits guidance from the repository root, `storybooks/AGENTS.md
 - 1.6.4: Replaced the CSS shim with a DOM-level cleanup so Storybook prunes duplicate light DOM buttons once `<fivra-button>` is registered.
 - 1.6.5: Removed the Angular web component story and related light DOM cleanup shim after confirming the nested button regression persists upstream.
 - 1.6.6: Updated Button stories to `Atomics/Button` and assigned a stable meta ID so composed Storybook refs group correctly.
+- 1.6.7: Removed the legacy light-DOM cleanup observer from Angular Button story rendering to avoid runtime churn and keep docs rendering stable.
 - 1.7.0: Updated the semantic override story to use the shared semantic palette API instead of `ngStyle` factories so the example matches end-user consumption.
 - 1.8.0: Updated stories to prefer the `label` input and semantic `color` alias for copy-pasteable consumer-facing examples.
 - 1.8.1: Removed redundant `tone` story controls after consolidating semantic presets under `color`.

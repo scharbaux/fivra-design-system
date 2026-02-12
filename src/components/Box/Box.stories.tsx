@@ -5,6 +5,31 @@ import { Box } from '@components/Box';
 import { Typography } from '@components/Typography';
 import { Button } from '@components/Button';
 import { Icon } from '@components/Icon';
+import {
+  backgroundColorTokenOptions,
+  borderColorTokenOptions,
+  borderWidthTokenOptions,
+  radiusTokenOptions,
+  shadowTokenOptions,
+  spacingTokenOptions,
+  textColorTokenOptions,
+} from '@styles/themes/storybook-token-options.generated';
+
+const DEFAULT_OPTION = '(default)';
+const DEFAULT_MAPPING = { [DEFAULT_OPTION]: undefined } as const;
+const ELEMENT_OPTIONS = ['div', 'section', 'article', 'aside', 'main', 'header', 'footer', 'nav', 'span'] as const;
+const DISPLAY_OPTIONS = ['block', 'inline-block', 'flex', 'inline-flex', 'grid', 'inline-grid', 'none'] as const;
+const FLEX_DIRECTION_OPTIONS = ['row', 'row-reverse', 'column', 'column-reverse'] as const;
+const JUSTIFY_CONTENT_OPTIONS = ['flex-start', 'center', 'flex-end', 'space-between', 'space-around', 'space-evenly'] as const;
+const ALIGN_ITEMS_OPTIONS = ['stretch', 'flex-start', 'center', 'flex-end', 'baseline'] as const;
+const FLEX_WRAP_OPTIONS = ['nowrap', 'wrap', 'wrap-reverse'] as const;
+const SPACING_OPTIONS = [DEFAULT_OPTION, ...spacingTokenOptions] as const;
+const BACKGROUND_COLOR_OPTIONS = [DEFAULT_OPTION, ...backgroundColorTokenOptions] as const;
+const TEXT_COLOR_OPTIONS = [DEFAULT_OPTION, ...textColorTokenOptions] as const;
+const BORDER_COLOR_OPTIONS = [DEFAULT_OPTION, ...borderColorTokenOptions] as const;
+const RADIUS_OPTIONS = [DEFAULT_OPTION, ...radiusTokenOptions] as const;
+const BORDER_WIDTH_OPTIONS = [DEFAULT_OPTION, ...borderWidthTokenOptions] as const;
+const SHADOW_OPTIONS = [DEFAULT_OPTION, ...shadowTokenOptions] as const;
 
 const meta: Meta<typeof Box> = {
   title: 'Atomics/Box',
@@ -12,30 +37,212 @@ const meta: Meta<typeof Box> = {
   component: Box,
   tags: ['autodocs'],
   argTypes: {
-    as: { control: false },
+    as: {
+      control: 'select',
+      options: ELEMENT_OPTIONS,
+      description: 'Polymorphic element tag rendered by the Box primitive.',
+      table: { category: 'Layout' },
+    },
     display: {
-      control: 'text',
+      control: 'select',
+      options: DISPLAY_OPTIONS,
       description: 'Sets the CSS display property for the rendered element.',
+      table: { category: 'Layout' },
+    },
+    flexDirection: {
+      control: 'select',
+      options: FLEX_DIRECTION_OPTIONS,
+      description: 'Flex direction utility when `display` is `flex` or `inline-flex`.',
+      table: { category: 'Layout' },
+    },
+    justifyContent: {
+      control: 'select',
+      options: JUSTIFY_CONTENT_OPTIONS,
+      description: 'Main-axis alignment utility for flex or grid layouts.',
+      table: { category: 'Layout' },
+    },
+    alignItems: {
+      control: 'select',
+      options: ALIGN_ITEMS_OPTIONS,
+      description: 'Cross-axis alignment utility for flex or grid layouts.',
+      table: { category: 'Layout' },
+    },
+    flexWrap: {
+      control: 'select',
+      options: FLEX_WRAP_OPTIONS,
+      description: 'Flex wrapping behavior when `display` is `flex`.',
+      table: { category: 'Layout' },
     },
     p: {
-      control: 'text',
+      control: 'select',
+      options: SPACING_OPTIONS,
+      mapping: DEFAULT_MAPPING,
       description: 'Padding shorthand accepting Engage spacing tokens (e.g., `spacing-m`).',
       table: { category: 'Spacing' },
     },
     m: {
-      control: 'text',
+      control: 'select',
+      options: SPACING_OPTIONS,
+      mapping: DEFAULT_MAPPING,
       description: 'Margin shorthand accepting Engage spacing tokens (e.g., `spacing-s`).',
       table: { category: 'Spacing' },
     },
+    mx: {
+      control: 'select',
+      options: SPACING_OPTIONS,
+      mapping: DEFAULT_MAPPING,
+      description: 'Horizontal margin utility accepting Engage spacing tokens.',
+      table: { category: 'Spacing' },
+    },
+    my: {
+      control: 'select',
+      options: SPACING_OPTIONS,
+      mapping: DEFAULT_MAPPING,
+      description: 'Vertical margin utility accepting Engage spacing tokens.',
+      table: { category: 'Spacing' },
+    },
+    mt: {
+      control: 'select',
+      options: SPACING_OPTIONS,
+      mapping: DEFAULT_MAPPING,
+      description: 'Top margin utility accepting Engage spacing tokens.',
+      table: { category: 'Spacing' },
+    },
+    mr: {
+      control: 'select',
+      options: SPACING_OPTIONS,
+      mapping: DEFAULT_MAPPING,
+      description: 'Right margin utility accepting Engage spacing tokens.',
+      table: { category: 'Spacing' },
+    },
+    mb: {
+      control: 'select',
+      options: SPACING_OPTIONS,
+      mapping: DEFAULT_MAPPING,
+      description: 'Bottom margin utility accepting Engage spacing tokens.',
+      table: { category: 'Spacing' },
+    },
+    ml: {
+      control: 'select',
+      options: SPACING_OPTIONS,
+      mapping: DEFAULT_MAPPING,
+      description: 'Left margin utility accepting Engage spacing tokens.',
+      table: { category: 'Spacing' },
+    },
+    px: {
+      control: 'select',
+      options: SPACING_OPTIONS,
+      mapping: DEFAULT_MAPPING,
+      description: 'Horizontal padding utility accepting Engage spacing tokens.',
+      table: { category: 'Spacing' },
+    },
+    py: {
+      control: 'select',
+      options: SPACING_OPTIONS,
+      mapping: DEFAULT_MAPPING,
+      description: 'Vertical padding utility accepting Engage spacing tokens.',
+      table: { category: 'Spacing' },
+    },
+    pt: {
+      control: 'select',
+      options: SPACING_OPTIONS,
+      mapping: DEFAULT_MAPPING,
+      description: 'Top padding utility accepting Engage spacing tokens.',
+      table: { category: 'Spacing' },
+    },
+    pr: {
+      control: 'select',
+      options: SPACING_OPTIONS,
+      mapping: DEFAULT_MAPPING,
+      description: 'Right padding utility accepting Engage spacing tokens.',
+      table: { category: 'Spacing' },
+    },
+    pb: {
+      control: 'select',
+      options: SPACING_OPTIONS,
+      mapping: DEFAULT_MAPPING,
+      description: 'Bottom padding utility accepting Engage spacing tokens.',
+      table: { category: 'Spacing' },
+    },
+    pl: {
+      control: 'select',
+      options: SPACING_OPTIONS,
+      mapping: DEFAULT_MAPPING,
+      description: 'Left padding utility accepting Engage spacing tokens.',
+      table: { category: 'Spacing' },
+    },
+    gap: {
+      control: 'select',
+      options: SPACING_OPTIONS,
+      mapping: DEFAULT_MAPPING,
+      description: 'Gap utility accepting Engage spacing tokens (e.g., `spacing-s`).',
+      table: { category: 'Spacing' },
+    },
+    rowGap: {
+      control: 'select',
+      options: SPACING_OPTIONS,
+      mapping: DEFAULT_MAPPING,
+      description: 'Row gap utility accepting Engage spacing tokens.',
+      table: { category: 'Spacing' },
+    },
+    columnGap: {
+      control: 'select',
+      options: SPACING_OPTIONS,
+      mapping: DEFAULT_MAPPING,
+      description: 'Column gap utility accepting Engage spacing tokens.',
+      table: { category: 'Spacing' },
+    },
     backgroundColor: {
-      control: 'text',
+      control: 'select',
+      options: BACKGROUND_COLOR_OPTIONS,
+      mapping: DEFAULT_MAPPING,
       description: 'Background fill accepting Engage tokens like `background-neutral-0`.',
       table: { category: 'Appearance' },
     },
+    color: {
+      control: 'select',
+      options: TEXT_COLOR_OPTIONS,
+      mapping: DEFAULT_MAPPING,
+      description: 'Foreground/text color accepting Engage tokens like `text-neutral-1`.',
+      table: { category: 'Appearance' },
+    },
+    borderColor: {
+      control: 'select',
+      options: BORDER_COLOR_OPTIONS,
+      mapping: DEFAULT_MAPPING,
+      description: 'Border color accepting Engage tokens like `border-primary-interactive`.',
+      table: { category: 'Appearance' },
+    },
     borderRadius: {
-      control: 'text',
+      control: 'select',
+      options: RADIUS_OPTIONS,
+      mapping: DEFAULT_MAPPING,
       description: 'Corner radius token (e.g., `radius-m`).',
       table: { category: 'Appearance' },
+    },
+    borderWidth: {
+      control: 'select',
+      options: BORDER_WIDTH_OPTIONS,
+      mapping: DEFAULT_MAPPING,
+      description: 'Border width token (e.g., `border-width-s`).',
+      table: { category: 'Appearance' },
+    },
+    boxShadow: {
+      control: 'select',
+      options: SHADOW_OPTIONS,
+      mapping: DEFAULT_MAPPING,
+      description: 'Shadow preset token (e.g., `shadow-m`).',
+      table: { category: 'Appearance' },
+    },
+    width: {
+      control: 'text',
+      description: 'Width utility accepting CSS values or spacing tokens.',
+      table: { category: 'Layout' },
+    },
+    height: {
+      control: 'text',
+      description: 'Height utility accepting CSS values or spacing tokens.',
+      table: { category: 'Layout' },
     },
   },
   parameters: {

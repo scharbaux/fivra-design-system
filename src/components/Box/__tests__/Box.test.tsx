@@ -62,6 +62,32 @@ describe('Box', () => {
     expect(element.style.borderRadius).toBe('calc(var(--radiusM) * 1px)');
   });
 
+  it('converts border width tokens to the generated variable naming', () => {
+    render(
+      <Box
+        data-testid="border-width-box"
+        borderWidth="border-width-s"
+      />,
+    );
+
+    const element = screen.getByTestId('border-width-box');
+    expect(element.style.borderWidth).toBe('calc(var(--borderwidthS) * 1px)');
+  });
+
+  it('converts shadow preset tokens to composite shadow values', () => {
+    render(
+      <Box
+        data-testid="shadow-box"
+        boxShadow="shadow-m"
+      />,
+    );
+
+    const element = screen.getByTestId('shadow-box');
+    expect(element.style.boxShadow).toBe(
+      'calc(var(--shadowsMX) * 1px) calc(var(--shadowsMY) * 1px) calc(var(--shadowsMBlur) * 1px) calc(var(--shadowsMSpread) * 1px) var(--shadowsMColor)',
+    );
+  });
+
   it('wires display and flexbox helpers', () => {
     render(
       <Box

@@ -18,3 +18,7 @@ he shared button behavior and styling.
 - 1.10.0: Added semantic palette APIs for success/warning/error styling without manual CSS custom property wiring.
 - 1.11.0: Added `label`, semantic `color`, and direct color override inputs (`surfaceColor`, `borderColor`, `textColor`, `accentColor`) for copy-pasteable consumption without inline style objects.
 - 1.11.1: Removed redundant `tone` input in favor of extensible `color` presets.
+- 1.11.2: Updated shared button state-layer mixing so hover/active tint derives from surface color while focus remains anchored to the primary accent.
+- 1.11.3: Updated variant tint sourcing so secondary uses border color and tertiary uses text color for hover/active state-layer mixes.
+- 1.11.4: Adjusted hover/active color-mix operand order so the variant tint color is the weighted first operand, matching expected state rendering.
+- 1.11.5: Applied variant-specific hover/active mix ordering so primary remains layer-first while secondary and tertiary are tint-first.
