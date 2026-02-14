@@ -7,8 +7,8 @@ import {
   type ButtonSize,
   type ButtonVariant,
   ensureButtonStyles,
-} from "@shared/button/button.styles";
-import type { ButtonColor } from "@shared/button/color-overrides";
+} from "@internal/angular/button/button.styles";
+import type { ButtonColor } from "@internal/angular/button/color-overrides";
 ensureButtonStyles();
 
 const TONES = ["success", "warning", "error"] as const;
@@ -254,7 +254,7 @@ export const Tertiary: Story = {
 
 export const DisabledStates: Story = {
   render: () =>
-    withWebComponentLightDomShim({
+    ({
       template: `
         <div
           style="
@@ -283,7 +283,7 @@ export const DisabledStates: Story = {
 export const SemanticOverrides: Story = {
   name: "Semantic Overrides",
   render: () =>
-    withWebComponentLightDomShim({
+    ({
       props: {
         tones: TONES,
       },
@@ -340,7 +340,7 @@ export const WithIcons: Story = {
     const { "aria-label": ariaLabelOverride, ariaLabel, ...rest } = args;
     const resolvedAriaLabel = ariaLabelOverride ?? ariaLabel ?? null;
 
-    return withWebComponentLightDomShim({
+    return {
       props: {
         ...rest,
         ariaLabel: resolvedAriaLabel,
@@ -379,7 +379,7 @@ export const WithIcons: Story = {
           [attr.aria-labelledby]="ariaLabelledby"
         ></fivra-button>
       `,
-    });
+    };
   },
   parameters: {
     docs: {

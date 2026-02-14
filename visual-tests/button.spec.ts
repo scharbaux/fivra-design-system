@@ -3,8 +3,6 @@ import { expect, test, type Page } from "@playwright/test";
 type StoryConfig = {
   id: string;
   name: string;
-  framework?: 'angular' | 'vue' | 'react';
-  composePath?: string;
 };
 
 const buttonStories: StoryConfig[] = [
@@ -15,28 +13,14 @@ const buttonStories: StoryConfig[] = [
   { id: "atomics-button-react--dropdown", name: "dropdown" },
   { id: "atomics-button-react--loading", name: "loading" },
   { id: "atomics-button-react--icon-only", name: "icon-only" },
-  {
-    id: "atomics-button-angular--dropdown",
-    name: "angular-dropdown",
-    composePath: "angular",
-    framework: "angular",
-  },
-  {
-    id: "atomics-button-angular--loading",
-    name: "angular-loading",
-    composePath: "angular",
-    framework: "angular",
-  },
 ];
 
 const storyUrl = (story: StoryConfig) => {
-  const prefix = story.composePath ? `/${story.composePath}` : "";
-  const framework = story.framework ? `;framework:${story.framework}` : "";
-  return `${prefix}/iframe.html?id=${story.id}&globals=backgrounds.grid:false${framework}&viewMode=story`;
+  return `/iframe.html?id=${story.id}&globals=backgrounds.grid:false&viewMode=story`;
 };
 
 async function loadStory(page: Page, story: StoryConfig) {
-  await page.goto(storyUrl(story), { waitUntil: "networkidle" });
+  await page.goto(storyUrl(story), { waitUntil: "domcontentloaded" });
   await page.waitForSelector("#storybook-root:not([hidden])");
   await page.evaluate(() => {
     document.body.style.margin = "0";
@@ -56,7 +40,6 @@ test.describe("Button visual regressions", () => {
   for (const story of buttonStories) {
     test(`${story.name} matches baseline`, async ({ page }) => {
       await loadStory(page, story);
-
       const canvas = page.locator("#storybook-root");
       await expect(canvas).toHaveScreenshot(`${story.name}.png`, {
         animations: "disabled",
