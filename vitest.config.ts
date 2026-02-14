@@ -18,6 +18,7 @@ export default defineConfig({
       '@components': path.resolve(__dirname, 'src/components'),
       '@web-components': path.resolve(__dirname, 'src/web-components'),
       '@shared': path.resolve(__dirname, 'src/shared'),
+      '@tokens': path.resolve(__dirname, 'src/tokens'),
       '@styles': path.resolve(__dirname, 'src/styles'),
     },
   },

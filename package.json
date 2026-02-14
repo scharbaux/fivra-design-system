@@ -15,6 +15,7 @@
     "optimize-icons": "node scripts/optimize-icons.mjs",
     "generate:icons": "node scripts/generate-icons-map.mjs",
     "generate:tokens": "node scripts/generate-design-tokens.mjs",
+    "generate:token-snapshot": "node scripts/generate-token-snapshot.mjs",
     "changeset": "changeset",
     "version": "changeset version",
     "release": "changeset publish",

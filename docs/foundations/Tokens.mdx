@@ -1,9 +1,9 @@
 import { Meta, Title, Subtitle } from '@storybook/addon-docs/blocks';
 import TokensTable from './TokensTable';
 
-<Meta title="Docs/Foundations/Design Tokens" parameters={{ layout: 'fullscreen' }} />
+<Meta title="Docs/Foundations/Design Tokens: Reference" parameters={{ layout: 'fullscreen' }} />
 
-<Title>Design Tokens</Title>
+<Title>Design Tokens: Reference</Title>
 
 <Subtitle>Inspect semantic tokens with theme/category filters and resolved Engage/Legacy values.</Subtitle>
 
@@ -14,36 +14,6 @@ import TokensTable from './TokensTable';
   }
 `}</style>
 
-## How this table is generated
-
-The data below is loaded directly from the Tokens Studio exports committed under
-`src/tokens/`. The external semantic definitions in
-[`src/tokens/Externals/Default.json`](../../src/tokens/Externals/Default.json)
-are merged with the Engage and Legacy internals in
-[`src/tokens/Internals`](../../src/tokens/Internals/) to reproduce the same
-transform that powers our generated CSS. The theme metadata used for grouping
-and theme attribution comes from
-[`src/styles/themes/tokens.generated.ts`](../../src/styles/themes/tokens.generated.ts),
-which is also emitted by the Style Dictionary build.
-
-> **Why it matters:** every alias path shown in the “Alias / Reference” column
-> is a direct pointer back to Tokens Studio, so designers and engineers can
-> trace a semantic token to the palette or primitive value that feeds it.
-
-## Refreshing the page after regenerating tokens
-
-1. Run `yarn generate:tokens` to pull the latest Tokens Studio data and rebuild
-   the generated CSS/theme manifest.
-2. Restart Storybook (or reload the MDX page) so the updated JSON and CSS
-   modules are re-imported.
-3. If you add new token sets, confirm they are surfaced in
-   [`tokens.generated.ts`](../../src/styles/themes/tokens.generated.ts) so the
-   table can display them.
-
-> **Tip:** The table renders both Engage (default) and Legacy themes. If a theme
-> does not appear, confirm its slug in `designTokenManifest.themes` matches a
-> JSON file under `src/tokens/Internals/`.
-
-## Semantic token reference
+Need generation and refresh details? See [Design Tokens: Workflow](?path=/docs/docs-foundations-design-tokens-workflow--docs).
 
 <TokensTable />

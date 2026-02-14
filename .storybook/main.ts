@@ -97,6 +97,7 @@ const config: StorybookConfig = {
         "@components": resolveAliasPath("../src/components"),
         "@web-components": resolveAliasPath("../src/web-components"),
         "@shared": resolveAliasPath("../src/shared"),
+        "@tokens": resolveAliasPath("../src/tokens"),
         "@styles": resolveAliasPath("../src/styles"),
       },
     };

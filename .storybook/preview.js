@@ -128,7 +128,7 @@ export const parameters = {
           'Overview',
           ['Getting Started', 'Tech Stack', 'Component Architecture'],
           'Foundations',
-          ['Design Tokens', 'Icons Library'],
+          ['Design Tokens: Reference', 'Design Tokens: Workflow', 'Icons Library'],
         ],
         'Components',
         [
