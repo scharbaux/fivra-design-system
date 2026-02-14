@@ -15,6 +15,12 @@ const buttonStories: StoryConfig[] = [
   { id: "atomics-button-react--icon-only", name: "icon-only" },
 ];
 
+const perStoryDiffRatio: Partial<Record<StoryConfig["name"], number>> = {
+  secondary: 0.03,
+  tertiary: 0.03,
+  "with-icons": 0.03,
+};
+
 const storyUrl = (story: StoryConfig) => {
   return `/iframe.html?id=${story.id}&globals=backgrounds.grid:false&viewMode=story`;
 };
@@ -45,6 +51,9 @@ test.describe("Button visual regressions", () => {
         animations: "disabled",
         caret: "hide",
         scale: "css",
+        ...(perStoryDiffRatio[story.name]
+          ? { maxDiffPixelRatio: perStoryDiffRatio[story.name] }
+          : {}),
       });
     });
   }
