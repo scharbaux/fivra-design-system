@@ -24,3 +24,4 @@ he shared button behavior and styling.
 - 1.11.5: Applied variant-specific hover/active mix ordering so primary remains layer-first while secondary and tertiary are tint-first.
 - 1.12.0: Mirrored the button style, state-layer, and color-override modules with `src/shared/button` while keeping Angular-local sources for `ng-packagr` rootDir compatibility.
 - 1.12.1: Updated the Angular button adapter and tests to consume local button style modules directly instead of the @components alias bridge.
+- 1.12.2: Fixed projected-label detection to ignore generated `label` fallback nodes so Angular Storybook no longer enters a render loop when consumers provide only the `label` input.

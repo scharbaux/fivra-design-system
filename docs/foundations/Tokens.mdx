@@ -1,11 +1,18 @@
 import { Meta, Title, Subtitle } from '@storybook/addon-docs/blocks';
 import TokensTable from './TokensTable';
 
-<Meta title="Docs/Foundations/Design Tokens" />
+<Meta title="Docs/Foundations/Design Tokens" parameters={{ layout: 'fullscreen' }} />
 
 <Title>Design Tokens</Title>
 
-<Subtitle>Inspect semantic tokens and their resolved Engage/Legacy values.</Subtitle>
+<Subtitle>Inspect semantic tokens with theme/category filters and resolved Engage/Legacy values.</Subtitle>
+
+<style>{`
+  .sbdocs.sbdocs-wrapper,
+  .sbdocs.sbdocs-content {
+    max-width: 100% !important;
+  }
+`}</style>
 
 ## How this table is generated
 

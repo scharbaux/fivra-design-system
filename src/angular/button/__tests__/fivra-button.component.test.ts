@@ -301,6 +301,12 @@ describe('FivraButtonComponent', () => {
 
     const button = queryButton();
     expect(button.textContent).toContain('Continue');
+    expect(button.dataset.hasLabel).toBe('true');
+
+    await flushChanges();
+    await flushChanges();
+
+    expect(button.dataset.hasLabel).toBe('true');
   });
 
   it('applies semantic color aliases via the color input', async () => {

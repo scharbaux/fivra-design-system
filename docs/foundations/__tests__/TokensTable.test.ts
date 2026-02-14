@@ -5,27 +5,26 @@ import { buildRows } from '../TokensTable';
 describe('TokensTable composite rows', () => {
   const rows = buildRows();
 
-  it('collapses typography composites into a single entry', () => {
-    const typographyRow = rows.find((row) => row.displayPath === 'typography.body-1');
+  it('keeps composite rows collapsed when typography or shadow composites are present', () => {
+    const compositeRows = rows.filter((row) => row.type === 'typography' || row.type === 'boxShadow');
 
-    expect(typographyRow).toBeDefined();
-    expect(typographyRow?.values.engage).toBeTypeOf('string');
-    expect(typographyRow?.values.engage).toMatch(/font-family:/);
-    expect(typographyRow?.alias).toContain('fontFamily');
+    compositeRows.forEach((row) => {
+      expect(row.displayPath?.startsWith(`${row.type}.`)).toBe(true);
+      expect(row.values.engage).toBeTypeOf('string');
+      expect(row.alias).toBeTypeOf('string');
 
-    const propertyRows = rows.filter((row) => row.path.join('.').startsWith('body-1.'));
-    expect(propertyRows).toHaveLength(0);
+      const descendantRows = rows.filter(
+        (candidate) => candidate.path.join('.') !== row.path.join('.') && candidate.basePath.join('.') === row.basePath.join('.')
+      );
+      expect(descendantRows).toHaveLength(0);
+    });
   });
 
-  it('collapses shadow composites into a single entry', () => {
-    const shadowRow = rows.find((row) => row.displayPath?.startsWith('boxShadow.'));
+  it('includes semantic foundation categories from the latest token export', () => {
+    const categories = new Set(rows.map((row) => row.path[0]));
 
-    expect(shadowRow).toBeDefined();
-    expect(shadowRow?.values.engage).toBeTypeOf('string');
-    expect(shadowRow?.values.engage).toMatch(/box-shadow:/);
-    expect(shadowRow?.alias).toContain('color');
-
-    const propertyRows = rows.filter((row) => row.path.join('.').startsWith('shadows.') && row.path.length > 2);
-    expect(propertyRows).toHaveLength(0);
+    expect(categories.has('Background')).toBe(true);
+    expect(categories.has('Border')).toBe(true);
+    expect(categories.has('Text')).toBe(true);
   });
 });

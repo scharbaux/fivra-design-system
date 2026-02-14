@@ -101,6 +101,7 @@ const DIRECT_STYLE_VARS: DirectStyleKey[] = [
   '--fivra-button-border',
   '--fivra-button-text',
 ];
+const GENERATED_LABEL_ATTR = 'data-fivra-button-generated-label';
 
 function capitalizeTokenSegment(segment: string): string {
   if (!segment) {
@@ -175,7 +176,12 @@ function resolveColorValue(value: string | null | undefined): string | null {
         class="{{ labelClassName }}"
         [attr.data-empty]="resolvedHasLabel ? null : 'true'"
       >
-        <ng-container *ngIf="!hasProjectedLabel && label">{{ label }}</ng-container>
+        <span
+          *ngIf="!hasProjectedLabel && label"
+          [attr.${GENERATED_LABEL_ATTR}]="'true'"
+        >
+          {{ label }}
+        </span>
         <ng-content></ng-content>
       </span>
       <span
@@ -554,6 +560,14 @@ export class FivraButtonComponent
 
     const hasContent = Array.from(container.childNodes).some((node) => {
       if (node.nodeType === Node.ELEMENT_NODE) {
+        const element = node as Element;
+
+        // Ignore generated fallback label content so projected-label detection
+        // stays stable when consumers only pass the `label` input.
+        if (element.hasAttribute(GENERATED_LABEL_ATTR)) {
+          return false;
+        }
+
         return true;
       }
 
@@ -566,8 +580,6 @@ export class FivraButtonComponent
 
     if (this.hasProjectedLabel !== hasContent) {
       this.hasProjectedLabel = hasContent;
-      this.cdr.markForCheck();
-    } else {
       this.cdr.markForCheck();
     }
   }

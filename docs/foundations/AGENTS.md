@@ -10,3 +10,6 @@ This directory inherits all requirements from `../AGENTS.md`. Follow the reposit
 ## Functional Changes
 - Use `<major>.<minor>[.<patch>]` labels instead of dates when recording new entries.
 - 1.13.1: Moved the Design Tokens MDX page, TokensTable specimen, and Icons Library story into `docs/foundations` to align with the sidebar restructuring.
+- 1.14.0: Reworked the Design Tokens reference into a fullscreen, filter-driven table viewport with theme/category selectors and updated composite-token tests for the latest token source-of-truth shape.
+- 1.14.1: Added token text search, explicit description column, fixed-height internal table scrolling, and full-width docs layout overrides while enforcing no horizontal table overflow.
+- 1.14.2: Added CSS-variable click-to-copy affordances, improved typography/icon/spacing specimens, introduced checkerboard-backed color specimens (including category-aware sphere/text rendering), and expanded the token workspace to fill the viewport height.

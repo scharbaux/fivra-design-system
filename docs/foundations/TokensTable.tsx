@@ -1,5 +1,7 @@
-import { Fragment, useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
+import { Icon } from '@components';
+import { icons as generatedIcons } from '@shared/icons/icons.generated';
 import { designTokenManifest } from '../../src/styles/themes/tokens.generated';
 import externalTokens from '../../src/tokens/Externals/Default.json';
 import engageTokens from '../../src/tokens/Internals/Engage.json';
@@ -48,6 +50,9 @@ const numberLikeTypes = new Set([
   'dimension',
   'number',
 ]);
+const specimenIconName = Object.keys(generatedIcons).includes('chevron-right')
+  ? 'chevron-right'
+  : Object.keys(generatedIcons)[0] ?? '';
 
 function isTokenNode(value: unknown): value is TokenNode {
   return Boolean(value && typeof value === 'object' && '$value' in (value as Record<string, unknown>));
@@ -217,15 +222,93 @@ function getCompositeKey(row: TokenRow): string | undefined {
 }
 
 function normalizeTypographyValue(value: unknown): string | undefined {
+  if (value == null) {
+    return undefined;
+  }
+
+  if (typeof value === 'number') {
+    return `${value}px`;
+  }
+
+  if (typeof value !== 'string') {
+    return String(value);
+  }
+
+  if (/px$|rem$|em$|%$/.test(value)) {
+    return value;
+  }
+
+  if (/^\d+(\.\d+)?$/.test(value)) {
+    return `${value}px`;
+  }
+
+  return value;
+}
+
+function normalizeTypographyWeight(value: unknown): CSSProperties['fontWeight'] {
+  if (typeof value === 'number') {
+    return value;
+  }
+
   if (typeof value !== 'string') {
     return undefined;
   }
 
-  if (/px$|rem$|em$/.test(value) || /^\d+(\.\d+)?$/.test(value)) {
+  const normalized = value.trim().toLowerCase();
+  const map: Record<string, number> = {
+    thin: 100,
+    extralight: 200,
+    'extra-light': 200,
+    light: 300,
+    regular: 400,
+    normal: 400,
+    medium: 500,
+    semibold: 600,
+    'semi-bold': 600,
+    bold: 700,
+    extrabold: 800,
+    'extra-bold': 800,
+    black: 900,
+  };
+
+  if (map[normalized]) {
+    return map[normalized];
+  }
+
+  const parsed = Number.parseFloat(normalized);
+  return Number.isFinite(parsed) ? parsed : value;
+}
+
+function normalizeTypographyFamily(value: unknown): string | undefined {
+  if (typeof value !== 'string' || !value.trim()) {
+    return undefined;
+  }
+
+  if (value.includes(',')) {
     return value;
   }
 
-  return value;
+  return `"${value}", "Google Sans", sans-serif`;
+}
+
+async function copyToClipboard(value: string): Promise<void> {
+  if (navigator.clipboard && window.isSecureContext) {
+    await navigator.clipboard.writeText(value);
+    return;
+  }
+
+  const textArea = document.createElement('textarea');
+  textArea.value = value;
+  textArea.style.position = 'fixed';
+  textArea.style.left = '-9999px';
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+  try {
+    document.execCommand('copy');
+  } finally {
+    document.body.removeChild(textArea);
+  }
 }
 
 function formatLength(value: unknown): string | undefined {
@@ -448,20 +531,54 @@ rows.forEach((row) => {
 
 function Specimen({ row, theme }: { row: TokenRow; theme: ThemeSlug }): ReactNode {
   const value = row.values[theme];
+  const category = row.path[0]?.toLowerCase();
 
   if (isColor(value)) {
+    if (category === 'text') {
+      return (
+        <span style={{ fontWeight: 700, color: value, fontSize: '1rem' }} aria-label={`Text color sample ${value}`}>
+          Aa
+        </span>
+      );
+    }
+
+    const sphereBase: CSSProperties = {
+      width: '2.5rem',
+      height: '2.5rem',
+      borderRadius: '50%',
+      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.45), 0 1px 2px rgba(0,0,0,0.12)',
+    };
+    const sphereStyle: CSSProperties =
+      category === 'border'
+        ? {
+            ...sphereBase,
+            background: '#ffffff',
+            border: `4px solid ${value}`,
+          }
+        : {
+            ...sphereBase,
+            background: value,
+            border: '1px solid rgba(0,0,0,0.12)',
+          };
+
     return (
       <span
         style={{
           display: 'inline-flex',
-          width: '2.5rem',
-          height: '2.5rem',
-          borderRadius: '0.75rem',
-          border: '1px solid rgba(0,0,0,0.08)',
-          background: value,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '2.75rem',
+          height: '2.75rem',
+          borderRadius: '6.25rem',
+          backgroundImage:
+            'linear-gradient(45deg, #e4e6eb 25%, transparent 25%), linear-gradient(-45deg, #e4e6eb 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #e4e6eb 75%), linear-gradient(-45deg, transparent 75%, #e4e6eb 75%)',
+          backgroundSize: '10px 10px',
+          backgroundPosition: '0 0, 0 5px, 5px -5px, -5px 0px',
         }}
         aria-label={`Color swatch ${value}`}
-      />
+      >
+        <span style={sphereStyle} />
+      </span>
     );
   }
 
@@ -511,13 +628,33 @@ function Specimen({ row, theme }: { row: TokenRow; theme: ThemeSlug }): ReactNod
         );
       }
 
+      if (category === 'iconsizes' && specimenIconName) {
+        return (
+          <span
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '3.5rem',
+              height: '2.5rem',
+              background: '#f7f7f8',
+              borderRadius: '0.5rem',
+              border: '1px solid rgba(0,0,0,0.08)',
+            }}
+            aria-label={`Icon size sample ${dimensionLabel}`}
+          >
+            <Icon name={specimenIconName} size={`${numeric}px`} color="#4c57ea" />
+          </span>
+        );
+      }
+
       return (
         <span
           style={{
             display: 'inline-flex',
             alignItems: 'center',
             justifyContent: 'center',
-            width: '3.5rem',
+            width: '100%',
             height: '2.5rem',
             background: '#f7f7f8',
             borderRadius: '0.5rem',
@@ -529,7 +666,7 @@ function Specimen({ row, theme }: { row: TokenRow; theme: ThemeSlug }): ReactNod
             style={{
               display: 'inline-block',
               width: '0.6rem',
-              height: `${Math.max(8, Math.min(numeric, 48))}px`,
+              height: `${Math.max(numeric, 1)}px`,
               background: '#4c57ea',
               borderRadius: '0.25rem',
             }}
@@ -567,8 +704,8 @@ function Specimen({ row, theme }: { row: TokenRow; theme: ThemeSlug }): ReactNod
 
     if (composite) {
       const style: CSSProperties = {
-        fontFamily: composite.fontFamily as string | undefined,
-        fontWeight: composite.fontWeight as CSSProperties['fontWeight'],
+        fontFamily: normalizeTypographyFamily(composite.fontFamily),
+        fontWeight: normalizeTypographyWeight(composite.fontWeight),
         fontSize: normalizeTypographyValue(composite.fontSize) as CSSProperties['fontSize'],
         lineHeight: normalizeTypographyValue(composite.lineHeight) as CSSProperties['lineHeight'],
         letterSpacing: normalizeTypographyValue(composite.letterSpacing) as CSSProperties['letterSpacing'],
@@ -615,80 +752,231 @@ function Specimen({ row, theme }: { row: TokenRow; theme: ThemeSlug }): ReactNod
 }
 
 function TokensTable() {
+  const themes = designTokenManifest.themes;
+  const [selectedTheme, setSelectedTheme] = useState<ThemeSlug>(themes[0]?.slug ?? 'engage');
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [searchValue, setSearchValue] = useState<string>('');
+  const [copiedVariable, setCopiedVariable] = useState<string | null>(null);
   const categories = useMemo(() => Object.keys(rowsByCategory).sort(), []);
+  const filteredRows = useMemo(() => {
+    const baseRows = selectedCategory === 'all' ? rows : rowsByCategory[selectedCategory] ?? [];
+    const query = searchValue.trim().toLowerCase();
+
+    if (!query) {
+      return baseRows;
+    }
+
+    return baseRows.filter((row) => {
+      const searchable = [
+        row.displayPath ?? row.path.join('.'),
+        row.alias ?? '',
+        row.cssVariable,
+        row.description ?? '',
+        formatRawValue(row.values[selectedTheme]),
+      ]
+        .join(' ')
+        .toLowerCase();
+
+      return searchable.includes(query);
+    });
+  }, [searchValue, selectedCategory, selectedTheme]);
+  const selectedThemeDefinition = useMemo(
+    () => themes.find((theme) => theme.slug === selectedTheme) ?? themes[0],
+    [selectedTheme, themes]
+  );
 
   return (
-    <div style={{ display: 'grid', gap: '2rem' }}>
-      {designTokenManifest.themes.map((theme) => (
-        <section key={theme.slug} aria-labelledby={`tokens-${theme.slug}`}>
-          <h2 id={`tokens-${theme.slug}`}>{theme.name} theme</h2>
-          <p style={{ color: '#585663', fontSize: '0.95rem' }}>
-            Resolved values from the <code>{theme.tokenSetCombination.internal}</code> Tokens Studio set merged with{' '}
-            {theme.tokenSetCombination.external.join(', ')}.
-          </p>
+    <section aria-labelledby="tokens-reference" style={{ width: '100%', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <div
+        style={{
+          display: 'flex',
+          gap: '0.75rem',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          marginBottom: '0.75rem',
+        }}
+      >
+        <label style={filterLabelStyle}>
+          <span style={filterLabelTextStyle}>Theme</span>
+          <select value={selectedTheme} onChange={(event) => setSelectedTheme(event.target.value as ThemeSlug)} style={filterControlStyle}>
+            {themes.map((theme) => (
+              <option key={theme.slug} value={theme.slug}>
+                {theme.name}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label style={filterLabelStyle}>
+          <span style={filterLabelTextStyle}>Category</span>
+          <select value={selectedCategory} onChange={(event) => setSelectedCategory(event.target.value)} style={filterControlStyle}>
+            <option value="all">All categories</option>
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label style={{ ...filterLabelStyle, flex: '1 1 16rem' }}>
+          <span style={filterLabelTextStyle}>Search</span>
+          <input
+            type="search"
+            value={searchValue}
+            onChange={(event) => setSearchValue(event.target.value)}
+            placeholder="Token, alias, value, CSS var..."
+            style={{ ...filterControlStyle, width: '100%' }}
+          />
+        </label>
+        <span style={resultsPillStyle}>{filteredRows.length} tokens</span>
+      </div>
 
-          {categories.map((category) => {
-            const categoryRows = rowsByCategory[category];
+      <p style={{ color: '#585663', fontSize: '0.95rem', marginTop: 0 }}>
+        Resolved values from the <code>{selectedThemeDefinition?.tokenSetCombination.internal}</code> Tokens Studio set merged with{' '}
+        {selectedThemeDefinition?.tokenSetCombination.external.join(', ')}.
+      </p>
 
-            return (
-              <Fragment key={`${theme.slug}-${category}`}>
-                <h3 style={{ marginTop: '1.5rem' }}>{category}</h3>
-                <div style={{ overflowX: 'auto' }}>
-                  <table style={{ borderCollapse: 'collapse', minWidth: '100%' }}>
-                    <thead>
-                      <tr>
-                        <th style={headerCellStyle}>Token name</th>
-                        <th style={headerCellStyle}>Alias / Reference</th>
-                        <th style={headerCellStyle}>Raw value</th>
-                        <th style={headerCellStyle}>CSS variable</th>
-                        <th style={headerCellStyle}>Specimen</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {categoryRows.map((row) => (
-                        <tr key={`${theme.slug}-${row.path.join('.')}`}>
-                          <td style={cellStyle}>
-                            <code>{row.displayPath ?? row.path.join('.')}</code>
-                            {row.description ? (
-                              <div style={{ color: '#706e7b', fontSize: '0.8rem', marginTop: '0.25rem' }}>{row.description}</div>
-                            ) : null}
-                          </td>
-                          <td style={cellStyle}>{row.alias ? <code>{row.alias}</code> : '—'}</td>
-                          <td style={cellStyle}>
-                            <code>{formatRawValue(row.values[theme.slug])}</code>
-                          </td>
-                          <td style={cellStyle}>
-                            <code>{row.cssVariable}</code>
-                          </td>
-                          <td style={{ ...cellStyle, textAlign: 'center' }}>
-                            <Specimen row={row} theme={theme.slug} />
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </Fragment>
-            );
-          })}
-        </section>
-      ))}
-    </div>
+      <div style={{ ...tableViewportStyle, flex: 1 }}>
+        <div style={{ overflowY: 'auto', overflowX: 'hidden', height: '100%' }}>
+          <table style={{ borderCollapse: 'collapse', width: '100%', tableLayout: 'fixed' }}>
+            <colgroup>
+              <col style={{ width: '20%' }} />
+              <col style={{ width: '18%' }} />
+              <col style={{ width: '18%' }} />
+              <col style={{ width: '16%' }} />
+              <col style={{ width: '20%' }} />
+              <col style={{ width: '8%' }} />
+            </colgroup>
+            <thead>
+              <tr>
+                <th style={headerCellStyle}>Token name</th>
+                <th style={headerCellStyle}>Description</th>
+                <th style={headerCellStyle}>Alias / Reference</th>
+                <th style={headerCellStyle}>Raw value</th>
+                <th style={headerCellStyle}>CSS variable</th>
+                <th style={headerCellStyle}>Specimen</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredRows.map((row) => (
+                <tr key={`${selectedTheme}-${row.path.join('.')}`}>
+                  <td style={cellStyle}>
+                    <code style={codeWrapStyle}>{row.displayPath ?? row.path.join('.')}</code>
+                  </td>
+                  <td style={cellStyle}>{row.description ?? '—'}</td>
+                  <td style={cellStyle}>{row.alias ? <code>{row.alias}</code> : '—'}</td>
+                  <td style={cellStyle}>
+                    <code style={codeWrapStyle}>{formatRawValue(row.values[selectedTheme])}</code>
+                  </td>
+                  <td style={cellStyle}>
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        await copyToClipboard(row.cssVariable);
+                        setCopiedVariable(row.cssVariable);
+                        window.setTimeout(() => {
+                          setCopiedVariable((current) => (current === row.cssVariable ? null : current));
+                        }, 1200);
+                      }}
+                      style={copyButtonStyle}
+                      title={`Copy ${row.cssVariable}`}
+                    >
+                      <code style={codeWrapStyle}>{row.cssVariable}</code>
+                      <span style={copyHintStyle}>{copiedVariable === row.cssVariable ? 'Copied' : 'Copy'}</span>
+                    </button>
+                  </td>
+                  <td style={{ ...cellStyle, textAlign: 'center' }}>
+                    <Specimen row={row} theme={selectedTheme} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
   );
 }
 
+const tableViewportStyle: CSSProperties = {
+  border: '1px solid rgba(0, 0, 0, 0.12)',
+  borderRadius: '0.75rem',
+  overflow: 'hidden',
+  minHeight: '28rem',
+  background: '#fff',
+};
+
+const filterLabelStyle: CSSProperties = {
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: '0.5rem',
+};
+
+const filterLabelTextStyle: CSSProperties = {
+  color: '#585663',
+  fontSize: '0.8rem',
+};
+
+const filterControlStyle: CSSProperties = {
+  border: '1px solid rgba(0, 0, 0, 0.15)',
+  borderRadius: '0.4rem',
+  padding: '0.35rem 0.55rem',
+  background: '#fff',
+  fontSize: '0.9rem',
+};
+
+const resultsPillStyle: CSSProperties = {
+  marginLeft: 'auto',
+  fontSize: '0.8rem',
+  color: '#585663',
+  background: '#f3f4f8',
+  borderRadius: '999px',
+  padding: '0.2rem 0.55rem',
+};
+
 const headerCellStyle: CSSProperties = {
+  position: 'sticky',
+  top: 0,
+  zIndex: 1,
   textAlign: 'left',
   padding: '0.75rem',
   borderBottom: '1px solid rgba(0,0,0,0.08)',
   fontWeight: 600,
   background: '#f7f7f8',
+  whiteSpace: 'nowrap',
 };
 
 const cellStyle: CSSProperties = {
   padding: '0.75rem',
   borderBottom: '1px solid rgba(0,0,0,0.08)',
   verticalAlign: 'top',
+  overflowWrap: 'anywhere',
+  wordBreak: 'break-word',
+};
+
+const codeWrapStyle: CSSProperties = {
+  whiteSpace: 'pre-wrap',
+  overflowWrap: 'anywhere',
+  wordBreak: 'break-word',
+};
+
+const copyButtonStyle: CSSProperties = {
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: '0.5rem',
+  border: '1px solid rgba(0,0,0,0.1)',
+  borderRadius: '0.45rem',
+  background: '#fff',
+  color: '#20232a',
+  padding: '0.35rem 0.5rem',
+  cursor: 'pointer',
+  font: 'inherit',
+  textAlign: 'left',
+};
+
+const copyHintStyle: CSSProperties = {
+  fontSize: '0.72rem',
+  color: '#5f6470',
+  whiteSpace: 'nowrap',
 };
 
 export default TokensTable;
