@@ -5,6 +5,7 @@ This directory follows the repository and `src/components/` standards. Keep shar
 - Prefer data attributes over brittle class name selectors when syncing styles between frameworks.
 - Mirror any API changes in the accompanying Storybook stories, tests, and documentation during the same change.
 - Update the "Functional Changes" section below with a short note when behavior or public API changes.
+- Treat `src/shared/button/` as the canonical home for shared button style/state/color modules.
 
 ## Component Contract
 
@@ -38,11 +39,20 @@ This directory follows the repository and `src/components/` standards. Keep shar
 
 | Prop | Type | Default | Notes |
 | --- | --- | --- | --- |
+| `label` | `React.ReactNode` | `undefined` | Visible label content. Prefer this for straightforward usage. |
+| `children` | `React.ReactNode` | `undefined` | Advanced: custom content; takes precedence over `label`. |
 | `variant` | `'primary' \| 'secondary' \| 'tertiary'` | `'primary'` | Maps to variant tokens listed above. |
+| `color` | `'primary-success' \| 'primary-warning' \| 'primary-error'` | `undefined` | Semantic palette alias. Prefer for docs examples. |
+| `surfaceColor` | `string` | `undefined` | Overrides `--fivra-button-surface` using a design token string (e.g., `background-primary-success`). |
+| `borderColor` | `string` | `undefined` | Overrides `--fivra-button-border` using a design token string (e.g., `border-primary-success`). |
+| `textColor` | `string` | `undefined` | Overrides `--fivra-button-text` using a design token string (e.g., `text-primary-success`). |
+| `accentColor` | `string` | `undefined` | Overrides `--fivra-button-accent` (drives state layers). |
 | `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Adjusts typography, padding, and icon spacing tokens. |
 | `fullWidth` | `boolean` | `false` | Sets `data-full-width` and expands to container width. |
 | `leadingIcon` | `React.ReactNode` | `undefined` | Rendered with `aria-hidden="true"` before the label. |
+| `leadingIconName` | `string` | `undefined` | Convenience: renders the shared Icon before the label (uses `currentColor`). |
 | `trailingIcon` | `React.ReactNode` | `undefined` | Rendered with `aria-hidden="true"` after the label. |
+| `trailingIconName` | `string` | `undefined` | Convenience: renders the shared Icon after the label (uses `currentColor`). |
 | `iconOnly` | `boolean` | `false` | Applies max radius and enforces accessible naming. |
 | `hasLabel` | `boolean` | `undefined` | Overrides automatic label detection when using visually hidden copy. |
 | `dropdown` | `boolean` | `false` | Adds caret indicator and toggles disclosure data attributes. |
@@ -53,7 +63,13 @@ This directory follows the repository and `src/components/` standards. Keep shar
 
 | Input | Type | Default | Notes |
 | --- | --- | --- | --- |
+| `label` | `string` | `undefined` | Visible label content when no projected label is provided. |
 | `variant` | `'primary' \| 'secondary' \| 'tertiary'` | `'primary'` | Mirrors React variant behavior. |
+| `color` | `'primary-success' \| 'primary-warning' \| 'primary-error'` | `undefined` | Semantic palette alias. Prefer for docs examples. |
+| `surfaceColor` | `string` | `undefined` | Overrides `--fivra-button-surface` using a design token string. |
+| `borderColor` | `string` | `undefined` | Overrides `--fivra-button-border` using a design token string. |
+| `textColor` | `string` | `undefined` | Overrides `--fivra-button-text` using a design token string. |
+| `accentColor` | `string` | `undefined` | Overrides `--fivra-button-accent` (drives state layers). |
 | `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Synchronizes spacing/typography tokens. |
 | `fullWidth` | `boolean` | `false` | Applies `data-full-width` and sets `display: block`. |
 | `iconOnly` | `boolean` | `false` | Requires `ariaLabel`/`ariaLabelledby`. |
@@ -73,7 +89,13 @@ _Outputs_: `focus()` and `click()` methods proxy to the internal button for host
 
 | Attribute | Type | Default | Notes |
 | --- | --- | --- | --- |
+| `label` | `string` | – | Visible label content when no slotted label is provided. |
 | `variant` | `primary \| secondary \| tertiary` | `primary` | Controls variant tokens. |
+| `color` | `primary-success \| primary-warning \| primary-error` | – | Semantic palette alias. Prefer for docs examples. |
+| `surface-color` | `string` | – | Overrides `--fivra-button-surface` using a design token string. |
+| `border-color` | `string` | – | Overrides `--fivra-button-border` using a design token string. |
+| `text-color` | `string` | – | Overrides `--fivra-button-text` using a design token string. |
+| `accent-color` | `string` | – | Overrides `--fivra-button-accent` (drives state layers). |
 | `size` | `sm \| md \| lg` | `md` | Adjusts size tokens. |
 | `full-width` | boolean attribute | `false` | Stretches to container width. |
 | `icon-only` | boolean attribute | `false` | Requires accessible name. |
@@ -111,8 +133,8 @@ Slots: `leading-icon`, default, and `trailing-icon` provide icon/labelling parit
 - 1.6.0: Defaulted the button font family to the generated body token so React and web component builds use Google Sans.
 - 1.7.0: Updated primary button halos to weight hover, active, and focus glows toward the accent color by default.
 - 1.8.0: Added the Angular adapter (component + directives + module) with parity tests and packaging support.
-- 1.8.1: Pointed React exports to the Angular-owned button style module so all frameworks share the same source without symlinks.
-- 1.8.2: Added a components-level barrel that re-exports the Angular-owned button styles via `@components/Button/button.styles` so every adapter shares the same import path.
+- 1.8.1: Pointed React exports to a single shared button style source so all frameworks shared the same source without symlinks.
+- 1.8.2: Added a components-level barrel so every adapter could import button styles through a unified path.
 - 1.8.3: Pointed the shared tests at the canonical Angular button styles to cover the inlined color-mix helper.
 - 1.8.4: Updated Button stories to import `Meta`/`StoryObj` from `@storybook/react-vite` so typings match the composed framework.
 - 1.8.5: React Storybook now imports `defineFivraButton()` from `@web-components` and guards duplicate registration in the custom element preview.
@@ -125,3 +147,21 @@ Slots: `leading-icon`, default, and `trailing-icon` provide icon/labelling parit
 - 1.9.3: Fixed `dropdown` type definition in the Web Component story.
 - 1.9.4: Updated React Storybook examples to wrap layout scaffolding with the Box primitive for shared spacing tokens.
 - 1.9.5: Updated Button stories icons related examples and adjusted colors.
+- 1.9.6: Updated React Storybook docs-source snippets to be copy-paste friendly for semantic overrides and icon usage.
+- 1.10.0: Added semantic palette APIs (success/warning/error) across adapters and introduced React `leadingIconName`/`trailingIconName` convenience props.
+- 1.11.0: Added `label` and semantic `color` plus direct color override props (`surfaceColor`, `borderColor`, `textColor`, `accentColor`) to make consumption copy-paste friendly without inline style objects.
+- 1.11.1: Removed redundant `tone` APIs in favor of `color` presets (extensible for future preset bundles).
+- 1.11.2: Generated the Semantic Overrides docs snippet from the same spec driving the specimen to prevent drift and standardized semantic labels to title case.
+- 1.11.3: Simplified the Semantic Overrides story to a single explicit example list while still deriving the docs snippet from the rendered specimen data.
+- 1.11.4: Moved Button multi-example layouts (disabled, sizes, full-width) into Storybook decorators so docs snippets show copy-pasteable `<Button />` instances instead of layout wrappers or args spreads.
+- 1.11.5: Removed the Semantic Overrides manual docs source constant by using a decorator-based grid layout with Storybook dynamic source generation.
+- 1.11.6: Updated React Storybook controls so `surfaceColor`, `borderColor`, `textColor`, `leadingIconName`, and `trailingIconName` use token/icon dropdowns with explicit defaults.
+- 1.11.7: Updated button state-layer styling to tint hover/active overlays from `surfaceColor` while keeping focus overlays pinned to the primary accent, and refreshed style-generation tests.
+- 1.11.8: Made state-layer tint source variant-aware (`surface` for primary, `border` for secondary, `text` for tertiary) so hover/active colors remain expressive across all variants.
+- 1.11.9: Corrected hover/active color-mix ordering to weight the variant tint color first, aligning rendered hover states with expected intensity behavior.
+- 1.11.10: Split hover/active mix ordering by variant so primary keeps layer-first blending while secondary/tertiary use tint-first blending.
+- 1.11.11: Replaced hardcoded Storybook color option arrays with shared generated token options sourced from `@styles/themes/storybook-token-options.generated`.
+- 1.12.0: Moved canonical button style/state-layer/color-override modules into src/shared/button and left adapter-level files as compatibility re-exports for incremental migration.
+- 1.12.1: Updated Button internals and tests to consume semantic color overrides through the new shared button core while preserving compatibility re-exports.
+- 1.12.2: Removed `src/components/Button` compatibility shim files (`button.styles.ts`, `color-overrides.ts`) after migrating internal consumers to `@shared/button/*`.
+- 1.12.3: Cleaned AGENTS history wording to reflect the current shared-button-core model centered on `src/shared/button`.

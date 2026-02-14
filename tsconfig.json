@@ -23,9 +23,11 @@
       "@web-components/*": ["src/web-components/*"],
       "@shared": ["src/shared/index.ts"],
       "@shared/*": ["src/shared/*"],
+      "@tokens": ["src/tokens"],
+      "@tokens/*": ["src/tokens/*"],
       "@styles": ["src/styles/index.css"],
       "@styles/*": ["src/styles/*"]
     }
   },
-  "include": ["src", "scripts"]
+  "include": ["src", "scripts", "docs/**/*.ts", "docs/**/*.tsx"]
 }

@@ -16,3 +16,4 @@ This workspace inherits the repository root and `storybooks/AGENTS.md` guidance.
 - 1.5.2: Wired the Angular Vite plugin and dev server allow-list so internal Angular packages load in Storybook.
 - 1.5.3: Forced the Storybook TypeScript config into full AOT mode so Ivy metadata is emitted without JIT during static builds.
 - 1.5.4: Routed button stories through an inline `moduleMetadata` helper so Angular modules register during Storybook renders.
+- 1.5.5: Removed the Angular Storybook tsconfig alias override for @components/Button/button.styles after migrating stories to shared button imports.

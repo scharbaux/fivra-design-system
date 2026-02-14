@@ -15,10 +15,12 @@
     "optimize-icons": "node scripts/optimize-icons.mjs",
     "generate:icons": "node scripts/generate-icons-map.mjs",
     "generate:tokens": "node scripts/generate-design-tokens.mjs",
+    "generate:token-snapshot": "node scripts/generate-token-snapshot.mjs",
     "changeset": "changeset",
     "version": "changeset version",
     "release": "changeset publish",
     "verify:agents": "node scripts/verify-agents-version.mjs",
+    "verify:angular-button-isolation": "node scripts/verify-angular-button-isolation.mjs",
     "storybook:react": "cross-env STORYBOOK_REF_MODE=dev STORYBOOK_COMPOSE_ANGULAR=false STORYBOOK_COMPOSE_VUE=false storybook dev -p 6006",
     "storybook:react:compose": "cross-env STORYBOOK_REF_MODE=dev STORYBOOK_COMPOSE_ANGULAR=true STORYBOOK_COMPOSE_VUE=true storybook dev -p 6006",
     "prestorybook:react": "yarn run generate:tokens",
@@ -42,7 +44,7 @@
     "prebuild": "yarn run generate:tokens",
     "build:angular": "ng-packagr -p ng-package.json -c tsconfig.angular.json",
     "build:watch": "tsup --watch",
-    "test": "vitest run",
+    "test": "yarn verify:angular-button-isolation && vitest run",
     "test:watch": "vitest"
   },
   "dependencies": {

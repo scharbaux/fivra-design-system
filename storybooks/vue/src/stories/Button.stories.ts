@@ -13,24 +13,20 @@ import {
   type ButtonSize,
   type ButtonVariant,
   ensureButtonStyles,
-} from "@components/Button/button.styles";
-import {
-  SEMANTIC_TONES,
-  createButtonSemanticStyleFactories,
-} from "@components/Button/story-helpers";
+} from "@shared/button/button.styles";
+import type { ButtonColor } from "@shared/button/color-overrides";
+import { createButtonColorOverrides } from "@shared/button/color-overrides";
 import { defineFivraButton } from "@web-components";
 
 ensureButtonStyles();
 
-const {
-  createPrimarySemanticStyles,
-  createSecondarySemanticStyles,
-  createTertiarySemanticStyles,
-} = createButtonSemanticStyleFactories<Record<string, string>>((overrides) => overrides);
+const TONES = ["success", "warning", "error"] as const;
 
 type VueButtonStoryArgs = {
+  label?: string;
   children?: string;
   variant?: ButtonVariant;
+  color?: ButtonColor;
   size?: ButtonSize;
   fullWidth?: boolean;
   iconOnly?: boolean;
@@ -64,10 +60,15 @@ const resolveStoryArgs = (args: VueButtonStoryArgs) => {
 const FivraButtonPreview = defineComponent({
   name: "FivraButtonPreview",
   props: {
-    children: { type: String, default: "Button" },
+    label: { type: String, default: "Button" },
+    children: { type: String, default: "" },
     variant: {
       type: String as PropType<ButtonVariant>,
       default: "primary",
+    },
+    color: {
+      type: String as PropType<ButtonColor | null>,
+      default: null,
     },
     size: {
       type: String as PropType<ButtonSize>,
@@ -106,7 +107,7 @@ const FivraButtonPreview = defineComponent({
         return false;
       }
 
-      return Boolean(props.children?.trim?.());
+      return Boolean((props.children || props.label)?.trim?.());
     });
 
     const resolvedAriaHaspopup = computed(() => {
@@ -123,6 +124,24 @@ const FivraButtonPreview = defineComponent({
       }
 
       return props.ariaExpanded;
+    });
+
+    const resolvedStyle = computed(() => {
+      const baseStyle = props.style ?? undefined;
+      const palette =
+        props.color
+          ? createButtonColorOverrides(props.variant ?? "primary", props.color)
+          : null;
+
+      if (!palette) {
+        return baseStyle;
+      }
+
+      const overrides = palette;
+      return {
+        ...overrides,
+        ...(baseStyle ?? {}),
+      };
     });
 
     const handleClick = (event: MouseEvent) => {
@@ -150,7 +169,7 @@ const FivraButtonPreview = defineComponent({
           "data-has-label": resolvedHasLabel.value ? "true" : "false",
           "data-dropdown": props.dropdown ? "true" : undefined,
           "data-loading": props.loading ? "true" : undefined,
-          style: props.style ?? undefined,
+          style: resolvedStyle.value,
           "aria-label": props.ariaLabel ?? undefined,
           "aria-labelledby": props.ariaLabelledby ?? undefined,
           "aria-haspopup": resolvedAriaHaspopup.value ?? undefined,
@@ -180,7 +199,7 @@ const FivraButtonPreview = defineComponent({
               class: BUTTON_LABEL_CLASS,
               "data-empty": resolvedHasLabel.value ? undefined : "true",
             },
-            resolvedHasLabel.value ? props.children ?? "" : null,
+            resolvedHasLabel.value ? props.children || props.label || "" : null,
           ),
           h(
             "span",
@@ -220,7 +239,7 @@ const meta: Meta<VueButtonStoryArgs> = {
   component: FivraButtonPreview,
   tags: ["autodocs"],
   args: {
-    children: "Button",
+    label: "Button",
     variant: "primary",
   },
   argTypes: {
@@ -291,7 +310,7 @@ type Story = StoryObj<VueButtonStoryArgs>;
 
 export const Primary: Story = {
   args: {
-    children: "Primary",
+    label: "Primary",
     variant: "primary",
   },
   parameters: {
@@ -306,7 +325,7 @@ export const Primary: Story = {
 
 export const Secondary: Story = {
   args: {
-    children: "Secondary",
+    label: "Secondary",
     variant: "secondary",
   },
   parameters: {
@@ -321,7 +340,7 @@ export const Secondary: Story = {
 
 export const Tertiary: Story = {
   args: {
-    children: "Tertiary",
+    label: "Tertiary",
     variant: "tertiary",
   },
   parameters: {
@@ -339,9 +358,9 @@ export const DisabledStates: Story = {
     components: { FivraButtonPreview },
     setup() {
       return {
-        primaryArgs: { variant: "primary", disabled: true, children: "Primary" },
-        secondaryArgs: { variant: "secondary", disabled: true, children: "Secondary" },
-        tertiaryArgs: { variant: "tertiary", disabled: true, children: "Tertiary" },
+        primaryArgs: { variant: "primary", disabled: true, label: "Primary" },
+        secondaryArgs: { variant: "secondary", disabled: true, label: "Secondary" },
+        tertiaryArgs: { variant: "tertiary", disabled: true, label: "Tertiary" },
       };
     },
     template: `
@@ -375,10 +394,7 @@ export const SemanticOverrides: Story = {
     components: { FivraButtonPreview },
     setup() {
       return {
-        tones: SEMANTIC_TONES,
-        createPrimarySemanticStyles,
-        createSecondarySemanticStyles,
-        createTertiarySemanticStyles,
+        tones: TONES,
       };
     },
     template: `
@@ -388,8 +404,8 @@ export const SemanticOverrides: Story = {
             v-for="tone in tones"
             :key="'primary-' + tone"
             variant="primary"
-            :style="createPrimarySemanticStyles(tone)"
-            :children="tone + ' Primary'"
+            :color="'primary-' + tone"
+            :label="tone + ' Primary'"
           />
         </div>
         <div style="display: flex; gap: calc(var(--spacingL) * 1px); flex-wrap: wrap;">
@@ -397,8 +413,8 @@ export const SemanticOverrides: Story = {
             v-for="tone in tones"
             :key="'secondary-' + tone"
             variant="secondary"
-            :style="createSecondarySemanticStyles(tone)"
-            :children="tone + ' Secondary'"
+            :color="'primary-' + tone"
+            :label="tone + ' Secondary'"
           />
         </div>
         <div style="display: flex; gap: calc(var(--spacingL) * 1px); flex-wrap: wrap;">
@@ -406,8 +422,8 @@ export const SemanticOverrides: Story = {
             v-for="tone in tones"
             :key="'tertiary-' + tone"
             variant="tertiary"
-            :style="createTertiarySemanticStyles(tone)"
-            :children="tone + ' Tertiary'"
+            :color="'primary-' + tone"
+            :label="tone + ' Tertiary'"
           />
         </div>
       </div>
@@ -417,7 +433,7 @@ export const SemanticOverrides: Story = {
     docs: {
       description: {
         story:
-          "Setting the `--fivra-button-accent` custom property enables success, warning, and error palettes while the new per-variant color-mix state layers adapt automatically. Fallback variables keep neutral overlays for browsers without color-mix support.",
+          "Set `color` to apply semantic palettes while the per-variant color-mix state layers adapt automatically. Consumers can still override `--fivra-button-*` custom properties directly when needed.",
       },
     },
   },
@@ -425,7 +441,7 @@ export const SemanticOverrides: Story = {
 
 export const WithIcons: Story = {
   args: {
-    children: "Download",
+    label: "Download",
     leadingIcon: "⬇",
     trailingIcon: "→",
   },
@@ -440,7 +456,7 @@ export const WithIcons: Story = {
 
 export const Sizes: Story = {
   args: {
-    children: "Responsive",
+    label: "Responsive",
     variant: "primary",
   },
   render: (args) => {
@@ -450,9 +466,9 @@ export const Sizes: Story = {
       components: { FivraButtonPreview },
       setup() {
         return {
-          smallArgs: { ...resolvedArgs, size: "sm", children: "Small" },
-          mediumArgs: { ...resolvedArgs, size: "md", children: "Medium" },
-          largeArgs: { ...resolvedArgs, size: "lg", children: "Large" },
+          smallArgs: { ...resolvedArgs, size: "sm", label: "Small" },
+          mediumArgs: { ...resolvedArgs, size: "md", label: "Medium" },
+          largeArgs: { ...resolvedArgs, size: "lg", label: "Large" },
         };
       },
       template: `
@@ -483,7 +499,7 @@ export const Sizes: Story = {
 
 export const FullWidth: Story = {
   args: {
-    children: "Continue",
+    label: "Continue",
     fullWidth: true,
     variant: "primary",
   },
@@ -513,7 +529,7 @@ export const FullWidth: Story = {
 
 export const Dropdown: Story = {
   args: {
-    children: "Menu",
+    label: "Menu",
     dropdown: true,
     "aria-expanded": "false",
   },
@@ -529,7 +545,7 @@ export const Dropdown: Story = {
 
 export const Loading: Story = {
   args: {
-    children: "Saving...",
+    label: "Saving...",
     loading: true,
     disabled: true,
   },

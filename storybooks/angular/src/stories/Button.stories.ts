@@ -7,22 +7,17 @@ import {
   type ButtonSize,
   type ButtonVariant,
   ensureButtonStyles,
-} from "@components/Button/button.styles";
-import {
-  SEMANTIC_TONES,
-  createButtonSemanticStyleFactories,
-} from "@components/Button/story-helpers";
+} from "@internal/angular/button/button.styles";
+import type { ButtonColor } from "@internal/angular/button/color-overrides";
 ensureButtonStyles();
 
-const {
-  createPrimarySemanticStyles,
-  createSecondarySemanticStyles,
-  createTertiarySemanticStyles,
-} = createButtonSemanticStyleFactories<Record<string, string>>((overrides) => overrides);
+const TONES = ["success", "warning", "error"] as const;
 
 type ButtonStoryArgs = {
+  label?: string;
   children?: string;
   variant?: ButtonVariant;
+  color?: ButtonColor;
   size?: ButtonSize;
   fullWidth?: boolean;
   iconOnly?: boolean;
@@ -49,87 +44,11 @@ type AngularStoryRenderResult = {
   styles?: string[];
   template?: string;
   component?: unknown;
-  onReady?: (element: HTMLElement) => void;
-  onDestroy?: () => void;
-};
-
-const applyWebComponentLightDomShim = (root: HTMLElement): (() => void) | undefined => {
-  const Constructor = customElements.get("fivra-button") as CustomElementConstructor | undefined;
-
-  if (!Constructor) {
-    return undefined;
-  }
-
-  const pruneHost = (host: Element | DocumentFragment) => {
-    if (!(host instanceof HTMLElement) || !(host instanceof Constructor)) {
-      return;
-    }
-
-    const fallbackButton = host.querySelector<HTMLButtonElement>(":scope > button.fivra-button");
-
-    fallbackButton?.remove();
-  };
-
-  const inspectNode = (node: Node) => {
-    if (node instanceof HTMLElement) {
-      if (node.matches("fivra-button")) {
-        pruneHost(node);
-      }
-
-      node.querySelectorAll("fivra-button").forEach((nestedHost) => {
-        pruneHost(nestedHost);
-      });
-    } else if (node instanceof DocumentFragment) {
-      node.querySelectorAll("fivra-button").forEach((nestedHost) => {
-        pruneHost(nestedHost);
-      });
-    }
-  };
-
-  inspectNode(root);
-
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      mutation.addedNodes.forEach((addedNode) => {
-        inspectNode(addedNode);
-      });
-    });
-  });
-
-  observer.observe(root, { childList: true, subtree: true });
-
-  return () => {
-    observer.disconnect();
-  };
-};
-
-const withWebComponentLightDomShim = (story: AngularStoryRenderResult): AngularStoryRenderResult => {
-  let cleanup: (() => void) | undefined;
-
-  return {
-    ...story,
-    onReady: (element: HTMLElement) => {
-      cleanup?.();
-      const maybeCleanup = applyWebComponentLightDomShim(element);
-
-      if (maybeCleanup) {
-        cleanup = maybeCleanup;
-      }
-
-      story.onReady?.(element);
-    },
-    onDestroy: () => {
-      cleanup?.();
-      cleanup = undefined;
-
-      story.onDestroy?.();
-    },
-  };
 };
 
 const defaultRender = (args: ButtonStoryArgs) => {
   const {
-    children,
+    label,
     style,
     onClick,
     "aria-label": ariaLabelOverride,
@@ -139,21 +58,23 @@ const defaultRender = (args: ButtonStoryArgs) => {
   const ariaLabel = ariaLabelOverride ?? rest.ariaLabel ?? null;
   const ariaExpanded = ariaExpandedOverride ?? rest.ariaExpanded ?? null;
 
-  return withWebComponentLightDomShim({
+  return {
     moduleMetadata: {
       imports: [CommonModule, FivraButtonModule],
     },
     props: {
       ...rest,
       style: style ?? null,
-      children,
+      label,
       ariaLabel,
       ariaExpanded,
       onClick,
     },
     template: `
       <fivra-button
+        [label]="label"
         [variant]="variant"
+        [color]="color"
         [size]="size"
         [fullWidth]="fullWidth"
         [iconOnly]="iconOnly"
@@ -168,6 +89,7 @@ const defaultRender = (args: ButtonStoryArgs) => {
         [ariaHaspopup]="ariaHaspopup"
         [ariaExpanded]="ariaExpanded"
         [attr.variant]="variant"
+        [attr.color]="color ?? null"
         [attr.size]="size"
         [attr.full-width]="fullWidth ? '' : null"
         [attr.icon-only]="iconOnly ? '' : null"
@@ -181,11 +103,9 @@ const defaultRender = (args: ButtonStoryArgs) => {
         [attr.aria-haspopup]="ariaHaspopup ?? (dropdown ? 'menu' : null)"
         [attr.aria-expanded]="ariaExpanded"
         (click)="onClick?.($event)"
-      >
-        <ng-container *ngIf="children">{{ children }}</ng-container>
-      </fivra-button>
+      ></fivra-button>
     `,
-  });
+  };
 };
 
 const meta: Meta<ButtonStoryArgs> = {
@@ -199,11 +119,30 @@ const meta: Meta<ButtonStoryArgs> = {
     }),
   ],
   args: {
-    children: "Button",
+    label: "Button",
     variant: "primary",
   },
   argTypes: {
     onClick: { action: "clicked" },
+    children: {
+      control: false,
+      description: "Advanced: provide projected content. Prefer `label` for straightforward usage.",
+      table: { category: "Content" },
+    },
+    label: {
+      control: "text",
+      description: "Visible label text for the button.",
+      table: { category: "Content" },
+    },
+    color: {
+      control: "inline-radio",
+      options: ["(default)", "primary-success", "primary-warning", "primary-error"],
+      mapping: {
+        "(default)": undefined,
+      },
+      description: "Preset palette identifier. Initially supports success/warning/error.",
+      table: { category: "Appearance" },
+    },
     leadingIcon: {
       control: false,
       description: "Optional icon rendered before the label.",
@@ -270,7 +209,7 @@ type Story = StoryObj<ButtonStoryArgs>;
 
 export const Primary: Story = {
   args: {
-    children: "Primary",
+    label: "Primary",
     variant: "primary",
   },
   parameters: {
@@ -285,7 +224,7 @@ export const Primary: Story = {
 
 export const Secondary: Story = {
   args: {
-    children: "Secondary",
+    label: "Secondary",
     variant: "secondary",
   },
   parameters: {
@@ -300,7 +239,7 @@ export const Secondary: Story = {
 
 export const Tertiary: Story = {
   args: {
-    children: "Tertiary",
+    label: "Tertiary",
     variant: "tertiary",
   },
   parameters: {
@@ -315,7 +254,7 @@ export const Tertiary: Story = {
 
 export const DisabledStates: Story = {
   render: () =>
-    withWebComponentLightDomShim({
+    ({
       template: `
         <div
           style="
@@ -325,9 +264,9 @@ export const DisabledStates: Story = {
             flex-wrap: wrap;
           "
         >
-          <fivra-button variant="primary" disabled>Primary</fivra-button>
-          <fivra-button variant="secondary" disabled>Secondary</fivra-button>
-          <fivra-button variant="tertiary" disabled>Tertiary</fivra-button>
+          <fivra-button variant="primary" label="Primary" disabled></fivra-button>
+          <fivra-button variant="secondary" label="Secondary" disabled></fivra-button>
+          <fivra-button variant="tertiary" label="Tertiary" disabled></fivra-button>
         </div>
       `,
     }),
@@ -344,12 +283,9 @@ export const DisabledStates: Story = {
 export const SemanticOverrides: Story = {
   name: "Semantic Overrides",
   render: () =>
-    withWebComponentLightDomShim({
+    ({
       props: {
-        tones: SEMANTIC_TONES,
-        createPrimarySemanticStyles,
-        createSecondarySemanticStyles,
-        createTertiarySemanticStyles,
+        tones: TONES,
       },
       template: `
         <div style="display: grid; gap: calc(var(--spacingM) * 1px);">
@@ -359,10 +295,9 @@ export const SemanticOverrides: Story = {
             <fivra-button
               *ngFor="let tone of tones"
               variant="primary"
-              [ngStyle]="createPrimarySemanticStyles(tone)"
-            >
-              {{ tone }} Primary
-            </fivra-button>
+              [color]="'primary-' + tone"
+              [label]="tone + ' Primary'"
+            ></fivra-button>
           </div>
           <div
             style="display: flex; gap: calc(var(--spacingL) * 1px); flex-wrap: wrap;"
@@ -370,10 +305,9 @@ export const SemanticOverrides: Story = {
             <fivra-button
               *ngFor="let tone of tones"
               variant="secondary"
-              [ngStyle]="createSecondarySemanticStyles(tone)"
-            >
-              {{ tone }} Secondary
-            </fivra-button>
+              [color]="'primary-' + tone"
+              [label]="tone + ' Secondary'"
+            ></fivra-button>
           </div>
           <div
             style="display: flex; gap: calc(var(--spacingL) * 1px); flex-wrap: wrap;"
@@ -381,10 +315,9 @@ export const SemanticOverrides: Story = {
             <fivra-button
               *ngFor="let tone of tones"
               variant="tertiary"
-              [ngStyle]="createTertiarySemanticStyles(tone)"
-            >
-              {{ tone }} Tertiary
-            </fivra-button>
+              [color]="'primary-' + tone"
+              [label]="tone + ' Tertiary'"
+            ></fivra-button>
           </div>
         </div>
       `,
@@ -393,7 +326,7 @@ export const SemanticOverrides: Story = {
     docs: {
       description: {
         story:
-          "Setting the `--fivra-button-accent` custom property enables success, warning, and error palettes while the new per-variant color-mix state layers adapt automatically. Fallback variables keep neutral overlays for browsers without color-mix support.",
+          "Set `color` to apply semantic palettes while the per-variant color-mix state layers adapt automatically. Consumers can still override `--fivra-button-*` custom properties directly when needed.",
       },
     },
   },
@@ -401,13 +334,13 @@ export const SemanticOverrides: Story = {
 
 export const WithIcons: Story = {
   args: {
-    children: "Download",
+    label: "Download",
   },
   render: (args) => {
     const { "aria-label": ariaLabelOverride, ariaLabel, ...rest } = args;
     const resolvedAriaLabel = ariaLabelOverride ?? ariaLabel ?? null;
 
-    return withWebComponentLightDomShim({
+    return {
       props: {
         ...rest,
         ariaLabel: resolvedAriaLabel,
@@ -420,6 +353,7 @@ export const WithIcons: Story = {
           <span aria-hidden="true">→</span>
         </ng-template>
         <fivra-button
+          [label]="label"
           [variant]="variant"
           [size]="size"
           [fullWidth]="fullWidth"
@@ -432,6 +366,7 @@ export const WithIcons: Story = {
           [ariaLabelledby]="ariaLabelledby"
           [leadingIcon]="leadingIconTemplate"
           [trailingIcon]="trailingIconTemplate"
+          [attr.label]="label ?? null"
           [attr.variant]="variant"
           [attr.size]="size"
           [attr.full-width]="fullWidth ? '' : null"
@@ -442,11 +377,9 @@ export const WithIcons: Story = {
           [attr.disabled]="disabled ? '' : null"
           [attr.aria-label]="ariaLabel"
           [attr.aria-labelledby]="ariaLabelledby"
-        >
-          {{ children }}
-        </fivra-button>
+        ></fivra-button>
       `,
-    });
+    };
   },
   parameters: {
     docs: {
@@ -459,7 +392,7 @@ export const WithIcons: Story = {
 
 export const Sizes: Story = {
   args: {
-    children: "Responsive",
+    label: "Responsive",
     variant: "primary",
   },
   render: (args) => ({
@@ -475,9 +408,9 @@ export const Sizes: Story = {
           flex-wrap: wrap;
         "
       >
-        <fivra-button [variant]="variant" size="sm" [attr.variant]="variant">Small</fivra-button>
-        <fivra-button [variant]="variant" size="md" [attr.variant]="variant">Medium</fivra-button>
-        <fivra-button [variant]="variant" size="lg" [attr.variant]="variant">Large</fivra-button>
+        <fivra-button [variant]="variant" size="sm" label="Small" [attr.variant]="variant" [attr.label]="'Small'"></fivra-button>
+        <fivra-button [variant]="variant" size="md" label="Medium" [attr.variant]="variant" [attr.label]="'Medium'"></fivra-button>
+        <fivra-button [variant]="variant" size="lg" label="Large" [attr.variant]="variant" [attr.label]="'Large'"></fivra-button>
       </div>
     `,
   }),
@@ -493,7 +426,7 @@ export const Sizes: Story = {
 
 export const FullWidth: Story = {
   args: {
-    children: "Continue",
+    label: "Continue",
     fullWidth: true,
     variant: "primary",
   },
@@ -504,15 +437,15 @@ export const FullWidth: Story = {
     template: `
       <div style="width: 320px;">
         <fivra-button
+          [label]="label"
           [variant]="variant"
           [size]="size"
           [fullWidth]="fullWidth"
+          [attr.label]="label ?? null"
           [attr.variant]="variant"
           [attr.size]="size"
           [attr.full-width]="fullWidth ? '' : null"
-        >
-          {{ children }}
-        </fivra-button>
+        ></fivra-button>
       </div>
     `,
   }),
@@ -527,7 +460,7 @@ export const FullWidth: Story = {
 
 export const Dropdown: Story = {
   args: {
-    children: "Menu",
+    label: "Menu",
     dropdown: true,
     "aria-expanded": "false",
   },
@@ -543,7 +476,7 @@ export const Dropdown: Story = {
 
 export const Loading: Story = {
   args: {
-    children: "Saving...",
+    label: "Saving...",
     loading: true,
     disabled: true,
   },
@@ -590,4 +523,3 @@ export const IconOnly: Story = {
     },
   },
 };
-

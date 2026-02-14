@@ -60,6 +60,30 @@
       "Robot": {
         "$type": "color",
         "$value": "{Alias.Core.User.3}"
+      },
+      "Active": {
+        "$type": "color",
+        "$value": "{Alias.Status.Active.2}"
+      },
+      "Processing": {
+        "$type": "color",
+        "$value": "{Alias.Status.Processing.2}"
+      },
+      "Pending": {
+        "$type": "color",
+        "$value": "{Alias.Status.Pending.2}"
+      },
+      "Done": {
+        "$type": "color",
+        "$value": "{Alias.Status.Done.2}"
+      },
+      "Issue": {
+        "$type": "color",
+        "$value": "{Alias.Status.Issue.2}"
+      },
+      "Ignored": {
+        "$type": "color",
+        "$value": "{Alias.Status.Ignored.2}"
       }
     },
     "Secondary": {
@@ -107,35 +131,39 @@
         "$type": "color",
         "$value": "{Alias.Neutral.1}"
       },
-      "Assigned": {
+      "Active": {
         "$type": "color",
-        "$value": "{Alias.Interaction.Assigned.1}"
+        "$value": "{Alias.Status.Active.1}"
       },
-      "Handled": {
+      "Processing": {
         "$type": "color",
-        "$value": "{Alias.Interaction.Handled.1}"
+        "$value": "{Alias.Status.Processing.1}"
       },
-      "Routing": {
+      "Pending": {
         "$type": "color",
-        "$value": "{Alias.Interaction.Routing.1}"
+        "$value": "{Alias.Status.Pending.1}"
       },
-      "Junk": {
+      "Done": {
         "$type": "color",
-        "$value": "{Alias.Interaction.Junk.1}"
+        "$value": "{Alias.Status.Done.1}"
       },
-      "Onhold": {
+      "Issue": {
         "$type": "color",
-        "$value": "{Alias.Interaction.Onhold.1}"
+        "$value": "{Alias.Status.Issue.1}"
       },
-      "Statuserror": {
+      "Ignored": {
         "$type": "color",
-        "$value": "{Alias.Interaction.Error.1}"
+        "$value": "{Alias.Status.Ignored.1}"
       }
     },
     "Tertiary": {
       "Interactive": {
         "$type": "color",
         "$value": "{Alias.Core.Tertiary.1}"
+      },
+      "Brand": {
+        "$type": "color",
+        "$value": "{Alias.Core.Brand.3}"
       },
       "Campaign": {
         "$type": "color",
@@ -234,6 +262,30 @@
       "Selected": {
         "$type": "color",
         "$value": "{Alias.Core.Primary.1}"
+      },
+      "Active": {
+        "$type": "color",
+        "$value": "{Alias.Status.Active.2}"
+      },
+      "Processing": {
+        "$type": "color",
+        "$value": "{Alias.Status.Processing.2}"
+      },
+      "Pending": {
+        "$type": "color",
+        "$value": "{Alias.Status.Pending.2}"
+      },
+      "Done": {
+        "$type": "color",
+        "$value": "{Alias.Status.Done.2}"
+      },
+      "Issue": {
+        "$type": "color",
+        "$value": "{Alias.Status.Issue.2}"
+      },
+      "Ignored": {
+        "$type": "color",
+        "$value": "{Alias.Status.Ignored.2}"
       }
     },
     "Secondary": {
@@ -376,6 +428,30 @@
       "Chat": {
         "$type": "color",
         "$value": "{Alias.Core.Chat.1}"
+      },
+      "Active": {
+        "$type": "color",
+        "$value": "{Alias.Status.Active.2}"
+      },
+      "Processing": {
+        "$type": "color",
+        "$value": "{Alias.Status.Processing.2}"
+      },
+      "Pending": {
+        "$type": "color",
+        "$value": "{Alias.Status.Pending.2}"
+      },
+      "Done": {
+        "$type": "color",
+        "$value": "{Alias.Status.Done.2}"
+      },
+      "Issue": {
+        "$type": "color",
+        "$value": "{Alias.Status.Issue.2}"
+      },
+      "Ignored": {
+        "$type": "color",
+        "$value": "{Alias.Status.Ignored.2}"
       }
     },
     "Secondary": {
@@ -423,29 +499,29 @@
         "$type": "color",
         "$value": "{Alias.Core.Chat.3}"
       },
-      "Assigned": {
+      "Active": {
         "$type": "color",
-        "$value": "{Alias.Interaction.Assigned.2}"
+        "$value": "{Alias.Status.Active.3}"
       },
-      "Handled": {
+      "Processing": {
         "$type": "color",
-        "$value": "{Alias.Interaction.Handled.2}"
+        "$value": "{Alias.Status.Processing.3}"
       },
-      "Routing": {
+      "Pending": {
         "$type": "color",
-        "$value": "{Alias.Interaction.Routing.2}"
+        "$value": "{Alias.Status.Pending.3}"
       },
-      "Junk": {
+      "Done": {
         "$type": "color",
-        "$value": "{Alias.Interaction.Junk.2}"
+        "$value": "{Alias.Status.Done.3}"
       },
-      "Onhold": {
+      "Issue": {
         "$type": "color",
-        "$value": "{Alias.Interaction.Onhold.2}"
+        "$value": "{Alias.Status.Issue.3}"
       },
-      "Statuserror": {
+      "Ignored": {
         "$type": "color",
-        "$value": "{Alias.Interaction.Error.2}"
+        "$value": "{Alias.Status.Ignored.3}"
       }
     },
     "Tertiary": {
@@ -722,180 +798,199 @@
       }
     }
   },
-  "heading-1": {
-    "$type": "typography",
-    "$value": {
-      "fontFamily": "{Font Family.Saans}",
-      "fontWeight": "{FontWeight.670}",
-      "fontSize": "{Font Size.heading.1}",
-      "lineHeight": "30px"
+  "typography": {
+    "display": {
+      "1": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{FontFamily.Saans}",
+          "fontWeight": "{FontWeight.670}",
+          "fontSize": "{FontSize.display.1}",
+          "lineHeight": "30px"
+        },
+        "$description": "h1"
+      },
+      "2": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{FontFamily.Saans}",
+          "fontWeight": "{FontWeight.670}",
+          "fontSize": "{FontSize.display.2}",
+          "lineHeight": "20px"
+        }
+      }
     },
-    "$description": "h1"
-  },
-  "heading-2": {
-    "$type": "typography",
-    "$value": {
-      "fontFamily": "{Font Family.Saans}",
-      "fontWeight": "{FontWeight.570}",
-      "fontSize": "{Font Size.heading.2}",
-      "lineHeight": "20px"
-    }
-  },
-  "heading-3": {
-    "$type": "typography",
-    "$value": {
-      "fontFamily": "{Font Family.Saans}",
-      "fontWeight": "{FontWeight.300}",
-      "fontSize": "{Font Size.heading.3}",
-      "lineHeight": "20px"
-    }
-  },
-  "body-1": {
-    "$type": "typography",
-    "$value": {
-      "fontFamily": "{Font Family.Saans}",
-      "fontWeight": "{FontWeight.380}",
-      "fontSize": "{Font Size.body.1}",
-      "lineHeight": "18px"
-    }
-  },
-  "body-1-medium": {
-    "$type": "typography",
-    "$value": {
-      "fontFamily": "{Font Family.Saans}",
-      "fontWeight": "{FontWeight.570}",
-      "fontSize": "{Font Size.body.1}",
-      "lineHeight": "18px"
-    }
-  },
-  "body-1-strong": {
-    "$type": "typography",
-    "$value": {
-      "fontFamily": "{Font Family.Saans}",
-      "fontWeight": "{FontWeight.670}",
-      "fontSize": "{Font Size.body.1}",
-      "lineHeight": "18px"
-    }
-  },
-  "body-2": {
-    "$type": "typography",
-    "$value": {
-      "fontFamily": "{Font Family.Saans}",
-      "fontWeight": "{FontWeight.380}",
-      "fontSize": "{Font Size.body.2}",
-      "lineHeight": "16px",
-      "letterSpacing": "1.5%"
-    }
-  },
-  "body-2-strong": {
-    "$type": "typography",
-    "$value": {
-      "fontFamily": "{Font Family.Saans}",
-      "fontWeight": "{FontWeight.570}",
-      "fontSize": "{Font Size.body.2}",
-      "lineHeight": "16px",
-      "letterSpacing": "1.5%"
-    }
-  },
-  "body-2-link": {
-    "$type": "typography",
-    "$value": {
-      "fontFamily": "{Font Family.Saans}",
-      "fontWeight": "{FontWeight.380}",
-      "fontSize": "{Font Size.body.2}",
-      "lineHeight": "16px",
-      "letterSpacing": "1.5%"
-    }
-  },
-  "body-2-long": {
-    "$type": "typography",
-    "$value": {
-      "fontFamily": "{Font Family.Saans}",
-      "fontWeight": "{FontWeight.380}",
-      "fontSize": "{Font Size.body.2}",
-      "lineHeight": "{Line Heights.Multi-line.l}",
-      "letterSpacing": "1.5%"
-    }
-  },
-  "body-3": {
-    "$type": "typography",
-    "$value": {
-      "fontFamily": "{Font Family.Saans}",
-      "fontWeight": "{FontWeight.300}",
-      "fontSize": "{Font Size.body.3}",
-      "lineHeight": "17px",
-      "letterSpacing": "1.5%"
-    }
-  },
-  "caption-1": {
-    "$type": "typography",
-    "$value": {
-      "fontFamily": "{Font Family.Saans}",
-      "fontWeight": "{FontWeight.380}",
-      "fontSize": "{Font Size.caption.1}",
-      "lineHeight": "14px",
-      "letterSpacing": "1.5%"
-    }
-  },
-  "caption-1-strong": {
-    "$type": "typography",
-    "$value": {
-      "fontFamily": "{Font Family.Saans}",
-      "fontWeight": "{FontWeight.570}",
-      "fontSize": "{Font Size.caption.1}",
-      "lineHeight": "14px",
-      "letterSpacing": "1.5%"
+    "heading": {
+      "1": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{FontFamily.Saans}",
+          "fontWeight": "{FontWeight.670}",
+          "fontSize": "{FontSize.heading.1}",
+          "lineHeight": "30px"
+        },
+        "$description": "h1"
+      },
+      "2": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{FontFamily.Saans}",
+          "fontWeight": "{FontWeight.570}",
+          "fontSize": "{FontSize.heading.2}",
+          "lineHeight": "20px"
+        }
+      },
+      "3": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{FontFamily.Saans}",
+          "fontWeight": "{FontWeight.300}",
+          "fontSize": "{FontSize.heading.3}",
+          "lineHeight": "20px"
+        }
+      }
+    },
+    "body": {
+      "1": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{FontFamily.Saans}",
+          "fontWeight": "{FontWeight.380}",
+          "fontSize": "{FontSize.body.1}",
+          "lineHeight": "18px"
+        }
+      },
+      "2": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{FontFamily.Saans}",
+          "fontWeight": "{FontWeight.380}",
+          "fontSize": "{FontSize.body.2}",
+          "lineHeight": "16px",
+          "letterSpacing": "1.5%"
+        }
+      },
+      "1-medium": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{FontFamily.Saans}",
+          "fontWeight": "{FontWeight.570}",
+          "fontSize": "{FontSize.body.1}",
+          "lineHeight": "18px"
+        }
+      },
+      "1-strong": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{FontFamily.Saans}",
+          "fontWeight": "{FontWeight.670}",
+          "fontSize": "{FontSize.body.1}",
+          "lineHeight": "18px"
+        }
+      },
+      "2-strong": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{FontFamily.Saans}",
+          "fontWeight": "{FontWeight.570}",
+          "fontSize": "{FontSize.body.2}",
+          "lineHeight": "16px",
+          "letterSpacing": "1.5%"
+        }
+      },
+      "2-link": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{FontFamily.Saans}",
+          "fontWeight": "{FontWeight.380}",
+          "fontSize": "{FontSize.body.2}",
+          "lineHeight": "16px",
+          "letterSpacing": "1.5%"
+        }
+      },
+      "2-long": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{FontFamily.Saans}",
+          "fontWeight": "{FontWeight.380}",
+          "fontSize": "{FontSize.body.2}",
+          "lineHeight": "{LineHeights.MultiLine.l}",
+          "letterSpacing": "1.5%"
+        }
+      }
+    },
+    "caption": {
+      "1": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{FontFamily.Saans}",
+          "fontWeight": "{FontWeight.380}",
+          "fontSize": "{FontSize.caption.1}",
+          "lineHeight": "14px",
+          "letterSpacing": "1.5%"
+        }
+      },
+      "1-strong": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{FontFamily.Saans}",
+          "fontWeight": "{FontWeight.570}",
+          "fontSize": "{FontSize.caption.1}",
+          "lineHeight": "14px",
+          "letterSpacing": "1.5%"
+        }
+      }
     }
   },
   "intensity": {
     "brand": {
       "focus": {
         "$type": "opacity",
-        "$value": "{opacity.50}"
+        "$value": "{Opacity.50}"
       },
       "hover": {
         "$type": "opacity",
-        "$value": "{opacity.24}"
+        "$value": "{Opacity.24}"
       },
       "active": {
         "$type": "opacity",
-        "$value": "{opacity.18}"
+        "$value": "{Opacity.18}"
       }
     },
     "darken": {
       "hover": {
         "$type": "opacity",
-        "$value": "{opacity.12}"
+        "$value": "{Opacity.12}"
       },
       "active": {
         "$type": "opacity",
-        "$value": "{opacity.16}"
+        "$value": "{Opacity.16}"
       },
       "focus": {
         "$type": "opacity",
-        "$value": "{opacity.16}"
+        "$value": "{Opacity.16}"
       },
       "drag": {
         "$type": "opacity",
-        "$value": "{opacity.24}"
+        "$value": "{Opacity.24}"
       }
     },
     "brighten": {
       "hover": {
         "$type": "opacity",
-        "$value": "{opacity.12}"
+        "$value": "{Opacity.12}"
       },
       "active": {
         "$type": "opacity",
-        "$value": "{opacity.16}"
+        "$value": "{Opacity.16}"
       },
       "focus": {
         "$type": "opacity",
-        "$value": "{opacity.16}"
+        "$value": "{Opacity.16}"
       },
       "drag": {
         "$type": "opacity",
-        "$value": "{opacity.24}"
+        "$value": "{Opacity.24}"
       }
     }
   }

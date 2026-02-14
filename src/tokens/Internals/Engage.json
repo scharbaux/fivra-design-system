@@ -143,6 +143,10 @@
         "900": {
           "$type": "color",
           "$value": "#1e246e"
+        },
+        "950": {
+          "$type": "color",
+          "$value": "#14184A"
         }
       }
     },
@@ -519,7 +523,8 @@
         },
         "64": {
           "$type": "color",
-          "$value": "rgba(255,255,255,0.64)"
+          "$value": "rgba(255,255,255,0.64)",
+          "$description": "Used for background overlays only"
         }
       },
       "Brand": {
@@ -551,6 +556,10 @@
         "2": {
           "$type": "color",
           "$value": "{Palette.Brand.Base.900}"
+        },
+        "3": {
+          "$type": "color",
+          "$value": "{Palette.Brand.Base.950}"
         }
       },
       "Campaign": {
@@ -646,65 +655,89 @@
         }
       }
     },
-    "Interaction": {
-      "Assigned": {
+    "Status": {
+      "Active": {
         "1": {
           "$type": "color",
           "$value": "{Palette.Blue.Base.100}"
         },
         "2": {
           "$type": "color",
+          "$value": "{Palette.Blue.Base.200}"
+        },
+        "3": {
+          "$type": "color",
           "$value": "{Palette.Blue.Base.400}"
         }
       },
-      "Error": {
+      "Issue": {
         "1": {
           "$type": "color",
           "$value": "{Palette.Red.Base.100}"
         },
         "2": {
           "$type": "color",
+          "$value": "{Palette.Red.Base.200}"
+        },
+        "3": {
+          "$type": "color",
           "$value": "{Palette.Red.Base.400}"
         }
       },
-      "Handled": {
+      "Done": {
         "1": {
           "$type": "color",
           "$value": "{Palette.Green.Base.100}"
         },
         "2": {
           "$type": "color",
+          "$value": "{Palette.Green.Base.200}"
+        },
+        "3": {
+          "$type": "color",
           "$value": "{Palette.Green.Base.400}"
         }
       },
-      "Junk": {
+      "Ignored": {
         "1": {
           "$type": "color",
           "$value": "{Palette.Grayscale.200}"
         },
         "2": {
           "$type": "color",
+          "$value": "{Palette.Grayscale.500}"
+        },
+        "3": {
+          "$type": "color",
           "$value": "{Palette.Grayscale.800}"
         }
       },
-      "Onhold": {
+      "Pending": {
         "1": {
           "$type": "color",
           "$value": "{Palette.Yellow.Base.100}"
         },
         "2": {
           "$type": "color",
+          "$value": "{Palette.Yellow.Base.200}"
+        },
+        "3": {
+          "$type": "color",
           "$value": "{Palette.Yellow.Base.400}"
         }
       },
-      "Routing": {
+      "Processing": {
         "1": {
           "$type": "color",
-          "$value": "{Palette.Grayscale.200}"
+          "$value": "{Palette.Orange.Base.100}"
         },
         "2": {
           "$type": "color",
-          "$value": "{Palette.Grayscale.800}"
+          "$value": "{Palette.Orange.Base.200}"
+        },
+        "3": {
+          "$type": "color",
+          "$value": "{Palette.Orange.Base.400}"
         }
       }
     },
@@ -813,21 +846,21 @@
       }
     }
   },
-  "Font Family": {
+  "FontFamily": {
     "Saans": {
       "$type": "fontFamilies",
-      "$value": "'Google Sans', sans-serif"
+      "$value": "Saans"
     },
     "Fallback": {
       "$type": "fontFamilies",
-      "$value": "sans-serif"
+      "$value": "none"
     }
   },
-  "Line Heights": {
-    "Multi-line": {
+  "LineHeights": {
+    "MultiLine": {
       "l": {
         "$type": "lineHeights",
-        "$value": "21px",
+        "$value": "21",
         "$description": "body-2"
       }
     }
@@ -978,7 +1011,7 @@
       "$value": "{Size.Base.xl4}"
     }
   },
-  "Font Size": {
+  "FontSize": {
     "display": {
       "1": {
         "$type": "fontSizes",
@@ -1024,7 +1057,7 @@
       }
     }
   },
-  "opacity": {
+  "Opacity": {
     "12": {
       "$type": "opacity",
       "$value": "12%"

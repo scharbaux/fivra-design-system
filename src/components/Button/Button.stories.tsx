@@ -3,18 +3,22 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { Box } from "@components/Box";
 import { Button } from "@components/Button";
-import { Icon } from "@components/Icon";
+import { icons as ICONS } from "@shared/icons/icons.generated";
 import {
-  SEMANTIC_TONES,
-  createButtonSemanticStyleFactories,
-} from "@components/Button/story-helpers";
+  backgroundColorTokenOptions,
+  borderColorTokenOptions,
+  textColorTokenOptions,
+} from "@styles/themes/storybook-token-options.generated";
 import { defineFivraButton } from "@web-components";
 
-const {
-  createPrimarySemanticStyles,
-  createSecondarySemanticStyles,
-  createTertiarySemanticStyles,
-} = createButtonSemanticStyleFactories<React.CSSProperties>((overrides) => overrides);
+const iconNames = Object.keys(ICONS).sort();
+
+const DEFAULT_OPTION = "(default)";
+const SURFACE_COLOR_OPTIONS = [DEFAULT_OPTION, ...backgroundColorTokenOptions] as const;
+const BORDER_COLOR_OPTIONS = [DEFAULT_OPTION, ...borderColorTokenOptions] as const;
+const TEXT_COLOR_OPTIONS = [DEFAULT_OPTION, ...textColorTokenOptions] as const;
+
+const ICON_NAME_OPTIONS = ["(none)", ...iconNames] as const;
 
 const meta: Meta<typeof Button> = {
   title: "Atomics/Button",
@@ -22,18 +26,87 @@ const meta: Meta<typeof Button> = {
   component: Button,
   tags: ["autodocs"],
   args: {
-    children: "Button",
+    label: "Button",
     variant: "primary",
   },
   argTypes: {
     onClick: { action: "clicked" },
+    children: {
+      control: false,
+      description: "Advanced: provide custom children. Prefer `label` for simple usage.",
+      table: { category: "Content" },
+    },
+    label: {
+      control: "text",
+      description: "Visible label text for the button.",
+      table: { category: "Content" },
+    },
+    color: {
+      control: "inline-radio",
+      options: ["(default)", "primary-success", "primary-warning", "primary-error"],
+      mapping: {
+        "(default)": undefined,
+      },
+      description: "Preset palette identifier. Initially supports success/warning/error.",
+      table: { category: "Appearance" },
+    },
+    surfaceColor: {
+      control: "select",
+      options: SURFACE_COLOR_OPTIONS,
+      mapping: {
+        "(default)": undefined,
+      },
+      description: "Overrides the surface color via a design token string (e.g., `background-primary-success`).",
+      table: { category: "Appearance" },
+    },
+    borderColor: {
+      control: "select",
+      options: BORDER_COLOR_OPTIONS,
+      mapping: {
+        "(default)": undefined,
+      },
+      description: "Overrides the border color via a design token string (e.g., `border-primary-success`).",
+      table: { category: "Appearance" },
+    },
+    textColor: {
+      control: "select",
+      options: TEXT_COLOR_OPTIONS,
+      mapping: {
+        "(default)": undefined,
+      },
+      description: "Overrides the text color via a design token string (e.g., `text-primary-success`).",
+      table: { category: "Appearance" },
+    },
+    accentColor: {
+      control: "text",
+      description: "Overrides the accent color driving state layers via a design token string.",
+      table: { category: "Appearance" },
+    },
     leadingIcon: {
       control: false,
       description: "Optional icon rendered before the label.",
     },
+    leadingIconName: {
+      control: "select",
+      options: ICON_NAME_OPTIONS,
+      mapping: {
+        "(none)": undefined,
+      },
+      description: "Icon name rendered before the label using the shared Icon component.",
+      table: { category: "Appearance" },
+    },
     trailingIcon: {
       control: false,
       description: "Optional icon rendered after the label.",
+    },
+    trailingIconName: {
+      control: "select",
+      options: ICON_NAME_OPTIONS,
+      mapping: {
+        "(none)": undefined,
+      },
+      description: "Icon name rendered after the label using the shared Icon component.",
+      table: { category: "Appearance" },
     },
     variant: {
       control: "inline-radio",
@@ -92,7 +165,7 @@ type Story = StoryObj<typeof Button>;
 
 export const Primary: Story = {
   args: {
-    children: "Primary",
+    label: "Primary",
     variant: "primary",
   },
   parameters: {
@@ -107,7 +180,7 @@ export const Primary: Story = {
 
 export const Secondary: Story = {
   args: {
-    children: "Secondary",
+    label: "Secondary",
     variant: "secondary",
   },
   parameters: {
@@ -122,7 +195,7 @@ export const Secondary: Story = {
 
 export const Tertiary: Story = {
   args: {
-    children: "Tertiary",
+    label: "Tertiary",
     variant: "tertiary",
   },
   parameters: {
@@ -136,21 +209,23 @@ export const Tertiary: Story = {
 };
 
 export const DisabledStates: Story = {
+  decorators: [
+    (Story) => (
+      <Box display="flex" gap="spacing-l" alignItems="center" flexWrap="wrap">
+        <Story />
+      </Box>
+    ),
+  ],
   render: () => (
-    <Box display="flex" gap="spacing-l" alignItems="center" flexWrap="wrap">
-      <Button variant="primary" disabled>
-        Primary
-      </Button>
-      <Button variant="secondary" disabled>
-        Secondary
-      </Button>
-      <Button variant="tertiary" disabled>
-        Tertiary
-      </Button>
-    </Box>
+    <>
+      <Button variant="primary" disabled label="Primary" />
+      <Button variant="secondary" disabled label="Secondary" />
+      <Button variant="tertiary" disabled label="Tertiary" />
+    </>
   ),
   parameters: {
     docs: {
+      source: { type: "dynamic" },
       description: {
         story:
           "Disabled states pull from `--backgroundPrimaryDisabled`, `--backgroundSecondaryDisabled`, and `--textPrimaryDisabled` ensuring consistent contrast and borders via `--borderPrimaryDisabled`.",
@@ -161,48 +236,34 @@ export const DisabledStates: Story = {
 
 export const SemanticOverrides: Story = {
   name: "Semantic Overrides",
+  decorators: [
+    (Story) => (
+      <Box display="grid" gap="spacing-l" style={{ gridTemplateColumns: "repeat(3, max-content)" }}>
+        <Story />
+      </Box>
+    ),
+  ],
   render: () => (
-    <Box display="grid" gap="spacing-m">
-      <Box display="flex" gap="spacing-l" flexWrap="wrap">
-        {SEMANTIC_TONES.map((tone) => (
-          <Button
-            key={`primary-${tone}`}
-            variant="primary"
-            style={createPrimarySemanticStyles(tone)}
-          >
-            {tone} Primary
-          </Button>
-        ))}
-      </Box>
-      <Box display="flex" gap="spacing-l" flexWrap="wrap">
-        {SEMANTIC_TONES.map((tone) => (
-          <Button
-            key={`secondary-${tone}`}
-            variant="secondary"
-            style={createSecondarySemanticStyles(tone)}
-          >
-            {tone} Secondary
-          </Button>
-        ))}
-      </Box>
-      <Box display="flex" gap="spacing-l" flexWrap="wrap">
-        {SEMANTIC_TONES.map((tone) => (
-          <Button
-            key={`tertiary-${tone}`}
-            variant="tertiary"
-            style={createTertiarySemanticStyles(tone)}
-          >
-            {tone} Tertiary
-          </Button>
-        ))}
-      </Box>
-    </Box>
+    <>
+      <Button variant="primary" color="primary-success" label="Success Primary" />
+      <Button variant="primary" color="primary-warning" label="Warning Primary" />
+      <Button variant="primary" color="primary-error" label="Error Primary" />
+
+      <Button variant="secondary" color="primary-success" label="Success Secondary" />
+      <Button variant="secondary" color="primary-warning" label="Warning Secondary" />
+      <Button variant="secondary" color="primary-error" label="Error Secondary" />
+
+      <Button variant="tertiary" color="primary-success" label="Success Tertiary" />
+      <Button variant="tertiary" color="primary-warning" label="Warning Tertiary" />
+      <Button variant="tertiary" color="primary-error" label="Error Tertiary" />
+    </>
   ),
   parameters: {
     docs: {
+      source: { type: "dynamic" },
       description: {
         story:
-          "Setting the `--fivra-button-accent` custom property enables success, warning, and error palettes while the new per-variant color-mix state layers adapt automatically. Fallback variables keep neutral overlays for browsers without color-mix support.",
+          "Set `color` to apply semantic palettes while the per-variant color-mix state layers adapt automatically. For full control, use `surfaceColor`, `borderColor`, `textColor`, and `accentColor` to point at specific theme tokens.",
       },
     },
   },
@@ -210,39 +271,47 @@ export const SemanticOverrides: Story = {
 
 export const WithIcons: Story = {
   args: {
-    children: "Download",
-    leadingIcon: <Icon color="textNeutral6" name="chevron-left" variant="solid" aria-hidden="true" />,
-    trailingIcon: <Icon color="textNeutral6" name="chevron-right" variant="solid" aria-hidden="true" />,
+    label: "Download",
+    leadingIconName: "chevron-left",
+    trailingIconName: "chevron-right",
   },
   parameters: {
     docs: {
+      source: {
+        language: "tsx",
+        code: `<Button
+  variant="primary"
+  leadingIconName="chevron-left"
+  trailingIconName="chevron-right"
+  label="Download"
+/>`,
+      },
       description: {
-        story: "Demonstrates leading and trailing icon slots using the shared Icon component.",
+        story:
+          "Demonstrates leading and trailing icon slots. Use `leadingIconName`/`trailingIconName` for the common case, or `leadingIcon`/`trailingIcon` for full control.",
       },
     },
   },
 };
 
 export const Sizes: Story = {
-  args: {
-    children: "Responsive",
-    variant: "primary",
-  },
-  render: (args) => (
-    <Box display="flex" gap="spacing-l" alignItems="center" flexWrap="wrap">
-      <Button {...args} size="sm">
-        Small
-      </Button>
-      <Button {...args} size="md">
-        Medium
-      </Button>
-      <Button {...args} size="lg">
-        Large
-      </Button>
-    </Box>
+  decorators: [
+    (Story) => (
+      <Box display="flex" gap="spacing-l" alignItems="center" flexWrap="wrap">
+        <Story />
+      </Box>
+    ),
+  ],
+  render: () => (
+    <>
+      <Button variant="primary" size="sm" label="Small" />
+      <Button variant="primary" size="md" label="Medium" />
+      <Button variant="primary" size="lg" label="Large" />
+    </>
   ),
   parameters: {
     docs: {
+      source: { type: "dynamic" },
       description: {
         story:
           "Small, medium, and large presets use explicit padding (12×4, 16×8, 24×12) with heights 24/32/40px and radii mapped to `--radiusXs`, `--radiusS`, and `--radiusM`.",
@@ -252,18 +321,17 @@ export const Sizes: Story = {
 };
 
 export const FullWidth: Story = {
-  args: {
-    children: "Continue",
-    fullWidth: true,
-    variant: "primary",
-  },
-  render: (args) => (
-    <Box width={320}>
-      <Button {...args} />
-    </Box>
-  ),
+  decorators: [
+    (Story) => (
+      <Box width={320}>
+        <Story />
+      </Box>
+    ),
+  ],
+  render: () => <Button label="Continue" fullWidth variant="primary" />,
   parameters: {
     docs: {
+      source: { type: "dynamic" },
       description: {
         story: "Full-width mode is useful for responsive layouts or stacked mobile actions.",
       },
@@ -273,7 +341,7 @@ export const FullWidth: Story = {
 
 export const Dropdown: Story = {
   args: {
-    children: "Menu",
+    label: "Menu",
     dropdown: true,
     "aria-expanded": "false",
   },
@@ -289,7 +357,7 @@ export const Dropdown: Story = {
 
 export const Loading: Story = {
   args: {
-    children: "Saving...",
+    label: "Saving...",
     loading: true,
     disabled: true,
   },
@@ -305,13 +373,24 @@ export const Loading: Story = {
 
 export const IconOnly: Story = {
   args: {
+    label: '',
     iconOnly: true,
     'aria-label': 'Next',
-    leadingIcon: <Icon color="textNeutral6" name="chevron-right" variant="solid" aria-hidden="true" />,
+    variant: 'tertiary',
+    leadingIconName: "chevron-right",
   },
   render: (args) => <Button {...args} />,
   parameters: {
     docs: {
+      source: {
+        language: "tsx",
+        code: `<Button
+  iconOnly
+  aria-label="Next"
+  variant="tertiary"
+  leadingIconName="chevron-right"
+/>`,
+      },
       description: {
         story:
           "Icon-only buttons collapse to a circular hit area via `--radiusMax`. Remember to supply an accessible `aria-label`.",
@@ -357,6 +436,12 @@ declare global {
       'fivra-button': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
         'full-width'?: boolean;
         variant?: string;
+        color?: string;
+        label?: string;
+        'surface-color'?: string;
+        'border-color'?: string;
+        'text-color'?: string;
+        'accent-color'?: string;
         size?: string;
         type?: string;
         dropdown?: boolean;

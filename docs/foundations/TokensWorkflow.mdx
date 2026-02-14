@@ -1,0 +1,38 @@
+import { Meta, Title, Subtitle } from '@storybook/addon-docs/blocks';
+
+<Meta title="Docs/Foundations/Design Tokens: Workflow" />
+
+<Title>Design Tokens: Workflow</Title>
+
+<Subtitle>How the token reference is generated and how to refresh it after token updates.</Subtitle>
+
+## How the table is generated
+
+The Design Tokens reference reads directly from the Tokens Studio exports committed under
+`src/tokens/`. The external semantic definitions in
+[`src/tokens/Externals/Default.json`](../../src/tokens/Externals/Default.json)
+are merged with the Engage and Legacy internals in
+[`src/tokens/Internals`](../../src/tokens/Internals/) to reproduce the same
+transform that powers the generated CSS.
+
+Theme metadata used for grouping and attribution comes from
+[`src/styles/themes/tokens.generated.ts`](../../src/styles/themes/tokens.generated.ts),
+which is emitted by the Style Dictionary build.
+
+## Refreshing after token changes
+
+1. Run `yarn generate:tokens` to pull the latest Tokens Studio data and rebuild generated theme assets.
+2. Run `yarn generate:token-snapshot` when changes are intentional and you want to update the docs baseline diff.
+3. Restart Storybook (or reload docs) so updated JSON/CSS modules are re-imported.
+4. If you add new token sets, confirm they appear in
+   [`src/styles/themes/tokens.generated.ts`](../../src/styles/themes/tokens.generated.ts)
+   so the reference page can resolve them.
+
+## Troubleshooting
+
+- If a theme does not appear in the reference, verify its slug exists in `designTokenManifest.themes`
+  and that a matching JSON payload exists under `src/tokens/Internals/`.
+- If rows show `Missing ref`, verify upstream alias paths in Tokens Studio and regenerate tokens.
+- If snapshot warnings persist after intended updates, re-run `yarn generate:token-snapshot` and refresh the docs page.
+
+Ready to explore the live token browser? Go to [Design Tokens: Reference](?path=/docs/docs-foundations-design-tokens-reference--docs).

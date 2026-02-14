@@ -15,3 +15,4 @@ This file inherits the repository root `AGENTS.md`. Generated theme assets live 
 - 1.4.0: Extended the `color-mix` utility with accent-target weighting to support variant-specific overlay mixes.
 - 1.5.0: Added Google Sans font assets, imported `fonts.css`, and regenerated themes so typography tokens resolve to the new family.
 - 1.5.1: Restored the `@layer` ordering ahead of font imports so bundled theme variables remain available at runtime.
+- 1.6.0: Added generated Storybook token option metadata (`storybook-token-options.generated.ts`) so controls can share centralized theme-driven options across components.

@@ -15,3 +15,6 @@ This directory inherits the repository and `docs/` guidance. Keep component refe
 - 1.8.2: Noted canonical Storybook and visual test references in the Button contract for doc maintainers.
 - 1.9.0: Documented the Typography primitive, covering variant mapping, accessibility, and token references.
 - 1.10.0: Added Box documentation outlining spacing tokens, layout helpers, and the shared contract link.
+- 1.11.0: Updated Button documentation to cover semantic palette APIs and icon name convenience props.
+- 1.12.0: Updated Button documentation to prefer `label`, introduced semantic `color`, and documented direct color override props for token-driven customization.
+- 1.12.1: Removed `tone` from docs after consolidating semantic presets under `color`.

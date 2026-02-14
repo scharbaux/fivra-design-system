@@ -16,3 +16,4 @@ This document inherits all policies from the repository root `AGENTS.md`. Review
 - Use `<major>.<minor>[.<patch>]` labels instead of dates when recording new entries.
 - 1.0: Established directory governance, documented Engage/Legacy exports, and recorded the initial Tokens Studio import; validated with `yarn test` and `yarn build`.
 - 1.1.0: Updated font family tokens to default to Google Sans with sans-serif fallback and refreshed generated outputs.
+- 1.2.0: Synced `$themes.json`, `Externals/Default.json`, and Engage/Legacy internal exports with the latest Tokens Studio source-of-truth payload for downstream docs and style generation.

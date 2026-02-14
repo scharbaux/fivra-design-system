@@ -42,4 +42,5 @@
 - 1.1.1: Added a compose-friendly React Storybook script, refreshed README guidance, and noted the tooling alignment.
 - 1.2.0: Introduced Playwright-powered Storybook visual regression tests, CI coverage, and contributor guidance for managing baselines.
 - 1.3.0: Added the token-driven Typography primitive with documentation, tests, and governance updates for future framework adapters.
-
+- 1.4.0: Added Angular Button isolation guardrails in tooling/tests so Angular Storybook coverage remains composed while avoiding cross-framework Button import coupling.
+- 1.5.0: Expanded Design Tokens documentation tooling with diagnostics, composite drill-downs, accessibility contrast checks, and a snapshot generation script for change tracking in docs.

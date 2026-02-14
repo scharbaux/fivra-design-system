@@ -12,10 +12,72 @@ import {
   BUTTON_VARIANTS,
   buttonClassStyles,
   buttonHostStyles,
-} from '@components/Button/button.styles';
+} from '@shared/button/button.styles';
+import type { ButtonColor, ButtonSemanticStyleOverrides } from '@shared/button/color-overrides';
+import { createButtonColorOverrides } from '@shared/button/color-overrides';
 
 type ButtonVariant = (typeof BUTTON_VARIANTS)[number];
 type ButtonSize = (typeof BUTTON_SIZES)[number];
+
+function isButtonColor(value: unknown): value is ButtonColor {
+  return value === 'primary-success' || value === 'primary-warning' || value === 'primary-error';
+}
+
+const TONE_STYLE_VARS: Array<keyof ButtonSemanticStyleOverrides> = [
+  '--fivra-button-surface',
+  '--fivra-button-accent',
+  '--fivra-button-border',
+  '--fivra-button-text',
+  '--fivra-button-hover-fallback',
+  '--fivra-button-active-fallback',
+];
+
+type DirectStyleKey =
+  | '--fivra-button-surface'
+  | '--fivra-button-accent'
+  | '--fivra-button-border'
+  | '--fivra-button-text';
+
+const DIRECT_STYLE_VARS: DirectStyleKey[] = [
+  '--fivra-button-surface',
+  '--fivra-button-accent',
+  '--fivra-button-border',
+  '--fivra-button-text',
+];
+
+function capitalizeTokenSegment(segment: string): string {
+  if (!segment) {
+    return segment;
+  }
+
+  return segment[0].toUpperCase() + segment.slice(1);
+}
+
+function toCssVariableName(token: string): string {
+  const [first, ...rest] = token.split('-');
+  const suffix = rest.map(capitalizeTokenSegment).join('');
+  return `--${first}${suffix}`;
+}
+
+function isDesignToken(value: string): boolean {
+  return /^[a-z]+(?:-[a-z0-9]+)+$/i.test(value);
+}
+
+function resolveColorValue(value: string | null): string | null {
+  if (!value) {
+    return null;
+  }
+
+  if (value.startsWith('var(') || value.startsWith('calc(')) {
+    return value;
+  }
+
+  if (isDesignToken(value)) {
+    return `var(${toCssVariableName(value)})`;
+  }
+
+  return value;
+}
 
 const template = document.createElement('template');
 
@@ -37,6 +99,7 @@ template.innerHTML = `
       <slot name="leading-icon"></slot>
     </span>
     <span class="${BUTTON_LABEL_CLASS}" part="label" data-empty="true">
+      <span part="label-text" data-label-text></span>
       <slot></slot>
     </span>
     <span class="${BUTTON_ICON_CLASS} ${BUTTON_TRAILING_ICON_CLASS}" part="trailing-icon" data-empty="true" aria-hidden="true">
@@ -50,6 +113,12 @@ export class FivraButtonElement extends HTMLElement {
   static get observedAttributes(): string[] {
     return [
       'variant',
+      'color',
+      'label',
+      'surface-color',
+      'border-color',
+      'text-color',
+      'accent-color',
       'size',
       'disabled',
       'full-width',
@@ -69,6 +138,7 @@ export class FivraButtonElement extends HTMLElement {
   private readonly leadingWrapper: HTMLElement;
   private readonly trailingWrapper: HTMLElement;
   private readonly labelWrapper: HTMLElement;
+  private readonly labelTextEl: HTMLElement;
   private readonly leadingSlot: HTMLSlotElement;
   private readonly trailingSlot: HTMLSlotElement;
   private readonly labelSlot: HTMLSlotElement;
@@ -82,6 +152,7 @@ export class FivraButtonElement extends HTMLElement {
     this.leadingWrapper = root.querySelector('[part="leading-icon"]') as HTMLElement;
     this.trailingWrapper = root.querySelector('[part="trailing-icon"]') as HTMLElement;
     this.labelWrapper = root.querySelector('[part="label"]') as HTMLElement;
+    this.labelTextEl = this.labelWrapper.querySelector('[data-label-text]') as HTMLElement;
     this.leadingSlot = this.leadingWrapper.querySelector('slot') as HTMLSlotElement;
     this.trailingSlot = this.trailingWrapper.querySelector('slot') as HTMLSlotElement;
     this.labelSlot = this.labelWrapper.querySelector('slot') as HTMLSlotElement;
@@ -118,6 +189,79 @@ export class FivraButtonElement extends HTMLElement {
 
   set variant(value: ButtonVariant) {
     this.setAttribute('variant', value);
+  }
+
+  get color(): ButtonColor | null {
+    const attr = this.getAttribute('color');
+    return isButtonColor(attr) ? (attr as ButtonColor) : null;
+  }
+
+  set color(value: ButtonColor | null) {
+    if (value) {
+      this.setAttribute('color', value);
+    } else {
+      this.removeAttribute('color');
+    }
+  }
+
+  get label(): string | null {
+    return this.getAttribute('label');
+  }
+
+  set label(value: string | null) {
+    if (value == null) {
+      this.removeAttribute('label');
+    } else {
+      this.setAttribute('label', value);
+    }
+  }
+
+  get surfaceColor(): string | null {
+    return this.getAttribute('surface-color');
+  }
+
+  set surfaceColor(value: string | null) {
+    if (value == null) {
+      this.removeAttribute('surface-color');
+    } else {
+      this.setAttribute('surface-color', value);
+    }
+  }
+
+  get borderColor(): string | null {
+    return this.getAttribute('border-color');
+  }
+
+  set borderColor(value: string | null) {
+    if (value == null) {
+      this.removeAttribute('border-color');
+    } else {
+      this.setAttribute('border-color', value);
+    }
+  }
+
+  get textColor(): string | null {
+    return this.getAttribute('text-color');
+  }
+
+  set textColor(value: string | null) {
+    if (value == null) {
+      this.removeAttribute('text-color');
+    } else {
+      this.setAttribute('text-color', value);
+    }
+  }
+
+  get accentColor(): string | null {
+    return this.getAttribute('accent-color');
+  }
+
+  set accentColor(value: string | null) {
+    if (value == null) {
+      this.removeAttribute('accent-color');
+    } else {
+      this.setAttribute('accent-color', value);
+    }
   }
 
   get size(): ButtonSize {
@@ -188,7 +332,7 @@ export class FivraButtonElement extends HTMLElement {
       return attr !== 'false';
     }
 
-    return !this.iconOnly && this.hasLabelSlotContent();
+    return !this.iconOnly && (this.hasLabelSlotContent() || Boolean(this.label && this.label.trim().length > 0));
   }
 
   set hasLabel(value: boolean) {
@@ -198,6 +342,7 @@ export class FivraButtonElement extends HTMLElement {
 
   private syncAll = (): void => {
     this.syncVariant();
+    this.syncColors();
     this.syncSize();
     this.syncDisabled();
     this.syncFullWidth();
@@ -217,6 +362,47 @@ export class FivraButtonElement extends HTMLElement {
       : DEFAULT_BUTTON_VARIANT;
 
     this.buttonEl.dataset.variant = variant;
+  }
+
+  private syncColors(): void {
+    // Reset our managed CSS variables each time so palette changes, direct overrides,
+    // and removals behave predictably.
+    for (const key of TONE_STYLE_VARS) {
+      this.buttonEl.style.removeProperty(key);
+    }
+    for (const key of DIRECT_STYLE_VARS) {
+      this.buttonEl.style.removeProperty(key);
+    }
+
+    const variant = this.variant;
+    const color = this.color;
+
+    const palette = color
+      ? createButtonColorOverrides(variant, color)
+      : null;
+
+    if (palette) {
+      for (const key of TONE_STYLE_VARS) {
+        const value = palette[key];
+        if (value) {
+          this.buttonEl.style.setProperty(key, value);
+        }
+      }
+    }
+
+    const direct: Record<DirectStyleKey, string | null> = {
+      '--fivra-button-surface': resolveColorValue(this.surfaceColor),
+      '--fivra-button-border': resolveColorValue(this.borderColor),
+      '--fivra-button-text': resolveColorValue(this.textColor),
+      '--fivra-button-accent': resolveColorValue(this.accentColor),
+    };
+
+    for (const key of DIRECT_STYLE_VARS) {
+      const value = direct[key];
+      if (value) {
+        this.buttonEl.style.setProperty(key, value);
+      }
+    }
   }
 
   private syncSize(): void {
@@ -297,7 +483,10 @@ export class FivraButtonElement extends HTMLElement {
     if (attr !== null) {
       hasLabel = attr !== 'false';
     } else {
-      hasLabel = !iconOnly && this.buttonEl.dataset.slotLabel === 'true';
+      hasLabel =
+        !iconOnly &&
+        (this.buttonEl.dataset.slotLabel === 'true' ||
+          Boolean(this.label && this.label.trim().length > 0));
     }
 
     this.buttonEl.dataset.hasLabel = hasLabel ? 'true' : 'false';
@@ -344,8 +533,12 @@ export class FivraButtonElement extends HTMLElement {
 
   private updateLabel(): boolean {
     const hasContent = this.hasLabelSlotContent();
-    this.labelWrapper.dataset.empty = hasContent ? 'false' : 'true';
-    return hasContent;
+    const label = this.label;
+    const resolvedLabel = !hasContent && label && label.trim().length > 0 ? label : '';
+    this.labelTextEl.textContent = resolvedLabel;
+    const hasLabel = hasContent || resolvedLabel.length > 0;
+    this.labelWrapper.dataset.empty = hasLabel ? 'false' : 'true';
+    return hasLabel;
   }
 
   private hasAssignedNodes(slot: HTMLSlotElement): boolean {

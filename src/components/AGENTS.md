@@ -23,9 +23,10 @@ This document extends the root-level `AGENTS.md`. All contributors must read and
 - 1.0: Added the shared Button implementation (React + web component) with reusable styling primitives.
 - 1.0: Button and Icon now consume theme tokens for layout, color, and state styling; Storybook docs updated accordingly.
 - 1.8.0: Shared button tokens now power the Angular adapter exported from `src/angular/`.
-- 1.8.2: Exposed the Angular-owned button styles through a components barrel so React and custom elements import them via the `@components` alias.
+- 1.8.2: Exposed shared button styles through a components barrel so React and custom elements imported them via a unified alias path.
 - 1.8.3: Swapped Storybook story typings to the `@storybook/react-vite` framework package after the automigration.
 - 1.8.4: Updated the Icon component to merge CSS token sizes into inline styles, added tests, and expanded stories to demonstrate token-driven sizing overrides.
 - 1.9.3: Retitled the Icon stories to `Atomics/Icon` and assigned a React meta ID for Storybook composition alignment.
 - 1.10.0: Introduced the token-backed React Typography primitive with shared style injector and cross-framework contract.
 - 1.11.0: Added the Box layout primitive with spacing shorthands, shared style injector, tests, stories, and documentation references.
+- 1.12.0: Cleaned AGENTS history wording to align with the shared-button-core terminology.

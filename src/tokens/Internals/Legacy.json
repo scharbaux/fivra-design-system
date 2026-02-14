@@ -143,6 +143,10 @@
         "900": {
           "$type": "color",
           "$value": "#1e246e"
+        },
+        "950": {
+          "$type": "color",
+          "$value": "#14184A"
         }
       }
     },
@@ -480,46 +484,47 @@
       "Darken": {
         "12": {
           "$type": "color",
-          "$value": "#0000001f"
+          "$value": "rgba(0,0,0,0.12)"
         },
         "16": {
           "$type": "color",
-          "$value": "#00000029"
+          "$value": "rgba(0,0,0,0.16)"
         },
         "24": {
           "$type": "color",
-          "$value": "#0000003d"
+          "$value": "rgba(0,0,0,0.24)"
         },
         "32": {
           "$type": "color",
-          "$value": "#00000052"
+          "$value": "rgba(0,0,0,0.32)"
         },
         "64": {
           "$type": "color",
-          "$value": "#000000a3",
+          "$value": "rgba(0,0,0,0.64)",
           "$description": "Used for background overlays only"
         }
       },
       "Brighten": {
         "12": {
           "$type": "color",
-          "$value": "#ffffff1f"
+          "$value": "rgba(255,255,255,0.12)"
         },
         "16": {
           "$type": "color",
-          "$value": "#ffffff29"
+          "$value": "rgba(255,255,255,0.16)"
         },
         "24": {
           "$type": "color",
-          "$value": "#ffffff3d"
+          "$value": "rgba(255,255,255,0.24)"
         },
         "32": {
           "$type": "color",
-          "$value": "#ffffff52"
+          "$value": "rgba(255,255,255,0.32)"
         },
         "64": {
           "$type": "color",
-          "$value": "#ffffffa3"
+          "$value": "rgba(255,255,255,0.64)",
+          "$description": "Used for background overlays only"
         }
       },
       "Brand": {
@@ -551,6 +556,10 @@
         "2": {
           "$type": "color",
           "$value": "{Palette.Brand.Base.900}"
+        },
+        "3": {
+          "$type": "color",
+          "$value": "{Palette.Brand.Base.950}"
         }
       },
       "Campaign": {
@@ -646,65 +655,89 @@
         }
       }
     },
-    "Interaction": {
-      "Assigned": {
+    "Status": {
+      "Active": {
         "1": {
           "$type": "color",
           "$value": "{Palette.Blue.Base.100}"
         },
         "2": {
           "$type": "color",
+          "$value": "{Palette.Blue.Base.200}"
+        },
+        "3": {
+          "$type": "color",
           "$value": "{Palette.Blue.Base.400}"
         }
       },
-      "Error": {
+      "Issue": {
         "1": {
           "$type": "color",
           "$value": "{Palette.Red.Base.100}"
         },
         "2": {
           "$type": "color",
+          "$value": "{Palette.Red.Base.200}"
+        },
+        "3": {
+          "$type": "color",
           "$value": "{Palette.Red.Base.400}"
         }
       },
-      "Handled": {
+      "Done": {
         "1": {
           "$type": "color",
           "$value": "{Palette.Green.Base.100}"
         },
         "2": {
           "$type": "color",
+          "$value": "{Palette.Green.Base.200}"
+        },
+        "3": {
+          "$type": "color",
           "$value": "{Palette.Green.Base.400}"
         }
       },
-      "Junk": {
+      "Ignored": {
         "1": {
           "$type": "color",
           "$value": "{Palette.Grayscale.200}"
         },
         "2": {
           "$type": "color",
+          "$value": "{Palette.Grayscale.500}"
+        },
+        "3": {
+          "$type": "color",
           "$value": "{Palette.Grayscale.800}"
         }
       },
-      "Onhold": {
+      "Pending": {
         "1": {
           "$type": "color",
           "$value": "{Palette.Yellow.Base.100}"
         },
         "2": {
           "$type": "color",
+          "$value": "{Palette.Yellow.Base.200}"
+        },
+        "3": {
+          "$type": "color",
           "$value": "{Palette.Yellow.Base.400}"
         }
       },
-      "Routing": {
+      "Processing": {
         "1": {
           "$type": "color",
-          "$value": "{Palette.Grayscale.200}"
+          "$value": "{Palette.Orange.Base.100}"
         },
         "2": {
           "$type": "color",
-          "$value": "{Palette.Grayscale.800}"
+          "$value": "{Palette.Orange.Base.200}"
+        },
+        "3": {
+          "$type": "color",
+          "$value": "{Palette.Orange.Base.400}"
         }
       }
     },
@@ -813,21 +846,21 @@
       }
     }
   },
-  "Font Family": {
+  "FontFamily": {
     "Saans": {
       "$type": "fontFamilies",
-      "$value": "'Google Sans', sans-serif"
+      "$value": "Saans"
     },
     "Fallback": {
       "$type": "fontFamilies",
-      "$value": "sans-serif"
+      "$value": "none"
     }
   },
-  "Line Heights": {
-    "Multi-line": {
+  "LineHeights": {
+    "MultiLine": {
       "l": {
         "$type": "lineHeights",
-        "$value": "21px",
+        "$value": "21",
         "$description": "body-2"
       }
     }
@@ -836,43 +869,43 @@
     "Base": {
       "xs3": {
         "$type": "number",
-        "$value": "1"
+        "$value": 1
       },
       "xs2": {
         "$type": "number",
-        "$value": "2"
+        "$value": 2
       },
       "xs": {
         "$type": "number",
-        "$value": "4"
+        "$value": 4
       },
       "s": {
         "$type": "number",
-        "$value": "8"
+        "$value": 8
       },
       "m": {
         "$type": "number",
-        "$value": "12"
+        "$value": 12
       },
       "l": {
         "$type": "number",
-        "$value": "16"
+        "$value": 16
       },
       "xl": {
         "$type": "number",
-        "$value": "24"
+        "$value": 24
       },
       "xl2": {
         "$type": "number",
-        "$value": "32"
+        "$value": 32
       },
       "xl3": {
         "$type": "number",
-        "$value": "48"
+        "$value": 48
       },
       "xl4": {
         "$type": "number",
-        "$value": "64"
+        "$value": 64
       }
     },
     "Icons": {
@@ -978,7 +1011,7 @@
       "$value": "{Size.Base.xl4}"
     }
   },
-  "Font Size": {
+  "FontSize": {
     "display": {
       "1": {
         "$type": "fontSizes",
@@ -1024,7 +1057,7 @@
       }
     }
   },
-  "opacity": {
+  "Opacity": {
     "12": {
       "$type": "opacity",
       "$value": "12%"
