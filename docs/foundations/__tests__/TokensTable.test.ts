@@ -6,6 +6,7 @@ import {
   buildTokenSnapshot,
   contrastRatio,
   evaluateA11yForTheme,
+  groupRowsByType,
   resolveReferenceDetailed,
 } from '../TokensTable';
 import tokenSnapshot from '../token-snapshot.json';
@@ -76,6 +77,35 @@ describe('TokensTable data model', () => {
       },
     });
     expect(withRemoved.summary.removed).toBeGreaterThan(0);
+  });
+
+  it('groups rows by token type with unknown fallback and stable counts', () => {
+    const grouped = groupRowsByType(rows);
+    expect(grouped.length).toBeGreaterThan(0);
+
+    const groupedCount = grouped.reduce((acc, group) => acc + group.count, 0);
+    expect(groupedCount).toBe(rows.length);
+
+    const colorGroup = grouped.find((group) => group.groupId === 'color');
+    expect(colorGroup?.count).toBeGreaterThan(0);
+
+    const unknownGroup = groupRowsByType([
+      {
+        ...rows[0],
+        type: undefined,
+      },
+    ]);
+    expect(unknownGroup[0]?.groupId).toBe('unknown');
+    expect(unknownGroup[0]?.groupLabel).toBe('Unknown');
+  });
+
+  it('keeps grouping stable for filtered subsets', () => {
+    const subset = rows.filter((row) => row.type === 'typography' || row.type === 'boxShadow');
+    const groupedSubset = groupRowsByType(subset);
+    const ids = groupedSubset.map((group) => group.groupId).sort();
+
+    expect(ids).toEqual(['boxShadow', 'typography']);
+    expect(groupedSubset.every((group) => group.rows.every((row) => row.type === group.groupId))).toBe(true);
   });
 
   it('keeps the committed token snapshot aligned with computed rows', () => {

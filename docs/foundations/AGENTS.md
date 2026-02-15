@@ -23,3 +23,4 @@ This directory inherits all requirements from `../AGENTS.md`. Follow the reposit
 - 1.15.6: Fixed the TokensTable CSS variable formatter to emit kebab-case names so the Design Tokens reference column matches generated token variables.
 - 1.15.7: Updated the TokensTable CSS-variable copy control so the copy icon overlays only on hover/focus without reserving layout space.
 - 1.15.8: Added a snapshot alignment test to ensure committed token baselines stay in sync with computed rows and avoid false composite-token change reports.
+- 1.15.9: Added type-grouped accordion sections with sticky headers in TokensTable, including session-persisted expand/collapse state and grouping helper tests.

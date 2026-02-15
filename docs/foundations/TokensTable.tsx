@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
 
 import { Icon } from '@components';
@@ -13,6 +13,7 @@ import { getCategoryIntro } from './token-category-intros';
 
 const REFERENCE_PATTERN = /^\{(.+)\}$/;
 const EXPANDED_ROWS_SESSION_KEY = 'docs.tokens.composite.expandedRows';
+const EXPANDED_GROUPS_SESSION_KEY = 'docs.tokens.typeAccordion.expandedGroups';
 
 type ThemeSlug = typeof designTokenManifest.themes[number]['slug'];
 
@@ -105,6 +106,15 @@ interface A11yResult {
   backgroundColor: string | null;
 }
 
+interface TokenTypeGroup {
+  groupId: string;
+  groupLabel: string;
+  rows: TokenRow[];
+  count: number;
+  warningCount: number;
+  diffCounts: Record<SnapshotDiffStatus, number>;
+}
+
 const themeDataBySlug: Record<ThemeSlug, TokenDictionary> = {
   engage: engageTokens as TokenDictionary,
   legacy: legacyTokens as TokenDictionary,
@@ -127,6 +137,19 @@ const TYPE_SORT_ORDER = [
   'typography',
   'boxShadow',
 ] as const;
+
+const TYPE_LABELS: Record<string, string> = {
+  color: 'Color',
+  opacity: 'Opacity',
+  spacing: 'Spacing',
+  borderWidth: 'Border Width',
+  borderRadius: 'Border Radius',
+  dimension: 'Dimension',
+  number: 'Number',
+  typography: 'Typography',
+  boxShadow: 'Box Shadow',
+  unknown: 'Unknown',
+};
 
 function isTokenNode(value: unknown): value is TokenNode {
   return Boolean(value && typeof value === 'object' && '$value' in (value as Record<string, unknown>));
@@ -472,6 +495,57 @@ function compareByTypeThenPath(a: TokenRow, b: TokenRow): number {
   }
 
   return a.path.join('.').localeCompare(b.path.join('.'));
+}
+
+function toTypeGroupId(type: string | undefined): string {
+  return type ?? 'unknown';
+}
+
+function toTypeGroupLabel(type: string | undefined): string {
+  const id = toTypeGroupId(type);
+  return TYPE_LABELS[id] ?? id.charAt(0).toUpperCase() + id.slice(1);
+}
+
+export function groupRowsByType(rows: TokenRow[]): TokenTypeGroup[] {
+  const groups = new Map<string, TokenTypeGroup>();
+
+  rows.forEach((row) => {
+    const groupId = toTypeGroupId(row.type);
+    const existing = groups.get(groupId);
+    const diffStatus = row.diffStatus ?? 'unchanged';
+
+    if (!existing) {
+      groups.set(groupId, {
+        groupId,
+        groupLabel: toTypeGroupLabel(row.type),
+        rows: [row],
+        count: 1,
+        warningCount: isIssueRow(row) ? 1 : 0,
+        diffCounts: {
+          added: diffStatus === 'added' ? 1 : 0,
+          removed: diffStatus === 'removed' ? 1 : 0,
+          changed: diffStatus === 'changed' ? 1 : 0,
+          unchanged: diffStatus === 'unchanged' ? 1 : 0,
+        },
+      });
+      return;
+    }
+
+    existing.rows.push(row);
+    existing.count += 1;
+    existing.warningCount += isIssueRow(row) ? 1 : 0;
+    existing.diffCounts[diffStatus] += 1;
+  });
+
+  return Array.from(groups.values()).sort((a, b) => {
+    const rankA = getTypeSortRank(a.groupId === 'unknown' ? undefined : a.groupId);
+    const rankB = getTypeSortRank(b.groupId === 'unknown' ? undefined : b.groupId);
+    if (rankA !== rankB) {
+      return rankA - rankB;
+    }
+
+    return a.groupLabel.localeCompare(b.groupLabel);
+  });
 }
 
 export function buildRows(): TokenRow[] {
@@ -1153,10 +1227,23 @@ function TokensTable() {
     }
   });
   const [detailThemeByRow, setDetailThemeByRow] = useState<Record<string, ThemeSlug>>({});
+  const [expandedGroups, setExpandedGroups] = useState<string[]>(() => {
+    try {
+      const cached = sessionStorage.getItem(EXPANDED_GROUPS_SESSION_KEY);
+      return cached ? (JSON.parse(cached) as string[]) : [];
+    } catch {
+      return [];
+    }
+  });
+  const [tableHeaderHeight, setTableHeaderHeight] = useState<number>(48);
+  const tableHeaderRef = useRef<HTMLTableSectionElement | null>(null);
 
   useEffect(() => {
     sessionStorage.setItem(EXPANDED_ROWS_SESSION_KEY, JSON.stringify(expandedRows));
   }, [expandedRows]);
+  useEffect(() => {
+    sessionStorage.setItem(EXPANDED_GROUPS_SESSION_KEY, JSON.stringify(expandedGroups));
+  }, [expandedGroups]);
 
   const diff = useMemo(
     () => buildSnapshotDiff(BASE_ROWS, tokenSnapshot as TokenSnapshot),
@@ -1197,6 +1284,7 @@ function TokensTable() {
 
     return queryScoped;
   }, [selectedCategory, diff.rows, diffFilter, issuesOnly, searchValue, selectedTheme]);
+  const groupedRows = useMemo(() => groupRowsByType(filteredRows), [filteredRows]);
 
   const selectedThemeDefinition = useMemo(
     () => designTokenManifest.themes.find((theme) => theme.slug === selectedTheme) ?? designTokenManifest.themes[0],
@@ -1208,6 +1296,48 @@ function TokensTable() {
   const intro = useMemo(() => getCategoryIntro(selectedCategory === 'all' ? 'all' : selectedCategory), [selectedCategory]);
   const a11yResults = useMemo(() => evaluateA11yForTheme(diff.rows, selectedTheme), [diff.rows, selectedTheme]);
   const snapshotIsStale = diff.summary.added > 0 || diff.summary.changed > 0 || diff.summary.removed > 0;
+  const expandedGroupSet = useMemo(() => new Set(expandedGroups), [expandedGroups]);
+
+  useEffect(() => {
+    if (!groupedRows.length) {
+      return;
+    }
+
+    const ids = groupedRows.map((group) => group.groupId);
+    setExpandedGroups((current) => {
+      const nextSet = new Set(current);
+      let changed = false;
+
+      ids.forEach((id) => {
+        if (!nextSet.has(id)) {
+          nextSet.add(id);
+          changed = true;
+        }
+      });
+
+      return changed ? Array.from(nextSet) : current;
+    });
+  }, [groupedRows]);
+
+  useEffect(() => {
+    const measure = () => {
+      const headerRow = tableHeaderRef.current?.querySelector('tr');
+      if (!headerRow) {
+        return;
+      }
+
+      const measured = headerRow.getBoundingClientRect().height;
+      if (measured > 0) {
+        setTableHeaderHeight(measured);
+      }
+    };
+
+    measure();
+    window.addEventListener('resize', measure);
+    return () => {
+      window.removeEventListener('resize', measure);
+    };
+  }, []);
 
   const toggleRow = (key: string) => {
     setExpandedRows((current) =>
@@ -1217,6 +1347,111 @@ function TokensTable() {
       ...current,
       [key]: current[key] ?? selectedTheme,
     }));
+  };
+  const toggleGroup = (groupId: string) => {
+    setExpandedGroups((current) =>
+      current.includes(groupId) ? current.filter((item) => item !== groupId) : [...current, groupId]
+    );
+  };
+  const renderTokenRow = (row: TokenRow) => {
+    const rowKey = row.path.join('.');
+    const expanded = expandedRowSet.has(rowKey);
+    const activeDetailTheme = detailThemeByRow[rowKey] ?? selectedTheme;
+    const meta = row.resolvedMetaByTheme[selectedTheme] ?? { status: 'ok' as const };
+
+    return (
+      <Fragment key={`${selectedTheme}-${rowKey}`}>
+        <tr key={`${selectedTheme}-${rowKey}`} style={row.diffStatus === 'removed' ? removedRowStyle : undefined}>
+          <td style={cellStyle}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap' }}>
+              {row.isComposite ? (
+                <button type="button" onClick={() => toggleRow(rowKey)} style={toggleButtonStyle} aria-label="Toggle composite details">
+                  {expanded ? '▾' : '▸'}
+                </button>
+              ) : null}
+              <code style={codeWrapStyle}>{row.displayPath ?? row.path.join('.')}</code>
+              {meta.status !== 'ok' ? <span style={diagnosticBadgeStyle(meta.status)}>{issueLabel(meta)}</span> : null}
+              {row.diffStatus && row.diffStatus !== 'unchanged' ? (
+                <span style={diffBadgeStyle(row.diffStatus)}>{row.diffStatus}</span>
+              ) : null}
+            </div>
+          </td>
+          <td style={cellStyle}>{row.description ?? '—'}</td>
+          <td style={cellStyle}>{row.alias ? <code style={codeWrapStyle}>{row.alias}</code> : '—'}</td>
+          <td style={cellStyle}>
+            <code style={codeWrapStyle}>{formatRawValue(row.resolvedValueByTheme[selectedTheme])}</code>
+          </td>
+          <td style={cellStyle}>
+            <button
+              type="button"
+              onClick={async () => {
+                await copyToClipboard(row.cssVariable);
+                setCopiedVariable(row.cssVariable);
+                window.setTimeout(() => {
+                  setCopiedVariable((current) => (current === row.cssVariable ? null : current));
+                }, 1200);
+              }}
+              style={copyButtonStyle}
+              className={`tokens-copy-button${copiedVariable === row.cssVariable ? ' is-copied' : ''}`}
+              title={`Copy ${row.cssVariable}`}
+            >
+              <code style={{ ...codeWrapStyle, ...copyValueStyle }}>{row.cssVariable}</code>
+              <span className="tokens-copy-glyph" style={copyGlyphStyle} aria-hidden="true">
+                <Icon name="copy" variant="solid" size={14} color="#5f6470" />
+              </span>
+            </button>
+          </td>
+          <td style={{ ...cellStyle, textAlign: 'center' }}>
+            <Specimen row={row} theme={selectedTheme} />
+          </td>
+        </tr>
+        {row.isComposite && expanded ? (
+          <tr>
+            <td style={expandedCellStyle} colSpan={6}>
+              <div style={expandedPanelStyle}>
+                <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                  {designTokenManifest.themes.map((theme) => (
+                    <button
+                      key={`${rowKey}-${theme.slug}`}
+                      type="button"
+                      onClick={() =>
+                        setDetailThemeByRow((current) => ({
+                          ...current,
+                          [rowKey]: theme.slug as ThemeSlug,
+                        }))
+                      }
+                      style={themeTabStyle(activeDetailTheme === theme.slug)}
+                    >
+                      {theme.name}
+                    </button>
+                  ))}
+                </div>
+                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                  <thead>
+                    <tr>
+                      <th style={miniHeaderStyle}>Property</th>
+                      <th style={miniHeaderStyle}>Alias</th>
+                      <th style={miniHeaderStyle}>Resolved ({activeDetailTheme})</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {(row.compositeProperties ?? []).map((property) => (
+                      <tr key={`${rowKey}-${property.name}`}>
+                        <td style={miniCellStyle}><code>{property.name}</code></td>
+                        <td style={miniCellStyle}>{property.alias ? <code>{property.alias}</code> : '—'}</td>
+                        <td style={miniCellStyle}>
+                          <code style={codeWrapStyle}>{formatRawValue(row.compositeValues?.[activeDetailTheme]?.[property.name])}</code>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </td>
+          </tr>
+        ) : null}
+      </Fragment>
+    );
   };
 
   return (
@@ -1365,7 +1600,7 @@ function TokensTable() {
               <col style={{ width: '18%' }} />
               <col style={{ width: '16%' }} />
             </colgroup>
-            <thead>
+            <thead ref={tableHeaderRef}>
               <tr>
                 <th style={headerCellStyle}>Token name</th>
                 <th style={headerCellStyle}>Description</th>
@@ -1375,108 +1610,46 @@ function TokensTable() {
                 <th style={headerCellStyle}>Specimen</th>
               </tr>
             </thead>
-            <tbody>
-              {filteredRows.map((row) => {
-                const rowKey = row.path.join('.');
-                const expanded = expandedRowSet.has(rowKey);
-                const activeDetailTheme = detailThemeByRow[rowKey] ?? selectedTheme;
-                const meta = row.resolvedMetaByTheme[selectedTheme] ?? { status: 'ok' as const };
+            {selectedCategory === 'all'
+              ? groupedRows.map((group) => {
+                  const isExpanded = expandedGroupSet.has(group.groupId);
+                  const groupBodyId = `tokens-group-${group.groupId}`;
 
-                return (
-                  <Fragment key={`${selectedTheme}-${rowKey}`}>
-                    <tr key={`${selectedTheme}-${rowKey}`} style={row.diffStatus === 'removed' ? removedRowStyle : undefined}>
-                      <td style={cellStyle}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap' }}>
-                          {row.isComposite ? (
-                            <button type="button" onClick={() => toggleRow(rowKey)} style={toggleButtonStyle} aria-label="Toggle composite details">
-                              {expanded ? '▾' : '▸'}
-                            </button>
-                          ) : null}
-                          <code style={codeWrapStyle}>{row.displayPath ?? row.path.join('.')}</code>
-                          {meta.status !== 'ok' ? <span style={diagnosticBadgeStyle(meta.status)}>{issueLabel(meta)}</span> : null}
-                          {row.diffStatus && row.diffStatus !== 'unchanged' ? (
-                            <span style={diffBadgeStyle(row.diffStatus)}>{row.diffStatus}</span>
-                          ) : null}
-                        </div>
-                      </td>
-                      <td style={cellStyle}>{row.description ?? '—'}</td>
-                      <td style={cellStyle}>{row.alias ? <code style={codeWrapStyle}>{row.alias}</code> : '—'}</td>
-                      <td style={cellStyle}>
-                        <code style={codeWrapStyle}>{formatRawValue(row.resolvedValueByTheme[selectedTheme])}</code>
-                      </td>
-                      <td style={cellStyle}>
-                        <button
-                          type="button"
-                          onClick={async () => {
-                            await copyToClipboard(row.cssVariable);
-                            setCopiedVariable(row.cssVariable);
-                            window.setTimeout(() => {
-                              setCopiedVariable((current) => (current === row.cssVariable ? null : current));
-                            }, 1200);
-                          }}
-                          style={copyButtonStyle}
-                          className={`tokens-copy-button${copiedVariable === row.cssVariable ? ' is-copied' : ''}`}
-                          title={`Copy ${row.cssVariable}`}
-                        >
-                          <code style={{ ...codeWrapStyle, ...copyValueStyle }}>{row.cssVariable}</code>
-                          <span className="tokens-copy-glyph" style={copyGlyphStyle} aria-hidden="true">
-                            <Icon name="copy" variant="solid" size={14} color="#5f6470" />
-                          </span>
-                        </button>
-                      </td>
-                      <td style={{ ...cellStyle, textAlign: 'center' }}>
-                        <Specimen row={row} theme={selectedTheme} />
-                      </td>
-                    </tr>
-                    {row.isComposite && expanded ? (
+                  return (
+                    <tbody key={group.groupId} id={groupBodyId}>
                       <tr>
-                        <td style={expandedCellStyle} colSpan={6}>
-                          <div style={expandedPanelStyle}>
-                            <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                              {designTokenManifest.themes.map((theme) => (
-                                <button
-                                  key={`${rowKey}-${theme.slug}`}
-                                  type="button"
-                                  onClick={() =>
-                                    setDetailThemeByRow((current) => ({
-                                      ...current,
-                                      [rowKey]: theme.slug as ThemeSlug,
-                                    }))
-                                  }
-                                  style={themeTabStyle(activeDetailTheme === theme.slug)}
-                                >
-                                  {theme.name}
-                                </button>
-                              ))}
-                            </div>
-                            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                              <thead>
-                                <tr>
-                                  <th style={miniHeaderStyle}>Property</th>
-                                  <th style={miniHeaderStyle}>Alias</th>
-                                  <th style={miniHeaderStyle}>Resolved ({activeDetailTheme})</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {(row.compositeProperties ?? []).map((property) => (
-                                  <tr key={`${rowKey}-${property.name}`}>
-                                    <td style={miniCellStyle}><code>{property.name}</code></td>
-                                    <td style={miniCellStyle}>{property.alias ? <code>{property.alias}</code> : '—'}</td>
-                                    <td style={miniCellStyle}>
-                                      <code style={codeWrapStyle}>{formatRawValue(row.compositeValues?.[activeDetailTheme]?.[property.name])}</code>
-                                    </td>
-                                  </tr>
-                                ))}
-                              </tbody>
-                            </table>
-                          </div>
+                        <td style={groupHeaderCellStyle(tableHeaderHeight)} colSpan={6}>
+                          <button
+                            type="button"
+                            onClick={() => toggleGroup(group.groupId)}
+                            style={groupHeaderButtonStyle}
+                            className="tokens-group-toggle"
+                            aria-expanded={isExpanded}
+                            aria-controls={groupBodyId}
+                          >
+                            <span style={groupHeaderLabelWrapStyle}>
+                              <span style={groupChevronStyle(isExpanded)} aria-hidden="true">▾</span>
+                              <span>{group.groupLabel}</span>
+                            </span>
+                            <span style={groupHeaderMetricsStyle}>
+                              <span style={groupMetricBadgeStyle}>{group.count}</span>
+                              {group.warningCount > 0 ? <span style={groupWarningBadgeStyle}>{group.warningCount} warnings</span> : null}
+                              {group.diffCounts.added > 0 ? <span style={groupDiffAddedBadgeStyle}>+{group.diffCounts.added}</span> : null}
+                              {group.diffCounts.changed > 0 ? <span style={groupDiffChangedBadgeStyle}>~{group.diffCounts.changed}</span> : null}
+                              {group.diffCounts.removed > 0 ? <span style={groupDiffRemovedBadgeStyle}>-{group.diffCounts.removed}</span> : null}
+                            </span>
+                          </button>
                         </td>
                       </tr>
-                    ) : null}
-                  </Fragment>
-                );
-              })}
-            </tbody>
+                      {isExpanded ? group.rows.map((row) => renderTokenRow(row)) : null}
+                    </tbody>
+                  );
+                })
+              : (
+                <tbody>
+                  {filteredRows.map((row) => renderTokenRow(row))}
+                </tbody>
+              )}
           </table>
         </div>
       </div>
@@ -1606,13 +1779,106 @@ const resultsPillStyle: CSSProperties = {
 const headerCellStyle: CSSProperties = {
   position: 'sticky',
   top: 0,
-  zIndex: 1,
+  zIndex: 3,
   textAlign: 'left',
   padding: '0.75rem',
   borderBottom: '1px solid rgba(0,0,0,0.08)',
   fontWeight: 600,
   background: '#f7f7f8',
   whiteSpace: 'nowrap',
+};
+
+const groupHeaderCellStyle = (offset: number): CSSProperties => ({
+  position: 'sticky',
+  top: `${offset}px`,
+  zIndex: 2,
+  padding: 0,
+  borderBottom: '1px solid rgba(0,0,0,0.08)',
+  background: '#edf0f7',
+  boxShadow: 'inset 0 -1px 0 rgba(0,0,0,0.04)',
+});
+
+const groupHeaderButtonStyle: CSSProperties = {
+  width: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  border: 'none',
+  background: 'transparent',
+  color: '#2f3442',
+  cursor: 'pointer',
+  textAlign: 'left',
+  padding: '0.52rem 0.75rem',
+  font: 'inherit',
+  fontWeight: 600,
+};
+
+const groupHeaderLabelWrapStyle: CSSProperties = {
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: '0.45rem',
+};
+
+const groupChevronStyle = (isExpanded: boolean): CSSProperties => ({
+  display: 'inline-flex',
+  width: '0.9rem',
+  justifyContent: 'center',
+  transform: isExpanded ? 'rotate(0deg)' : 'rotate(-90deg)',
+  transition: 'transform 140ms ease',
+  color: '#4d5464',
+});
+
+const groupHeaderMetricsStyle: CSSProperties = {
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: '0.35rem',
+  flexWrap: 'wrap',
+  justifyContent: 'flex-end',
+};
+
+const groupMetricBadgeStyle: CSSProperties = {
+  borderRadius: '999px',
+  background: '#dfe4f3',
+  color: '#353d4d',
+  fontSize: '0.72rem',
+  padding: '0.1rem 0.45rem',
+  fontWeight: 570,
+};
+
+const groupWarningBadgeStyle: CSSProperties = {
+  borderRadius: '999px',
+  background: '#fff3db',
+  color: '#8c5a1b',
+  fontSize: '0.72rem',
+  padding: '0.1rem 0.45rem',
+  fontWeight: 570,
+};
+
+const groupDiffAddedBadgeStyle: CSSProperties = {
+  borderRadius: '999px',
+  background: '#e8f7ef',
+  color: '#0f6f3f',
+  fontSize: '0.72rem',
+  padding: '0.1rem 0.45rem',
+  fontWeight: 570,
+};
+
+const groupDiffChangedBadgeStyle: CSSProperties = {
+  borderRadius: '999px',
+  background: '#f2f0ff',
+  color: '#4e40a0',
+  fontSize: '0.72rem',
+  padding: '0.1rem 0.45rem',
+  fontWeight: 570,
+};
+
+const groupDiffRemovedBadgeStyle: CSSProperties = {
+  borderRadius: '999px',
+  background: '#fdeced',
+  color: '#8e1f28',
+  fontSize: '0.72rem',
+  padding: '0.1rem 0.45rem',
+  fontWeight: 570,
 };
 
 const cellStyle: CSSProperties = {
@@ -1655,6 +1921,12 @@ const copyValueStyle: CSSProperties = {
 };
 
 const copyButtonInteractiveStyle = `
+  .tokens-group-toggle:hover,
+  .tokens-group-toggle:focus-visible {
+    background: rgba(255,255,255,0.56);
+    outline: none;
+  }
+
   .tokens-copy-button:hover,
   .tokens-copy-button:focus-visible {
     background: #f7f7f8!important;
