@@ -16,3 +16,5 @@ This directory inherits all requirements from `../AGENTS.md`. Follow the reposit
 - 1.15.0: Added diagnostics-first token docs enhancements including expandable composite property panels, unresolved-reference warning badges/filters, curated category intros, an AA contrast helper panel, and snapshot-based added/changed/removed token diff indicators.
 - 1.15.1: Split Design Tokens content into a focused reference page plus a dedicated `Design Tokens: Workflow` page so generation/refresh guidance is separate from day-to-day token exploration.
 - 1.15.2: Renamed the explorer page to `Design Tokens: Reference`, fixed docs cross-links to Storybook paths, and enforced Foundations sidebar ordering (`Reference`, `Workflow`, then `Icons Library`).
+- 1.15.3: Updated typography family fallbacks shown in the TokensTable specimen to use Saans for consistency with runtime token fonts.
+- 1.15.4: Updated TokensTable typography weight normalization to only support token-defined names (`Light`, `Regular`, `Medium`, `SemiBold`) with their exact numeric mappings (`300`, `380`, `570`, `670`).

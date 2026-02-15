@@ -5,6 +5,21 @@ import { Box } from '@components/Box';
 import { Typography } from '@components/Typography';
 import { TYPOGRAPHY_VARIANTS } from './typography.styles';
 
+const HEADINGS_SOURCE = `<Box display="grid" gap="spacing-m">
+  <Typography variant="heading-1">Heading 1</Typography>
+  <Typography variant="heading-2">Heading 2</Typography>
+  <Typography variant="heading-3">Heading 3</Typography>
+</Box>`;
+
+const EMPHASIS_AND_LINKS_SOURCE = `<Box display="grid" gap="spacing-s">
+  <Typography variant="body-1-strong">Body 1 strong emphasizes supporting copy.</Typography>
+  <Typography variant="body-2-strong">Body 2 strong with compact letter spacing.</Typography>
+  <Typography variant="body-2-link" as="a" href="#">
+    Body 2 link uses interactive tokens and can render as an anchor.
+  </Typography>
+  <Typography variant="caption-1">Caption 1 suits tertiary UI metadata.</Typography>
+</Box>`;
+
 const meta: Meta<typeof Typography> = {
   title: 'Atomics/Typography',
   id: 'atomics-typography-react',
@@ -19,7 +34,7 @@ const meta: Meta<typeof Typography> = {
       control: 'select',
       options: TYPOGRAPHY_VARIANTS,
       description:
-        'Maps to Engage typography tokens (e.g., `--heading1FontSize`, `--body2LetterSpacing`).',
+        'Maps to Engage typography tokens (e.g., `--typographyHeading1FontSize`, `--typographyBody2LetterSpacing`).',
     },
     truncate: {
       control: 'boolean',
@@ -70,6 +85,10 @@ export const Headings: Story = {
   ),
   parameters: {
     docs: {
+      source: {
+        language: 'tsx',
+        code: HEADINGS_SOURCE,
+      },
       description: {
         story:
           'Heading variants inherit semantic `<h1>`–`<h3>` elements by default so screen readers announce appropriate structure.',
@@ -91,6 +110,10 @@ export const EmphasisAndLinks: Story = {
   ),
   parameters: {
     docs: {
+      source: {
+        language: 'tsx',
+        code: EMPHASIS_AND_LINKS_SOURCE,
+      },
       description: {
         story:
           'Typography variants remain token-sourced, enabling emphasis styles, link treatments, and captions without redefining CSS per framework.',

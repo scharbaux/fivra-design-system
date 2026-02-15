@@ -29,6 +29,13 @@ const slugify = (value) =>
 
 const ensureBanner = (content, banner) => (content.startsWith(banner) ? content : `${banner}${content}`);
 const FIVRA_THEME_ATTRIBUTE = 'data-fivra-theme';
+const FONT_WEIGHT_NAME_TO_VALUE = {
+  light: '300',
+  regular: '380',
+  medium: '570',
+  semibold: '670',
+  'semi-bold': '670',
+};
 
 const formatPercentValue = (value) => {
   const percent = value * 100;
@@ -109,6 +116,116 @@ const readJson = async (filePath) => {
   return JSON.parse(content);
 };
 
+const normalizeFontWeightTokens = (node) => {
+  if (!node || typeof node !== 'object') {
+    return;
+  }
+
+  if (!Array.isArray(node) && node.$type === 'fontWeights' && typeof node.$value === 'string') {
+    const normalized = node.$value.trim().toLowerCase();
+    const mapped = FONT_WEIGHT_NAME_TO_VALUE[normalized];
+    if (mapped) {
+      node.$value = mapped;
+    }
+  }
+
+  for (const value of Object.values(node)) {
+    if (value && typeof value === 'object') {
+      normalizeFontWeightTokens(value);
+    }
+  }
+};
+
+const typographyTokenSegmentToCss = (segment, index) => {
+  if (index === 0) {
+    return segment.toLowerCase();
+  }
+
+  return segment
+    .split(/[-_\s]+/)
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join('');
+};
+
+const typographyPathToCssVariable = (pathSegments) => {
+  if (pathSegments.length === 0) {
+    return null;
+  }
+
+  const cssName = pathSegments
+    .map((segment, index) => typographyTokenSegmentToCss(segment, index))
+    .join('');
+  return cssName ? `--${cssName}` : null;
+};
+
+const extractFontWeightReferenceValue = (value) => {
+  if (typeof value === 'number') {
+    return String(value);
+  }
+
+  if (typeof value !== 'string') {
+    return null;
+  }
+
+  const trimmed = value.trim();
+  if (/^\d+(\.\d+)?$/.test(trimmed)) {
+    return trimmed;
+  }
+
+  const referenceMatch = trimmed.match(/^\{FontWeight\.([^}]+)\}$/);
+  if (!referenceMatch) {
+    return null;
+  }
+
+  const referenceKey = referenceMatch[1];
+  if (/^\d+(\.\d+)?$/.test(referenceKey)) {
+    return referenceKey;
+  }
+
+  const mapped = FONT_WEIGHT_NAME_TO_VALUE[referenceKey.toLowerCase()];
+  return mapped ?? null;
+};
+
+const collectTypographyFontWeightOverrides = (tokenNode, path = []) => {
+  if (!tokenNode || typeof tokenNode !== 'object' || Array.isArray(tokenNode)) {
+    return {};
+  }
+
+  const overrides = {};
+
+  for (const [key, value] of Object.entries(tokenNode)) {
+    const nextPath = [...path, key];
+    const normalizedPath = nextPath.filter((segment) => segment !== '$value');
+
+    if (
+      key === 'fontWeight' &&
+      normalizedPath[0] === 'typography'
+    ) {
+      const resolvedValue = value && typeof value === 'object' ? value.$value : value;
+      const cssVarName = typographyPathToCssVariable(normalizedPath);
+      const cssVarValue = extractFontWeightReferenceValue(resolvedValue);
+
+      if (cssVarName && cssVarValue) {
+        overrides[cssVarName] = cssVarValue;
+      }
+    }
+
+    if (value && typeof value === 'object') {
+      Object.assign(overrides, collectTypographyFontWeightOverrides(value, nextPath));
+    }
+  }
+
+  return overrides;
+};
+
+const applyTypographyFontWeightOverrides = (cssContent, overrides) =>
+  Object.entries(overrides).reduce((nextCssContent, [cssVarName, cssVarValue]) => {
+    const escapedVariableName = cssVarName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const declarationPattern = new RegExp(`(${escapedVariableName}:\\s*)([^;]+);`, 'g');
+    return nextCssContent.replace(declarationPattern, `$1${cssVarValue};`);
+  }, cssContent);
+
 const resolveTokenSource = async (value) => {
   if (typeof value === 'string') {
     const absolute = path.resolve(TOKENS_DIR, value);
@@ -140,6 +257,10 @@ const loadTokenBundle = async () => {
     } else {
       throw new Error(`Token set "${name}" must resolve to a JSON object or file path.`);
     }
+  }
+
+  for (const entry of Object.values(tokenSets)) {
+    normalizeFontWeightTokens(entry.tokens);
   }
 
   return { metadata, themes, tokenSets };
@@ -229,7 +350,12 @@ const buildStyleDictionary = async ({
 
   const cssPath = path.join(THEMES_OUTPUT_DIR, `${slug}.css`);
   const cssContent = await fs.readFile(cssPath, 'utf8');
-  const augmentedCss = ensureStateLayerAliases(appendIntensityCompanionTokens(cssContent));
+  const typographyWeightOverrides = externalEntries.reduce((allOverrides, entry) => {
+    Object.assign(allOverrides, collectTypographyFontWeightOverrides(entry.tokens));
+    return allOverrides;
+  }, {});
+  const overriddenTypographyCss = applyTypographyFontWeightOverrides(cssContent, typographyWeightOverrides);
+  const augmentedCss = ensureStateLayerAliases(appendIntensityCompanionTokens(overriddenTypographyCss));
   const rewrittenCss = rewriteRootSelector({ cssContent: augmentedCss, selector });
   await fs.writeFile(cssPath, ensureBanner(rewrittenCss, CSS_BANNER), 'utf8');
 

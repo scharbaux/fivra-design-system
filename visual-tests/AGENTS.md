@@ -16,7 +16,7 @@ This directory extends the repository root `AGENTS.md`. Use Playwright-based vis
 - 1.0: Introduced Playwright-powered visual regression tests targeting the Button Storybook stories and committed baselines.
 - 1.1.0: Added Angular dropdown/loading stories to the button visual suite to guard harmonized caret/spinner behavior.
 - 1.1.1: Updated the harness to target Angular via JIT-enabled Storybook refs and captured dropdown/loading baselines.
-- 1.1.2: Wait for `document.fonts.ready` (plus a frame tick) before capturing button stories so Google Sans always applies; refresh baselines after Playwright browsers finish installing.
+- 1.1.2: Wait for `document.fonts.ready` (plus a frame tick) before capturing button stories so Saans always applies; refresh baselines after Playwright browsers finish installing.
 - 1.1.3: Dropped OS-specific filename suffixes, refreshed shared baselines, and documented the cross-platform workflow.
 - 1.1.4: Publish HTML reports and diff image bundles when Playwright visual tests fail so reviewers can audit regressions quickly.
 - 1.1.5: Require the full Chromium toolchain (including `chromium-headless-shell`) before running tests and remind contributors to refresh baselines after the install completes.
@@ -24,3 +24,4 @@ This directory extends the repository root `AGENTS.md`. Use Playwright-based vis
 - 1.1.7: Moved Angular dropdown/loading coverage out of `button.spec.ts` screenshots and into the dedicated Angular health check because Playwright screenshot capture against composed Angular iframes was timing out unreliably.
 - 1.1.8: Applied Linux-tolerant per-story screenshot diff ratios (`secondary`, `tertiary`, `with-icons`) while keeping stricter defaults for remaining button visual scenarios.
 - 1.2.0: Added Box visual regression coverage for React and Vue Storybook stories, including token spacing, layout alignment, background utilities, and nested composition specimens.
+- 1.3.0: Added Typography visual regression coverage for React and Vue stories to guard variant rendering, truncation, and no-wrap behavior across frameworks.

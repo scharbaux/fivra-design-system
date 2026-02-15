@@ -47,7 +47,7 @@ ${BOX_BASE_CLASS} {
 }
 
 ${BASE_CLASS} {
-  --fivra-button-font-family: var(--body1FontFamily, 'Google Sans', sans-serif);
+  --fivra-button-font-family: var(--typographyBody1FontFamily, var(--body1FontFamily, 'Saans', sans-serif));
   --fivra-button-font-weight: 600;
   --fivra-button-radius: var(--radiusS);
   --fivra-button-transition: background-color 160ms ease, color 160ms ease,

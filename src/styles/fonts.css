@@ -1,47 +1,53 @@
 @font-face {
-  font-family: 'Google Sans';
-  src: url('../shared/assets/fonts/google-sans/GoogleSans-Regular.ttf') format('truetype');
+  font-family: 'Saans';
+  src: url('./fonts/SaansRegular.woff2') format('woff2'),
+    url('./fonts/SaansRegular.otf') format('opentype');
   font-style: normal;
-  font-weight: 400;
+  font-weight: 380;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Google Sans';
-  src: url('../shared/assets/fonts/google-sans/GoogleSans-Italic.ttf') format('truetype');
-  font-style: italic;
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Google Sans';
-  src: url('../shared/assets/fonts/google-sans/GoogleSans-Medium.ttf') format('truetype');
+  font-family: 'Saans';
+  src: url('./fonts/SaansLight.woff2') format('woff2'),
+    url('./fonts/SaansLight.otf') format('opentype');
   font-style: normal;
-  font-weight: 500;
+  font-weight: 300;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Google Sans';
-  src: url('../shared/assets/fonts/google-sans/GoogleSans-MediumItalic.ttf') format('truetype');
-  font-style: italic;
-  font-weight: 500;
+  font-family: 'Saans';
+  src: url('./fonts/SaansMedium.woff2') format('woff2'),
+    url('./fonts/SaansMedium.otf') format('opentype');
+  font-style: normal;
+  font-weight: 570;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Google Sans';
-  src: url('../shared/assets/fonts/google-sans/GoogleSans-Bold.ttf') format('truetype');
+  font-family: 'Saans';
+  src: url('./fonts/SaansSemiBold.woff2') format('woff2'),
+    url('./fonts/SaansSemiBold.otf') format('opentype');
+  font-style: normal;
+  font-weight: 670;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Saans';
+  src: url('./fonts/SaansBold.woff2') format('woff2'),
+    url('./fonts/SaansBold.otf') format('opentype');
   font-style: normal;
   font-weight: 700;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Google Sans';
-  src: url('../shared/assets/fonts/google-sans/GoogleSans-BoldItalic.ttf') format('truetype');
-  font-style: italic;
-  font-weight: 700;
+  font-family: 'Saans';
+  src: url('./fonts/SaansHeavy.woff2') format('woff2'),
+    url('./fonts/SaansHeavy.otf') format('opentype');
+  font-style: normal;
+  font-weight: 800;
   font-display: swap;
 }

@@ -18,3 +18,6 @@ This directory inherits guidance from the repository root, `storybooks/AGENTS.md
 - 1.6.2: Migrated Vue Button stories to use shared button style and color override modules from src/shared/button.
 - 1.7.0: Added Vue Box stories with React-parity controls/docs and explicit docs source snippets so code previews avoid Storybook render scaffolding.
 - 1.8.0: Extracted a reusable Vue Box preview module and refactored Vue Button stories to compose Box as the structural wrapper for the button specimen.
+- 1.9.0: Added Vue Typography stories with React-parity args/argTypes/descriptions and shared Typography style injection.
+- 1.9.1: Added explicit Typography docs source snippets (to avoid render-object previews) and ensured runtime style injection happens in the Vue Typography preview setup.
+- 1.9.2: Updated Vue Typography docs token examples to match canonical `--typography*` variable names after aligning shared Typography variant CSS bindings.

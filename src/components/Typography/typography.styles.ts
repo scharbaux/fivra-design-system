@@ -21,120 +21,137 @@ export type TypographyVariant =
 
 type VariantTokenConfig = {
   variant: TypographyVariant;
-  fontFamily: string;
-  fontWeight: string;
-  fontSize: string;
-  lineHeight: string;
-  letterSpacing?: string;
+  fontFamily: TokenVariable;
+  fontWeight: TokenVariable;
+  fontSize: TokenVariable;
+  lineHeight: TokenVariable;
+  letterSpacing?: TokenVariable;
 };
+
+type TokenVariable = {
+  canonical: string;
+  legacy?: string;
+};
+
+function token(canonical: string, legacy?: string): TokenVariable {
+  return { canonical, legacy };
+}
+
+function resolveTokenValue(variable: TokenVariable): string {
+  if (variable.legacy) {
+    return `var(${variable.canonical}, var(${variable.legacy}))`;
+  }
+
+  return `var(${variable.canonical})`;
+}
 
 const VARIANT_TOKEN_CONFIGS: VariantTokenConfig[] = [
   {
     variant: 'heading-1',
-    fontFamily: '--heading1FontFamily',
-    fontWeight: '--heading1FontWeight',
-    fontSize: '--heading1FontSize',
-    lineHeight: '--heading1LineHeight',
+    fontFamily: token('--typographyHeading1FontFamily', '--heading1FontFamily'),
+    fontWeight: token('--typographyHeading1FontWeight', '--heading1FontWeight'),
+    fontSize: token('--typographyHeading1FontSize', '--heading1FontSize'),
+    lineHeight: token('--typographyHeading1LineHeight', '--heading1LineHeight'),
   },
   {
     variant: 'heading-2',
-    fontFamily: '--heading2FontFamily',
-    fontWeight: '--heading2FontWeight',
-    fontSize: '--heading2FontSize',
-    lineHeight: '--heading2LineHeight',
+    fontFamily: token('--typographyHeading2FontFamily', '--heading2FontFamily'),
+    fontWeight: token('--typographyHeading2FontWeight', '--heading2FontWeight'),
+    fontSize: token('--typographyHeading2FontSize', '--heading2FontSize'),
+    lineHeight: token('--typographyHeading2LineHeight', '--heading2LineHeight'),
   },
   {
     variant: 'heading-3',
-    fontFamily: '--heading3FontFamily',
-    fontWeight: '--heading3FontWeight',
-    fontSize: '--heading3FontSize',
-    lineHeight: '--heading3LineHeight',
+    fontFamily: token('--typographyHeading3FontFamily', '--heading3FontFamily'),
+    fontWeight: token('--typographyHeading3FontWeight', '--heading3FontWeight'),
+    fontSize: token('--typographyHeading3FontSize', '--heading3FontSize'),
+    lineHeight: token('--typographyHeading3LineHeight', '--heading3LineHeight'),
   },
   {
     variant: 'body-1',
-    fontFamily: '--body1FontFamily',
-    fontWeight: '--body1FontWeight',
-    fontSize: '--body1FontSize',
-    lineHeight: '--body1LineHeight',
+    fontFamily: token('--typographyBody1FontFamily', '--body1FontFamily'),
+    fontWeight: token('--typographyBody1FontWeight', '--body1FontWeight'),
+    fontSize: token('--typographyBody1FontSize', '--body1FontSize'),
+    lineHeight: token('--typographyBody1LineHeight', '--body1LineHeight'),
   },
   {
     variant: 'body-1-medium',
-    fontFamily: '--body1MediumFontFamily',
-    fontWeight: '--body1MediumFontWeight',
-    fontSize: '--body1MediumFontSize',
-    lineHeight: '--body1MediumLineHeight',
+    fontFamily: token('--typographyBody1MediumFontFamily', '--body1MediumFontFamily'),
+    fontWeight: token('--typographyBody1MediumFontWeight', '--body1MediumFontWeight'),
+    fontSize: token('--typographyBody1MediumFontSize', '--body1MediumFontSize'),
+    lineHeight: token('--typographyBody1MediumLineHeight', '--body1MediumLineHeight'),
   },
   {
     variant: 'body-1-strong',
-    fontFamily: '--body1StrongFontFamily',
-    fontWeight: '--body1StrongFontWeight',
-    fontSize: '--body1StrongFontSize',
-    lineHeight: '--body1StrongLineHeight',
+    fontFamily: token('--typographyBody1StrongFontFamily', '--body1StrongFontFamily'),
+    fontWeight: token('--typographyBody1StrongFontWeight', '--body1StrongFontWeight'),
+    fontSize: token('--typographyBody1StrongFontSize', '--body1StrongFontSize'),
+    lineHeight: token('--typographyBody1StrongLineHeight', '--body1StrongLineHeight'),
   },
   {
     variant: 'body-2',
-    fontFamily: '--body2FontFamily',
-    fontWeight: '--body2FontWeight',
-    fontSize: '--body2FontSize',
-    lineHeight: '--body2LineHeight',
-    letterSpacing: '--body2LetterSpacing',
+    fontFamily: token('--typographyBody2FontFamily', '--body2FontFamily'),
+    fontWeight: token('--typographyBody2FontWeight', '--body2FontWeight'),
+    fontSize: token('--typographyBody2FontSize', '--body2FontSize'),
+    lineHeight: token('--typographyBody2LineHeight', '--body2LineHeight'),
+    letterSpacing: token('--typographyBody2LetterSpacing', '--body2LetterSpacing'),
   },
   {
     variant: 'body-2-strong',
-    fontFamily: '--body2StrongFontFamily',
-    fontWeight: '--body2StrongFontWeight',
-    fontSize: '--body2StrongFontSize',
-    lineHeight: '--body2StrongLineHeight',
-    letterSpacing: '--body2StrongLetterSpacing',
+    fontFamily: token('--typographyBody2StrongFontFamily', '--body2StrongFontFamily'),
+    fontWeight: token('--typographyBody2StrongFontWeight', '--body2StrongFontWeight'),
+    fontSize: token('--typographyBody2StrongFontSize', '--body2StrongFontSize'),
+    lineHeight: token('--typographyBody2StrongLineHeight', '--body2StrongLineHeight'),
+    letterSpacing: token('--typographyBody2StrongLetterSpacing', '--body2StrongLetterSpacing'),
   },
   {
     variant: 'body-2-link',
-    fontFamily: '--body2LinkFontFamily',
-    fontWeight: '--body2LinkFontWeight',
-    fontSize: '--body2LinkFontSize',
-    lineHeight: '--body2LinkLineHeight',
-    letterSpacing: '--body2LinkLetterSpacing',
+    fontFamily: token('--typographyBody2LinkFontFamily', '--body2LinkFontFamily'),
+    fontWeight: token('--typographyBody2LinkFontWeight', '--body2LinkFontWeight'),
+    fontSize: token('--typographyBody2LinkFontSize', '--body2LinkFontSize'),
+    lineHeight: token('--typographyBody2LinkLineHeight', '--body2LinkLineHeight'),
+    letterSpacing: token('--typographyBody2LinkLetterSpacing', '--body2LinkLetterSpacing'),
   },
   {
     variant: 'body-2-long',
-    fontFamily: '--body2LongFontFamily',
-    fontWeight: '--body2LongFontWeight',
-    fontSize: '--body2LongFontSize',
-    lineHeight: '--body2LongLineHeight',
-    letterSpacing: '--body2LongLetterSpacing',
+    fontFamily: token('--typographyBody2LongFontFamily', '--body2LongFontFamily'),
+    fontWeight: token('--typographyBody2LongFontWeight', '--body2LongFontWeight'),
+    fontSize: token('--typographyBody2LongFontSize', '--body2LongFontSize'),
+    lineHeight: token('--typographyBody2LongLineHeight', '--body2LongLineHeight'),
+    letterSpacing: token('--typographyBody2LongLetterSpacing', '--body2LongLetterSpacing'),
   },
   {
     variant: 'body-3',
-    fontFamily: '--body3FontFamily',
-    fontWeight: '--body3FontWeight',
-    fontSize: '--body3FontSize',
-    lineHeight: '--body3LineHeight',
-    letterSpacing: '--body3LetterSpacing',
+    fontFamily: token('--typographyBody3FontFamily', '--body3FontFamily'),
+    fontWeight: token('--typographyBody3FontWeight', '--body3FontWeight'),
+    fontSize: token('--typographyBody3FontSize', '--body3FontSize'),
+    lineHeight: token('--typographyBody3LineHeight', '--body3LineHeight'),
+    letterSpacing: token('--typographyBody3LetterSpacing', '--body3LetterSpacing'),
   },
   {
     variant: 'caption-1',
-    fontFamily: '--caption1FontFamily',
-    fontWeight: '--caption1FontWeight',
-    fontSize: '--caption1FontSize',
-    lineHeight: '--caption1LineHeight',
-    letterSpacing: '--caption1LetterSpacing',
+    fontFamily: token('--typographyCaption1FontFamily', '--caption1FontFamily'),
+    fontWeight: token('--typographyCaption1FontWeight', '--caption1FontWeight'),
+    fontSize: token('--typographyCaption1FontSize', '--caption1FontSize'),
+    lineHeight: token('--typographyCaption1LineHeight', '--caption1LineHeight'),
+    letterSpacing: token('--typographyCaption1LetterSpacing', '--caption1LetterSpacing'),
   },
   {
     variant: 'caption-1-strong',
-    fontFamily: '--caption1StrongFontFamily',
-    fontWeight: '--caption1StrongFontWeight',
-    fontSize: '--caption1StrongFontSize',
-    lineHeight: '--caption1StrongLineHeight',
-    letterSpacing: '--caption1StrongLetterSpacing',
+    fontFamily: token('--typographyCaption1StrongFontFamily', '--caption1StrongFontFamily'),
+    fontWeight: token('--typographyCaption1StrongFontWeight', '--caption1StrongFontWeight'),
+    fontSize: token('--typographyCaption1StrongFontSize', '--caption1StrongFontSize'),
+    lineHeight: token('--typographyCaption1StrongLineHeight', '--caption1StrongLineHeight'),
+    letterSpacing: token('--typographyCaption1StrongLetterSpacing', '--caption1StrongLetterSpacing'),
   },
 ];
 
 const typographyVariantStyles = VARIANT_TOKEN_CONFIGS.map((config) => {
   const letterSpacingDeclaration = config.letterSpacing
-    ? `  letter-spacing: var(${config.letterSpacing});\n`
+    ? `  letter-spacing: ${resolveTokenValue(config.letterSpacing)};\n`
     : '';
 
-  return `.${TYPOGRAPHY_CLASS_NAME}[data-variant="${config.variant}"] {\n  font-family: var(${config.fontFamily});\n  font-weight: var(${config.fontWeight});\n  font-size: var(${config.fontSize});\n  line-height: var(${config.lineHeight});\n${letterSpacingDeclaration}}`;
+  return `.${TYPOGRAPHY_CLASS_NAME}[data-variant="${config.variant}"] {\n  font-family: ${resolveTokenValue(config.fontFamily)};\n  font-weight: ${resolveTokenValue(config.fontWeight)};\n  font-size: ${resolveTokenValue(config.fontSize)};\n  line-height: ${resolveTokenValue(config.lineHeight)};\n${letterSpacingDeclaration}}`;
 }).join('\n\n');
 
 const TYPOGRAPHY_BASE_STYLES = `.${TYPOGRAPHY_CLASS_NAME} {\n  margin: 0;\n  color: var(--textNeutral1);\n}\n\n.${TYPOGRAPHY_CLASS_NAME}[data-truncate="true"] {\n  max-width: 100%;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n}\n\n.${TYPOGRAPHY_CLASS_NAME}[data-nowrap="true"] {\n  white-space: nowrap;\n}\n\n.${TYPOGRAPHY_CLASS_NAME}[data-variant="body-2-link"] {\n  color: var(--textPrimaryInteractive, var(--textNeutral1));\n  text-decoration: underline;\n}\n`;

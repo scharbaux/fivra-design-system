@@ -342,19 +342,10 @@ function normalizeTypographyWeight(value: unknown): CSSProperties['fontWeight'] 
 
   const normalized = value.trim().toLowerCase();
   const map: Record<string, number> = {
-    thin: 100,
-    extralight: 200,
-    'extra-light': 200,
     light: 300,
-    regular: 400,
-    normal: 400,
-    medium: 500,
-    semibold: 600,
-    'semi-bold': 600,
-    bold: 700,
-    extrabold: 800,
-    'extra-bold': 800,
-    black: 900,
+    regular: 380,
+    medium: 570,
+    semibold: 670,
   };
 
   if (map[normalized]) {
@@ -374,7 +365,7 @@ function normalizeTypographyFamily(value: unknown): string | undefined {
     return value;
   }
 
-  return `"${value}", "Google Sans", sans-serif`;
+  return `"${value}", "Saans", sans-serif`;
 }
 
 export function formatRawValue(raw: unknown): string {
