@@ -70,24 +70,36 @@ function formatAlias(reference) {
   return match ? match[1] : undefined;
 }
 
+function formatLength(value) {
+  if (value == null) return undefined;
+  if (typeof value === 'number') return `${value}px`;
+  return String(value);
+}
+
 function formatCompositeRawValue(type, values) {
   if (type === 'typography') {
     const declarations = [];
-    if (values.fontFamily) declarations.push(`font-family: ${values.fontFamily};`);
-    if (values.fontWeight) declarations.push(`font-weight: ${values.fontWeight};`);
-    if (values.fontSize) declarations.push(`font-size: ${values.fontSize};`);
-    if (values.lineHeight) declarations.push(`line-height: ${values.lineHeight};`);
-    if (values.letterSpacing) declarations.push(`letter-spacing: ${values.letterSpacing};`);
+    const family = values.fontFamily;
+    const weight = values.fontWeight;
+    const size = formatLength(values.fontSize);
+    const lineHeight = formatLength(values.lineHeight);
+    const letterSpacing = formatLength(values.letterSpacing);
+
+    if (family) declarations.push(`font-family: ${family};`);
+    if (weight) declarations.push(`font-weight: ${weight};`);
+    if (size) declarations.push(`font-size: ${size};`);
+    if (lineHeight) declarations.push(`line-height: ${lineHeight};`);
+    if (letterSpacing) declarations.push(`letter-spacing: ${letterSpacing};`);
     return declarations.join(' ');
   }
 
   if (type === 'boxShadow') {
-    const x = values.x ?? 0;
-    const y = values.y ?? 0;
-    const blur = values.blur ?? 0;
-    const spread = values.spread ?? 0;
+    const x = formatLength(values.x) ?? '0';
+    const y = formatLength(values.y) ?? '0';
+    const blur = formatLength(values.blur) ?? '0';
+    const spread = formatLength(values.spread) ?? '0';
     const color = values.color ?? 'transparent';
-    return `box-shadow: ${x} ${y} ${blur} ${spread} ${color};`;
+    return `box-shadow: ${[x, y, blur, spread, color].join(' ')};`;
   }
 
   return JSON.stringify(values);
@@ -192,7 +204,7 @@ function buildRows() {
     const alias = group.properties
       .map((property) => {
         const propName = property.path[property.path.length - 1];
-        const aliasRef = formatAlias(property.reference);
+        const aliasRef = formatAlias(property.reference) ?? (property.reference != null ? String(property.reference) : undefined);
         return aliasRef ? `${propName}: ${aliasRef}` : null;
       })
       .filter(Boolean)

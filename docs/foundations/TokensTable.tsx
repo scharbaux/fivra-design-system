@@ -1418,8 +1418,8 @@ function TokensTable() {
                           className={`tokens-copy-button${copiedVariable === row.cssVariable ? ' is-copied' : ''}`}
                           title={`Copy ${row.cssVariable}`}
                         >
-                          <code style={codeWrapStyle}>{row.cssVariable}</code>
-                          <span style={copyGlyphStyle} aria-hidden="true">
+                          <code style={{ ...codeWrapStyle, ...copyValueStyle }}>{row.cssVariable}</code>
+                          <span className="tokens-copy-glyph" style={copyGlyphStyle} aria-hidden="true">
                             <Icon name="copy" variant="solid" size={14} color="#5f6470" />
                           </span>
                         </button>
@@ -1634,9 +1634,7 @@ const codeWrapStyle: CSSProperties = {
 };
 
 const copyButtonStyle: CSSProperties = {
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: '0.35rem',
+  display: 'inline-block',
   border: '1px solid rgba(0,0,0,0.1)',
   borderRadius: '0.45rem',
   background: '#ffffff',
@@ -1647,7 +1645,12 @@ const copyButtonStyle: CSSProperties = {
   textAlign: 'left',
   position: 'relative',
   width: '100%',
-  justifyContent: 'space-between',
+};
+
+const copyValueStyle: CSSProperties = {
+  display: 'block',
+  width: '100%',
+  paddingRight: '2rem',
 };
 
 const copyButtonInteractiveStyle = `
@@ -1655,6 +1658,18 @@ const copyButtonInteractiveStyle = `
   .tokens-copy-button:focus-visible {
     background: #f7f7f8!important;
     border-color: rgba(0,0,0,0.18);
+  }
+
+  .tokens-copy-button .tokens-copy-glyph {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.96);
+    transition: opacity 140ms ease, transform 140ms ease;
+  }
+
+  .tokens-copy-button:hover .tokens-copy-glyph,
+  .tokens-copy-button:focus-visible .tokens-copy-glyph {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
   }
 
   .tokens-copy-button.is-copied::after {
@@ -1675,7 +1690,7 @@ const copyButtonInteractiveStyle = `
 `;
 
 const copyGlyphStyle: CSSProperties = {
-  display: 'inline-flex',
+  display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   width: '1.35rem',
@@ -1685,6 +1700,11 @@ const copyGlyphStyle: CSSProperties = {
   background: '#fff',
   color: '#5f6470',
   flexShrink: 0,
+  position: 'absolute',
+  top: '50%',
+  right: '0.45rem',
+  transform: 'translateY(-50%)',
+  pointerEvents: 'none',
 };
 
 const contrastSpecimenCardStyle: CSSProperties = {
@@ -1726,14 +1746,16 @@ const toggleButtonStyle: CSSProperties = {
 const diagnosticBadgeStyle = (status: ResolveStatus): CSSProperties => ({
   borderRadius: '999px',
   fontSize: '0.68rem',
-  padding: '0.16rem 0.45rem',
+  padding: '0.08rem 0.45rem',
   background: status === 'missing-ref' ? '#fff4e5' : status === 'cycle' ? '#fceef3' : '#fdeceb',
   color: status === 'missing-ref' ? '#8c5a1b' : status === 'cycle' ? '#8a2a4b' : '#8e1f28',
 });
 
 const diffBadgeStyle = (status: SnapshotDiffStatus): CSSProperties => ({
-  borderRadius: '999px',
-  fontSize: '0.68rem',
+  borderRadius: '4px',
+  fontSize: '0.8rem',
+  fontWeight: 570,
+  lineHeight: '1rem',
   padding: '0.16rem 0.45rem',
   background:
     status === 'added'

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-02-15T22:21:56.729Z",
+  "generatedAt": "2026-02-15T22:48:07.359Z",
   "themes": [
     "engage",
     "legacy"
@@ -1116,6 +1116,7 @@
     },
     "shadows.l": {
       "type": "boxShadow",
+      "alias": "x: 0 | y: 4 | blur: 16 | spread: 0 | color: rgba(21,21,21,0.2) | type: dropShadow",
       "cssVariable": "--shadows-l",
       "valuesByTheme": {
         "engage": "box-shadow: 0 4 16 0 rgba(21,21,21,0.2);",
@@ -1124,6 +1125,7 @@
     },
     "shadows.m": {
       "type": "boxShadow",
+      "alias": "x: 0 | y: 2 | blur: 12 | spread: 0 | color: rgba(21,21,21,0.2) | type: dropShadow",
       "cssVariable": "--shadows-m",
       "valuesByTheme": {
         "engage": "box-shadow: 0 2 12 0 rgba(21,21,21,0.2);",
@@ -1132,6 +1134,7 @@
     },
     "shadows.s": {
       "type": "boxShadow",
+      "alias": "x: 0 | y: 2 | blur: 8 | spread: 0 | color: rgba(21,21,21,0.2) | type: dropShadow",
       "cssVariable": "--shadows-s",
       "valuesByTheme": {
         "engage": "box-shadow: 0 2 8 0 rgba(21,21,21,0.2);",
@@ -1716,7 +1719,7 @@
     },
     "typography.body.1": {
       "type": "typography",
-      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.380 | fontSize: FontSize.body.1",
+      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.380 | fontSize: FontSize.body.1 | lineHeight: 18px",
       "cssVariable": "--typography-body-1",
       "valuesByTheme": {
         "engage": "font-family: Saans; font-weight: Regular; font-size: 16; line-height: 18px;",
@@ -1725,7 +1728,7 @@
     },
     "typography.body.1-medium": {
       "type": "typography",
-      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.570 | fontSize: FontSize.body.1",
+      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.570 | fontSize: FontSize.body.1 | lineHeight: 18px",
       "cssVariable": "--typography-body-1-medium",
       "valuesByTheme": {
         "engage": "font-family: Saans; font-weight: Medium; font-size: 16; line-height: 18px;",
@@ -1734,7 +1737,7 @@
     },
     "typography.body.1-strong": {
       "type": "typography",
-      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.670 | fontSize: FontSize.body.1",
+      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.670 | fontSize: FontSize.body.1 | lineHeight: 18px",
       "cssVariable": "--typography-body-1-strong",
       "valuesByTheme": {
         "engage": "font-family: Saans; font-weight: SemiBold; font-size: 16; line-height: 18px;",
@@ -1743,7 +1746,7 @@
     },
     "typography.body.2": {
       "type": "typography",
-      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.380 | fontSize: FontSize.body.2",
+      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.380 | fontSize: FontSize.body.2 | lineHeight: 16px | letterSpacing: 1.5%",
       "cssVariable": "--typography-body-2",
       "valuesByTheme": {
         "engage": "font-family: Saans; font-weight: Regular; font-size: 14; line-height: 16px; letter-spacing: 1.5%;",
@@ -1752,7 +1755,7 @@
     },
     "typography.body.2-link": {
       "type": "typography",
-      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.380 | fontSize: FontSize.body.2",
+      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.380 | fontSize: FontSize.body.2 | lineHeight: 16px | letterSpacing: 1.5%",
       "cssVariable": "--typography-body-2-link",
       "valuesByTheme": {
         "engage": "font-family: Saans; font-weight: Regular; font-size: 14; line-height: 16px; letter-spacing: 1.5%;",
@@ -1761,16 +1764,16 @@
     },
     "typography.body.2-long": {
       "type": "typography",
-      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.380 | fontSize: FontSize.body.2 | lineHeight: LineHeights.MultiLine.l",
+      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.380 | fontSize: FontSize.body.2 | lineHeight: LineHeights.MultiLine.l | letterSpacing: 1.5%",
       "cssVariable": "--typography-body-2-long",
       "valuesByTheme": {
-        "engage": "font-family: Saans; font-weight: Regular; font-size: 14; line-height: 21; letter-spacing: 1.5%;",
+        "engage": "font-family: Saans; font-weight: Regular; font-size: 14; line-height: 21px; letter-spacing: 1.5%;",
         "legacy": "font-family: Saans; font-weight: Regular; font-size: 14; line-height: 21; letter-spacing: 1.5%;"
       }
     },
     "typography.body.2-strong": {
       "type": "typography",
-      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.570 | fontSize: FontSize.body.2",
+      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.570 | fontSize: FontSize.body.2 | lineHeight: 16px | letterSpacing: 1.5%",
       "cssVariable": "--typography-body-2-strong",
       "valuesByTheme": {
         "engage": "font-family: Saans; font-weight: Medium; font-size: 14; line-height: 16px; letter-spacing: 1.5%;",
@@ -1779,7 +1782,7 @@
     },
     "typography.caption.1": {
       "type": "typography",
-      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.380 | fontSize: FontSize.caption.1",
+      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.380 | fontSize: FontSize.caption.1 | lineHeight: 14px | letterSpacing: 1.5%",
       "cssVariable": "--typography-caption-1",
       "valuesByTheme": {
         "engage": "font-family: Saans; font-weight: Regular; font-size: 12; line-height: 14px; letter-spacing: 1.5%;",
@@ -1788,7 +1791,7 @@
     },
     "typography.caption.1-strong": {
       "type": "typography",
-      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.570 | fontSize: FontSize.caption.1",
+      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.570 | fontSize: FontSize.caption.1 | lineHeight: 14px | letterSpacing: 1.5%",
       "cssVariable": "--typography-caption-1-strong",
       "valuesByTheme": {
         "engage": "font-family: Saans; font-weight: Medium; font-size: 12; line-height: 14px; letter-spacing: 1.5%;",
@@ -1797,7 +1800,7 @@
     },
     "typography.display.1": {
       "type": "typography",
-      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.670 | fontSize: FontSize.display.1",
+      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.670 | fontSize: FontSize.display.1 | lineHeight: 30px",
       "cssVariable": "--typography-display-1",
       "valuesByTheme": {
         "engage": "font-family: Saans; font-weight: SemiBold; font-size: 36; line-height: 30px;",
@@ -1806,7 +1809,7 @@
     },
     "typography.display.2": {
       "type": "typography",
-      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.670 | fontSize: FontSize.display.2",
+      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.670 | fontSize: FontSize.display.2 | lineHeight: 20px",
       "cssVariable": "--typography-display-2",
       "valuesByTheme": {
         "engage": "font-family: Saans; font-weight: SemiBold; font-size: 32; line-height: 20px;",
@@ -1815,7 +1818,7 @@
     },
     "typography.heading.1": {
       "type": "typography",
-      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.670 | fontSize: FontSize.heading.1",
+      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.670 | fontSize: FontSize.heading.1 | lineHeight: 30px",
       "cssVariable": "--typography-heading-1",
       "valuesByTheme": {
         "engage": "font-family: Saans; font-weight: SemiBold; font-size: 28; line-height: 30px;",
@@ -1824,7 +1827,7 @@
     },
     "typography.heading.2": {
       "type": "typography",
-      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.570 | fontSize: FontSize.heading.2",
+      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.570 | fontSize: FontSize.heading.2 | lineHeight: 20px",
       "cssVariable": "--typography-heading-2",
       "valuesByTheme": {
         "engage": "font-family: Saans; font-weight: Medium; font-size: 18; line-height: 20px;",
@@ -1833,7 +1836,7 @@
     },
     "typography.heading.3": {
       "type": "typography",
-      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.300 | fontSize: FontSize.heading.3",
+      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.300 | fontSize: FontSize.heading.3 | lineHeight: 20px",
       "cssVariable": "--typography-heading-3",
       "valuesByTheme": {
         "engage": "font-family: Saans; font-weight: Light; font-size: 18; line-height: 20px;",

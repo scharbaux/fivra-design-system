@@ -8,6 +8,7 @@ import {
   evaluateA11yForTheme,
   resolveReferenceDetailed,
 } from '../TokensTable';
+import tokenSnapshot from '../token-snapshot.json';
 import { getCategoryIntro } from '../token-category-intros';
 import { TOKEN_A11Y_RULES } from '../token-a11y-rules';
 
@@ -75,6 +76,16 @@ describe('TokensTable data model', () => {
       },
     });
     expect(withRemoved.summary.removed).toBeGreaterThan(0);
+  });
+
+  it('keeps the committed token snapshot aligned with computed rows', () => {
+    const diff = buildSnapshotDiff(rows, tokenSnapshot);
+    const changedPaths = diff.rows
+      .filter((row) => row.diffStatus === 'changed')
+      .map((row) => row.path.join('.'));
+    expect(changedPaths, `Changed rows: ${changedPaths.join(', ')}`).toEqual([]);
+    expect(diff.summary.added).toBe(0);
+    expect(diff.summary.removed).toBe(0);
   });
 
   it('resolves category intros with curated and fallback content', () => {
