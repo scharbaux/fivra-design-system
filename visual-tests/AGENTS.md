@@ -23,3 +23,4 @@ This directory extends the repository root `AGENTS.md`. Use Playwright-based vis
 - 1.1.6: Added Angular Button Storybook health checks that fail on page/console errors and renderer unresponsiveness to catch hung iframe regressions earlier.
 - 1.1.7: Moved Angular dropdown/loading coverage out of `button.spec.ts` screenshots and into the dedicated Angular health check because Playwright screenshot capture against composed Angular iframes was timing out unreliably.
 - 1.1.8: Applied Linux-tolerant per-story screenshot diff ratios (`secondary`, `tertiary`, `with-icons`) while keeping stricter defaults for remaining button visual scenarios.
+- 1.2.0: Added Box visual regression coverage for React and Vue Storybook stories, including token spacing, layout alignment, background utilities, and nested composition specimens.

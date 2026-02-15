@@ -165,3 +165,4 @@ Slots: `leading-icon`, default, and `trailing-icon` provide icon/labelling parit
 - 1.12.1: Updated Button internals and tests to consume semantic color overrides through the new shared button core while preserving compatibility re-exports.
 - 1.12.2: Removed `src/components/Button` compatibility shim files (`button.styles.ts`, `color-overrides.ts`) after migrating internal consumers to `@shared/button/*`.
 - 1.12.3: Cleaned AGENTS history wording to reflect the current shared-button-core model centered on `src/shared/button`.
+- 1.13.0: Refactored the React Button structure to compose the Box primitive for the root and internal wrappers while preserving the existing button API and data-attribute contract.

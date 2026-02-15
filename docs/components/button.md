@@ -1,6 +1,7 @@
 # Button
 
 The Button component exposes an accessible, themeable action trigger implemented both as a React component and as a standards-based custom element. Styles, variants, and sizing tokens are shared across targets so teams can mix frameworks without visual drift.
+React and Vue Storybook adapters compose the Box primitive as their structural wrapper so layout/reset behavior stays consistent with other primitives.
 
 Refer to the [Button component contract](../../src/components/Button/AGENTS.md#component-contract) for the authoritative list of variants, sizes, accessibility requirements, and framework-specific props. Update that contract alongside this page when behavior shifts.
 

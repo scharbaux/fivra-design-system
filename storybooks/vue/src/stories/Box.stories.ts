@@ -1,10 +1,11 @@
-import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from '@storybook/vue3';
 
-import { Button } from '@components/Button';
-import { Box } from '@components/Box';
-import { Icon } from '@components/Icon';
-import { Typography } from '@components/Typography';
+import {
+  BUTTON_CLASS_NAME,
+  BUTTON_ICON_CLASS,
+  BUTTON_LABEL_CLASS,
+  ensureButtonStyles,
+} from '@shared/button/button.styles';
 import {
   backgroundColorTokenOptions,
   borderColorTokenOptions,
@@ -14,6 +15,7 @@ import {
   spacingTokenOptions,
   textColorTokenOptions,
 } from '@styles/themes/storybook-token-options.generated';
+import { FivraBoxPreview, type VueBoxStoryArgs } from './Box.preview';
 
 const DEFAULT_OPTION = '(default)';
 const DEFAULT_MAPPING = { [DEFAULT_OPTION]: undefined } as const;
@@ -31,26 +33,21 @@ const RADIUS_OPTIONS = [DEFAULT_OPTION, ...radiusTokenOptions] as const;
 const BORDER_WIDTH_OPTIONS = [DEFAULT_OPTION, ...borderWidthTokenOptions] as const;
 const SHADOW_OPTIONS = [DEFAULT_OPTION, ...shadowTokenOptions] as const;
 
-const PADDING_AND_MARGIN_TOKENS_SOURCE = `<Box backgroundColor="background-neutral-6" p="spacing-xl" gap="spacing-m" display="grid">
-  <Box backgroundColor="background-neutral-0" p="spacing-m" borderRadius="radius-m">
-    Base padding applied via <code>p</code> with Engage spacing tokens.
-  </Box>
-  <Box
-    backgroundColor="background-neutral-0"
-    p="spacing-m"
-    borderRadius="radius-m"
-    mb="spacing-s"
-  >
-    Bottom margin tokens like <code>mb</code> space stacked content consistently.
-  </Box>
-  <Box backgroundColor="background-neutral-0" px="spacing-l" py="spacing-s" borderRadius="radius-m">
-    Axis shorthands (
-    <code>px</code>, <code>py</code>
-    ) cascade until side-specific overrides are provided.
-  </Box>
-</Box>`;
+ensureButtonStyles();
 
-const FLEX_ALIGNMENT_SOURCE = `<Box
+const PADDING_AND_MARGIN_TOKENS_SOURCE = `<FivraBoxPreview backgroundColor="background-neutral-6" p="spacing-xl" gap="spacing-m" display="grid">
+  <FivraBoxPreview backgroundColor="background-neutral-0" p="spacing-m" borderRadius="radius-m">
+    Base padding applied via <code>p</code> with Engage spacing tokens.
+  </FivraBoxPreview>
+  <FivraBoxPreview backgroundColor="background-neutral-0" p="spacing-m" borderRadius="radius-m" mb="spacing-s">
+    Bottom margin tokens like <code>mb</code> space stacked content consistently.
+  </FivraBoxPreview>
+  <FivraBoxPreview backgroundColor="background-neutral-0" px="spacing-l" py="spacing-s" borderRadius="radius-m">
+    Axis shorthands (<code>px</code>, <code>py</code>) cascade until side-specific overrides are provided.
+  </FivraBoxPreview>
+</FivraBoxPreview>`;
+
+const FLEX_ALIGNMENT_SOURCE = `<FivraBoxPreview
   display="flex"
   gap="spacing-l"
   alignItems="center"
@@ -59,11 +56,11 @@ const FLEX_ALIGNMENT_SOURCE = `<Box
   backgroundColor="background-neutral-0"
   borderRadius="radius-l"
 >
-  <Box backgroundColor="background-neutral-6" p="spacing-s" borderRadius="radius-s">
+  <FivraBoxPreview backgroundColor="background-neutral-6" p="spacing-s" borderRadius="radius-s">
     Start
-  </Box>
-  <Box display="flex" gap="spacing-s" alignItems="center">
-    <Box
+  </FivraBoxPreview>
+  <FivraBoxPreview display="flex" gap="spacing-s" alignItems="center">
+    <FivraBoxPreview
       backgroundColor="background-primary-interactive"
       color="background-neutral-0"
       p="spacing-xs"
@@ -73,8 +70,8 @@ const FLEX_ALIGNMENT_SOURCE = `<Box
       alignItems="flex-start"
     >
       Flex child
-    </Box>
-    <Box
+    </FivraBoxPreview>
+    <FivraBoxPreview
       backgroundColor="background-secondary-interactive"
       color="text-neutral-6"
       p="spacing-xs"
@@ -84,23 +81,23 @@ const FLEX_ALIGNMENT_SOURCE = `<Box
       justifyContent="center"
     >
       Aligns center
-    </Box>
-  </Box>
-</Box>`;
+    </FivraBoxPreview>
+  </FivraBoxPreview>
+</FivraBoxPreview>`;
 
-const BACKGROUND_UTILITIES_SOURCE = `<Box display="grid" gap="spacing-m" p="spacing-m" backgroundColor="background-neutral-6" borderRadius="radius-l">
-  <Box backgroundColor="background-primary-interactive" color="text-neutral-6" p="spacing-m" borderRadius="radius-m">
+const BACKGROUND_UTILITIES_SOURCE = `<FivraBoxPreview display="grid" gap="spacing-m" p="spacing-m" backgroundColor="background-neutral-6" borderRadius="radius-l">
+  <FivraBoxPreview backgroundColor="background-primary-interactive" color="text-neutral-6" p="spacing-m" borderRadius="radius-m">
     Primary background
-  </Box>
-  <Box backgroundColor="background-secondary-interactive" color="text-neutral-6" p="spacing-m" borderRadius="radius-m">
+  </FivraBoxPreview>
+  <FivraBoxPreview backgroundColor="background-secondary-interactive" color="text-neutral-6" p="spacing-m" borderRadius="radius-m">
     Secondary background
-  </Box>
-  <Box backgroundColor="background-tertiary-interactive" color="text-neutral-1" p="spacing-m" borderRadius="radius-m">
+  </FivraBoxPreview>
+  <FivraBoxPreview backgroundColor="background-tertiary-interactive" color="text-neutral-1" p="spacing-m" borderRadius="radius-m">
     Tertiary background
-  </Box>
-</Box>`;
+  </FivraBoxPreview>
+</FivraBoxPreview>`;
 
-const NESTED_COMPOSITION_SOURCE = `<Box
+const NESTED_COMPOSITION_SOURCE = `<FivraBoxPreview
   display="grid"
   gap="spacing-l"
   p="spacing-l"
@@ -108,7 +105,7 @@ const NESTED_COMPOSITION_SOURCE = `<Box
   borderRadius="radius-l"
   justifyContent="center"
 >
-  <Box
+  <FivraBoxPreview
     display="grid"
     gap="spacing-l"
     backgroundColor="background-neutral-0"
@@ -116,43 +113,60 @@ const NESTED_COMPOSITION_SOURCE = `<Box
     p="spacing-xl"
     width="400px"
   >
-    <Box display="flex" justifyContent="space-between">
-      <Typography variant="body-1-strong">Card title</Typography>
-      <Button
+    <FivraBoxPreview display="flex" justifyContent="space-between" alignItems="center">
+      <strong>Card title</strong>
+      <button
+        type="button"
+        class="${BUTTON_CLASS_NAME}"
+        data-variant="tertiary"
+        data-size="md"
+        data-icon-only="true"
+        data-has-label="false"
         aria-label="Close modal"
-        iconOnly
-        leadingIcon={<Icon aria-hidden="true" name="close" variant="outline" />}
-        onClick={() => {}}
-        variant="tertiary"
       >
-        Button
-      </Button>
-    </Box>
+        <span class="${BUTTON_ICON_CLASS}" data-empty="false">×</span>
+        <span class="${BUTTON_LABEL_CLASS}" data-empty="true"></span>
+      </button>
+    </FivraBoxPreview>
 
-    <Box color="text-neutral-2">
-      <Typography variant="body-2-long">
-        Reusable layout primitive enables nested shells without bespoke wrappers, ensuring consistent
-        spacing and token usage.
-      </Typography>
-    </Box>
+    <FivraBoxPreview color="text-neutral-2">
+      Reusable layout primitive enables nested shells without bespoke wrappers, ensuring consistent
+      spacing and token usage.
+    </FivraBoxPreview>
 
-    <Box
+    <FivraBoxPreview
       display="flex"
       gap="spacing-s"
       justifyContent="space-between"
-      style={{ borderTop: '1px solid var(--borderNeutral5)' }}
+      :style="{ borderTop: '1px solid var(--borderNeutral5)' }"
       pt="spacing-m"
     >
-      <Button variant="secondary">Cancel</Button>
-      <Button variant="primary">Primary Action</Button>
-    </Box>
-  </Box>
-</Box>`;
+      <button
+        type="button"
+        class="${BUTTON_CLASS_NAME}"
+        data-variant="secondary"
+        data-size="md"
+        data-has-label="true"
+      >
+        <span class="${BUTTON_LABEL_CLASS}" data-empty="false">Cancel</span>
+      </button>
+      <button
+        type="button"
+        class="${BUTTON_CLASS_NAME}"
+        data-variant="primary"
+        data-size="md"
+        data-has-label="true"
+      >
+        <span class="${BUTTON_LABEL_CLASS}" data-empty="false">Primary Action</span>
+      </button>
+    </FivraBoxPreview>
+  </FivraBoxPreview>
+</FivraBoxPreview>`;
 
-const meta: Meta<typeof Box> = {
+const meta: Meta<VueBoxStoryArgs> = {
   title: 'Atomics/Box',
-  id: 'atomics-box-react',
-  component: Box,
+  id: 'atomics-box-vue',
+  component: FivraBoxPreview,
   tags: ['autodocs'],
   argTypes: {
     as: {
@@ -375,32 +389,30 @@ const meta: Meta<typeof Box> = {
 
 export default meta;
 
-type Story = StoryObj<typeof Box>;
+type Story = StoryObj<VueBoxStoryArgs>;
 
 export const PaddingAndMarginTokens: Story = {
   name: 'Padding & margin tokens',
-  render: () => (
-    <Box backgroundColor="background-neutral-6" p="spacing-xl" gap="spacing-m" display="grid">
-      <Box backgroundColor="background-neutral-0" p="spacing-m" borderRadius="radius-m">
-        Base padding applied via <code>p</code> with Engage spacing tokens.
-      </Box>
-      <Box
-        backgroundColor="background-neutral-0"
-        p="spacing-m"
-        borderRadius="radius-m"
-        mb="spacing-s"
-      >
-        Bottom margin tokens like <code>mb</code> space stacked content consistently.
-      </Box>
-      <Box backgroundColor="background-neutral-0" px="spacing-l" py="spacing-s" borderRadius="radius-m">
-        Axis shorthands (`px`, `py`) cascade until side-specific overrides are provided.
-      </Box>
-    </Box>
-  ),
+  render: () => ({
+    components: { FivraBoxPreview },
+    template: `
+      <FivraBoxPreview backgroundColor="background-neutral-6" p="spacing-xl" gap="spacing-m" display="grid">
+        <FivraBoxPreview backgroundColor="background-neutral-0" p="spacing-m" borderRadius="radius-m">
+          Base padding applied via <code>p</code> with Engage spacing tokens.
+        </FivraBoxPreview>
+        <FivraBoxPreview backgroundColor="background-neutral-0" p="spacing-m" borderRadius="radius-m" mb="spacing-s">
+          Bottom margin tokens like <code>mb</code> space stacked content consistently.
+        </FivraBoxPreview>
+        <FivraBoxPreview backgroundColor="background-neutral-0" px="spacing-l" py="spacing-s" borderRadius="radius-m">
+          Axis shorthands (<code>px</code>, <code>py</code>) cascade until side-specific overrides are provided.
+        </FivraBoxPreview>
+      </FivraBoxPreview>
+    `,
+  }),
   parameters: {
     docs: {
       source: {
-        language: 'tsx',
+        language: 'html',
         code: PADDING_AND_MARGIN_TOKENS_SOURCE,
       },
       description: {
@@ -412,25 +424,52 @@ export const PaddingAndMarginTokens: Story = {
 };
 
 export const FlexAlignment: Story = {
-  render: () => (
-    <Box display="flex" gap="spacing-l" alignItems="center" justifyContent="space-between" p="spacing-m" backgroundColor="background-neutral-0" borderRadius="radius-l">
-      <Box backgroundColor="background-neutral-6" p="spacing-s" borderRadius="radius-s">
-        Start
-      </Box>
-      <Box display="flex" gap="spacing-s" alignItems="center">
-        <Box backgroundColor="background-primary-interactive" color="background-neutral-0" p="spacing-xs" borderRadius="radius-xs" width="200px" display="flex" alignItems="flex-start">
-          Flex child
-        </Box>
-        <Box backgroundColor="background-secondary-interactive" color="text-neutral-6" p="spacing-xs" borderRadius="radius-xs" width="200px" display="flex" justifyContent="center">
-          Aligns center
-        </Box>
-      </Box>
-    </Box>
-  ),
+  render: () => ({
+    components: { FivraBoxPreview },
+    template: `
+      <FivraBoxPreview
+        display="flex"
+        gap="spacing-l"
+        alignItems="center"
+        justifyContent="space-between"
+        p="spacing-m"
+        backgroundColor="background-neutral-0"
+        borderRadius="radius-l"
+      >
+        <FivraBoxPreview backgroundColor="background-neutral-6" p="spacing-s" borderRadius="radius-s">
+          Start
+        </FivraBoxPreview>
+        <FivraBoxPreview display="flex" gap="spacing-s" alignItems="center">
+          <FivraBoxPreview
+            backgroundColor="background-primary-interactive"
+            color="background-neutral-0"
+            p="spacing-xs"
+            borderRadius="radius-xs"
+            width="200px"
+            display="flex"
+            alignItems="flex-start"
+          >
+            Flex child
+          </FivraBoxPreview>
+          <FivraBoxPreview
+            backgroundColor="background-secondary-interactive"
+            color="text-neutral-6"
+            p="spacing-xs"
+            borderRadius="radius-xs"
+            width="200px"
+            display="flex"
+            justifyContent="center"
+          >
+            Aligns center
+          </FivraBoxPreview>
+        </FivraBoxPreview>
+      </FivraBoxPreview>
+    `,
+  }),
   parameters: {
     docs: {
       source: {
-        language: 'tsx',
+        language: 'html',
         code: FLEX_ALIGNMENT_SOURCE,
       },
       description: {
@@ -442,23 +481,26 @@ export const FlexAlignment: Story = {
 };
 
 export const BackgroundUtilities: Story = {
-  render: () => (
-    <Box display="grid" gap="spacing-m" p="spacing-m" backgroundColor="background-neutral-6" borderRadius="radius-l">
-      <Box backgroundColor="background-primary-interactive" color="text-neutral-6" p="spacing-m" borderRadius="radius-m">
-        Primary background
-      </Box>
-      <Box backgroundColor="background-secondary-interactive" color="text-neutral-6" p="spacing-m" borderRadius="radius-m">
-        Secondary background
-      </Box>
-      <Box backgroundColor="background-tertiary-interactive" color="text-neutral-1" p="spacing-m" borderRadius="radius-m">
-        Tertiary background
-      </Box>
-    </Box>
-  ),
+  render: () => ({
+    components: { FivraBoxPreview },
+    template: `
+      <FivraBoxPreview display="grid" gap="spacing-m" p="spacing-m" backgroundColor="background-neutral-6" borderRadius="radius-l">
+        <FivraBoxPreview backgroundColor="background-primary-interactive" color="text-neutral-6" p="spacing-m" borderRadius="radius-m">
+          Primary background
+        </FivraBoxPreview>
+        <FivraBoxPreview backgroundColor="background-secondary-interactive" color="text-neutral-6" p="spacing-m" borderRadius="radius-m">
+          Secondary background
+        </FivraBoxPreview>
+        <FivraBoxPreview backgroundColor="background-tertiary-interactive" color="text-neutral-1" p="spacing-m" borderRadius="radius-m">
+          Tertiary background
+        </FivraBoxPreview>
+      </FivraBoxPreview>
+    `,
+  }),
   parameters: {
     docs: {
       source: {
-        language: 'tsx',
+        language: 'html',
         code: BACKGROUND_UTILITIES_SOURCE,
       },
       description: {
@@ -470,39 +512,86 @@ export const BackgroundUtilities: Story = {
 };
 
 export const NestedComposition: Story = {
-  render: () => (
-    <Box display="grid" gap="spacing-l" p="spacing-l" backgroundColor="background-neutral-6" borderRadius="radius-l" justifyContent="center">
-      <Box display="grid" gap="spacing-l" backgroundColor="background-neutral-0" borderRadius="radius-m" p="spacing-xl" width="400px">
-        <Box display="flex" justifyContent="space-between">
-          <Typography variant="body-1-strong">Card title</Typography>
-          <Button
-            aria-label="Close modal"
-            iconOnly
-            leadingIcon={<Icon aria-hidden="true" name="close" variant="outline" />}
-            onClick={() => {}}
-            variant="tertiary"
+  render: () => ({
+    components: { FivraBoxPreview },
+    template: `
+      <FivraBoxPreview
+        display="grid"
+        gap="spacing-l"
+        p="spacing-l"
+        backgroundColor="background-neutral-6"
+        borderRadius="radius-l"
+        justifyContent="center"
+      >
+        <FivraBoxPreview
+          display="grid"
+          gap="spacing-l"
+          backgroundColor="background-neutral-0"
+          borderRadius="radius-m"
+          p="spacing-xl"
+          width="400px"
+        >
+          <FivraBoxPreview display="flex" justifyContent="space-between" alignItems="center">
+            <strong>Card title</strong>
+            <button
+              type="button"
+              :class="buttonClassName"
+              data-variant="tertiary"
+              data-size="md"
+              data-icon-only="true"
+              data-has-label="false"
+              aria-label="Close modal"
+            >
+              <span :class="buttonIconClassName" data-empty="false">×</span>
+              <span :class="buttonLabelClassName" data-empty="true"></span>
+            </button>
+          </FivraBoxPreview>
+
+          <FivraBoxPreview color="text-neutral-2">
+            Reusable layout primitive enables nested shells without bespoke wrappers, ensuring consistent spacing and token usage.
+          </FivraBoxPreview>
+
+          <FivraBoxPreview
+            display="flex"
+            gap="spacing-s"
+            justifyContent="space-between"
+            :style="{ borderTop: '1px solid var(--borderNeutral5)' }"
+            pt="spacing-m"
           >
-            Button
-          </Button>
-        </Box>
-        <Box color="text-neutral-2">
-          <Typography variant="body-2-long">Reusable layout primitive enables nested shells without bespoke wrappers, ensuring consistent spacing and token usage.</Typography>
-        </Box>
-        <Box display="flex" gap="spacing-s" justifyContent="space-between" style={{ borderTop: '1px solid var(--borderNeutral5)' }} pt="spacing-m">
-          <Button variant="secondary">
-            Cancel
-          </Button>
-          <Button variant="primary">
-            Primary Action
-          </Button>
-        </Box>
-      </Box>
-    </Box>
-  ),
+            <button
+              type="button"
+              :class="buttonClassName"
+              data-variant="secondary"
+              data-size="md"
+              data-has-label="true"
+            >
+              <span :class="buttonLabelClassName" data-empty="false">Cancel</span>
+            </button>
+            <button
+              type="button"
+              :class="buttonClassName"
+              data-variant="primary"
+              data-size="md"
+              data-has-label="true"
+            >
+              <span :class="buttonLabelClassName" data-empty="false">Primary Action</span>
+            </button>
+          </FivraBoxPreview>
+        </FivraBoxPreview>
+      </FivraBoxPreview>
+    `,
+    setup() {
+      return {
+        buttonClassName: BUTTON_CLASS_NAME,
+        buttonIconClassName: BUTTON_ICON_CLASS,
+        buttonLabelClassName: BUTTON_LABEL_CLASS,
+      };
+    },
+  }),
   parameters: {
     docs: {
       source: {
-        language: 'tsx',
+        language: 'html',
         code: NESTED_COMPOSITION_SOURCE,
       },
       description: {

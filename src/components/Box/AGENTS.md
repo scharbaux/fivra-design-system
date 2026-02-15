@@ -17,3 +17,5 @@ This directory inherits the repository root `AGENTS.md` and `src/components/AGEN
 - 1.3.2: Refined the Storybook nested composition example markup so icon usage matches current Button/Icon consumption patterns.
 - 1.3.3: Added centralized token-backed Storybook select controls for Box props (spacing, colors, radius, border width, shadow presets, and polymorphic/layout options).
 - 1.3.4: Added `shadow-{level}` preset support (`shadow-s|m|l`) and corrected border-width token variable mapping to `--borderwidth*` names.
+- 1.4.0: Moved Box style/token resolution into shared helpers consumed by React and Vue stories, and added helper-focused unit coverage.
+- 1.4.1: Added a cross-framework Box story parity test to guard React/Vue argTypes and story export alignment.

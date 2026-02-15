@@ -17,6 +17,7 @@ import {
 import type { ButtonColor } from "@shared/button/color-overrides";
 import { createButtonColorOverrides } from "@shared/button/color-overrides";
 import { defineFivraButton } from "@web-components";
+import { FivraBoxPreview } from "./Box.preview";
 
 ensureButtonStyles();
 
@@ -157,9 +158,10 @@ const FivraButtonPreview = defineComponent({
 
     return () =>
       h(
-        "button",
+        FivraBoxPreview,
         {
-          class: BUTTON_CLASS_NAME,
+          as: "button",
+          className: BUTTON_CLASS_NAME,
           type: props.type,
           disabled: props.disabled || props.loading,
           "data-variant": props.variant ?? "primary",
@@ -177,46 +179,53 @@ const FivraButtonPreview = defineComponent({
           "aria-busy": props.loading ? "true" : undefined,
           onClick: handleClick,
         },
-        [
-          props.loading
-            ? h("span", {
-                class: BUTTON_SPINNER_CLASS,
+        {
+          default: () => [
+            props.loading
+              ? h(FivraBoxPreview, {
+                  as: "span",
+                  className: BUTTON_SPINNER_CLASS,
+                  "aria-hidden": "true",
+                })
+              : null,
+            h(
+              FivraBoxPreview,
+              {
+                as: "span",
+                className: `${BUTTON_ICON_CLASS} ${BUTTON_LEADING_ICON_CLASS}`,
                 "aria-hidden": "true",
-              })
-            : null,
-          h(
-            "span",
-            {
-              class: `${BUTTON_ICON_CLASS} ${BUTTON_LEADING_ICON_CLASS}`,
-              "aria-hidden": "true",
-              "data-empty": props.leadingIcon ? undefined : "true",
-            },
-            props.leadingIcon ?? null,
-          ),
-          h(
-            "span",
-            {
-              class: BUTTON_LABEL_CLASS,
-              "data-empty": resolvedHasLabel.value ? undefined : "true",
-            },
-            resolvedHasLabel.value ? props.children || props.label || "" : null,
-          ),
-          h(
-            "span",
-            {
-              class: `${BUTTON_ICON_CLASS} ${BUTTON_TRAILING_ICON_CLASS}`,
-              "aria-hidden": "true",
-              "data-empty": props.trailingIcon ? undefined : "true",
-            },
-            props.trailingIcon ?? null,
-          ),
-          props.dropdown
-            ? h("span", {
-                class: BUTTON_CARET_CLASS,
+                "data-empty": props.leadingIcon ? undefined : "true",
+              },
+              { default: () => props.leadingIcon ?? null },
+            ),
+            h(
+              FivraBoxPreview,
+              {
+                as: "span",
+                className: BUTTON_LABEL_CLASS,
+                "data-empty": resolvedHasLabel.value ? undefined : "true",
+              },
+              { default: () => (resolvedHasLabel.value ? props.children || props.label || "" : null) },
+            ),
+            h(
+              FivraBoxPreview,
+              {
+                as: "span",
+                className: `${BUTTON_ICON_CLASS} ${BUTTON_TRAILING_ICON_CLASS}`,
                 "aria-hidden": "true",
-              })
-            : null,
-        ],
+                "data-empty": props.trailingIcon ? undefined : "true",
+              },
+              { default: () => props.trailingIcon ?? null },
+            ),
+            props.dropdown
+              ? h(FivraBoxPreview, {
+                  as: "span",
+                  className: BUTTON_CARET_CLASS,
+                  "aria-hidden": "true",
+                })
+              : null,
+          ],
+        },
       );
   },
 });

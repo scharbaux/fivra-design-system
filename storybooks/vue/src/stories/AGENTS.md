@@ -16,3 +16,5 @@ This directory inherits guidance from the repository root, `storybooks/AGENTS.md
 - 1.6.0: Updated stories to prefer the `label` prop and semantic `color` alias for copy-pasteable consumer-facing examples.
 - 1.6.1: Removed redundant `tone` story props after consolidating semantic presets under `color`.
 - 1.6.2: Migrated Vue Button stories to use shared button style and color override modules from src/shared/button.
+- 1.7.0: Added Vue Box stories with React-parity controls/docs and explicit docs source snippets so code previews avoid Storybook render scaffolding.
+- 1.8.0: Extracted a reusable Vue Box preview module and refactored Vue Button stories to compose Box as the structural wrapper for the button specimen.

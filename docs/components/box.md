@@ -6,7 +6,8 @@ Review the [Box component contract](../../src/components/Box/AGENTS.md#component
 
 - Source: [`src/components/Box/Box.tsx`](../../src/components/Box/Box.tsx)
 - Styles: [`src/components/Box/box.styles.ts`](../../src/components/Box/box.styles.ts)
-- Stories: [`src/components/Box/Box.stories.tsx`](../../src/components/Box/Box.stories.tsx)
+- React stories: [`src/components/Box/Box.stories.tsx`](../../src/components/Box/Box.stories.tsx)
+- Vue stories: [`storybooks/vue/src/stories/Box.stories.ts`](../../storybooks/vue/src/stories/Box.stories.ts)
 
 ## React usage
 
@@ -100,3 +101,34 @@ Box relies on Engage CSS custom properties for background, text, radius, border 
 ```
 
 Wrap your feature area with `.dashboard-shell` (or switch `data-fivra-theme`) so the updated token values cascade into every Box instance.
+
+## Vue parity
+
+Vue Storybook uses the same Box token-resolution pipeline (`createBoxStyles`) and mirrors the React docs controls/argTypes so API behavior stays aligned across frameworks.
+
+### Vue Storybook adapter snippet
+
+```vue
+<template>
+  <FivraBoxPreview
+    as="section"
+    backgroundColor="background-neutral-0"
+    borderRadius="radius-l"
+    p="spacing-l"
+    display="grid"
+    gap="spacing-m"
+  >
+    <FivraBoxPreview as="h2" style="margin: 0">
+      Account summary
+    </FivraBoxPreview>
+    <FivraBoxPreview color="text-neutral-2">
+      Use spacing tokens (for example, <code>spacing-m</code>) for consistent gutters.
+    </FivraBoxPreview>
+  </FivraBoxPreview>
+</template>
+```
+
+### Story IDs used for cross-framework verification
+
+- React: `atomics-box-react--padding-and-margin-tokens`, `atomics-box-react--flex-alignment`, `atomics-box-react--background-utilities`, `atomics-box-react--nested-composition`
+- Vue: `atomics-box-vue--padding-and-margin-tokens`, `atomics-box-vue--flex-alignment`, `atomics-box-vue--background-utilities`, `atomics-box-vue--nested-composition`

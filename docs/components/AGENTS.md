@@ -18,3 +18,5 @@ This directory inherits the repository and `docs/` guidance. Keep component refe
 - 1.11.0: Updated Button documentation to cover semantic palette APIs and icon name convenience props.
 - 1.12.0: Updated Button documentation to prefer `label`, introduced semantic `color`, and documented direct color override props for token-driven customization.
 - 1.12.1: Removed `tone` from docs after consolidating semantic presets under `color`.
+- 1.13.0: Expanded Box docs with explicit Vue parity guidance, Storybook adapter snippets, and cross-framework story IDs used for visual verification.
+- 1.13.1: Updated Button docs to note that React and Vue adapters compose Box as a structural primitive.
