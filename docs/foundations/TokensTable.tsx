@@ -1501,12 +1501,13 @@ const summaryPillStyle: CSSProperties = {
 };
 
 const filterChipButtonStyle = (active: boolean): CSSProperties => ({
-  border: `1px solid ${active ? '#3f5efb' : 'rgba(0,0,0,0.14)'}`,
-  background: active ? '#eef2ff' : '#fff',
-  color: active ? '#293683' : '#2f3442',
+  border: `1px solid ${active ? 'rgba(0,0,0,0.14)' : '#3f5efb'}`,
+  background: active ? '#fff' : '#eef2ff',
+  color: active ? '#2f3442' : '#293683',
   borderRadius: '999px',
   padding: '0.24rem 0.62rem',
-  fontSize: '0.78rem',
+  fontSize: '0.9rem',
+  fontWeight: 570,
   cursor: 'pointer',
 });
 

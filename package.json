@@ -21,6 +21,7 @@
     "release": "changeset publish",
     "verify:agents": "node scripts/verify-agents-version.mjs",
     "verify:css-vars": "node scripts/verify-kebab-css-vars.mjs",
+    "verify:token-snapshot": "vitest run docs/foundations/__tests__/TokensTable.test.ts -t \"keeps the committed token snapshot aligned with computed rows\"",
     "verify:angular-button-isolation": "node scripts/verify-angular-button-isolation.mjs",
     "storybook:react": "cross-env STORYBOOK_REF_MODE=dev STORYBOOK_COMPOSE_ANGULAR=false STORYBOOK_COMPOSE_VUE=false storybook dev -p 6006",
     "storybook:react:compose": "cross-env STORYBOOK_REF_MODE=dev STORYBOOK_COMPOSE_ANGULAR=true STORYBOOK_COMPOSE_VUE=true storybook dev -p 6006",
