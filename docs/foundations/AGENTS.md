@@ -24,3 +24,4 @@ This directory inherits all requirements from `../AGENTS.md`. Follow the reposit
 - 1.15.7: Updated the TokensTable CSS-variable copy control so the copy icon overlays only on hover/focus without reserving layout space.
 - 1.15.8: Added a snapshot alignment test to ensure committed token baselines stay in sync with computed rows and avoid false composite-token change reports.
 - 1.15.9: Added type-grouped accordion sections with sticky headers in TokensTable, including session-persisted expand/collapse state and grouping helper tests.
+- 1.16.0: Refactored TokensTable into modular model/styles/presentational files (`TokensTable.model.ts`, `TokensTable.styles.ts`, `TokensTableRows.tsx`, `TokensTableSpecimen.tsx`) while preserving existing behavior and exports.
