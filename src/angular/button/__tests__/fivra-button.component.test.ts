@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 import {
+  BOX_CLASS_NAME,
   BUTTON_CARET_CLASS,
   BUTTON_ICON_CLASS,
   BUTTON_LABEL_CLASS,
@@ -128,6 +129,7 @@ describe('FivraButtonComponent', () => {
   it('renders defaults and core attributes', () => {
     const button = queryButton();
     expect(button).toBeTruthy();
+    expect(button.classList.contains(BOX_CLASS_NAME)).toBe(true);
     expect(button.dataset.variant).toBe(DEFAULT_BUTTON_VARIANT);
     expect(button.dataset.size).toBe(DEFAULT_BUTTON_SIZE);
     expect(button.dataset.hasLabel).toBe('true');
@@ -147,6 +149,9 @@ describe('FivraButtonComponent', () => {
     expect(leading?.getAttribute('data-empty')).toBe('true');
     expect(trailing?.getAttribute('data-empty')).toBe('true');
     expect(label?.getAttribute('data-empty')).toBeNull();
+    expect(leading?.classList.contains(BOX_CLASS_NAME)).toBe(true);
+    expect(trailing?.classList.contains(BOX_CLASS_NAME)).toBe(true);
+    expect(label?.classList.contains(BOX_CLASS_NAME)).toBe(true);
     expect(caret).toBeNull();
     expect(spinner).toBeNull();
   });

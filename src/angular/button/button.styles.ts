@@ -5,6 +5,7 @@ import {
 
 export { COLOR_MIX_SUPPORTS_DECLARATION };
 
+export const BOX_CLASS_NAME = 'fivra-box';
 export const BUTTON_CLASS_NAME = 'fivra-button';
 export const BUTTON_ICON_CLASS = `${BUTTON_CLASS_NAME}__icon`;
 export const BUTTON_LABEL_CLASS = `${BUTTON_CLASS_NAME}__label`;
@@ -23,6 +24,7 @@ export const DEFAULT_BUTTON_VARIANT: ButtonVariant = 'primary';
 export const DEFAULT_BUTTON_SIZE: ButtonSize = 'md';
 
 const BASE_CLASS = `.${BUTTON_CLASS_NAME}`;
+const BOX_BASE_CLASS = `.${BOX_CLASS_NAME}`;
 const ICON_CLASS = `.${BUTTON_ICON_CLASS}`;
 const LABEL_CLASS = `.${BUTTON_LABEL_CLASS}`;
 const SPINNER_CLASS = `.${BUTTON_SPINNER_CLASS}`;
@@ -38,6 +40,12 @@ const SECONDARY_TERTIARY_BUTTON_STATE_MIXES = createInteractiveStateLayerMixes({
 });
 
 export const buttonClassStyles = `
+${BOX_BASE_CLASS} {
+  box-sizing: border-box;
+  min-width: 0;
+  min-height: 0;
+}
+
 ${BASE_CLASS} {
   --fivra-button-font-family: var(--body1FontFamily, 'Google Sans', sans-serif);
   --fivra-button-font-weight: 600;
