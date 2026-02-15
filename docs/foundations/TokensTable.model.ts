@@ -97,6 +97,30 @@ export interface A11yResult {
   backgroundColor: string | null;
 }
 
+export interface A11yTokenOption {
+  path: string;
+  label: string;
+  value: string;
+}
+
+export interface A11yComplianceResult {
+  key: 'aa-normal' | 'aa-large';
+  label: string;
+  threshold: number;
+  passes: boolean | null;
+}
+
+export interface A11yPairEvaluation {
+  textPath?: string;
+  backgroundPath?: string;
+  textColor: string | null;
+  backgroundColor: string | null;
+  ratio: number | null;
+  aaNormal: A11yComplianceResult;
+  aaLarge: A11yComplianceResult;
+  summary: 'pass-both' | 'pass-large-only' | 'fail' | 'unknown';
+}
+
 export interface TokenTypeGroup {
   groupId: string;
   groupLabel: string;
@@ -873,6 +897,125 @@ export function evaluateA11yForTheme(
       backgroundColor: backgroundValue,
     };
   });
+}
+
+interface A11yPairInput {
+  textColor: string | null;
+  backgroundColor: string | null;
+  ratio?: number | null;
+}
+
+interface EvaluateA11yPairFromRowsInput {
+  textPath?: string;
+  backgroundPath?: string;
+  rows: TokenRow[];
+  theme: ThemeSlug;
+}
+
+interface A11yTokenOptionsResult {
+  textOptions: A11yTokenOption[];
+  backgroundOptions: A11yTokenOption[];
+}
+
+function makeA11yComplianceResult(
+  key: 'aa-normal' | 'aa-large',
+  label: string,
+  threshold: number,
+  ratio: number | null
+): A11yComplianceResult {
+  return {
+    key,
+    label,
+    threshold,
+    passes: ratio == null ? null : ratio >= threshold,
+  };
+}
+
+function summarizeA11yEvaluation(
+  aaNormal: A11yComplianceResult,
+  aaLarge: A11yComplianceResult
+): A11yPairEvaluation['summary'] {
+  if (aaNormal.passes == null || aaLarge.passes == null) {
+    return 'unknown';
+  }
+
+  if (aaNormal.passes) {
+    return 'pass-both';
+  }
+
+  if (aaLarge.passes) {
+    return 'pass-large-only';
+  }
+
+  return 'fail';
+}
+
+export function evaluateA11yPair({ textColor, backgroundColor, ratio }: A11yPairInput): A11yPairEvaluation {
+  const computedRatio =
+    ratio == null && textColor && backgroundColor && isColor(textColor) && isColor(backgroundColor)
+      ? contrastRatio(textColor, backgroundColor)
+      : ratio ?? null;
+
+  const aaNormal = makeA11yComplianceResult('aa-normal', 'AA normal', 4.5, computedRatio);
+  const aaLarge = makeA11yComplianceResult('aa-large', 'AA large', 3, computedRatio);
+
+  return {
+    textColor,
+    backgroundColor,
+    ratio: computedRatio,
+    aaNormal,
+    aaLarge,
+    summary: summarizeA11yEvaluation(aaNormal, aaLarge),
+  };
+}
+
+export function evaluateA11yPairFromRows({
+  textPath,
+  backgroundPath,
+  rows,
+  theme,
+}: EvaluateA11yPairFromRowsInput): A11yPairEvaluation {
+  const rowMap = indexRowsByPath(rows.filter((row) => row.diffStatus !== 'removed'));
+  const textValue = textPath ? rowMap[textPath]?.resolvedValueByTheme[theme] : undefined;
+  const backgroundValue = backgroundPath ? rowMap[backgroundPath]?.resolvedValueByTheme[theme] : undefined;
+
+  const textColor = isColor(textValue) ? textValue : null;
+  const backgroundColor = isColor(backgroundValue) ? backgroundValue : null;
+
+  return {
+    ...evaluateA11yPair({ textColor, backgroundColor }),
+    textPath,
+    backgroundPath,
+  };
+}
+
+export function buildA11yTokenOptions(rows: TokenRow[], theme: ThemeSlug): A11yTokenOptionsResult {
+  const visibleRows = rows.filter((row) => row.diffStatus !== 'removed');
+  const toOption = (row: TokenRow): A11yTokenOption | null => {
+    const value = row.resolvedValueByTheme[theme];
+    if (!isColor(value)) {
+      return null;
+    }
+
+    const path = row.path.join('.');
+    return {
+      path,
+      label: row.displayPath ?? path,
+      value,
+    };
+  };
+
+  const toSortedOptions = (predicate: (row: TokenRow) => boolean): A11yTokenOption[] =>
+    visibleRows
+      .filter(predicate)
+      .map(toOption)
+      .filter((option): option is A11yTokenOption => option != null)
+      .sort((a, b) => a.path.localeCompare(b.path));
+
+  return {
+    textOptions: toSortedOptions((row) => row.path[0] === 'Text'),
+    backgroundOptions: toSortedOptions((row) => row.path[0] === 'Background'),
+  };
 }
 
 function issueStatusForTheme(row: TokenRow, theme: ThemeSlug): ResolveStatus {

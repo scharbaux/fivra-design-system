@@ -1,10 +1,13 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  buildA11yTokenOptions,
   buildRows,
   buildSnapshotDiff,
   buildTokenSnapshot,
   contrastRatio,
+  evaluateA11yPair,
+  evaluateA11yPairFromRows,
   evaluateA11yForTheme,
   groupRowsByType,
   resolveReferenceDetailed,
@@ -129,6 +132,46 @@ describe('TokensTable data model', () => {
     expect(results.length).toBe(TOKEN_A11Y_RULES.length);
     expect(results[0]).toHaveProperty('status');
     expect(['pass', 'fail', 'unknown']).toContain(results[0].status);
+  });
+
+  it('builds custom a11y token options from text/background semantic paths', () => {
+    const options = buildA11yTokenOptions(rows, 'engage');
+
+    expect(options.textOptions.length).toBeGreaterThan(0);
+    expect(options.backgroundOptions.length).toBeGreaterThan(0);
+    expect(options.textOptions.every((option) => option.path.startsWith('Text.'))).toBe(true);
+    expect(options.backgroundOptions.every((option) => option.path.startsWith('Background.'))).toBe(true);
+    expect(options.textOptions.every((option) => option.value.startsWith('#') || option.value.startsWith('rgb'))).toBe(true);
+  });
+
+  it('evaluates aa-normal and aa-large statuses from explicit colors', () => {
+    const pass = evaluateA11yPair({ textColor: '#111111', backgroundColor: '#ffffff' });
+    const fail = evaluateA11yPair({ textColor: '#7f7f7f', backgroundColor: '#ffffff' });
+
+    expect(pass.aaNormal.passes).toBe(true);
+    expect(pass.aaLarge.passes).toBe(true);
+    expect(pass.summary).toBe('pass-both');
+    expect(fail.aaNormal.passes).toBe(false);
+    expect(fail.summary === 'pass-large-only' || fail.summary === 'fail').toBe(true);
+  });
+
+  it('evaluates custom a11y pairs from token rows and returns unknown for invalid paths', () => {
+    const evaluated = evaluateA11yPairFromRows({
+      textPath: 'Text.Primary.Interactive',
+      backgroundPath: 'Background.Neutral.0',
+      rows,
+      theme: 'engage',
+    });
+    const unknown = evaluateA11yPairFromRows({
+      textPath: 'Text.Does.Not.Exist',
+      backgroundPath: 'Background.Neutral.0',
+      rows,
+      theme: 'engage',
+    });
+
+    expect(evaluated.ratio).not.toBeNull();
+    expect(['pass-both', 'pass-large-only', 'fail']).toContain(evaluated.summary);
+    expect(unknown.summary).toBe('unknown');
   });
 
   it('computes contrast ratio for parseable color values', () => {

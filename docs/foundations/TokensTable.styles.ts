@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react';
 
-import type { A11yResult, ResolveStatus, SnapshotDiffStatus } from './TokensTable.model';
+import type { A11yPairEvaluation, A11yResult, ResolveStatus, SnapshotDiffStatus } from './TokensTable.model';
 
 export const summaryStripStyle: CSSProperties = {
   display: 'flex',
@@ -84,6 +84,157 @@ export const a11ySpecimenStyle = (ratio: number | null): CSSProperties => {
     lineHeight: 1,
     padding: '0 0.4rem',
   };
+};
+
+export const a11yBuilderCardStyle: CSSProperties = {
+  border: '1px solid rgba(0,0,0,0.1)',
+  borderRadius: '0.55rem',
+  padding: '0.7rem 0.75rem',
+  background: '#fafbff',
+  marginBottom: '0.75rem',
+};
+
+export const a11yBuilderTitleStyle: CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  marginBottom: '0.45rem',
+  gap: '0.5rem',
+};
+
+export const a11yBuilderGridStyle: CSSProperties = {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))',
+  gap: '0.55rem 0.7rem',
+  marginBottom: '0.6rem',
+};
+
+export const a11yBuilderLabelStyle: CSSProperties = {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '0.28rem',
+};
+
+export const a11yBuilderControlLabelStyle: CSSProperties = {
+  fontSize: '0.76rem',
+  color: '#596076',
+  fontWeight: 570,
+};
+
+export const a11yBuilderInputStyle: CSSProperties = {
+  border: '1px solid rgba(0,0,0,0.14)',
+  borderRadius: '0.35rem',
+  padding: '0.34rem 0.45rem',
+  fontSize: '0.84rem',
+  background: '#fff',
+};
+
+export const a11yBuilderSelectStyle: CSSProperties = {
+  border: '1px solid rgba(0,0,0,0.14)',
+  borderRadius: '0.35rem',
+  padding: '0.34rem 0.45rem',
+  fontSize: '0.84rem',
+  background: '#fff',
+};
+
+export const a11ySizeToggleWrapStyle: CSSProperties = {
+  display: 'inline-flex',
+  border: '1px solid rgba(0,0,0,0.16)',
+  borderRadius: '999px',
+  overflow: 'hidden',
+};
+
+export const a11ySizeToggleButtonStyle = (active: boolean): CSSProperties => ({
+  border: 'none',
+  borderRight: active ? 'none' : '1px solid rgba(0,0,0,0.12)',
+  background: active ? '#1f2937' : '#ffffff',
+  color: active ? '#ffffff' : '#2f3442',
+  padding: '0.24rem 0.64rem',
+  fontSize: '0.78rem',
+  fontWeight: 570,
+  cursor: 'pointer',
+});
+
+export const a11yBuilderSwapButtonStyle: CSSProperties = {
+  border: '1px solid rgba(0,0,0,0.16)',
+  background: '#fff',
+  color: '#2f3442',
+  borderRadius: '0.4rem',
+  padding: '0.35rem 0.55rem',
+  fontSize: '0.8rem',
+  fontWeight: 570,
+  cursor: 'pointer',
+  alignSelf: 'flex-end',
+};
+
+export const a11yBuilderPreviewStyle: CSSProperties = {
+  border: '1px solid rgba(0,0,0,0.1)',
+  borderRadius: '0.55rem',
+  padding: '0.65rem 0.7rem',
+  background: '#ffffff',
+  display: 'grid',
+  gap: '0.45rem',
+};
+
+export const a11yBuilderPreviewTextStyle = (textColor: string, backgroundColor: string, largeText: boolean): CSSProperties => ({
+  ...a11ySpecimenStyle(null),
+  width: '100%',
+  justifyContent: 'center',
+  background: backgroundColor,
+  color: textColor,
+  fontSize: largeText ? '1.15rem' : '0.9rem',
+  height: largeText ? '2.3rem' : '2rem',
+});
+
+export const a11yBuilderRatioStyle: CSSProperties = {
+  fontSize: '1.05rem',
+  fontWeight: 700,
+  color: '#2f3442',
+};
+
+export const a11yBuilderChipsStyle: CSSProperties = {
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: '0.4rem',
+  alignItems: 'center',
+};
+
+export const a11yBuilderChipStyle = (passes: boolean | null): CSSProperties => ({
+  borderRadius: '999px',
+  padding: '0.14rem 0.52rem',
+  fontSize: '0.74rem',
+  fontWeight: 570,
+  background: passes == null ? '#f3f4f6' : passes ? '#e9f8ef' : '#fdeced',
+  color: passes == null ? '#5f6470' : passes ? '#0f6f3f' : '#8e1f28',
+});
+
+export const a11yBuilderSummaryStyle = (summary: A11yPairEvaluation['summary']): CSSProperties => ({
+  fontSize: '0.8rem',
+  fontWeight: 570,
+  color:
+    summary === 'pass-both'
+      ? '#0f6f3f'
+      : summary === 'pass-large-only'
+        ? '#8c5a1b'
+        : summary === 'fail'
+          ? '#8e1f28'
+          : '#5f6470',
+});
+
+export const a11yBuilderHintStyle: CSSProperties = {
+  fontSize: '0.78rem',
+  color: '#5f6470',
+};
+
+export const a11yActionButtonStyle: CSSProperties = {
+  border: '1px solid rgba(0,0,0,0.16)',
+  background: '#fff',
+  color: '#2f3442',
+  borderRadius: '0.35rem',
+  padding: '0.2rem 0.45rem',
+  fontSize: '0.74rem',
+  fontWeight: 570,
+  cursor: 'pointer',
 };
 
 export const tableViewportStyle: CSSProperties = {
