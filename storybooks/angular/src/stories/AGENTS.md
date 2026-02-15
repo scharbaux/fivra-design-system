@@ -23,3 +23,5 @@ This directory inherits guidance from the repository root, `storybooks/AGENTS.md
 - 1.8.1: Removed redundant `tone` story controls after consolidating semantic presets under `color`.
 - 1.8.2: Updated Angular Button stories to read shared style and color types from src/shared/button for cross-framework parity.
 - 1.8.3: Repointed Angular Button stories to Angular-local button style and color modules and removed undefined light-DOM shim wrappers that could destabilize Storybook rendering.
+
+- 1.8.4: Migrated Angular Button story token references and docs text to kebab-case CSS custom property naming.

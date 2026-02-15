@@ -10,10 +10,10 @@ describe('createBoxStyles', () => {
       pl: 'spacing-l',
     });
 
-    expect(style.paddingTop).toBe('calc(var(--spacingM) * 1px)');
-    expect(style.paddingBottom).toBe('calc(var(--spacingM) * 1px)');
-    expect(style.paddingRight).toBe('calc(var(--spacingS) * 1px)');
-    expect(style.paddingLeft).toBe('calc(var(--spacingL) * 1px)');
+    expect(style.paddingTop).toBe('calc(var(--spacing-m) * 1px)');
+    expect(style.paddingBottom).toBe('calc(var(--spacing-m) * 1px)');
+    expect(style.paddingRight).toBe('calc(var(--spacing-s) * 1px)');
+    expect(style.paddingLeft).toBe('calc(var(--spacing-l) * 1px)');
   });
 
   it('resolves design tokens for colors, radius, and border width', () => {
@@ -24,10 +24,10 @@ describe('createBoxStyles', () => {
       borderWidth: 'border-width-s',
     });
 
-    expect(style.backgroundColor).toBe('var(--backgroundNeutral0)');
-    expect(style.borderColor).toBe('var(--borderPrimaryInteractive)');
-    expect(style.borderRadius).toBe('calc(var(--radiusM) * 1px)');
-    expect(style.borderWidth).toBe('calc(var(--borderwidthS) * 1px)');
+    expect(style.backgroundColor).toBe('var(--background-neutral-0)');
+    expect(style.borderColor).toBe('var(--border-primary-interactive)');
+    expect(style.borderRadius).toBe('calc(var(--radius-m) * 1px)');
+    expect(style.borderWidth).toBe('calc(var(--borderwidth-s) * 1px)');
   });
 
   it('resolves shadow presets and dimensions', () => {
@@ -38,9 +38,9 @@ describe('createBoxStyles', () => {
     });
 
     expect(style.boxShadow).toBe(
-      'calc(var(--shadowsMX) * 1px) calc(var(--shadowsMY) * 1px) calc(var(--shadowsMBlur) * 1px) calc(var(--shadowsMSpread) * 1px) var(--shadowsMColor)',
+      'calc(var(--shadows-mx) * 1px) calc(var(--shadows-my) * 1px) calc(var(--shadows-m-blur) * 1px) calc(var(--shadows-m-spread) * 1px) var(--shadows-m-color)',
     );
-    expect(style.width).toBe('calc(var(--spacingXl) * 1px)');
+    expect(style.width).toBe('calc(var(--spacing-xl) * 1px)');
     expect(style.height).toBe('32px');
   });
 });

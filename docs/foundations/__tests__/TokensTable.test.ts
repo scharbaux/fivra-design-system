@@ -69,7 +69,7 @@ describe('TokensTable data model', () => {
       tokens: {
         ...snapshot.tokens,
         'Legacy.Removed.Token': {
-          cssVariable: '--legacyRemovedToken',
+          cssVariable: '--legacy-removed-token',
           valuesByTheme: { engage: '#000000', legacy: '#000000' },
         },
       },

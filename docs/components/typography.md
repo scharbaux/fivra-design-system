@@ -34,7 +34,7 @@ export function BillingSummary() {
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `variant` | `TypographyVariant` | `'body-1'` | Maps text styling to Engage tokens (`--heading1FontSize`, `--body2LetterSpacing`, etc.). |
+| `variant` | `TypographyVariant` | `'body-1'` | Maps text styling to Engage tokens (`--heading-1-font-size`, `--body-2-letter-spacing`, etc.). |
 | `truncate` | `boolean` | `false` | Adds `data-truncate="true"` to apply ellipsis overflow handling. |
 | `noWrap` | `boolean` | `false` | Prevents line wrapping by setting `white-space: nowrap` via `data-nowrap`. |
 | `as` | `React.ElementType` | Semantic default per variant | Overrides the rendered element. Headings default to `<h1>`–`<h3>`, body variants use `<p>`, and captions render `<span>`. |
@@ -44,19 +44,19 @@ export function BillingSummary() {
 
 | Variant | Default element | Tokens |
 | --- | --- | --- |
-| `heading-1` | `<h1>` | `--heading1FontFamily`, `--heading1FontSize`, `--heading1FontWeight`, `--heading1LineHeight` |
+| `heading-1` | `<h1>` | `--heading-1-font-family`, `--heading-1-font-size`, `--heading-1-font-weight`, `--heading-1-line-height` |
 | `heading-2` | `<h2>` | `--heading2*` tokens |
 | `heading-3` | `<h3>` | `--heading3*` tokens |
 | `body-1` | `<p>` | `--body1*` tokens |
-| `body-1-medium` | `<p>` | `--body1Medium*` tokens |
-| `body-1-strong` | `<p>` | `--body1Strong*` tokens |
+| `body-1-medium` | `<p>` | `--body-1-medium*` tokens |
+| `body-1-strong` | `<p>` | `--body-1-strong*` tokens |
 | `body-2` | `<p>` | `--body2*` tokens |
-| `body-2-strong` | `<p>` | `--body2Strong*` tokens |
-| `body-2-link` | `<p>` | `--body2Link*` tokens and `--textPrimaryInteractive` color |
-| `body-2-long` | `<p>` | `--body2Long*` tokens |
+| `body-2-strong` | `<p>` | `--body-2-strong*` tokens |
+| `body-2-link` | `<p>` | `--body-2-link*` tokens and `--text-primary-interactive` color |
+| `body-2-long` | `<p>` | `--body-2-long*` tokens |
 | `body-3` | `<p>` | `--body3*` tokens |
 | `caption-1` | `<span>` | `--caption1*` tokens |
-| `caption-1-strong` | `<span>` | `--caption1Strong*` tokens |
+| `caption-1-strong` | `<span>` | `--caption-1-strong*` tokens |
 
 ## Accessibility
 
@@ -66,14 +66,14 @@ export function BillingSummary() {
 
 ## Theming
 
-The component reads Engage custom properties such as `--heading1FontFamily`, `--body2FontSize`, and `--textNeutral1`. Override these tokens at the theme or container scope to adjust typography across frameworks without changing component code.
+The component reads Engage custom properties such as `--heading-1-font-family`, `--body-2-font-size`, and `--text-neutral-1`. Override these tokens at the theme or container scope to adjust typography across frameworks without changing component code.
 
 ```css
 .marketing-theme {
-  --heading1FontSize: 32px;
-  --heading1FontWeight: 700;
-  --body2LetterSpacing: 0.02em;
-  --textNeutral1: #1c1932;
+  --heading-1-font-size: 32px;
+  --heading-1-font-weight: 700;
+  --body-2-letter-spacing: 0.02em;
+  --text-neutral-1: #1c1932;
 }
 ```
 

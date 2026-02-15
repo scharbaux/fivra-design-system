@@ -138,7 +138,7 @@ const NESTED_COMPOSITION_SOURCE = `<FivraBoxPreview
       display="flex"
       gap="spacing-s"
       justifyContent="space-between"
-      :style="{ borderTop: '1px solid var(--borderNeutral5)' }"
+      :style="{ borderTop: '1px solid var(--border-neutral-5)' }"
       pt="spacing-m"
     >
       <button
@@ -505,7 +505,7 @@ export const BackgroundUtilities: Story = {
       },
       description: {
         story:
-          'Background and text props accept Engage token strings, resolving them to `var(--tokenName)` references for consistent theme usage.',
+          'Background and text props accept Engage token strings, resolving them to `var(--token-name)` references for consistent theme usage.',
       },
     },
   },
@@ -555,7 +555,7 @@ export const NestedComposition: Story = {
             display="flex"
             gap="spacing-s"
             justifyContent="space-between"
-            :style="{ borderTop: '1px solid var(--borderNeutral5)' }"
+            :style="{ borderTop: '1px solid var(--border-neutral-5)' }"
             pt="spacing-m"
           >
             <button

@@ -265,7 +265,7 @@ const meta: Meta<VueButtonStoryArgs> = {
       control: "inline-radio",
       options: ["primary", "secondary", "tertiary"],
       description:
-        "Visual treatment of the button mapped to `--backgroundPrimaryInteractive`, `--backgroundNeutral0`, and transparent tiers.",
+        "Visual treatment of the button mapped to `--background-primary-interactive`, `--background-neutral-0`, and transparent tiers.",
       table: { category: "Appearance" },
     },
     size: {
@@ -281,7 +281,7 @@ const meta: Meta<VueButtonStoryArgs> = {
     },
     iconOnly: {
       control: "boolean",
-      description: "Removes the visible label and switches to `--radiusMax`. Provide `aria-label` for accessibility.",
+      description: "Removes the visible label and switches to `--radius-max`. Provide `aria-label` for accessibility.",
       table: { category: "Appearance" },
     },
     hasLabel: {
@@ -326,7 +326,7 @@ export const Primary: Story = {
     docs: {
       description: {
         story:
-          "Primary buttons emphasize the main action using '--backgroundPrimaryInteractive'. The default mixes keep brand overlays weighting the state layer and surface through `--fivra-button-hover-color`, `--fivra-button-active-color`, and `--fivra-button-focus-ring-color`.",
+          "Primary buttons emphasize the main action using '--background-primary-interactive'. The default mixes keep brand overlays weighting the state layer and surface through `--fivra-button-hover-color`, `--fivra-button-active-color`, and `--fivra-button-focus-ring-color`.",
       },
     },
   },
@@ -341,7 +341,7 @@ export const Secondary: Story = {
     docs: {
       description: {
         story:
-          "Secondary buttons pair `--backgroundNeutral0` with `--borderPrimaryInteractive` and now reweight their hover, active, and focus mixes so the accent receives the intensity percentage. The result keeps outline tiers neutral by default while adopting semantic hues when `--fivra-button-accent` is overridden.",
+          "Secondary buttons pair `--background-neutral-0` with `--border-primary-interactive` and now reweight their hover, active, and focus mixes so the accent receives the intensity percentage. The result keeps outline tiers neutral by default while adopting semantic hues when `--fivra-button-accent` is overridden.",
       },
     },
   },
@@ -376,7 +376,7 @@ export const DisabledStates: Story = {
       <div
         style="
           display: flex;
-          gap: calc(var(--spacingL) * 1px);
+          gap: calc(var(--spacing-l) * 1px);
           align-items: center;
           flex-wrap: wrap;
         "
@@ -391,7 +391,7 @@ export const DisabledStates: Story = {
     docs: {
       description: {
         story:
-          "Disabled states pull from `--backgroundPrimaryDisabled`, `--backgroundSecondaryDisabled`, and `--textPrimaryDisabled` ensuring consistent contrast and borders via `--borderPrimaryDisabled`.",
+          "Disabled states pull from `--background-primary-disabled`, `--background-secondary-disabled`, and `--text-primary-disabled` ensuring consistent contrast and borders via `--border-primary-disabled`.",
       },
     },
   },
@@ -407,8 +407,8 @@ export const SemanticOverrides: Story = {
       };
     },
     template: `
-      <div style="display: grid; gap: calc(var(--spacingM) * 1px);">
-        <div style="display: flex; gap: calc(var(--spacingL) * 1px); flex-wrap: wrap;">
+      <div style="display: grid; gap: calc(var(--spacing-m) * 1px);">
+        <div style="display: flex; gap: calc(var(--spacing-l) * 1px); flex-wrap: wrap;">
           <FivraButtonPreview
             v-for="tone in tones"
             :key="'primary-' + tone"
@@ -417,7 +417,7 @@ export const SemanticOverrides: Story = {
             :label="tone + ' Primary'"
           />
         </div>
-        <div style="display: flex; gap: calc(var(--spacingL) * 1px); flex-wrap: wrap;">
+        <div style="display: flex; gap: calc(var(--spacing-l) * 1px); flex-wrap: wrap;">
           <FivraButtonPreview
             v-for="tone in tones"
             :key="'secondary-' + tone"
@@ -426,7 +426,7 @@ export const SemanticOverrides: Story = {
             :label="tone + ' Secondary'"
           />
         </div>
-        <div style="display: flex; gap: calc(var(--spacingL) * 1px); flex-wrap: wrap;">
+        <div style="display: flex; gap: calc(var(--spacing-l) * 1px); flex-wrap: wrap;">
           <FivraButtonPreview
             v-for="tone in tones"
             :key="'tertiary-' + tone"
@@ -484,7 +484,7 @@ export const Sizes: Story = {
         <div
           style="
             display: flex;
-            gap: calc(var(--spacingL) * 1px);
+            gap: calc(var(--spacing-l) * 1px);
             align-items: center;
             flex-wrap: wrap;
           "
@@ -500,7 +500,7 @@ export const Sizes: Story = {
     docs: {
       description: {
         story:
-          "Small, medium, and large presets use explicit padding (12×4, 16×8, 24×12) with heights 24/32/40px and radii mapped to `--radiusXs`, `--radiusS`, and `--radiusM`.",
+          "Small, medium, and large presets use explicit padding (12×4, 16×8, 24×12) with heights 24/32/40px and radii mapped to `--radius-xs`, `--radius-s`, and `--radius-m`.",
       },
     },
   },
@@ -579,7 +579,7 @@ export const IconOnly: Story = {
     docs: {
       description: {
         story:
-          "Icon-only buttons collapse to a circular hit area via `--radiusMax`. Remember to supply an accessible `aria-label`.",
+          "Icon-only buttons collapse to a circular hit area via `--radius-max`. Remember to supply an accessible `aria-label`.",
       },
     },
   },

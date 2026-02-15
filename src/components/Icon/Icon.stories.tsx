@@ -31,13 +31,13 @@ const meta: Meta<typeof Icon> = {
     size: {
       control: "text",
       description:
-        "Number in px (e.g. 24) or any CSS size (e.g. 'var(--iconsizesL)'). Defaults to the token-driven 'var(--iconsizesM)'.",
+        "Number in px (e.g. 24) or any CSS size (e.g. 'var(--iconsizes-l)'). Defaults to the token-driven 'var(--iconsizes-m)'.",
       table: { category: "Sizing" },
     },
     color: {
       control: "text",
       description:
-        "Applies to fill via currentColor. Defaults to 'var(--textSecondaryInteractive)' and can be overridden with props or parent color styles.",
+        "Applies to fill via currentColor. Defaults to 'var(--text-secondary-interactive)' and can be overridden with props or parent color styles.",
       table: { category: "Color" },
     },
     title: {
@@ -54,7 +54,7 @@ const meta: Meta<typeof Icon> = {
   parameters: {
     design: {
       type: "figma",
-      url: "https://www.figma.com/design/Zt40QOhEylVnVmHOfrbex8/Figma-Icons-Exporter--Demo-File-?node-id=0-1&t=LCoE4lsUxsvxZNg7-1",
+      url: "https://www.figma.com/design/Zt40QOhEylVnVmHOfrbex8/Figma-Icons-Exporter--demo-file-?node-id=0-1&t=LCoE4lsUxsvxZNg7-1",
     },
     docs: {
       description: {
@@ -74,14 +74,14 @@ export const Basic: Story = {
   args: {
     name: defaultIcon,
     variant: "outline",
-    size: "var(--iconsizesXl2)",
-    color: "var(--textPrimaryInteractive)",
+    size: "var(--iconsizes-xl-2)",
+    color: "var(--text-primary-interactive)",
   },
   parameters: {
     docs: {
       description: {
         story:
-          "Outline variant scaled via the token 'var(--iconsizesXl2)' and tinted with 'var(--textPrimaryInteractive)'.",
+          "Outline variant scaled via the token 'var(--iconsizes-xl-2)' and tinted with 'var(--text-primary-interactive)'.",
       },
     },
   },
@@ -106,21 +106,21 @@ export const Sizes: Story = {
   args: {
     name: defaultIcon,
     variant: "outline",
-    color: "var(--textSecondaryInteractive)",
+    color: "var(--text-secondary-interactive)",
   },
   render: (args) => (
     <Box display="flex" gap="spacing-l" alignItems="center">
-      <Icon {...args} size="var(--iconsizesS)" />
-      <Icon {...args} size="var(--iconsizesM)" />
-      <Icon {...args} size="var(--iconsizesXl2)" />
-      <Icon {...args} size="var(--iconsizesXl3)" />
+      <Icon {...args} size="var(--iconsizes-s)" />
+      <Icon {...args} size="var(--iconsizes-m)" />
+      <Icon {...args} size="var(--iconsizes-xl-2)" />
+      <Icon {...args} size="var(--iconsizes-xl-3)" />
     </Box>
   ),
   parameters: {
     docs: {
       description: {
         story:
-          "Highlights the icon size scale using the '--iconsizes*' tokens. The component defaults to 'var(--iconsizesM)'.",
+          "Highlights the icon size scale using the '--iconsizes*' tokens. The component defaults to 'var(--iconsizes-m)'.",
       },
     },
   },
@@ -130,7 +130,7 @@ export const TokenOverride: Story = {
   args: {
     name: defaultIcon,
     variant: "outline",
-    color: "var(--textPrimaryInteractive)",
+    color: "var(--text-primary-interactive)",
   },
   render: (args) => (
     <Box display="flex" flexDirection="column" gap="spacing-m">
@@ -138,7 +138,7 @@ export const TokenOverride: Story = {
         display="flex"
         alignItems="center"
         gap="spacing-s"
-        style={{ "--icon-size": "var(--iconsizesL)" } as React.CSSProperties}
+        style={{ "--icon-size": "var(--iconsizes-l)" } as React.CSSProperties}
       >
         <span style={{ fontSize: "0.875rem" }}>Default token</span>
         <Icon {...args} size="var(--icon-size)" />
@@ -168,21 +168,21 @@ export const Colors: Story = {
   args: {
     name: defaultIcon,
     variant: "solid",
-    size: "var(--iconsizesXl2)",
+    size: "var(--iconsizes-xl-2)",
   },
   render: (args) => (
     <Box display="flex" gap="spacing-l">
-      <Icon {...args} color="var(--textPrimaryInteractive)" />
-      <Icon {...args} color="var(--textPrimarySuccess)" />
-      <Icon {...args} color="var(--textPrimaryWarning)" />
-      <Icon {...args} color="var(--textPrimaryError)" />
+      <Icon {...args} color="var(--text-primary-interactive)" />
+      <Icon {...args} color="var(--text-primary-success)" />
+      <Icon {...args} color="var(--text-primary-warning)" />
+      <Icon {...args} color="var(--text-primary-error)" />
     </Box>
   ),
   parameters: {
     docs: {
       description: {
         story:
-          "Icons inherit 'currentColor'. Token values like '--textPrimarySuccess' or '--textPrimaryError' make it easy to align with the theme palette.",
+          "Icons inherit 'currentColor'. Token values like '--text-primary-success' or '--text-primary-error' make it easy to align with the theme palette.",
       },
     },
   },
@@ -195,7 +195,7 @@ export const WithTitle: Story = {
     name: defaultIcon,
     title: "Descriptive title for tooltip",
     variant: "outline",
-    size: "var(--iconsizesXl2)",
+    size: "var(--iconsizes-xl-2)",
   },
   parameters: {
     docs: {
@@ -211,8 +211,8 @@ export const WithAriaLabel: Story = {
   args: {
     name: defaultIcon,
     variant: "solid",
-    size: "var(--iconsizesXl2)",
-    color: "var(--textNeutral1)",
+    size: "var(--iconsizes-xl-2)",
+    color: "var(--text-neutral-1)",
     "aria-label": "Notifications",
   },
   parameters: {

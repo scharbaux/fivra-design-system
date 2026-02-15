@@ -52,7 +52,7 @@ const meta: Meta = {
     },
     design: {
       type: "figma",
-      url: "https://www.figma.com/design/Zt40QOhEylVnVmHOfrbex8/Figma-Icons-Exporter--Demo-File-?node-id=0-1&t=LCoE4lsUxsvxZNg7-1",
+      url: "https://www.figma.com/design/Zt40QOhEylVnVmHOfrbex8/Figma-Icons-Exporter--demo-file-?node-id=0-1&t=LCoE4lsUxsvxZNg7-1",
     }
   },
   tags: ["autodocs"],

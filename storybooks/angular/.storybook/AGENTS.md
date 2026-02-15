@@ -16,3 +16,5 @@ This directory inherits the repository root, `storybooks/AGENTS.md`, and `storyb
 - 1.5.6: Imported the shared design system stylesheet into the preview to restore theming for Angular stories.
 - 1.5.7: Enabled credentialed CORS handling in the Vite dev server while preserving Storybook defaults.
 - 1.5.8: Forced the Angular Vite plugin into JIT mode and imported `@angular/compiler` so static builds can render button stories for Playwright.
+
+- 1.5.9: Updated preview token references to kebab-case CSS custom properties for generated theme parity.

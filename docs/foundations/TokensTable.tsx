@@ -147,20 +147,21 @@ function toCssVariable(path: string[]): string {
     return '';
   }
 
-  const normalized = path.map((segment) => {
-    const cleaned = segment
-      .replace(/[^a-zA-Z0-9]+/g, ' ')
-      .split(' ')
-      .filter(Boolean)
-      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-      .join('');
+  const normalized = path
+    .map((segment) =>
+      segment
+        .replace(/[^a-zA-Z0-9]+/g, '-')
+        .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+        .replace(/([A-Z])([A-Z][a-z])/g, '$1-$2')
+        .replace(/([a-zA-Z])([0-9])/g, '$1-$2')
+        .replace(/([0-9])([a-zA-Z])/g, '$1-$2')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '')
+        .toLowerCase(),
+    )
+    .filter(Boolean);
 
-    return cleaned || segment;
-  });
-
-  normalized[0] = normalized[0].charAt(0).toLowerCase() + normalized[0].slice(1);
-
-  return `--${normalized.join('')}`;
+  return `--${normalized.join('-')}`;
 }
 
 function severity(status: ResolveStatus): number {

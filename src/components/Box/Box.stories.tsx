@@ -140,7 +140,7 @@ const NESTED_COMPOSITION_SOURCE = `<Box
       display="flex"
       gap="spacing-s"
       justifyContent="space-between"
-      style={{ borderTop: '1px solid var(--borderNeutral5)' }}
+      style={{ borderTop: '1px solid var(--border-neutral-5)' }}
       pt="spacing-m"
     >
       <Button variant="secondary">Cancel</Button>
@@ -463,7 +463,7 @@ export const BackgroundUtilities: Story = {
       },
       description: {
         story:
-          'Background and text props accept Engage token strings, resolving them to `var(--tokenName)` references for consistent theme usage.',
+          'Background and text props accept Engage token strings, resolving them to `var(--token-name)` references for consistent theme usage.',
       },
     },
   },
@@ -488,7 +488,7 @@ export const NestedComposition: Story = {
         <Box color="text-neutral-2">
           <Typography variant="body-2-long">Reusable layout primitive enables nested shells without bespoke wrappers, ensuring consistent spacing and token usage.</Typography>
         </Box>
-        <Box display="flex" gap="spacing-s" justifyContent="space-between" style={{ borderTop: '1px solid var(--borderNeutral5)' }} pt="spacing-m">
+        <Box display="flex" gap="spacing-s" justifyContent="space-between" style={{ borderTop: '1px solid var(--border-neutral-5)' }} pt="spacing-m">
           <Button variant="secondary">
             Cancel
           </Button>

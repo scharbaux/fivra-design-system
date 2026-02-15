@@ -11,9 +11,9 @@ import {
 
 const DESIGN_TOKEN_LOG_PREFIX = "[Storybook][Design Tokens]";
 const SAMPLE_THEME_VARIABLES = [
-  "--radiusMax",
-  "--spacingS",
-  "--backgroundPrimaryInteractive",
+  "--radius-max",
+  "--spacing-s",
+  "--background-primary-interactive",
 ] as const;
 
 const shouldLogDesignTokenStatus = () =>

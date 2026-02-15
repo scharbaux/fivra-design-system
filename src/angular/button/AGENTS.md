@@ -27,3 +27,5 @@ he shared button behavior and styling.
 - 1.12.2: Fixed projected-label detection to ignore generated `label` fallback nodes so Angular Storybook no longer enters a render loop when consumers provide only the `label` input.
 - 1.13.0: Added Box-derived structural classes (`fivra-box`) and reset injection to the Angular button root/wrappers to align baseline layout behavior with React and Vue Box composition.
 - 1.13.1: Updated Angular button font-family token fallback to prefer canonical typography tokens and `Saans` so adapter typography matches shared token naming and font assets.
+
+- 1.13.2: Migrated Angular button style/color/state-layer token references and related tests to kebab-case CSS custom properties.

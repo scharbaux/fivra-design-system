@@ -19,3 +19,5 @@ This file inherits the repository root `AGENTS.md`. Generated theme assets live 
 - 1.6.1: Replaced Google Sans `@font-face` registrations with local Saans assets so token-defined `Saans` family values resolve correctly at runtime.
 - 1.6.2: Aligned Saans `@font-face` weights with token-defined values (`300`, `380`, `570`, `670`) to avoid rounded-weight rendering drift.
 - 1.6.3: Regenerated Engage/Legacy typography variables to emit token-exact font weights (`380`, `570`, `670`) instead of rounded defaults from the transform pipeline.
+
+- 1.6.4: Regenerated Engage/Legacy theme assets and token option metadata with kebab-case CSS custom property names.

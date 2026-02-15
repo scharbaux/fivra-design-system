@@ -323,7 +323,7 @@ describe('FivraButtonComponent', () => {
 
     const button = queryButton();
     const computed = getComputedStyle(button);
-    expect(computed.getPropertyValue('--fivra-button-accent').trim()).toBe('var(--textPrimarySuccess)');
+    expect(computed.getPropertyValue('--fivra-button-accent').trim()).toBe('var(--text-primary-success)');
   });
 
   it('supports aria-label attributes and focus/click helpers', async () => {

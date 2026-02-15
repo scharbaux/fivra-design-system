@@ -18,3 +18,6 @@ This directory inherits all requirements from `../AGENTS.md`. Follow the reposit
 - 1.15.2: Renamed the explorer page to `Design Tokens: Reference`, fixed docs cross-links to Storybook paths, and enforced Foundations sidebar ordering (`Reference`, `Workflow`, then `Icons Library`).
 - 1.15.3: Updated typography family fallbacks shown in the TokensTable specimen to use Saans for consistency with runtime token fonts.
 - 1.15.4: Updated TokensTable typography weight normalization to only support token-defined names (`Light`, `Regular`, `Medium`, `SemiBold`) with their exact numeric mappings (`300`, `380`, `570`, `670`).
+
+- 1.15.5: Regenerated token snapshot/specimen expectations and diagnostics to align with kebab-case CSS custom property names.
+- 1.15.6: Fixed the TokensTable CSS variable formatter to emit kebab-case names so the Design Tokens reference column matches generated token variables.

@@ -68,8 +68,8 @@ const appendIntensityCompanionTokens = (cssContent) =>
 
 const ensureStateLayerAliases = (cssContent) => {
   const aliases = [
-    { name: '--stateLayerBrightenBase', value: 'var(--backgroundNeutral0)' },
-    { name: '--stateLayerDarkenBase', value: 'var(--backgroundNeutral1)' },
+    { name: '--state-layer-brighten-base', value: 'var(--background-neutral-0)' },
+    { name: '--state-layer-darken-base', value: 'var(--background-neutral-1)' },
   ];
 
   return cssContent.replace(/(:root[^{]*\{)([\s\S]*?)(\n\})/, (match, prefix, body, suffix) => {
@@ -85,6 +85,36 @@ const ensureStateLayerAliases = (cssContent) => {
 
     return `${prefix}${nextBody}${suffix}`;
   });
+};
+
+const toKebabCssVariableName = (cssVariableName) =>
+  cssVariableName
+    .replace(/^--/, '')
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+    .replace(/([A-Z])([A-Z][a-z])/g, '$1-$2')
+    .replace(/([a-zA-Z])([0-9])/g, '$1-$2')
+    .replace(/([0-9])([a-zA-Z])/g, '$1-$2')
+    .replace(/--+/g, '-')
+    .toLowerCase();
+
+const normalizeCssVariableCasing = (cssContent) => {
+  const discoveredVariableNames = new Set();
+  for (const match of cssContent.matchAll(/--[A-Za-z0-9-]+/g)) {
+    discoveredVariableNames.add(match[0]);
+  }
+
+  const replacements = [...discoveredVariableNames]
+    .filter((variableName) => /[A-Z]/.test(variableName))
+    .map((variableName) => ({
+      from: variableName,
+      to: `--${toKebabCssVariableName(variableName)}`,
+    }))
+    .sort((a, b) => b.from.length - a.from.length);
+
+  return replacements.reduce((nextCssContent, replacement) => {
+    const escaped = replacement.from.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return nextCssContent.replace(new RegExp(escaped, 'g'), replacement.to);
+  }, cssContent);
 };
 
 const clearGeneratedThemeArtifacts = async () => {
@@ -356,7 +386,8 @@ const buildStyleDictionary = async ({
   }, {});
   const overriddenTypographyCss = applyTypographyFontWeightOverrides(cssContent, typographyWeightOverrides);
   const augmentedCss = ensureStateLayerAliases(appendIntensityCompanionTokens(overriddenTypographyCss));
-  const rewrittenCss = rewriteRootSelector({ cssContent: augmentedCss, selector });
+  const normalizedCss = normalizeCssVariableCasing(augmentedCss);
+  const rewrittenCss = rewriteRootSelector({ cssContent: normalizedCss, selector });
   await fs.writeFile(cssPath, ensureBanner(rewrittenCss, CSS_BANNER), 'utf8');
 
   return {

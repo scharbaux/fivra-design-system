@@ -152,7 +152,7 @@ const meta: Meta<VueTypographyStoryArgs> = {
       control: "select",
       options: TYPOGRAPHY_VARIANTS,
       description:
-        "Maps to Engage typography tokens (e.g., `--typographyHeading1FontSize`, `--typographyBody2LetterSpacing`).",
+        "Maps to Engage typography tokens (e.g., `--typography-heading-1-font-size`, `--typography-body-2-letter-spacing`).",
     },
     truncate: {
       control: "boolean",

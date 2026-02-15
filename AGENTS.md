@@ -44,3 +44,4 @@
 - 1.3.0: Added the token-driven Typography primitive with documentation, tests, and governance updates for future framework adapters.
 - 1.4.0: Added Angular Button isolation guardrails in tooling/tests so Angular Storybook coverage remains composed while avoiding cross-framework Button import coupling.
 - 1.5.0: Expanded Design Tokens documentation tooling with diagnostics, composite drill-downs, accessibility contrast checks, and a snapshot generation script for change tracking in docs.
+- 1.6.0: Migrated project CSS custom properties to full kebab-case naming in one pass, updated generators/runtime/docs/tests, and added automated verification to block mixed-case token variables.

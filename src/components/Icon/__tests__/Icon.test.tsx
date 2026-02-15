@@ -27,7 +27,7 @@ describe('Icon', () => {
   });
 
   it('merges token-driven size into inline styles when size is a CSS variable', () => {
-    const tokenSize = 'var(--iconsizesXl2)';
+    const tokenSize = 'var(--iconsizes-xl-2)';
     const { getByLabelText } = render(
       <Icon
         name="example"

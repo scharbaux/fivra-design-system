@@ -112,7 +112,7 @@ const meta: Meta<typeof Button> = {
       control: "inline-radio",
       options: ["primary", "secondary", "tertiary"],
       description:
-        "Visual treatment of the button mapped to `--backgroundPrimaryInteractive`, `--backgroundNeutral0`, and transparent tiers.",
+        "Visual treatment of the button mapped to `--background-primary-interactive`, `--background-neutral-0`, and transparent tiers.",
       table: { category: "Appearance" },
     },
     size: {
@@ -128,7 +128,7 @@ const meta: Meta<typeof Button> = {
     },
     iconOnly: {
       control: "boolean",
-      description: "Removes the visible label and switches to `--radiusMax`. Provide `aria-label` for accessibility.",
+      description: "Removes the visible label and switches to `--radius-max`. Provide `aria-label` for accessibility.",
       table: { category: "Appearance" },
     },
     hasLabel: {
@@ -172,7 +172,7 @@ export const Primary: Story = {
     docs: {
       description: {
         story:
-          "Primary buttons emphasize the main action using '--backgroundPrimaryInteractive'. The default mixes keep brand overlays weighting the state layer and surface through `--fivra-button-hover-color`, `--fivra-button-active-color`, and `--fivra-button-focus-ring-color`.",
+          "Primary buttons emphasize the main action using '--background-primary-interactive'. The default mixes keep brand overlays weighting the state layer and surface through `--fivra-button-hover-color`, `--fivra-button-active-color`, and `--fivra-button-focus-ring-color`.",
       },
     },
   },
@@ -187,7 +187,7 @@ export const Secondary: Story = {
     docs: {
       description: {
         story:
-          "Secondary buttons pair `--backgroundNeutral0` with `--borderPrimaryInteractive` and now reweight their hover, active, and focus mixes so the accent receives the intensity percentage. The result keeps outline tiers neutral by default while adopting semantic hues when `--fivra-button-accent` is overridden.",
+          "Secondary buttons pair `--background-neutral-0` with `--border-primary-interactive` and now reweight their hover, active, and focus mixes so the accent receives the intensity percentage. The result keeps outline tiers neutral by default while adopting semantic hues when `--fivra-button-accent` is overridden.",
       },
     },
   },
@@ -228,7 +228,7 @@ export const DisabledStates: Story = {
       source: { type: "dynamic" },
       description: {
         story:
-          "Disabled states pull from `--backgroundPrimaryDisabled`, `--backgroundSecondaryDisabled`, and `--textPrimaryDisabled` ensuring consistent contrast and borders via `--borderPrimaryDisabled`.",
+          "Disabled states pull from `--background-primary-disabled`, `--background-secondary-disabled`, and `--text-primary-disabled` ensuring consistent contrast and borders via `--border-primary-disabled`.",
       },
     },
   },
@@ -314,7 +314,7 @@ export const Sizes: Story = {
       source: { type: "dynamic" },
       description: {
         story:
-          "Small, medium, and large presets use explicit padding (12×4, 16×8, 24×12) with heights 24/32/40px and radii mapped to `--radiusXs`, `--radiusS`, and `--radiusM`.",
+          "Small, medium, and large presets use explicit padding (12×4, 16×8, 24×12) with heights 24/32/40px and radii mapped to `--radius-xs`, `--radius-s`, and `--radius-m`.",
       },
     },
   },
@@ -393,7 +393,7 @@ export const IconOnly: Story = {
       },
       description: {
         story:
-          "Icon-only buttons collapse to a circular hit area via `--radiusMax`. Remember to supply an accessible `aria-label`.",
+          "Icon-only buttons collapse to a circular hit area via `--radius-max`. Remember to supply an accessible `aria-label`.",
       },
     },
   },

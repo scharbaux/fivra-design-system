@@ -40,3 +40,5 @@ This document augments the root `AGENTS.md`. Ensure you understand the repositor
 - 1.13.1: Moved the Design Tokens reference, TokensTable specimen, and Icons Library story into `docs/foundations` for centralized foundations coverage.
 - 1.13.2: Added Chromatic and Tokens Studio integration placeholders and updated the Figma plugin documentation metadata.
 - 1.13.3: Updated architecture typography guidance to reference Saans as the default runtime font family.
+
+- 1.13.4: Updated architecture guidance examples to use kebab-case CSS custom property naming.

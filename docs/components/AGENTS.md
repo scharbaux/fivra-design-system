@@ -20,3 +20,5 @@ This directory inherits the repository and `docs/` guidance. Keep component refe
 - 1.12.1: Removed `tone` from docs after consolidating semantic presets under `color`.
 - 1.13.0: Expanded Box docs with explicit Vue parity guidance, Storybook adapter snippets, and cross-framework story IDs used for visual verification.
 - 1.13.1: Updated Button docs to note that React and Vue adapters compose Box as a structural primitive.
+
+- 1.13.2: Migrated Box/Button/Typography docs token variable examples to kebab-case naming.

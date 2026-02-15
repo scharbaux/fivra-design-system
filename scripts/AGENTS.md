@@ -32,3 +32,4 @@ This file extends the repository root `AGENTS.md`. Always review the root conven
 - 1.8.0: Added `verify-angular-button-isolation.mjs` and wired it into `yarn test` to block Angular Button imports from shared/component Button modules.
 - 1.9.0: Added `generate-token-snapshot.mjs` and the `yarn generate:token-snapshot` workflow to persist deterministic docs baselines for token added/changed/removed diffing.
 - 1.10.0: Updated `generate-design-tokens.mjs` to preserve non-standard typography font-weight values (`300`, `380`, `570`, `670`) from token references when emitting theme CSS variables.
+- 1.11.0: Updated token generation to normalize emitted CSS custom properties to full kebab-case and added `verify-kebab-css-vars.mjs` plus `yarn verify:css-vars` enforcement in the test workflow.

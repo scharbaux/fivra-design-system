@@ -65,32 +65,12 @@ function isBorderWidthToken(value: string): value is BoxBorderWidthToken {
   return borderWidthTokenSet.has(value);
 }
 
-function capitalizeTokenSegment(segment: string): string {
-  if (!segment) {
-    return segment;
-  }
-
-  return segment[0].toUpperCase() + segment.slice(1);
-}
-
 function toCssVariableName(token: string): string {
-  const [first, ...rest] = token.split('-');
-  const suffix = rest.map(capitalizeTokenSegment).join('');
-  return `--${first}${suffix}`;
-}
-
-function toPascalToken(value: string): string {
-  return value
-    .split('-')
-    .filter(Boolean)
-    .map(capitalizeTokenSegment)
-    .join('');
+  return `--${token}`;
 }
 
 function toBorderWidthCssVariableName(token: string): string {
-  const segments = token.split('-');
-  const scale = segments.slice(2).map(capitalizeTokenSegment).join('');
-  return `--borderwidth${scale}`;
+  return `--${token.replace('border-width-', 'borderwidth-')}`;
 }
 
 function isDesignToken(value: string): boolean {
@@ -204,10 +184,10 @@ function resolveBoxShadowValue(value: BoxStyleInput['boxShadow']): string | unde
 
   if (isDesignToken(value) && value.startsWith('shadow-')) {
     const preset = value.slice('shadow-'.length);
-    const level = toPascalToken(preset);
+    const normalizedPreset = preset.trim().toLowerCase();
 
-    if (level) {
-      return `calc(var(--shadows${level}X) * 1px) calc(var(--shadows${level}Y) * 1px) calc(var(--shadows${level}Blur) * 1px) calc(var(--shadows${level}Spread) * 1px) var(--shadows${level}Color)`;
+    if (normalizedPreset) {
+      return `calc(var(--shadows-${normalizedPreset}x) * 1px) calc(var(--shadows-${normalizedPreset}y) * 1px) calc(var(--shadows-${normalizedPreset}-blur) * 1px) calc(var(--shadows-${normalizedPreset}-spread) * 1px) var(--shadows-${normalizedPreset}-color)`;
     }
 
     return `var(${toCssVariableName(value)})`;

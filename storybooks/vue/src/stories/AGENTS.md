@@ -21,3 +21,5 @@ This directory inherits guidance from the repository root, `storybooks/AGENTS.md
 - 1.9.0: Added Vue Typography stories with React-parity args/argTypes/descriptions and shared Typography style injection.
 - 1.9.1: Added explicit Typography docs source snippets (to avoid render-object previews) and ensured runtime style injection happens in the Vue Typography preview setup.
 - 1.9.2: Updated Vue Typography docs token examples to match canonical `--typography*` variable names after aligning shared Typography variant CSS bindings.
+
+- 1.9.3: Migrated Vue Box/Button/Typography story token references and docs text to kebab-case CSS custom property naming.

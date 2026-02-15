@@ -73,9 +73,9 @@ export function SummaryCard() {
 | `gap`, `rowGap`, `columnGap` | `BoxSpacingToken \| number \| string` | Applies spacing tokens such as `spacing-m`, numeric pixel values, or raw CSS lengths. |
 | `p`, `px`, `py`, `pt`, `pr`, `pb`, `pl` | `BoxSpacingToken \| number \| string` | Padding shorthands. Axis (`px`, `py`) and side props override broader settings. |
 | `m`, `mx`, `my`, `mt`, `mr`, `mb`, `ml` | `BoxSpacingToken \| number \| string` | Margin shorthands with the same precedence rules as padding. |
-| `backgroundColor`, `color`, `borderColor` | `string` | Accept Engage token strings like `background-neutral-0` or raw CSS values. Tokens become `var(--tokenName)` references. |
-| `borderRadius` | `BoxRadiusToken \| number \| string` | Maps radius tokens (`radius-m`) to `var(--radiusM)` or accepts custom values. |
-| `borderWidth` | `BoxBorderWidthToken \| number \| string` | Converts border width tokens (`border-width-s`) to `calc(var(--borderwidthS) * 1px)` or forwards raw CSS. |
+| `backgroundColor`, `color`, `borderColor` | `string` | Accept Engage token strings like `background-neutral-0` or raw CSS values. Tokens become `var(--token-name)` references. |
+| `borderRadius` | `BoxRadiusToken \| number \| string` | Maps radius tokens (`radius-m`) to `var(--radius-m)` or accepts custom values. |
+| `borderWidth` | `BoxBorderWidthToken \| number \| string` | Converts border width tokens (`border-width-s`) to `calc(var(--borderwidth-s) * 1px)` or forwards raw CSS. |
 | `boxShadow` | `string` | Optional shadow token (e.g., `shadow-m`) or raw CSS shadow declaration. |
 | `width`, `height` | `BoxSpacingToken \| number \| string` | Accept spacing tokens, numbers (pixels), or raw CSS for dimensions. |
 | `style` | `React.CSSProperties` | Inline overrides merged after token resolution so author styles win. |
@@ -93,10 +93,10 @@ Box relies on Engage CSS custom properties for background, text, radius, border 
 
 ```css
 .dashboard-shell {
-  --backgroundNeutral0: #1d1a2b;
-  --textNeutral1: #f7f7f8;
-  --spacingL: 20;
-  --radiusL: 18;
+  --background-neutral-0: #1d1a2b;
+  --text-neutral-1: #f7f7f8;
+  --spacing-l: 20;
+  --radius-l: 18;
 }
 ```
 
