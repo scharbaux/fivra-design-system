@@ -23,3 +23,4 @@ This directory inherits guidance from the repository root, `storybooks/AGENTS.md
 - 1.9.2: Updated Vue Typography docs token examples to match canonical `--typography*` variable names after aligning shared Typography variant CSS bindings.
 
 - 1.9.3: Migrated Vue Box/Button/Typography story token references and docs text to kebab-case CSS custom property naming.
+- 1.10.0: Added Vue Icon preview/stories with React-parity controls and wired Vue Button stories to support `leadingIconName`/`trailingIconName` via the shared icon map.

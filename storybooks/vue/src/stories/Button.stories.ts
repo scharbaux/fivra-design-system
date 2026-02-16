@@ -2,6 +2,7 @@ import type { PropType } from "vue";
 import { computed, defineComponent, h } from "vue";
 import type { Meta, StoryObj } from "@storybook/vue3";
 
+import { icons as ICONS } from "@shared/icons/icons.generated";
 import {
   BUTTON_CARET_CLASS,
   BUTTON_CLASS_NAME,
@@ -18,10 +19,13 @@ import type { ButtonColor } from "@shared/button/color-overrides";
 import { createButtonColorOverrides } from "@shared/button/color-overrides";
 import { defineFivraButton } from "@web-components";
 import { FivraBoxPreview } from "./Box.preview";
+import { FivraIconPreview } from "./Icon.preview";
 
 ensureButtonStyles();
 
 const TONES = ["success", "warning", "error"] as const;
+const iconNames = Object.keys(ICONS).sort();
+const ICON_NAME_OPTIONS = ["(none)", ...iconNames] as const;
 
 type VueButtonStoryArgs = {
   label?: string;
@@ -44,7 +48,9 @@ type VueButtonStoryArgs = {
   "aria-label"?: string;
   "aria-expanded"?: string;
   leadingIcon?: string | null;
+  leadingIconName?: string;
   trailingIcon?: string | null;
+  trailingIconName?: string;
   onClick?: (event: MouseEvent) => void;
 };
 
@@ -94,7 +100,9 @@ const FivraButtonPreview = defineComponent({
     ariaHaspopup: { type: String as PropType<string | null>, default: null },
     ariaExpanded: { type: String as PropType<string | null>, default: null },
     leadingIcon: { type: String as PropType<string | null>, default: null },
+    leadingIconName: { type: String as PropType<string | undefined>, default: undefined },
     trailingIcon: { type: String as PropType<string | null>, default: null },
+    trailingIconName: { type: String as PropType<string | undefined>, default: undefined },
     onClick: { type: Function as PropType<((event: MouseEvent) => void) | undefined> },
   },
   emits: ["click"],
@@ -143,6 +151,40 @@ const FivraButtonPreview = defineComponent({
         ...overrides,
         ...(baseStyle ?? {}),
       };
+    });
+
+    const resolvedLeadingIcon = computed(() => {
+      if (props.leadingIcon) {
+        return props.leadingIcon;
+      }
+
+      if (!props.leadingIconName) {
+        return null;
+      }
+
+      return h(FivraIconPreview, {
+        name: props.leadingIconName,
+        variant: "solid",
+        color: "currentColor",
+        "aria-hidden": "true",
+      });
+    });
+
+    const resolvedTrailingIcon = computed(() => {
+      if (props.trailingIcon) {
+        return props.trailingIcon;
+      }
+
+      if (!props.trailingIconName) {
+        return null;
+      }
+
+      return h(FivraIconPreview, {
+        name: props.trailingIconName,
+        variant: "solid",
+        color: "currentColor",
+        "aria-hidden": "true",
+      });
     });
 
     const handleClick = (event: MouseEvent) => {
@@ -194,9 +236,9 @@ const FivraButtonPreview = defineComponent({
                 as: "span",
                 className: `${BUTTON_ICON_CLASS} ${BUTTON_LEADING_ICON_CLASS}`,
                 "aria-hidden": "true",
-                "data-empty": props.leadingIcon ? undefined : "true",
+                "data-empty": resolvedLeadingIcon.value ? undefined : "true",
               },
-              { default: () => props.leadingIcon ?? null },
+              { default: () => resolvedLeadingIcon.value },
             ),
             h(
               FivraBoxPreview,
@@ -213,9 +255,9 @@ const FivraButtonPreview = defineComponent({
                 as: "span",
                 className: `${BUTTON_ICON_CLASS} ${BUTTON_TRAILING_ICON_CLASS}`,
                 "aria-hidden": "true",
-                "data-empty": props.trailingIcon ? undefined : "true",
+                "data-empty": resolvedTrailingIcon.value ? undefined : "true",
               },
-              { default: () => props.trailingIcon ?? null },
+              { default: () => resolvedTrailingIcon.value },
             ),
             props.dropdown
               ? h(FivraBoxPreview, {
@@ -257,9 +299,27 @@ const meta: Meta<VueButtonStoryArgs> = {
       control: false,
       description: "Optional icon rendered before the label.",
     },
+    leadingIconName: {
+      control: "select",
+      options: ICON_NAME_OPTIONS,
+      mapping: {
+        "(none)": undefined,
+      },
+      description: "Icon name rendered before the label using the shared Icon component.",
+      table: { category: "Appearance" },
+    },
     trailingIcon: {
       control: false,
       description: "Optional icon rendered after the label.",
+    },
+    trailingIconName: {
+      control: "select",
+      options: ICON_NAME_OPTIONS,
+      mapping: {
+        "(none)": undefined,
+      },
+      description: "Icon name rendered after the label using the shared Icon component.",
+      table: { category: "Appearance" },
     },
     variant: {
       control: "inline-radio",
@@ -451,8 +511,8 @@ export const SemanticOverrides: Story = {
 export const WithIcons: Story = {
   args: {
     label: "Download",
-    leadingIcon: "⬇",
-    trailingIcon: "→",
+    leadingIconName: "chevron-left",
+    trailingIconName: "chevron-right",
   },
   parameters: {
     docs: {
@@ -572,7 +632,7 @@ export const IconOnly: Story = {
   args: {
     iconOnly: true,
     children: undefined,
-    leadingIcon: "→",
+    leadingIconName: "chevron-right",
     "aria-label": "Next",
   },
   parameters: {

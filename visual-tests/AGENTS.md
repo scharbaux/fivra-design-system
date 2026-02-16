@@ -25,3 +25,4 @@ This directory extends the repository root `AGENTS.md`. Use Playwright-based vis
 - 1.1.8: Applied Linux-tolerant per-story screenshot diff ratios (`secondary`, `tertiary`, `with-icons`) while keeping stricter defaults for remaining button visual scenarios.
 - 1.2.0: Added Box visual regression coverage for React and Vue Storybook stories, including token spacing, layout alignment, background utilities, and nested composition specimens.
 - 1.3.0: Added Typography visual regression coverage for React and Vue stories to guard variant rendering, truncation, and no-wrap behavior across frameworks.
+- 1.4.0: Added Icon visual regression coverage for React and Vue stories across outline/solid rendering, token sizing, and color variants.
