@@ -3,213 +3,264 @@
     "Primary": {
       "Interactive": {
         "$type": "color",
-        "$value": "{Alias.Core.Primary.1}"
+        "$value": "{Alias.Core.Primary.1}",
+        "$description": "Used for interactive elements "
       },
       "Brand": {
         "$type": "color",
-        "$value": "{Alias.Core.Brand.1}"
-      },
-      "Notice": {
-        "$type": "color",
-        "$value": "{Alias.Semantic.Notice.1}"
-      },
-      "Success": {
-        "$type": "color",
-        "$value": "{Alias.Semantic.Positive.1}"
-      },
-      "Error": {
-        "$type": "color",
-        "$value": "{Alias.Semantic.Error.1}"
-      },
-      "Warning": {
-        "$type": "color",
-        "$value": "{Alias.Semantic.Warning.1}"
-      },
-      "Campaign": {
-        "$type": "color",
-        "$value": "{Alias.Core.Campaign.1}"
-      },
-      "Voice": {
-        "$type": "color",
-        "$value": "{Alias.Core.Voice.1}"
-      },
-      "Mail": {
-        "$type": "color",
-        "$value": "{Alias.Core.Mail.1}"
-      },
-      "Chat": {
-        "$type": "color",
-        "$value": "{Alias.Core.Chat.1}"
-      },
-      "Disabled": {
-        "$type": "color",
-        "$value": "{Alias.Neutral.3}"
+        "$value": "{Alias.Core.Brand.1}",
+        "$description": "Used for non-interactive elements"
       },
       "Selected": {
         "$type": "color",
-        "$value": "{Alias.Core.Primary.2}"
+        "$value": "{Alias.Core.Primary.2}",
+        "$description": "Used for selected state of elements"
+      },
+      "Disabled": {
+        "$type": "color",
+        "$value": "{Alias.Neutral.3}",
+        "$description": "Used for disabled interactive elements"
+      },
+      "Notice": {
+        "$type": "color",
+        "$value": "{Alias.Semantic.Notice.1}",
+        "$description": "Used for informative messaging with inverted text for contrast"
+      },
+      "Success": {
+        "$type": "color",
+        "$value": "{Alias.Semantic.Positive.1}",
+        "$description": "Used for positive / successful messaging with inverted text for contrast"
+      },
+      "Error": {
+        "$type": "color",
+        "$value": "{Alias.Semantic.Error.1}",
+        "$description": "Used for negative / error messaging with inverted text for contrast"
+      },
+      "Warning": {
+        "$type": "color",
+        "$value": "{Alias.Semantic.Warning.1}",
+        "$description": "Used for warning / urgency messaging with inverted text for contrast"
+      },
+      "Campaign": {
+        "$type": "color",
+        "$value": "{Alias.Core.Campaign.1}",
+        "$description": "Used for campaign related elements"
+      },
+      "Voice": {
+        "$type": "color",
+        "$value": "{Alias.Core.Voice.1}",
+        "$description": "Used for voice related elements"
+      },
+      "Mail": {
+        "$type": "color",
+        "$value": "{Alias.Core.Mail.1}",
+        "$description": "Used for mail related elements"
+      },
+      "Chat": {
+        "$type": "color",
+        "$value": "{Alias.Core.Chat.1}",
+        "$description": "Used for chat related elements"
       },
       "Contact": {
         "$type": "color",
-        "$value": "{Alias.Core.User.1}"
+        "$value": "{Alias.Core.User.1}",
+        "$description": "Used for avatar related elements"
       },
       "Agent": {
         "$type": "color",
-        "$value": "{Alias.Core.User.2}"
+        "$value": "{Alias.Core.User.2}",
+        "$description": "Used for avatar related elements"
       },
       "Robot": {
         "$type": "color",
-        "$value": "{Alias.Core.User.3}"
+        "$value": "{Alias.Core.User.3}",
+        "$description": "Used for avatar related elements"
       },
       "Active": {
         "$type": "color",
-        "$value": "{Alias.Status.Active.2}"
+        "$value": "{Alias.Status.Active.2}",
+        "$description": "Used for interaction state badges"
       },
       "Processing": {
         "$type": "color",
-        "$value": "{Alias.Status.Processing.2}"
+        "$value": "{Alias.Status.Processing.2}",
+        "$description": "Used for interaction state badges"
       },
       "Pending": {
         "$type": "color",
-        "$value": "{Alias.Status.Pending.2}"
+        "$value": "{Alias.Status.Pending.2}",
+        "$description": "Used for interaction state badges"
       },
       "Done": {
         "$type": "color",
-        "$value": "{Alias.Status.Done.2}"
+        "$value": "{Alias.Status.Done.2}",
+        "$description": "Used for interaction state badges"
       },
       "Issue": {
         "$type": "color",
-        "$value": "{Alias.Status.Issue.2}"
+        "$value": "{Alias.Status.Issue.2}",
+        "$description": "Used for interaction state badges"
       },
       "Ignored": {
         "$type": "color",
-        "$value": "{Alias.Status.Ignored.2}"
+        "$value": "{Alias.Status.Ignored.2}",
+        "$description": "Used for interaction state badges"
       }
     },
     "Secondary": {
       "Interactive": {
         "$type": "color",
-        "$value": "{Alias.Core.Secondary.1}"
+        "$value": "{Alias.Core.Secondary.1}",
+        "$description": "Used for interactive elements "
       },
       "Brand": {
         "$type": "color",
-        "$value": "{Alias.Core.Brand.2}"
-      },
-      "Notice": {
-        "$type": "color",
-        "$value": "{Alias.Semantic.Notice.2}"
-      },
-      "Success": {
-        "$type": "color",
-        "$value": "{Alias.Semantic.Positive.2}"
-      },
-      "Error": {
-        "$type": "color",
-        "$value": "{Alias.Semantic.Error.2}"
-      },
-      "Warning": {
-        "$type": "color",
-        "$value": "{Alias.Semantic.Warning.2}"
-      },
-      "Campaign": {
-        "$type": "color",
-        "$value": "{Alias.Core.Campaign.2}"
-      },
-      "Voice": {
-        "$type": "color",
-        "$value": "{Alias.Core.Voice.2}"
-      },
-      "Mail": {
-        "$type": "color",
-        "$value": "{Alias.Core.Mail.2}"
-      },
-      "Chat": {
-        "$type": "color",
-        "$value": "{Alias.Core.Chat.2}"
+        "$value": "{Alias.Core.Brand.2}",
+        "$description": "Used for non-interactive elements"
       },
       "Disabled": {
         "$type": "color",
-        "$value": "{Alias.Neutral.1}"
+        "$value": "{Alias.Neutral.1}",
+        "$description": "Used for disabled interactive elements"
+      },
+      "Notice": {
+        "$type": "color",
+        "$value": "{Alias.Semantic.Notice.2}",
+        "$description": "Used for informative messaging with inverted text for contrast"
+      },
+      "Success": {
+        "$type": "color",
+        "$value": "{Alias.Semantic.Positive.2}",
+        "$description": "Used for positive / successful messaging with inverted text for contrast"
+      },
+      "Error": {
+        "$type": "color",
+        "$value": "{Alias.Semantic.Error.2}",
+        "$description": "Used for negative / error messaging with inverted text for contrast"
+      },
+      "Warning": {
+        "$type": "color",
+        "$value": "{Alias.Semantic.Warning.2}",
+        "$description": "Used for warning / urgency messaging with inverted text for contrast"
+      },
+      "Campaign": {
+        "$type": "color",
+        "$value": "{Alias.Core.Campaign.2}",
+        "$description": "Used for campaign related elements"
+      },
+      "Voice": {
+        "$type": "color",
+        "$value": "{Alias.Core.Voice.2}",
+        "$description": "Used for voice related elements"
+      },
+      "Mail": {
+        "$type": "color",
+        "$value": "{Alias.Core.Mail.2}",
+        "$description": "Used for mail related elements"
+      },
+      "Chat": {
+        "$type": "color",
+        "$value": "{Alias.Core.Chat.2}",
+        "$description": "Used for chat related elements"
       },
       "Active": {
         "$type": "color",
-        "$value": "{Alias.Status.Active.1}"
+        "$value": "{Alias.Status.Active.1}",
+        "$description": "Used for interaction state badges"
       },
       "Processing": {
         "$type": "color",
-        "$value": "{Alias.Status.Processing.1}"
+        "$value": "{Alias.Status.Processing.1}",
+        "$description": "Used for interaction state badges"
       },
       "Pending": {
         "$type": "color",
-        "$value": "{Alias.Status.Pending.1}"
+        "$value": "{Alias.Status.Pending.1}",
+        "$description": "Used for interaction state badges"
       },
       "Done": {
         "$type": "color",
-        "$value": "{Alias.Status.Done.1}"
+        "$value": "{Alias.Status.Done.1}",
+        "$description": "Used for interaction state badges"
       },
       "Issue": {
         "$type": "color",
-        "$value": "{Alias.Status.Issue.1}"
+        "$value": "{Alias.Status.Issue.1}",
+        "$description": "Used for interaction state badges"
       },
       "Ignored": {
         "$type": "color",
-        "$value": "{Alias.Status.Ignored.1}"
+        "$value": "{Alias.Status.Ignored.1}",
+        "$description": "Used for interaction state badges"
       }
     },
     "Tertiary": {
       "Interactive": {
         "$type": "color",
-        "$value": "{Alias.Core.Tertiary.1}"
+        "$value": "{Alias.Core.Tertiary.1}",
+        "$description": "Used for interactive elements "
       },
       "Brand": {
         "$type": "color",
-        "$value": "{Alias.Core.Brand.3}"
+        "$value": "{Alias.Core.Brand.3}",
+        "$description": "Used for non-interactive elements "
       },
       "Campaign": {
         "$type": "color",
-        "$value": "{Alias.Core.Campaign.3}"
+        "$value": "{Alias.Core.Campaign.3}",
+        "$description": "Used for campaign related elements"
       },
       "Voice": {
         "$type": "color",
-        "$value": "{Alias.Core.Voice.3}"
+        "$value": "{Alias.Core.Voice.3}",
+        "$description": "Used for voice related elements"
       },
       "Mail": {
         "$type": "color",
-        "$value": "{Alias.Core.Mail.3}"
+        "$value": "{Alias.Core.Mail.3}",
+        "$description": "Used for mail related elements"
       },
       "Chat": {
         "$type": "color",
-        "$value": "{Alias.Core.Chat.3}"
+        "$value": "{Alias.Core.Chat.3}",
+        "$description": "Used for chat related elements"
       }
     },
     "Neutral": {
       "0": {
         "$type": "color",
-        "$value": "{Alias.Neutral.0}"
+        "$value": "{Alias.Neutral.0}",
+        "$description": "High contrast tint"
       },
       "1": {
         "$type": "color",
-        "$value": "{Alias.Neutral.10}"
+        "$value": "{Alias.Neutral.10}",
+        "$description": "High contrast tint"
       },
       "2": {
         "$type": "color",
-        "$value": "{Alias.Neutral.8}"
+        "$value": "{Alias.Neutral.8}",
+        "$description": "Alternative high contrast tint"
       },
       "3": {
         "$type": "color",
-        "$value": "{Alias.Neutral.6}"
+        "$value": "{Alias.Neutral.6}",
+        "$description": "Medium contrast tint"
       },
       "4": {
         "$type": "color",
-        "$value": "{Alias.Neutral.4}"
+        "$value": "{Alias.Neutral.4}",
+        "$description": "Alternative medium contrast tint"
       },
       "5": {
         "$type": "color",
-        "$value": "{Alias.Neutral.2}"
+        "$value": "{Alias.Neutral.2}",
+        "$description": "Light contrast tint"
       },
       "6": {
         "$type": "color",
-        "$value": "{Alias.Neutral.1}"
+        "$value": "{Alias.Neutral.1}",
+        "$description": "Alternative light contrast time"
       }
     }
   },
@@ -217,169 +268,209 @@
     "Primary": {
       "Interactive": {
         "$type": "color",
-        "$value": "{Alias.Core.Primary.1}"
+        "$value": "{Alias.Core.Primary.1}",
+        "$description": "Used for interactive elements "
       },
       "Brand": {
         "$type": "color",
-        "$value": "{Alias.Core.Brand.1}"
-      },
-      "Disabled": {
-        "$type": "color",
-        "$value": "{Alias.Neutral.4}"
-      },
-      "Notice": {
-        "$type": "color",
-        "$value": "{Alias.Semantic.Notice.1}"
-      },
-      "Success": {
-        "$type": "color",
-        "$value": "{Alias.Semantic.Positive.1}"
-      },
-      "Error": {
-        "$type": "color",
-        "$value": "{Alias.Semantic.Error.1}"
-      },
-      "Warning": {
-        "$type": "color",
-        "$value": "{Alias.Semantic.Warning.1}"
-      },
-      "Campaign": {
-        "$type": "color",
-        "$value": "{Alias.Core.Campaign.1}"
-      },
-      "Voice": {
-        "$type": "color",
-        "$value": "{Alias.Core.Voice.1}"
-      },
-      "Mail": {
-        "$type": "color",
-        "$value": "{Alias.Core.Mail.1}"
-      },
-      "Chat": {
-        "$type": "color",
-        "$value": "{Alias.Core.Chat.1}"
+        "$value": "{Alias.Core.Brand.1}",
+        "$description": "Used for non-interactive elements"
       },
       "Selected": {
         "$type": "color",
-        "$value": "{Alias.Core.Primary.1}"
+        "$value": "{Alias.Core.Primary.1}",
+        "$description": "Used for selected state of elements"
+      },
+      "Disabled": {
+        "$type": "color",
+        "$value": "{Alias.Neutral.4}",
+        "$description": "Used for disabled interactive elements"
+      },
+      "Notice": {
+        "$type": "color",
+        "$value": "{Alias.Semantic.Notice.1}",
+        "$description": "Used for informative messaging with primary background for contrast"
+      },
+      "Success": {
+        "$type": "color",
+        "$value": "{Alias.Semantic.Positive.1}",
+        "$description": "Used for positive / successful messaging with primary background for contrast"
+      },
+      "Error": {
+        "$type": "color",
+        "$value": "{Alias.Semantic.Error.1}",
+        "$description": "Used for negative / error messaging with primary background for contrast"
+      },
+      "Warning": {
+        "$type": "color",
+        "$value": "{Alias.Semantic.Warning.1}",
+        "$description": "Used for warning / urgency messaging with primary background for contrast"
+      },
+      "Campaign": {
+        "$type": "color",
+        "$value": "{Alias.Core.Campaign.1}",
+        "$description": "Used for campaign related elements"
+      },
+      "Voice": {
+        "$type": "color",
+        "$value": "{Alias.Core.Voice.1}",
+        "$description": "Used for voice related elements"
+      },
+      "Mail": {
+        "$type": "color",
+        "$value": "{Alias.Core.Mail.1}",
+        "$description": "Used for mail related elements"
+      },
+      "Chat": {
+        "$type": "color",
+        "$value": "{Alias.Core.Chat.1}",
+        "$description": "Used for chat related elements"
       },
       "Active": {
         "$type": "color",
-        "$value": "{Alias.Status.Active.2}"
+        "$value": "{Alias.Status.Active.2}",
+        "$description": "Used for interaction state badges"
       },
       "Processing": {
         "$type": "color",
-        "$value": "{Alias.Status.Processing.2}"
+        "$value": "{Alias.Status.Processing.2}",
+        "$description": "Used for interaction state badges"
       },
       "Pending": {
         "$type": "color",
-        "$value": "{Alias.Status.Pending.2}"
+        "$value": "{Alias.Status.Pending.2}",
+        "$description": "Used for interaction state badges"
       },
       "Done": {
         "$type": "color",
-        "$value": "{Alias.Status.Done.2}"
+        "$value": "{Alias.Status.Done.2}",
+        "$description": "Used for interaction state badges"
       },
       "Issue": {
         "$type": "color",
-        "$value": "{Alias.Status.Issue.2}"
+        "$value": "{Alias.Status.Issue.2}",
+        "$description": "Used for interaction state badges"
       },
       "Ignored": {
         "$type": "color",
-        "$value": "{Alias.Status.Ignored.2}"
+        "$value": "{Alias.Status.Ignored.2}",
+        "$description": "Used for interaction state badges"
       }
     },
     "Secondary": {
       "Interactive": {
         "$type": "color",
-        "$value": "{Alias.Core.Secondary.1}"
+        "$value": "{Alias.Core.Secondary.1}",
+        "$description": "Used for interactive elements "
       },
       "Brand": {
         "$type": "color",
-        "$value": "{Alias.Core.Brand.2}"
+        "$value": "{Alias.Core.Brand.2}",
+        "$description": "Used for non-interactive elements"
       },
       "Disabled": {
         "$type": "color",
-        "$value": "{Alias.Neutral.1}"
+        "$value": "{Alias.Neutral.1}",
+        "$description": "Used for disabled interactive elements"
       },
       "Notice": {
         "$type": "color",
-        "$value": "{Alias.Semantic.Notice.2}"
+        "$value": "{Alias.Semantic.Notice.2}",
+        "$description": "Used for informative messaging elements"
       },
       "Success": {
         "$type": "color",
-        "$value": "{Alias.Semantic.Positive.2}"
+        "$value": "{Alias.Semantic.Positive.2}",
+        "$description": "Used for positive / successful messaging elements"
       },
       "Error": {
         "$type": "color",
-        "$value": "{Alias.Semantic.Error.2}"
+        "$value": "{Alias.Semantic.Error.2}",
+        "$description": "Used for negative / error messaging elements"
       },
       "Warning": {
         "$type": "color",
-        "$value": "{Alias.Semantic.Warning.2}"
+        "$value": "{Alias.Semantic.Warning.2}",
+        "$description": "Used for warning / urgency messaging elements"
       },
       "Campaign": {
         "$type": "color",
-        "$value": "{Alias.Core.Campaign.2}"
+        "$value": "{Alias.Core.Campaign.2}",
+        "$description": "Used for campaign related elements"
       },
       "Voice": {
         "$type": "color",
-        "$value": "{Alias.Core.Voice.2}"
+        "$value": "{Alias.Core.Voice.2}",
+        "$description": "Used for voice related elements"
       },
       "Mail": {
         "$type": "color",
-        "$value": "{Alias.Core.Mail.2}"
+        "$value": "{Alias.Core.Mail.2}",
+        "$description": "Used for mail related elements"
       },
       "Chat": {
         "$type": "color",
-        "$value": "{Alias.Core.Chat.2}"
+        "$value": "{Alias.Core.Chat.2}",
+        "$description": "Used for chat related elements"
       }
     },
     "Tertiary": {
       "Interactive": {
         "$type": "color",
-        "$value": "{Alias.Core.Tertiary.1}"
+        "$value": "{Alias.Core.Tertiary.1}",
+        "$description": "Used for interactive elements "
       },
       "Campaign": {
         "$type": "color",
-        "$value": "{Alias.Core.Campaign.3}"
+        "$value": "{Alias.Core.Campaign.3}",
+        "$description": "Used for campaign related elements"
       },
       "Voice": {
         "$type": "color",
-        "$value": "{Alias.Core.Voice.3}"
+        "$value": "{Alias.Core.Voice.3}",
+        "$description": "Used for voice related elements"
       },
       "Mail": {
         "$type": "color",
-        "$value": "{Alias.Core.Mail.3}"
+        "$value": "{Alias.Core.Mail.3}",
+        "$description": "Used for mail related elements"
       },
       "Chat": {
         "$type": "color",
-        "$value": "{Alias.Core.Chat.3}"
+        "$value": "{Alias.Core.Chat.3}",
+        "$description": "Used for chat related elements"
       }
     },
     "Neutral": {
       "1": {
         "$type": "color",
-        "$value": "{Alias.Neutral.10}"
+        "$value": "{Alias.Neutral.10}",
+        "$description": "High contrast tint"
       },
       "2": {
         "$type": "color",
-        "$value": "{Alias.Neutral.8}"
+        "$value": "{Alias.Neutral.8}",
+        "$description": "Alternative high contrast tint"
       },
       "3": {
         "$type": "color",
-        "$value": "{Alias.Neutral.6}"
+        "$value": "{Alias.Neutral.6}",
+        "$description": "Medium contrast tint"
       },
       "4": {
         "$type": "color",
-        "$value": "{Alias.Neutral.4}"
+        "$value": "{Alias.Neutral.4}",
+        "$description": "Alternative medium contrast tint"
       },
       "5": {
         "$type": "color",
-        "$value": "{Alias.Neutral.2}"
+        "$value": "{Alias.Neutral.2}",
+        "$description": "Light contrast tint"
       },
       "6": {
         "$type": "color",
-        "$value": "{Alias.Neutral.1}"
+        "$value": "{Alias.Neutral.1}",
+        "$description": "Alternative light contrast time"
       }
     }
   },
@@ -387,173 +478,214 @@
     "Primary": {
       "Interactive": {
         "$type": "color",
-        "$value": "{Alias.Core.Primary.1}"
+        "$value": "{Alias.Core.Primary.1}",
+        "$description": "Used for interactive elements "
       },
       "Brand": {
         "$type": "color",
-        "$value": "{Alias.Core.Brand.1}"
+        "$value": "{Alias.Core.Brand.1}",
+        "$description": "Used for non-interactive elements"
       },
       "Disabled": {
         "$type": "color",
-        "$value": "{Alias.Neutral.6}"
+        "$value": "{Alias.Neutral.6}",
+        "$description": "Used for disabled interactive elements against light background"
       },
       "Notice": {
         "$type": "color",
-        "$value": "{Alias.Semantic.Notice.1}"
+        "$value": "{Alias.Semantic.Notice.1}",
+        "$description": "Used for informative messaging with inverted text for contrast"
       },
       "Success": {
         "$type": "color",
-        "$value": "{Alias.Semantic.Positive.1}"
+        "$value": "{Alias.Semantic.Positive.1}",
+        "$description": "Used for positive / successful messaging with inverted text for contrast"
       },
       "Error": {
         "$type": "color",
-        "$value": "{Alias.Semantic.Error.1}"
+        "$value": "{Alias.Semantic.Error.1}",
+        "$description": "Used for negative / error messaging with inverted text for contrast"
       },
       "Warning": {
         "$type": "color",
-        "$value": "{Alias.Semantic.Warning.1}"
+        "$value": "{Alias.Semantic.Warning.1}",
+        "$description": "Used for warning / urgency messaging with inverted text for contrast"
       },
       "Campaign": {
         "$type": "color",
-        "$value": "{Alias.Core.Campaign.1}"
+        "$value": "{Alias.Core.Campaign.1}",
+        "$description": "Used for campaign related elements"
       },
       "Voice": {
         "$type": "color",
-        "$value": "{Alias.Core.Voice.1}"
+        "$value": "{Alias.Core.Voice.1}",
+        "$description": "Used for voice related elements"
       },
       "Mail": {
         "$type": "color",
-        "$value": "{Alias.Core.Mail.1}"
+        "$value": "{Alias.Core.Mail.1}",
+        "$description": "Used for mail related elements"
       },
       "Chat": {
         "$type": "color",
-        "$value": "{Alias.Core.Chat.1}"
+        "$value": "{Alias.Core.Chat.1}",
+        "$description": "Used for chat related elements"
       },
       "Active": {
         "$type": "color",
-        "$value": "{Alias.Status.Active.2}"
+        "$value": "{Alias.Status.Active.2}",
+        "$description": "Used for interaction state badges"
       },
       "Processing": {
         "$type": "color",
-        "$value": "{Alias.Status.Processing.2}"
+        "$value": "{Alias.Status.Processing.2}",
+        "$description": "Used for interaction state badges"
       },
       "Pending": {
         "$type": "color",
-        "$value": "{Alias.Status.Pending.2}"
+        "$value": "{Alias.Status.Pending.2}",
+        "$description": "Used for interaction state badges"
       },
       "Done": {
         "$type": "color",
-        "$value": "{Alias.Status.Done.2}"
+        "$value": "{Alias.Status.Done.2}",
+        "$description": "Used for interaction state badges"
       },
       "Issue": {
         "$type": "color",
-        "$value": "{Alias.Status.Issue.2}"
+        "$value": "{Alias.Status.Issue.2}",
+        "$description": "Used for interaction state badges"
       },
       "Ignored": {
         "$type": "color",
-        "$value": "{Alias.Status.Ignored.2}"
+        "$value": "{Alias.Status.Ignored.2}",
+        "$description": "Used for interaction state badges"
       }
     },
     "Secondary": {
       "Interactive": {
         "$type": "color",
-        "$value": "{Alias.Core.Secondary.1}"
+        "$value": "{Alias.Core.Secondary.1}",
+        "$description": "Used for interactive elements "
       },
       "Brand": {
         "$type": "color",
-        "$value": "{Alias.Core.Brand.2}"
+        "$value": "{Alias.Core.Brand.2}",
+        "$description": "Used for non-interactive elements"
       },
       "Disabled": {
         "$type": "color",
-        "$value": "{Alias.Neutral.7}"
+        "$value": "{Alias.Neutral.7}",
+        "$description": "Used for disabled interactive elements when more contrast is needed against a gray background to meet 3:1 AA contrast ratio"
       },
       "Notice": {
         "$type": "color",
-        "$value": "{Alias.Semantic.Notice.3}"
+        "$value": "{Alias.Semantic.Notice.3}",
+        "$description": "Used for informative messaging with inverted background for contrast"
       },
       "Success": {
         "$type": "color",
-        "$value": "{Alias.Semantic.Positive.3}"
+        "$value": "{Alias.Semantic.Positive.3}",
+        "$description": "Used for positive / successful messaging with inverted background for contrast"
       },
       "Error": {
         "$type": "color",
-        "$value": "{Alias.Semantic.Error.3}"
+        "$value": "{Alias.Semantic.Error.3}",
+        "$description": "Used for negative / error messaging with inverted background for contrast"
       },
       "Warning": {
         "$type": "color",
-        "$value": "{Alias.Semantic.Warning.3}"
+        "$value": "{Alias.Semantic.Warning.3}",
+        "$description": "Used for warning / urgency messaging with inverted background for contrast"
       },
       "Campaign": {
         "$type": "color",
-        "$value": "{Alias.Core.Campaign.3}"
+        "$value": "{Alias.Core.Campaign.3}",
+        "$description": "Used for campaign related elements"
       },
       "Voice": {
         "$type": "color",
-        "$value": "{Alias.Core.Voice.3}"
+        "$value": "{Alias.Core.Voice.3}",
+        "$description": "Used for voice related elements"
       },
       "Mail": {
         "$type": "color",
-        "$value": "{Alias.Core.Mail.3}"
+        "$value": "{Alias.Core.Mail.3}",
+        "$description": "Used for mail related elements"
       },
       "Chat": {
         "$type": "color",
-        "$value": "{Alias.Core.Chat.3}"
+        "$value": "{Alias.Core.Chat.3}",
+        "$description": "Used for chat related elements"
       },
       "Active": {
         "$type": "color",
-        "$value": "{Alias.Status.Active.3}"
+        "$value": "{Alias.Status.Active.3}",
+        "$description": "Used for interaction state badges"
       },
       "Processing": {
         "$type": "color",
-        "$value": "{Alias.Status.Processing.3}"
+        "$value": "{Alias.Status.Processing.3}",
+        "$description": "Used for interaction state badges"
       },
       "Pending": {
         "$type": "color",
-        "$value": "{Alias.Status.Pending.3}"
+        "$value": "{Alias.Status.Pending.3}",
+        "$description": "Used for interaction state badges"
       },
       "Done": {
         "$type": "color",
-        "$value": "{Alias.Status.Done.3}"
+        "$value": "{Alias.Status.Done.3}",
+        "$description": "Used for interaction state badges"
       },
       "Issue": {
         "$type": "color",
-        "$value": "{Alias.Status.Issue.3}"
+        "$value": "{Alias.Status.Issue.3}",
+        "$description": "Used for interaction state badges"
       },
       "Ignored": {
         "$type": "color",
-        "$value": "{Alias.Status.Ignored.3}"
+        "$value": "{Alias.Status.Ignored.3}",
+        "$description": "Used for interaction state badges"
       }
     },
     "Tertiary": {
       "Interactive": {
         "$type": "color",
-        "$value": "{Alias.Neutral.8}"
+        "$value": "{Alias.Neutral.8}",
+        "$description": "Used for interactive elements "
       }
     },
     "Neutral": {
       "1": {
         "$type": "color",
-        "$value": "{Alias.Neutral.10}"
+        "$value": "{Alias.Neutral.10}",
+        "$description": "High contrast tint, used for non-interactive elements"
       },
       "2": {
         "$type": "color",
-        "$value": "{Alias.Neutral.8}"
+        "$value": "{Alias.Neutral.8}",
+        "$description": "Alternative high contrast tint, used for non-interactive elements"
       },
       "3": {
         "$type": "color",
-        "$value": "{Alias.Neutral.6}"
+        "$value": "{Alias.Neutral.6}",
+        "$description": "Medium contrast tint, used for non-interactive elements"
       },
       "4": {
         "$type": "color",
-        "$value": "{Alias.Neutral.4}"
+        "$value": "{Alias.Neutral.4}",
+        "$description": "Alternative medium contrast tint (use against dark background, does not meet 3:1 AA on light backgrounds, used for non-interactive elements"
       },
       "5": {
         "$type": "color",
-        "$value": "{Alias.Neutral.2}"
+        "$value": "{Alias.Neutral.2}",
+        "$description": "Alternative medium contrast tint (use against dark background, does not meet 3:1 AA on light backgrounds, used for non-interactive elements"
       },
       "6": {
         "$type": "color",
-        "$value": "{Alias.Neutral.1}"
+        "$value": "{Alias.Neutral.1}",
+        "$description": "Alternative medium contrast tint (use against dark background, does not meet 3:1 AA on light backgrounds, used for non-interactive elements"
       }
     }
   },
