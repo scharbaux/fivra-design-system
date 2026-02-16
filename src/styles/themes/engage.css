@@ -6,138 +6,138 @@
  */
 
 :root, [data-fivra-theme='engage'] {
-  --background-primary-interactive: #4c57ea;
-  --background-primary-brand: #29308a;
-  --background-primary-notice: #4c57ea;
-  --background-primary-success: #079950;
-  --background-primary-error: #fc4032;
-  --background-primary-warning: #ea6208;
-  --background-primary-campaign: #f2960c;
-  --background-primary-voice: #4c57ea;
-  --background-primary-mail: #f2960c;
-  --background-primary-chat: #4c57ea;
-  --background-primary-disabled: #e4e3eb;
-  --background-primary-selected: #f3f4fc;
-  --background-primary-contact: #bdbbc8;
-  --background-primary-agent: #4c57ea;
-  --background-primary-robot: #ea6208;
-  --background-primary-active: #4c57ea;
-  --background-primary-processing: #ea6208;
-  --background-primary-pending: #f2960c;
-  --background-primary-done: #079950;
-  --background-primary-issue: #fc4032;
-  --background-primary-ignored: #a4a2b0;
-  --background-secondary-interactive: #3c3b44;
-  --background-secondary-brand: #1e246e;
-  --background-secondary-notice: #f3f4fc;
-  --background-secondary-success: #f1fcf3;
-  --background-secondary-error: #fcf1f1;
-  --background-secondary-warning: #fcf4f1;
-  --background-secondary-campaign: #fcf7ed;
-  --background-secondary-voice: #f3f4fc;
-  --background-secondary-mail: #fcf7ed;
-  --background-secondary-chat: #f3f4fc;
-  --background-secondary-disabled: #f7f7f8;
-  --background-secondary-active: #bec3ff;
-  --background-secondary-processing: #fbc5ae;
-  --background-secondary-pending: #ffe0a7;
-  --background-secondary-done: #94e6b0;
-  --background-secondary-issue: #ffc5c4;
-  --background-secondary-ignored: #e4e3eb;
-  --background-tertiary-interactive: #ffffff;
-  --background-tertiary-brand: #14184a;
-  --background-tertiary-campaign: #4d3300;
-  --background-tertiary-voice: #1f0099;
-  --background-tertiary-mail: #4d3300;
-  --background-tertiary-chat: #1f0099;
-  --background-neutral-0: #ffffff;
-  --background-neutral-1: #3c3b44;
-  --background-neutral-2: #706e7b;
-  --background-neutral-3: #a4a2b0;
-  --background-neutral-4: #d4d3dd;
-  --background-neutral-5: #eeeef2;
-  --background-neutral-6: #f7f7f8;
-  --border-primary-interactive: #4c57ea;
-  --border-primary-brand: #29308a;
-  --border-primary-disabled: #d4d3dd;
-  --border-primary-notice: #4c57ea;
-  --border-primary-success: #079950;
-  --border-primary-error: #fc4032;
-  --border-primary-warning: #ea6208;
-  --border-primary-campaign: #f2960c;
-  --border-primary-voice: #4c57ea;
-  --border-primary-mail: #f2960c;
-  --border-primary-chat: #4c57ea;
-  --border-primary-selected: #4c57ea;
-  --border-primary-active: #4c57ea;
-  --border-primary-processing: #ea6208;
-  --border-primary-pending: #f2960c;
-  --border-primary-done: #079950;
-  --border-primary-issue: #fc4032;
-  --border-primary-ignored: #a4a2b0;
-  --border-secondary-interactive: #3c3b44;
-  --border-secondary-brand: #1e246e;
-  --border-secondary-disabled: #f7f7f8;
-  --border-secondary-notice: #f3f4fc;
-  --border-secondary-success: #f1fcf3;
-  --border-secondary-error: #fcf1f1;
-  --border-secondary-warning: #fcf4f1;
-  --border-secondary-campaign: #fcf7ed;
-  --border-secondary-voice: #f3f4fc;
-  --border-secondary-mail: #fcf7ed;
-  --border-secondary-chat: #f3f4fc;
-  --border-tertiary-interactive: #ffffff;
-  --border-tertiary-campaign: #4d3300;
-  --border-tertiary-voice: #1f0099;
-  --border-tertiary-mail: #4d3300;
-  --border-tertiary-chat: #1f0099;
-  --border-neutral-1: #3c3b44;
-  --border-neutral-2: #706e7b;
-  --border-neutral-3: #a4a2b0;
-  --border-neutral-4: #d4d3dd;
-  --border-neutral-5: #eeeef2;
-  --border-neutral-6: #f7f7f8;
-  --text-primary-interactive: #4c57ea;
-  --text-primary-brand: #29308a;
-  --text-primary-disabled: #a4a2b0;
-  --text-primary-notice: #4c57ea;
-  --text-primary-success: #079950;
-  --text-primary-error: #fc4032;
-  --text-primary-warning: #ea6208;
-  --text-primary-campaign: #f2960c;
-  --text-primary-voice: #4c57ea;
-  --text-primary-mail: #f2960c;
-  --text-primary-chat: #4c57ea;
-  --text-primary-active: #4c57ea;
-  --text-primary-processing: #ea6208;
-  --text-primary-pending: #f2960c;
-  --text-primary-done: #079950;
-  --text-primary-issue: #fc4032;
-  --text-primary-ignored: #a4a2b0;
-  --text-secondary-interactive: #3c3b44;
-  --text-secondary-brand: #1e246e;
-  --text-secondary-disabled: #898794;
-  --text-secondary-notice: #1f0099;
-  --text-secondary-success: #004a19;
-  --text-secondary-error: #690000;
-  --text-secondary-warning: #5d2201;
-  --text-secondary-campaign: #4d3300;
-  --text-secondary-voice: #1f0099;
-  --text-secondary-mail: #4d3300;
-  --text-secondary-chat: #1f0099;
-  --text-secondary-active: #1f0099;
-  --text-secondary-processing: #5d2201;
-  --text-secondary-pending: #4d3300;
-  --text-secondary-done: #004a19;
-  --text-secondary-issue: #690000;
-  --text-secondary-ignored: #585663;
-  --text-tertiary-interactive: #706e7b;
-  --text-neutral-1: #3c3b44;
-  --text-neutral-2: #706e7b;
-  --text-neutral-3: #a4a2b0;
-  --text-neutral-4: #d4d3dd;
-  --text-neutral-5: #eeeef2;
-  --text-neutral-6: #f7f7f8;
+  --background-primary-interactive: #4c57ea; /** Used for interactive elements  */
+  --background-primary-brand: #29308a; /** Used for non-interactive elements */
+  --background-primary-selected: #f3f4fc; /** Used for selected state of elements */
+  --background-primary-disabled: #e4e3eb; /** Used for disabled interactive elements */
+  --background-primary-notice: #4c57ea; /** Used for informative messaging with inverted text for contrast */
+  --background-primary-success: #079950; /** Used for positive / successful messaging with inverted text for contrast */
+  --background-primary-error: #fc4032; /** Used for negative / error messaging with inverted text for contrast */
+  --background-primary-warning: #ea6208; /** Used for warning / urgency messaging with inverted text for contrast */
+  --background-primary-campaign: #f2960c; /** Used for campaign related elements */
+  --background-primary-voice: #4c57ea; /** Used for voice related elements */
+  --background-primary-mail: #f2960c; /** Used for mail related elements */
+  --background-primary-chat: #4c57ea; /** Used for chat related elements */
+  --background-primary-contact: #bdbbc8; /** Used for avatar related elements */
+  --background-primary-agent: #4c57ea; /** Used for avatar related elements */
+  --background-primary-robot: #ea6208; /** Used for avatar related elements */
+  --background-primary-active: #4c57ea; /** Used for interaction state badges */
+  --background-primary-processing: #ea6208; /** Used for interaction state badges */
+  --background-primary-pending: #f2960c; /** Used for interaction state badges */
+  --background-primary-done: #079950; /** Used for interaction state badges */
+  --background-primary-issue: #fc4032; /** Used for interaction state badges */
+  --background-primary-ignored: #a4a2b0; /** Used for interaction state badges */
+  --background-secondary-interactive: #3c3b44; /** Used for interactive elements  */
+  --background-secondary-brand: #1e246e; /** Used for non-interactive elements */
+  --background-secondary-disabled: #f7f7f8; /** Used for disabled interactive elements */
+  --background-secondary-notice: #f3f4fc; /** Used for informative messaging with inverted text for contrast */
+  --background-secondary-success: #f1fcf3; /** Used for positive / successful messaging with inverted text for contrast */
+  --background-secondary-error: #fcf1f1; /** Used for negative / error messaging with inverted text for contrast */
+  --background-secondary-warning: #fcf4f1; /** Used for warning / urgency messaging with inverted text for contrast */
+  --background-secondary-campaign: #fcf7ed; /** Used for campaign related elements */
+  --background-secondary-voice: #f3f4fc; /** Used for voice related elements */
+  --background-secondary-mail: #fcf7ed; /** Used for mail related elements */
+  --background-secondary-chat: #f3f4fc; /** Used for chat related elements */
+  --background-secondary-active: #bec3ff; /** Used for interaction state badges */
+  --background-secondary-processing: #fbc5ae; /** Used for interaction state badges */
+  --background-secondary-pending: #ffe0a7; /** Used for interaction state badges */
+  --background-secondary-done: #94e6b0; /** Used for interaction state badges */
+  --background-secondary-issue: #ffc5c4; /** Used for interaction state badges */
+  --background-secondary-ignored: #e4e3eb; /** Used for interaction state badges */
+  --background-tertiary-interactive: #ffffff; /** Used for interactive elements  */
+  --background-tertiary-brand: #14184a; /** Used for non-interactive elements  */
+  --background-tertiary-campaign: #4d3300; /** Used for campaign related elements */
+  --background-tertiary-voice: #1f0099; /** Used for voice related elements */
+  --background-tertiary-mail: #4d3300; /** Used for mail related elements */
+  --background-tertiary-chat: #1f0099; /** Used for chat related elements */
+  --background-neutral-0: #ffffff; /** High contrast tint */
+  --background-neutral-1: #3c3b44; /** High contrast tint */
+  --background-neutral-2: #706e7b; /** Alternative high contrast tint */
+  --background-neutral-3: #a4a2b0; /** Medium contrast tint */
+  --background-neutral-4: #d4d3dd; /** Alternative medium contrast tint */
+  --background-neutral-5: #eeeef2; /** Light contrast tint */
+  --background-neutral-6: #f7f7f8; /** Alternative light contrast time */
+  --border-primary-interactive: #4c57ea; /** Used for interactive elements  */
+  --border-primary-brand: #29308a; /** Used for non-interactive elements */
+  --border-primary-selected: #4c57ea; /** Used for selected state of elements */
+  --border-primary-disabled: #d4d3dd; /** Used for disabled interactive elements */
+  --border-primary-notice: #4c57ea; /** Used for informative messaging with primary background for contrast */
+  --border-primary-success: #079950; /** Used for positive / successful messaging with primary background for contrast */
+  --border-primary-error: #fc4032; /** Used for negative / error messaging with primary background for contrast */
+  --border-primary-warning: #ea6208; /** Used for warning / urgency messaging with primary background for contrast */
+  --border-primary-campaign: #f2960c; /** Used for campaign related elements */
+  --border-primary-voice: #4c57ea; /** Used for voice related elements */
+  --border-primary-mail: #f2960c; /** Used for mail related elements */
+  --border-primary-chat: #4c57ea; /** Used for chat related elements */
+  --border-primary-active: #4c57ea; /** Used for interaction state badges */
+  --border-primary-processing: #ea6208; /** Used for interaction state badges */
+  --border-primary-pending: #f2960c; /** Used for interaction state badges */
+  --border-primary-done: #079950; /** Used for interaction state badges */
+  --border-primary-issue: #fc4032; /** Used for interaction state badges */
+  --border-primary-ignored: #a4a2b0; /** Used for interaction state badges */
+  --border-secondary-interactive: #3c3b44; /** Used for interactive elements  */
+  --border-secondary-brand: #1e246e; /** Used for non-interactive elements */
+  --border-secondary-disabled: #f7f7f8; /** Used for disabled interactive elements */
+  --border-secondary-notice: #f3f4fc; /** Used for informative messaging elements */
+  --border-secondary-success: #f1fcf3; /** Used for positive / successful messaging elements */
+  --border-secondary-error: #fcf1f1; /** Used for negative / error messaging elements */
+  --border-secondary-warning: #fcf4f1; /** Used for warning / urgency messaging elements */
+  --border-secondary-campaign: #fcf7ed; /** Used for campaign related elements */
+  --border-secondary-voice: #f3f4fc; /** Used for voice related elements */
+  --border-secondary-mail: #fcf7ed; /** Used for mail related elements */
+  --border-secondary-chat: #f3f4fc; /** Used for chat related elements */
+  --border-tertiary-interactive: #ffffff; /** Used for interactive elements  */
+  --border-tertiary-campaign: #4d3300; /** Used for campaign related elements */
+  --border-tertiary-voice: #1f0099; /** Used for voice related elements */
+  --border-tertiary-mail: #4d3300; /** Used for mail related elements */
+  --border-tertiary-chat: #1f0099; /** Used for chat related elements */
+  --border-neutral-1: #3c3b44; /** High contrast tint */
+  --border-neutral-2: #706e7b; /** Alternative high contrast tint */
+  --border-neutral-3: #a4a2b0; /** Medium contrast tint */
+  --border-neutral-4: #d4d3dd; /** Alternative medium contrast tint */
+  --border-neutral-5: #eeeef2; /** Light contrast tint */
+  --border-neutral-6: #f7f7f8; /** Alternative light contrast time */
+  --text-primary-interactive: #4c57ea; /** Used for interactive elements  */
+  --text-primary-brand: #29308a; /** Used for non-interactive elements */
+  --text-primary-disabled: #a4a2b0; /** Used for disabled interactive elements against light background */
+  --text-primary-notice: #4c57ea; /** Used for informative messaging with inverted text for contrast */
+  --text-primary-success: #079950; /** Used for positive / successful messaging with inverted text for contrast */
+  --text-primary-error: #fc4032; /** Used for negative / error messaging with inverted text for contrast */
+  --text-primary-warning: #ea6208; /** Used for warning / urgency messaging with inverted text for contrast */
+  --text-primary-campaign: #f2960c; /** Used for campaign related elements */
+  --text-primary-voice: #4c57ea; /** Used for voice related elements */
+  --text-primary-mail: #f2960c; /** Used for mail related elements */
+  --text-primary-chat: #4c57ea; /** Used for chat related elements */
+  --text-primary-active: #4c57ea; /** Used for interaction state badges */
+  --text-primary-processing: #ea6208; /** Used for interaction state badges */
+  --text-primary-pending: #f2960c; /** Used for interaction state badges */
+  --text-primary-done: #079950; /** Used for interaction state badges */
+  --text-primary-issue: #fc4032; /** Used for interaction state badges */
+  --text-primary-ignored: #a4a2b0; /** Used for interaction state badges */
+  --text-secondary-interactive: #3c3b44; /** Used for interactive elements  */
+  --text-secondary-brand: #1e246e; /** Used for non-interactive elements */
+  --text-secondary-disabled: #898794; /** Used for disabled interactive elements when more contrast is needed against a gray background to meet 3:1 AA contrast ratio */
+  --text-secondary-notice: #1f0099; /** Used for informative messaging with inverted background for contrast */
+  --text-secondary-success: #004a19; /** Used for positive / successful messaging with inverted background for contrast */
+  --text-secondary-error: #690000; /** Used for negative / error messaging with inverted background for contrast */
+  --text-secondary-warning: #5d2201; /** Used for warning / urgency messaging with inverted background for contrast */
+  --text-secondary-campaign: #4d3300; /** Used for campaign related elements */
+  --text-secondary-voice: #1f0099; /** Used for voice related elements */
+  --text-secondary-mail: #4d3300; /** Used for mail related elements */
+  --text-secondary-chat: #1f0099; /** Used for chat related elements */
+  --text-secondary-active: #1f0099; /** Used for interaction state badges */
+  --text-secondary-processing: #5d2201; /** Used for interaction state badges */
+  --text-secondary-pending: #4d3300; /** Used for interaction state badges */
+  --text-secondary-done: #004a19; /** Used for interaction state badges */
+  --text-secondary-issue: #690000; /** Used for interaction state badges */
+  --text-secondary-ignored: #585663; /** Used for interaction state badges */
+  --text-tertiary-interactive: #706e7b; /** Used for interactive elements  */
+  --text-neutral-1: #3c3b44; /** High contrast tint, used for non-interactive elements */
+  --text-neutral-2: #706e7b; /** Alternative high contrast tint, used for non-interactive elements */
+  --text-neutral-3: #a4a2b0; /** Medium contrast tint, used for non-interactive elements */
+  --text-neutral-4: #d4d3dd; /** Alternative medium contrast tint (use against dark background, does not meet 3:1 AA on light backgrounds, used for non-interactive elements */
+  --text-neutral-5: #eeeef2; /** Alternative medium contrast tint (use against dark background, does not meet 3:1 AA on light backgrounds, used for non-interactive elements */
+  --text-neutral-6: #f7f7f8; /** Alternative medium contrast tint (use against dark background, does not meet 3:1 AA on light backgrounds, used for non-interactive elements */
   --state-brand-focus: rgba(76, 87, 234, 0.5);
   --state-brand-hover: rgba(76, 87, 234, 0.24);
   --state-brand-press: rgba(76, 87, 234, 0.18);
