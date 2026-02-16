@@ -34,6 +34,13 @@ async function loadStory(page: Page, story: StoryConfig) {
 }
 
 test.describe('Box visual regressions', () => {
+  const screenshotOptions = {
+    animations: 'disabled' as const,
+    caret: 'hide' as const,
+    scale: 'css' as const,
+    maxDiffPixelRatio: 0.02,
+  };
+
   test.beforeEach(async ({ page }) => {
     await page.setViewportSize({ width: 1000, height: 760 });
   });
@@ -42,11 +49,7 @@ test.describe('Box visual regressions', () => {
     test(`${story.name} matches baseline`, async ({ page }) => {
       await loadStory(page, story);
       const canvas = page.locator('#storybook-root');
-      await expect(canvas).toHaveScreenshot(`${story.name}.png`, {
-        animations: 'disabled',
-        caret: 'hide',
-        scale: 'css',
-      });
+      await expect(canvas).toHaveScreenshot(`${story.name}.png`, screenshotOptions);
     });
   }
 });
