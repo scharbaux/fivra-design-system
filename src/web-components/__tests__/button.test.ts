@@ -171,6 +171,22 @@ describe('FivraButtonElement behavior', () => {
     expect(button?.style.getPropertyValue('--fivra-button-accent')).toBe('');
   });
 
+  it('resolves direct color override attributes to kebab-case CSS variables', async () => {
+    const element = document.createElement('fivra-button') as FivraButtonElement;
+    element.setAttribute('surface-color', 'background-primary-warning');
+    element.setAttribute('border-color', 'border-primary-warning');
+    element.setAttribute('text-color', 'text-primary-warning');
+    element.textContent = 'Continue';
+    document.body.appendChild(element);
+
+    await waitForUpdates();
+
+    const button = element.shadowRoot?.querySelector('button') as HTMLButtonElement | null;
+    expect(button?.style.getPropertyValue('--fivra-button-surface')).toBe('var(--background-primary-warning)');
+    expect(button?.style.getPropertyValue('--fivra-button-border')).toBe('var(--border-primary-warning)');
+    expect(button?.style.getPropertyValue('--fivra-button-text')).toBe('var(--text-primary-warning)');
+  });
+
   it('renders label text from the label attribute when the slot is empty', async () => {
     const element = document.createElement('fivra-button') as FivraButtonElement;
     element.setAttribute('label', 'Continue');

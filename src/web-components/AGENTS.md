@@ -28,3 +28,4 @@ This directory extends the repository and `src/components/` guidance for custom 
 - 1.6.7: Cleaned AGENTS history wording to match the shared-button-core terminology.
 
 - 1.6.8: Migrated web-component button token resolution and tests to kebab-case CSS custom properties.
+- 1.6.9: Added regression coverage for direct `surface-color`/`border-color`/`text-color` token overrides to ensure web-component style variables resolve via kebab-case token names.

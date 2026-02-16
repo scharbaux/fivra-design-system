@@ -86,18 +86,8 @@ function hasLabelContent(children: React.ReactNode): boolean {
   });
 }
 
-function capitalizeTokenSegment(segment: string): string {
-  if (!segment) {
-    return segment;
-  }
-
-  return segment[0].toUpperCase() + segment.slice(1);
-}
-
 function toCssVariableName(token: string): string {
-  const [first, ...rest] = token.split('-');
-  const suffix = rest.map(capitalizeTokenSegment).join('');
-  return `--${first}${suffix}`;
+  return `--${token}`;
 }
 
 function isDesignToken(value: string): boolean {

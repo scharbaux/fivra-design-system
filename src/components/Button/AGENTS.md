@@ -168,3 +168,4 @@ Slots: `leading-icon`, default, and `trailing-icon` provide icon/labelling parit
 - 1.13.0: Refactored the React Button structure to compose the Box primitive for the root and internal wrappers while preserving the existing button API and data-attribute contract.
 
 - 1.13.1: Migrated Button stories/tests/token references to kebab-case CSS custom properties to match generated theme variables.
+- 1.13.2: Updated React button token override resolution (`surfaceColor`/`borderColor`/`textColor`/`accentColor`) to emit kebab-case CSS variable references and added regression coverage for direct token overrides.

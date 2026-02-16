@@ -21,3 +21,4 @@ This file inherits the repository root `AGENTS.md`. Generated theme assets live 
 - 1.6.3: Regenerated Engage/Legacy typography variables to emit token-exact font weights (`380`, `570`, `670`) instead of rounded defaults from the transform pipeline.
 
 - 1.6.4: Regenerated Engage/Legacy theme assets and token option metadata with kebab-case CSS custom property names.
+- 1.6.5: Regenerated Storybook token option metadata after fixing kebab-case CSS variable parsing so shared color/spacing/radius/border/shadow option lists are populated again.

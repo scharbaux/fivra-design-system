@@ -24,3 +24,6 @@ This directory inherits guidance from the repository root, `storybooks/AGENTS.md
 
 - 1.9.3: Migrated Vue Box/Button/Typography story token references and docs text to kebab-case CSS custom property naming.
 - 1.10.0: Added Vue Icon preview/stories with React-parity controls and wired Vue Button stories to support `leadingIconName`/`trailingIconName` via the shared icon map.
+- 1.10.1: Fixed Vue Button story control reactivity so primary story args update live, and added surface/border/text/accent color override controls for React parity.
+- 1.10.2: Switched Vue Button `surfaceColor`/`borderColor`/`textColor` controls to token-backed select dropdowns using shared generated Storybook token options, matching React UX.
+- 1.10.3: Updated Vue Button preview token override resolution to emit kebab-case CSS variable references for direct color overrides so controls map to existing theme variables.

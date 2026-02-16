@@ -431,25 +431,47 @@ const toKebabToken = (value) =>
 const dedupe = (values) => [...new Set(values)];
 
 const extractCssVariableNames = (cssContent) =>
-  [...cssContent.matchAll(/--([A-Za-z0-9]+):/g)].map((match) => match[1]);
+  [...cssContent.matchAll(/--([A-Za-z0-9-]+)\s*:/g)].map((match) => match[1]);
 
 const extractShadowTokenOptions = (cssVarNames) => {
   const byLevel = new Map();
-  const shadowPattern = /^shadows([A-Za-z0-9]+?)(X|Y|Blur|Spread|Color|Type)$/;
-
-  for (const cssVarName of cssVarNames) {
-    const match = cssVarName.match(shadowPattern);
-    if (!match) {
-      continue;
-    }
-
-    const [, level, part] = match;
+  const addPart = (level, part) => {
     const parts = byLevel.get(level) ?? new Set();
     parts.add(part);
     byLevel.set(level, parts);
+  };
+
+  for (const cssVarName of cssVarNames) {
+    if (!cssVarName.startsWith('shadows')) {
+      continue;
+    }
+
+    const kebabRest = cssVarName.startsWith('shadows-')
+      ? cssVarName.slice('shadows-'.length)
+      : null;
+
+    if (kebabRest) {
+      const dashedMatch = kebabRest.match(/^(.+)-(blur|spread|color|type)$/);
+      if (dashedMatch) {
+        addPart(toKebabToken(dashedMatch[1]), dashedMatch[2]);
+        continue;
+      }
+
+      const compactMatch = kebabRest.match(/^([a-z0-9]+)(x|y)$/);
+      if (compactMatch) {
+        addPart(toKebabToken(compactMatch[1]), compactMatch[2]);
+        continue;
+      }
+    }
+
+    const camelMatch = cssVarName.match(/^shadows([A-Za-z0-9]+?)(X|Y|Blur|Spread|Color|Type)$/);
+    if (camelMatch) {
+      const [, level, part] = camelMatch;
+      addPart(toKebabToken(level), part.toLowerCase());
+    }
   }
 
-  const requiredParts = ['X', 'Y', 'Blur', 'Spread', 'Color'];
+  const requiredParts = ['x', 'y', 'blur', 'spread', 'color'];
 
   return [...byLevel.entries()]
     .filter(([, parts]) => requiredParts.every((part) => parts.has(part)))

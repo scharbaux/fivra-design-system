@@ -29,3 +29,4 @@ he shared button behavior and styling.
 - 1.13.1: Updated Angular button font-family token fallback to prefer canonical typography tokens and `Saans` so adapter typography matches shared token naming and font assets.
 
 - 1.13.2: Migrated Angular button style/color/state-layer token references and related tests to kebab-case CSS custom properties.
+- 1.13.3: Updated Angular direct color override token resolution to emit kebab-case CSS variable references so `surfaceColor`, `borderColor`, `textColor`, and `accentColor` map to existing theme variables.

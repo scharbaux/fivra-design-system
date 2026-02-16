@@ -4,6 +4,11 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 
 import { icons as ICONS } from "@shared/icons/icons.generated";
 import {
+  backgroundColorTokenOptions,
+  borderColorTokenOptions,
+  textColorTokenOptions,
+} from "@styles/themes/storybook-token-options.generated";
+import {
   BUTTON_CARET_CLASS,
   BUTTON_CLASS_NAME,
   BUTTON_ICON_CLASS,
@@ -25,6 +30,10 @@ ensureButtonStyles();
 
 const TONES = ["success", "warning", "error"] as const;
 const iconNames = Object.keys(ICONS).sort();
+const DEFAULT_OPTION = "(default)";
+const SURFACE_COLOR_OPTIONS = [DEFAULT_OPTION, ...backgroundColorTokenOptions] as const;
+const BORDER_COLOR_OPTIONS = [DEFAULT_OPTION, ...borderColorTokenOptions] as const;
+const TEXT_COLOR_OPTIONS = [DEFAULT_OPTION, ...textColorTokenOptions] as const;
 const ICON_NAME_OPTIONS = ["(none)", ...iconNames] as const;
 
 type VueButtonStoryArgs = {
@@ -41,6 +50,10 @@ type VueButtonStoryArgs = {
   disabled?: boolean;
   type?: "button" | "submit" | "reset";
   style?: Record<string, string> | null;
+  surfaceColor?: string | null;
+  borderColor?: string | null;
+  textColor?: string | null;
+  accentColor?: string | null;
   ariaLabel?: string | null;
   ariaLabelledby?: string | null;
   ariaHaspopup?: string | null;
@@ -53,6 +66,30 @@ type VueButtonStoryArgs = {
   trailingIconName?: string;
   onClick?: (event: MouseEvent) => void;
 };
+
+function toCssVariableName(token: string): string {
+  return `--${token}`;
+}
+
+function isDesignToken(value: string): boolean {
+  return /^[a-z]+(?:-[a-z0-9]+)+$/i.test(value);
+}
+
+function resolveColorValue(value: string | null | undefined): string | undefined {
+  if (!value) {
+    return undefined;
+  }
+
+  if (value.startsWith("var(") || value.startsWith("calc(")) {
+    return value;
+  }
+
+  if (isDesignToken(value)) {
+    return `var(${toCssVariableName(value)})`;
+  }
+
+  return value;
+}
 
 const resolveStoryArgs = (args: VueButtonStoryArgs) => {
   const { "aria-label": ariaLabelAttr, "aria-expanded": ariaExpandedAttr, ...rest } = args;
@@ -95,6 +132,10 @@ const FivraButtonPreview = defineComponent({
       type: Object as PropType<Record<string, string> | null>,
       default: null,
     },
+    surfaceColor: { type: String as PropType<string | null>, default: null },
+    borderColor: { type: String as PropType<string | null>, default: null },
+    textColor: { type: String as PropType<string | null>, default: null },
+    accentColor: { type: String as PropType<string | null>, default: null },
     ariaLabel: { type: String as PropType<string | null>, default: null },
     ariaLabelledby: { type: String as PropType<string | null>, default: null },
     ariaHaspopup: { type: String as PropType<string | null>, default: null },
@@ -141,14 +182,30 @@ const FivraButtonPreview = defineComponent({
         props.color
           ? createButtonColorOverrides(props.variant ?? "primary", props.color)
           : null;
+      const directOverrides =
+        props.surfaceColor || props.borderColor || props.textColor || props.accentColor
+          ? {
+              ...(props.surfaceColor
+                ? { "--fivra-button-surface": resolveColorValue(props.surfaceColor) }
+                : {}),
+              ...(props.borderColor
+                ? { "--fivra-button-border": resolveColorValue(props.borderColor) }
+                : {}),
+              ...(props.textColor
+                ? { "--fivra-button-text": resolveColorValue(props.textColor) }
+                : {}),
+              ...(props.accentColor
+                ? { "--fivra-button-accent": resolveColorValue(props.accentColor) }
+                : {}),
+            }
+          : null;
 
-      if (!palette) {
+      if (!palette && !directOverrides) {
         return baseStyle;
       }
-
-      const overrides = palette;
       return {
-        ...overrides,
+        ...(palette ?? {}),
+        ...(directOverrides ?? {}),
         ...(baseStyle ?? {}),
       };
     });
@@ -273,14 +330,13 @@ const FivraButtonPreview = defineComponent({
 });
 
 const defaultRender = (args: VueButtonStoryArgs) => {
-  const resolvedArgs = resolveStoryArgs(args);
-
   return {
     components: { FivraButtonPreview },
     setup() {
-      return { args: resolvedArgs };
+      const resolvedArgs = computed(() => resolveStoryArgs(args));
+      return { resolvedArgs };
     },
-    template: `<FivraButtonPreview v-bind="args" />`,
+    template: `<FivraButtonPreview v-bind="resolvedArgs" />`,
   };
 };
 
@@ -295,6 +351,47 @@ const meta: Meta<VueButtonStoryArgs> = {
   },
   argTypes: {
     onClick: { action: "clicked" },
+    color: {
+      control: "inline-radio",
+      options: ["(default)", "primary-success", "primary-warning", "primary-error"],
+      mapping: {
+        "(default)": undefined,
+      },
+      description: "Preset palette identifier. Initially supports success/warning/error.",
+      table: { category: "Appearance" },
+    },
+    surfaceColor: {
+      control: "select",
+      options: SURFACE_COLOR_OPTIONS,
+      mapping: {
+        "(default)": undefined,
+      },
+      description: "Overrides the surface color via a design token string (e.g., `background-primary-success`).",
+      table: { category: "Appearance" },
+    },
+    borderColor: {
+      control: "select",
+      options: BORDER_COLOR_OPTIONS,
+      mapping: {
+        "(default)": undefined,
+      },
+      description: "Overrides the border color via a design token string (e.g., `border-primary-success`).",
+      table: { category: "Appearance" },
+    },
+    textColor: {
+      control: "select",
+      options: TEXT_COLOR_OPTIONS,
+      mapping: {
+        "(default)": undefined,
+      },
+      description: "Overrides the text color via a design token string (e.g., `text-primary-success`).",
+      table: { category: "Appearance" },
+    },
+    accentColor: {
+      control: "text",
+      description: "Overrides the accent color driving state layers via a design token string.",
+      table: { category: "Appearance" },
+    },
     leadingIcon: {
       control: false,
       description: "Optional icon rendered before the label.",

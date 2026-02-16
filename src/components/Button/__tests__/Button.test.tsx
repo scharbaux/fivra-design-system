@@ -78,6 +78,22 @@ describe('Button', () => {
     expect(button.style.getPropertyValue('--fivra-button-border')).toBe('var(--border-primary-success)');
   });
 
+  it('resolves direct token overrides to kebab-case CSS variables', () => {
+    render(
+      <Button
+        label="Continue"
+        surfaceColor="background-primary-warning"
+        borderColor="border-primary-warning"
+        textColor="text-primary-warning"
+      />,
+    );
+
+    const button = screen.getByRole('button', { name: 'Continue' });
+    expect(button.style.getPropertyValue('--fivra-button-surface')).toBe('var(--background-primary-warning)');
+    expect(button.style.getPropertyValue('--fivra-button-border')).toBe('var(--border-primary-warning)');
+    expect(button.style.getPropertyValue('--fivra-button-text')).toBe('var(--text-primary-warning)');
+  });
+
   it('applies semantic color aliases without requiring inline style props', () => {
     render(<Button variant="secondary" color="primary-success" label="Continue" />);
 
