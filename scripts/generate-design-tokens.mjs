@@ -29,6 +29,13 @@ const slugify = (value) =>
 
 const ensureBanner = (content, banner) => (content.startsWith(banner) ? content : `${banner}${content}`);
 const FIVRA_THEME_ATTRIBUTE = 'data-fivra-theme';
+const FONT_WEIGHT_NAME_TO_VALUE = {
+  light: '300',
+  regular: '380',
+  medium: '570',
+  semibold: '670',
+  'semi-bold': '670',
+};
 
 const formatPercentValue = (value) => {
   const percent = value * 100;
@@ -61,8 +68,8 @@ const appendIntensityCompanionTokens = (cssContent) =>
 
 const ensureStateLayerAliases = (cssContent) => {
   const aliases = [
-    { name: '--stateLayerBrightenBase', value: 'var(--backgroundNeutral0)' },
-    { name: '--stateLayerDarkenBase', value: 'var(--backgroundNeutral1)' },
+    { name: '--state-layer-brighten-base', value: 'var(--background-neutral-0)' },
+    { name: '--state-layer-darken-base', value: 'var(--background-neutral-1)' },
   ];
 
   return cssContent.replace(/(:root[^{]*\{)([\s\S]*?)(\n\})/, (match, prefix, body, suffix) => {
@@ -78,6 +85,36 @@ const ensureStateLayerAliases = (cssContent) => {
 
     return `${prefix}${nextBody}${suffix}`;
   });
+};
+
+const toKebabCssVariableName = (cssVariableName) =>
+  cssVariableName
+    .replace(/^--/, '')
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+    .replace(/([A-Z])([A-Z][a-z])/g, '$1-$2')
+    .replace(/([a-zA-Z])([0-9])/g, '$1-$2')
+    .replace(/([0-9])([a-zA-Z])/g, '$1-$2')
+    .replace(/--+/g, '-')
+    .toLowerCase();
+
+const normalizeCssVariableCasing = (cssContent) => {
+  const discoveredVariableNames = new Set();
+  for (const match of cssContent.matchAll(/--[A-Za-z0-9-]+/g)) {
+    discoveredVariableNames.add(match[0]);
+  }
+
+  const replacements = [...discoveredVariableNames]
+    .filter((variableName) => /[A-Z]/.test(variableName))
+    .map((variableName) => ({
+      from: variableName,
+      to: `--${toKebabCssVariableName(variableName)}`,
+    }))
+    .sort((a, b) => b.from.length - a.from.length);
+
+  return replacements.reduce((nextCssContent, replacement) => {
+    const escaped = replacement.from.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return nextCssContent.replace(new RegExp(escaped, 'g'), replacement.to);
+  }, cssContent);
 };
 
 const clearGeneratedThemeArtifacts = async () => {
@@ -108,6 +145,116 @@ const readJson = async (filePath) => {
   const content = await fs.readFile(filePath, 'utf8');
   return JSON.parse(content);
 };
+
+const normalizeFontWeightTokens = (node) => {
+  if (!node || typeof node !== 'object') {
+    return;
+  }
+
+  if (!Array.isArray(node) && node.$type === 'fontWeights' && typeof node.$value === 'string') {
+    const normalized = node.$value.trim().toLowerCase();
+    const mapped = FONT_WEIGHT_NAME_TO_VALUE[normalized];
+    if (mapped) {
+      node.$value = mapped;
+    }
+  }
+
+  for (const value of Object.values(node)) {
+    if (value && typeof value === 'object') {
+      normalizeFontWeightTokens(value);
+    }
+  }
+};
+
+const typographyTokenSegmentToCss = (segment, index) => {
+  if (index === 0) {
+    return segment.toLowerCase();
+  }
+
+  return segment
+    .split(/[-_\s]+/)
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join('');
+};
+
+const typographyPathToCssVariable = (pathSegments) => {
+  if (pathSegments.length === 0) {
+    return null;
+  }
+
+  const cssName = pathSegments
+    .map((segment, index) => typographyTokenSegmentToCss(segment, index))
+    .join('');
+  return cssName ? `--${cssName}` : null;
+};
+
+const extractFontWeightReferenceValue = (value) => {
+  if (typeof value === 'number') {
+    return String(value);
+  }
+
+  if (typeof value !== 'string') {
+    return null;
+  }
+
+  const trimmed = value.trim();
+  if (/^\d+(\.\d+)?$/.test(trimmed)) {
+    return trimmed;
+  }
+
+  const referenceMatch = trimmed.match(/^\{FontWeight\.([^}]+)\}$/);
+  if (!referenceMatch) {
+    return null;
+  }
+
+  const referenceKey = referenceMatch[1];
+  if (/^\d+(\.\d+)?$/.test(referenceKey)) {
+    return referenceKey;
+  }
+
+  const mapped = FONT_WEIGHT_NAME_TO_VALUE[referenceKey.toLowerCase()];
+  return mapped ?? null;
+};
+
+const collectTypographyFontWeightOverrides = (tokenNode, path = []) => {
+  if (!tokenNode || typeof tokenNode !== 'object' || Array.isArray(tokenNode)) {
+    return {};
+  }
+
+  const overrides = {};
+
+  for (const [key, value] of Object.entries(tokenNode)) {
+    const nextPath = [...path, key];
+    const normalizedPath = nextPath.filter((segment) => segment !== '$value');
+
+    if (
+      key === 'fontWeight' &&
+      normalizedPath[0] === 'typography'
+    ) {
+      const resolvedValue = value && typeof value === 'object' ? value.$value : value;
+      const cssVarName = typographyPathToCssVariable(normalizedPath);
+      const cssVarValue = extractFontWeightReferenceValue(resolvedValue);
+
+      if (cssVarName && cssVarValue) {
+        overrides[cssVarName] = cssVarValue;
+      }
+    }
+
+    if (value && typeof value === 'object') {
+      Object.assign(overrides, collectTypographyFontWeightOverrides(value, nextPath));
+    }
+  }
+
+  return overrides;
+};
+
+const applyTypographyFontWeightOverrides = (cssContent, overrides) =>
+  Object.entries(overrides).reduce((nextCssContent, [cssVarName, cssVarValue]) => {
+    const escapedVariableName = cssVarName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const declarationPattern = new RegExp(`(${escapedVariableName}:\\s*)([^;]+);`, 'g');
+    return nextCssContent.replace(declarationPattern, `$1${cssVarValue};`);
+  }, cssContent);
 
 const resolveTokenSource = async (value) => {
   if (typeof value === 'string') {
@@ -140,6 +287,10 @@ const loadTokenBundle = async () => {
     } else {
       throw new Error(`Token set "${name}" must resolve to a JSON object or file path.`);
     }
+  }
+
+  for (const entry of Object.values(tokenSets)) {
+    normalizeFontWeightTokens(entry.tokens);
   }
 
   return { metadata, themes, tokenSets };
@@ -229,8 +380,14 @@ const buildStyleDictionary = async ({
 
   const cssPath = path.join(THEMES_OUTPUT_DIR, `${slug}.css`);
   const cssContent = await fs.readFile(cssPath, 'utf8');
-  const augmentedCss = ensureStateLayerAliases(appendIntensityCompanionTokens(cssContent));
-  const rewrittenCss = rewriteRootSelector({ cssContent: augmentedCss, selector });
+  const typographyWeightOverrides = externalEntries.reduce((allOverrides, entry) => {
+    Object.assign(allOverrides, collectTypographyFontWeightOverrides(entry.tokens));
+    return allOverrides;
+  }, {});
+  const overriddenTypographyCss = applyTypographyFontWeightOverrides(cssContent, typographyWeightOverrides);
+  const augmentedCss = ensureStateLayerAliases(appendIntensityCompanionTokens(overriddenTypographyCss));
+  const normalizedCss = normalizeCssVariableCasing(augmentedCss);
+  const rewrittenCss = rewriteRootSelector({ cssContent: normalizedCss, selector });
   await fs.writeFile(cssPath, ensureBanner(rewrittenCss, CSS_BANNER), 'utf8');
 
   return {
@@ -274,25 +431,47 @@ const toKebabToken = (value) =>
 const dedupe = (values) => [...new Set(values)];
 
 const extractCssVariableNames = (cssContent) =>
-  [...cssContent.matchAll(/--([A-Za-z0-9]+):/g)].map((match) => match[1]);
+  [...cssContent.matchAll(/--([A-Za-z0-9-]+)\s*:/g)].map((match) => match[1]);
 
 const extractShadowTokenOptions = (cssVarNames) => {
   const byLevel = new Map();
-  const shadowPattern = /^shadows([A-Za-z0-9]+?)(X|Y|Blur|Spread|Color|Type)$/;
-
-  for (const cssVarName of cssVarNames) {
-    const match = cssVarName.match(shadowPattern);
-    if (!match) {
-      continue;
-    }
-
-    const [, level, part] = match;
+  const addPart = (level, part) => {
     const parts = byLevel.get(level) ?? new Set();
     parts.add(part);
     byLevel.set(level, parts);
+  };
+
+  for (const cssVarName of cssVarNames) {
+    if (!cssVarName.startsWith('shadows')) {
+      continue;
+    }
+
+    const kebabRest = cssVarName.startsWith('shadows-')
+      ? cssVarName.slice('shadows-'.length)
+      : null;
+
+    if (kebabRest) {
+      const dashedMatch = kebabRest.match(/^(.+)-(blur|spread|color|type)$/);
+      if (dashedMatch) {
+        addPart(toKebabToken(dashedMatch[1]), dashedMatch[2]);
+        continue;
+      }
+
+      const compactMatch = kebabRest.match(/^([a-z0-9]+)(x|y)$/);
+      if (compactMatch) {
+        addPart(toKebabToken(compactMatch[1]), compactMatch[2]);
+        continue;
+      }
+    }
+
+    const camelMatch = cssVarName.match(/^shadows([A-Za-z0-9]+?)(X|Y|Blur|Spread|Color|Type)$/);
+    if (camelMatch) {
+      const [, level, part] = camelMatch;
+      addPart(toKebabToken(level), part.toLowerCase());
+    }
   }
 
-  const requiredParts = ['X', 'Y', 'Blur', 'Spread', 'Color'];
+  const requiredParts = ['x', 'y', 'blur', 'spread', 'color'];
 
   return [...byLevel.entries()]
     .filter(([, parts]) => requiredParts.every((part) => parts.has(part)))

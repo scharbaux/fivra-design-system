@@ -13,31 +13,31 @@ export type ButtonSemanticStyleFactories<TStyles> = {
 };
 
 const createPrimaryOverrides = (tone: SemanticTone): SemanticStyleOverrides => ({
-  "--fivra-button-surface": `var(--backgroundPrimary${tone})`,
-  "--fivra-button-accent": `var(--backgroundPrimary${tone})`,
-  "--fivra-button-border": `var(--borderPrimary${tone})`,
-  "--fivra-button-text": "var(--backgroundNeutral0)",
-  "--fivra-button-hover-fallback": `var(--backgroundPrimary${tone})`,
-  "--fivra-button-active-fallback": `var(--backgroundPrimary${tone})`,
+  "--fivra-button-surface": `var(--background-primary${tone})`,
+  "--fivra-button-accent": `var(--background-primary${tone})`,
+  "--fivra-button-border": `var(--border-primary${tone})`,
+  "--fivra-button-text": "var(--background-neutral-0)",
+  "--fivra-button-hover-fallback": `var(--background-primary${tone})`,
+  "--fivra-button-active-fallback": `var(--background-primary${tone})`,
 });
 
 const createSecondaryOverrides = (
   tone: SemanticTone,
 ): SemanticStyleOverrides => ({
-  "--fivra-button-accent": `var(--textPrimary${tone})`,
-  "--fivra-button-border": `var(--borderPrimary${tone})`,
-  "--fivra-button-text": `var(--textPrimary${tone})`,
-  "--fivra-button-hover-fallback": `var(--backgroundSecondary${tone})`,
-  "--fivra-button-active-fallback": `var(--backgroundSecondary${tone})`,
+  "--fivra-button-accent": `var(--text-primary${tone})`,
+  "--fivra-button-border": `var(--border-primary${tone})`,
+  "--fivra-button-text": `var(--text-primary${tone})`,
+  "--fivra-button-hover-fallback": `var(--background-secondary${tone})`,
+  "--fivra-button-active-fallback": `var(--background-secondary${tone})`,
 });
 
 const createTertiaryOverrides = (
   tone: SemanticTone,
 ): SemanticStyleOverrides => ({
-  "--fivra-button-accent": `var(--textPrimary${tone})`,
-  "--fivra-button-text": `var(--textPrimary${tone})`,
-  "--fivra-button-hover-fallback": `var(--backgroundSecondary${tone})`,
-  "--fivra-button-active-fallback": `var(--backgroundSecondary${tone})`,
+  "--fivra-button-accent": `var(--text-primary${tone})`,
+  "--fivra-button-text": `var(--text-primary${tone})`,
+  "--fivra-button-hover-fallback": `var(--background-secondary${tone})`,
+  "--fivra-button-active-fallback": `var(--background-secondary${tone})`,
 });
 
 export function createButtonSemanticStyleFactories(): ButtonSemanticStyleFactories<SemanticStyleOverrides>;

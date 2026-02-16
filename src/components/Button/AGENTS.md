@@ -13,17 +13,17 @@ This directory follows the repository and `src/components/` standards. Keep shar
 
 | Variant | Description | Token hooks |
 | --- | --- | --- |
-| `primary` | High-emphasis action with accent backgrounds, halo, and strong focus ring. | `--backgroundPrimaryInteractive`, `--textOnPrimary`, `--haloPrimary*` |
-| `secondary` | Neutral surface button with outlined emphasis and token-driven halo mix. | `--backgroundNeutral0`, `--borderNeutralStrong`, `--haloNeutral*` |
-| `tertiary` | Low-emphasis ghost button with transparent background and hover/active overlays. | `--overlayNeutral*`, `--textPrimaryInteractive` |
+| `primary` | High-emphasis action with accent backgrounds, halo, and strong focus ring. | `--background-primary-interactive`, `--text-on-primary`, `--halo-primary*` |
+| `secondary` | Neutral surface button with outlined emphasis and token-driven halo mix. | `--background-neutral-0`, `--border-neutral-strong`, `--halo-neutral*` |
+| `tertiary` | Low-emphasis ghost button with transparent background and hover/active overlays. | `--overlay-neutral*`, `--text-primary-interactive` |
 
 ### Sizes
 
 | Size | Description | Measurement hooks |
 | --- | --- | --- |
-| `sm` | Compact control for dense layouts, 32px height, 14px type, 8px horizontal padding. | `--buttonHeightSm`, `--buttonPaddingXSm`, `--iconSizeSm` |
-| `md` | Default control, 40px height, 16px type, 12px horizontal padding. | `--buttonHeightMd`, `--buttonPaddingXMd`, `--iconSizeMd` |
-| `lg` | Spacious control for marketing/forms, 48px height, 18px type, 16px horizontal padding. | `--buttonHeightLg`, `--buttonPaddingXLg`, `--iconSizeLg` |
+| `sm` | Compact control for dense layouts, 32px height, 14px type, 8px horizontal padding. | `--button-height-sm`, `--button-padding-x-sm`, `--icon-size-sm` |
+| `md` | Default control, 40px height, 16px type, 12px horizontal padding. | `--button-height-md`, `--button-padding-x-md`, `--icon-size-md` |
+| `lg` | Spacious control for marketing/forms, 48px height, 18px type, 16px horizontal padding. | `--button-height-lg`, `--button-padding-x-lg`, `--icon-size-lg` |
 
 ### Accessibility requirements
 
@@ -165,3 +165,7 @@ Slots: `leading-icon`, default, and `trailing-icon` provide icon/labelling parit
 - 1.12.1: Updated Button internals and tests to consume semantic color overrides through the new shared button core while preserving compatibility re-exports.
 - 1.12.2: Removed `src/components/Button` compatibility shim files (`button.styles.ts`, `color-overrides.ts`) after migrating internal consumers to `@shared/button/*`.
 - 1.12.3: Cleaned AGENTS history wording to reflect the current shared-button-core model centered on `src/shared/button`.
+- 1.13.0: Refactored the React Button structure to compose the Box primitive for the root and internal wrappers while preserving the existing button API and data-attribute contract.
+
+- 1.13.1: Migrated Button stories/tests/token references to kebab-case CSS custom properties to match generated theme variables.
+- 1.13.2: Updated React button token override resolution (`surfaceColor`/`borderColor`/`textColor`/`accentColor`) to emit kebab-case CSS variable references and added regression coverage for direct token overrides.

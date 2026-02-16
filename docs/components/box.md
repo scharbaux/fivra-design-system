@@ -6,7 +6,8 @@ Review the [Box component contract](../../src/components/Box/AGENTS.md#component
 
 - Source: [`src/components/Box/Box.tsx`](../../src/components/Box/Box.tsx)
 - Styles: [`src/components/Box/box.styles.ts`](../../src/components/Box/box.styles.ts)
-- Stories: [`src/components/Box/Box.stories.tsx`](../../src/components/Box/Box.stories.tsx)
+- React stories: [`src/components/Box/Box.stories.tsx`](../../src/components/Box/Box.stories.tsx)
+- Vue stories: [`storybooks/vue/src/stories/Box.stories.ts`](../../storybooks/vue/src/stories/Box.stories.ts)
 
 ## React usage
 
@@ -72,9 +73,9 @@ export function SummaryCard() {
 | `gap`, `rowGap`, `columnGap` | `BoxSpacingToken \| number \| string` | Applies spacing tokens such as `spacing-m`, numeric pixel values, or raw CSS lengths. |
 | `p`, `px`, `py`, `pt`, `pr`, `pb`, `pl` | `BoxSpacingToken \| number \| string` | Padding shorthands. Axis (`px`, `py`) and side props override broader settings. |
 | `m`, `mx`, `my`, `mt`, `mr`, `mb`, `ml` | `BoxSpacingToken \| number \| string` | Margin shorthands with the same precedence rules as padding. |
-| `backgroundColor`, `color`, `borderColor` | `string` | Accept Engage token strings like `background-neutral-0` or raw CSS values. Tokens become `var(--tokenName)` references. |
-| `borderRadius` | `BoxRadiusToken \| number \| string` | Maps radius tokens (`radius-m`) to `var(--radiusM)` or accepts custom values. |
-| `borderWidth` | `BoxBorderWidthToken \| number \| string` | Converts border width tokens (`border-width-s`) to `calc(var(--borderwidthS) * 1px)` or forwards raw CSS. |
+| `backgroundColor`, `color`, `borderColor` | `string` | Accept Engage token strings like `background-neutral-0` or raw CSS values. Tokens become `var(--token-name)` references. |
+| `borderRadius` | `BoxRadiusToken \| number \| string` | Maps radius tokens (`radius-m`) to `var(--radius-m)` or accepts custom values. |
+| `borderWidth` | `BoxBorderWidthToken \| number \| string` | Converts border width tokens (`border-width-s`) to `calc(var(--borderwidth-s) * 1px)` or forwards raw CSS. |
 | `boxShadow` | `string` | Optional shadow token (e.g., `shadow-m`) or raw CSS shadow declaration. |
 | `width`, `height` | `BoxSpacingToken \| number \| string` | Accept spacing tokens, numbers (pixels), or raw CSS for dimensions. |
 | `style` | `React.CSSProperties` | Inline overrides merged after token resolution so author styles win. |
@@ -92,11 +93,42 @@ Box relies on Engage CSS custom properties for background, text, radius, border 
 
 ```css
 .dashboard-shell {
-  --backgroundNeutral0: #1d1a2b;
-  --textNeutral1: #f7f7f8;
-  --spacingL: 20;
-  --radiusL: 18;
+  --background-neutral-0: #1d1a2b;
+  --text-neutral-1: #f7f7f8;
+  --spacing-l: 20;
+  --radius-l: 18;
 }
 ```
 
 Wrap your feature area with `.dashboard-shell` (or switch `data-fivra-theme`) so the updated token values cascade into every Box instance.
+
+## Vue parity
+
+Vue Storybook uses the same Box token-resolution pipeline (`createBoxStyles`) and mirrors the React docs controls/argTypes so API behavior stays aligned across frameworks.
+
+### Vue Storybook adapter snippet
+
+```vue
+<template>
+  <FivraBoxPreview
+    as="section"
+    backgroundColor="background-neutral-0"
+    borderRadius="radius-l"
+    p="spacing-l"
+    display="grid"
+    gap="spacing-m"
+  >
+    <FivraBoxPreview as="h2" style="margin: 0">
+      Account summary
+    </FivraBoxPreview>
+    <FivraBoxPreview color="text-neutral-2">
+      Use spacing tokens (for example, <code>spacing-m</code>) for consistent gutters.
+    </FivraBoxPreview>
+  </FivraBoxPreview>
+</template>
+```
+
+### Story IDs used for cross-framework verification
+
+- React: `atomics-box-react--padding-and-margin-tokens`, `atomics-box-react--flex-alignment`, `atomics-box-react--background-utilities`, `atomics-box-react--nested-composition`
+- Vue: `atomics-box-vue--padding-and-margin-tokens`, `atomics-box-vue--flex-alignment`, `atomics-box-vue--background-utilities`, `atomics-box-vue--nested-composition`

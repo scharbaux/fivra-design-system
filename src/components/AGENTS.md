@@ -30,3 +30,9 @@ This document extends the root-level `AGENTS.md`. All contributors must read and
 - 1.10.0: Introduced the token-backed React Typography primitive with shared style injector and cross-framework contract.
 - 1.11.0: Added the Box layout primitive with spacing shorthands, shared style injector, tests, stories, and documentation references.
 - 1.12.0: Cleaned AGENTS history wording to align with the shared-button-core terminology.
+- 1.12.1: Extracted Box style/token resolution into shared helpers so React and Vue Storybook adapters can consume the same Box contract.
+- 1.13.0: Adopted Box as a structural building block inside the React Button component and the Vue Button story adapter to reinforce primitive composition across frameworks.
+- 1.13.1: Added Vue Typography stories plus parity assertions so Typography controls/docs stay synchronized with the React adapter.
+- 1.13.2: Updated Typography Storybook code previews to show clean usage snippets instead of render configuration wrappers.
+- 1.14.0: Migrated component token variable references to kebab-case across Box, Button, Icon, and Typography to align with the generated theme contract.
+- 1.14.1: Extracted shared Icon source/variant resolution utilities, kept React Icon API stable, and added cross-framework Icon story parity plus shared-core unit coverage.

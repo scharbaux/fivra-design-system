@@ -17,14 +17,14 @@ type CssVarName =
 
 export type ButtonSemanticStyleOverrides = Partial<Record<CssVarName, string>>;
 
-function colorSuffix(color: ButtonColor): 'Success' | 'Warning' | 'Error' {
+function colorSuffix(color: ButtonColor): 'success' | 'warning' | 'error' {
   switch (color) {
     case 'primary-success':
-      return 'Success';
+      return 'success';
     case 'primary-warning':
-      return 'Warning';
+      return 'warning';
     case 'primary-error':
-      return 'Error';
+      return 'error';
   }
 }
 
@@ -36,30 +36,29 @@ export function createButtonColorOverrides(
 
   if (variant === 'primary') {
     return {
-      '--fivra-button-surface': `var(--backgroundPrimary${suffix})`,
-      '--fivra-button-accent': `var(--backgroundPrimary${suffix})`,
-      '--fivra-button-border': `var(--borderPrimary${suffix})`,
-      '--fivra-button-text': 'var(--backgroundNeutral0)',
-      '--fivra-button-hover-fallback': `var(--backgroundPrimary${suffix})`,
-      '--fivra-button-active-fallback': `var(--backgroundPrimary${suffix})`,
+      '--fivra-button-surface': `var(--background-primary-${suffix})`,
+      '--fivra-button-accent': `var(--background-primary-${suffix})`,
+      '--fivra-button-border': `var(--border-primary-${suffix})`,
+      '--fivra-button-text': 'var(--background-neutral-0)',
+      '--fivra-button-hover-fallback': `var(--background-primary-${suffix})`,
+      '--fivra-button-active-fallback': `var(--background-primary-${suffix})`,
     };
   }
 
   if (variant === 'secondary') {
     return {
-      '--fivra-button-accent': `var(--textPrimary${suffix})`,
-      '--fivra-button-border': `var(--borderPrimary${suffix})`,
-      '--fivra-button-text': `var(--textPrimary${suffix})`,
-      '--fivra-button-hover-fallback': `var(--backgroundSecondary${suffix})`,
-      '--fivra-button-active-fallback': `var(--backgroundSecondary${suffix})`,
+      '--fivra-button-accent': `var(--text-primary-${suffix})`,
+      '--fivra-button-border': `var(--border-primary-${suffix})`,
+      '--fivra-button-text': `var(--text-primary-${suffix})`,
+      '--fivra-button-hover-fallback': `var(--background-secondary-${suffix})`,
+      '--fivra-button-active-fallback': `var(--background-secondary-${suffix})`,
     };
   }
 
   return {
-    '--fivra-button-accent': `var(--textPrimary${suffix})`,
-    '--fivra-button-text': `var(--textPrimary${suffix})`,
-    '--fivra-button-hover-fallback': `var(--backgroundSecondary${suffix})`,
-    '--fivra-button-active-fallback': `var(--backgroundSecondary${suffix})`,
+    '--fivra-button-accent': `var(--text-primary-${suffix})`,
+    '--fivra-button-text': `var(--text-primary-${suffix})`,
+    '--fivra-button-hover-fallback': `var(--background-secondary-${suffix})`,
+    '--fivra-button-active-fallback': `var(--background-secondary-${suffix})`,
   };
 }
-

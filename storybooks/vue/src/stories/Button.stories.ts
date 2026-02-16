@@ -2,6 +2,12 @@ import type { PropType } from "vue";
 import { computed, defineComponent, h } from "vue";
 import type { Meta, StoryObj } from "@storybook/vue3";
 
+import { icons as ICONS } from "@shared/icons/icons.generated";
+import {
+  backgroundColorTokenOptions,
+  borderColorTokenOptions,
+  textColorTokenOptions,
+} from "@styles/themes/storybook-token-options.generated";
 import {
   BUTTON_CARET_CLASS,
   BUTTON_CLASS_NAME,
@@ -17,10 +23,18 @@ import {
 import type { ButtonColor } from "@shared/button/color-overrides";
 import { createButtonColorOverrides } from "@shared/button/color-overrides";
 import { defineFivraButton } from "@web-components";
+import { FivraBoxPreview } from "./Box.preview";
+import { FivraIconPreview } from "./Icon.preview";
 
 ensureButtonStyles();
 
 const TONES = ["success", "warning", "error"] as const;
+const iconNames = Object.keys(ICONS).sort();
+const DEFAULT_OPTION = "(default)";
+const SURFACE_COLOR_OPTIONS = [DEFAULT_OPTION, ...backgroundColorTokenOptions] as const;
+const BORDER_COLOR_OPTIONS = [DEFAULT_OPTION, ...borderColorTokenOptions] as const;
+const TEXT_COLOR_OPTIONS = [DEFAULT_OPTION, ...textColorTokenOptions] as const;
+const ICON_NAME_OPTIONS = ["(none)", ...iconNames] as const;
 
 type VueButtonStoryArgs = {
   label?: string;
@@ -36,6 +50,10 @@ type VueButtonStoryArgs = {
   disabled?: boolean;
   type?: "button" | "submit" | "reset";
   style?: Record<string, string> | null;
+  surfaceColor?: string | null;
+  borderColor?: string | null;
+  textColor?: string | null;
+  accentColor?: string | null;
   ariaLabel?: string | null;
   ariaLabelledby?: string | null;
   ariaHaspopup?: string | null;
@@ -43,9 +61,35 @@ type VueButtonStoryArgs = {
   "aria-label"?: string;
   "aria-expanded"?: string;
   leadingIcon?: string | null;
+  leadingIconName?: string;
   trailingIcon?: string | null;
+  trailingIconName?: string;
   onClick?: (event: MouseEvent) => void;
 };
+
+function toCssVariableName(token: string): string {
+  return `--${token}`;
+}
+
+function isDesignToken(value: string): boolean {
+  return /^[a-z]+(?:-[a-z0-9]+)+$/i.test(value);
+}
+
+function resolveColorValue(value: string | null | undefined): string | undefined {
+  if (!value) {
+    return undefined;
+  }
+
+  if (value.startsWith("var(") || value.startsWith("calc(")) {
+    return value;
+  }
+
+  if (isDesignToken(value)) {
+    return `var(${toCssVariableName(value)})`;
+  }
+
+  return value;
+}
 
 const resolveStoryArgs = (args: VueButtonStoryArgs) => {
   const { "aria-label": ariaLabelAttr, "aria-expanded": ariaExpandedAttr, ...rest } = args;
@@ -88,12 +132,18 @@ const FivraButtonPreview = defineComponent({
       type: Object as PropType<Record<string, string> | null>,
       default: null,
     },
+    surfaceColor: { type: String as PropType<string | null>, default: null },
+    borderColor: { type: String as PropType<string | null>, default: null },
+    textColor: { type: String as PropType<string | null>, default: null },
+    accentColor: { type: String as PropType<string | null>, default: null },
     ariaLabel: { type: String as PropType<string | null>, default: null },
     ariaLabelledby: { type: String as PropType<string | null>, default: null },
     ariaHaspopup: { type: String as PropType<string | null>, default: null },
     ariaExpanded: { type: String as PropType<string | null>, default: null },
     leadingIcon: { type: String as PropType<string | null>, default: null },
+    leadingIconName: { type: String as PropType<string | undefined>, default: undefined },
     trailingIcon: { type: String as PropType<string | null>, default: null },
+    trailingIconName: { type: String as PropType<string | undefined>, default: undefined },
     onClick: { type: Function as PropType<((event: MouseEvent) => void) | undefined> },
   },
   emits: ["click"],
@@ -132,16 +182,66 @@ const FivraButtonPreview = defineComponent({
         props.color
           ? createButtonColorOverrides(props.variant ?? "primary", props.color)
           : null;
+      const directOverrides =
+        props.surfaceColor || props.borderColor || props.textColor || props.accentColor
+          ? {
+              ...(props.surfaceColor
+                ? { "--fivra-button-surface": resolveColorValue(props.surfaceColor) }
+                : {}),
+              ...(props.borderColor
+                ? { "--fivra-button-border": resolveColorValue(props.borderColor) }
+                : {}),
+              ...(props.textColor
+                ? { "--fivra-button-text": resolveColorValue(props.textColor) }
+                : {}),
+              ...(props.accentColor
+                ? { "--fivra-button-accent": resolveColorValue(props.accentColor) }
+                : {}),
+            }
+          : null;
 
-      if (!palette) {
+      if (!palette && !directOverrides) {
         return baseStyle;
       }
-
-      const overrides = palette;
       return {
-        ...overrides,
+        ...(palette ?? {}),
+        ...(directOverrides ?? {}),
         ...(baseStyle ?? {}),
       };
+    });
+
+    const resolvedLeadingIcon = computed(() => {
+      if (props.leadingIcon) {
+        return props.leadingIcon;
+      }
+
+      if (!props.leadingIconName) {
+        return null;
+      }
+
+      return h(FivraIconPreview, {
+        name: props.leadingIconName,
+        variant: "solid",
+        color: "currentColor",
+        "aria-hidden": "true",
+      });
+    });
+
+    const resolvedTrailingIcon = computed(() => {
+      if (props.trailingIcon) {
+        return props.trailingIcon;
+      }
+
+      if (!props.trailingIconName) {
+        return null;
+      }
+
+      return h(FivraIconPreview, {
+        name: props.trailingIconName,
+        variant: "solid",
+        color: "currentColor",
+        "aria-hidden": "true",
+      });
     });
 
     const handleClick = (event: MouseEvent) => {
@@ -157,9 +257,10 @@ const FivraButtonPreview = defineComponent({
 
     return () =>
       h(
-        "button",
+        FivraBoxPreview,
         {
-          class: BUTTON_CLASS_NAME,
+          as: "button",
+          className: BUTTON_CLASS_NAME,
           type: props.type,
           disabled: props.disabled || props.loading,
           "data-variant": props.variant ?? "primary",
@@ -177,59 +278,65 @@ const FivraButtonPreview = defineComponent({
           "aria-busy": props.loading ? "true" : undefined,
           onClick: handleClick,
         },
-        [
-          props.loading
-            ? h("span", {
-                class: BUTTON_SPINNER_CLASS,
+        {
+          default: () => [
+            props.loading
+              ? h(FivraBoxPreview, {
+                  as: "span",
+                  className: BUTTON_SPINNER_CLASS,
+                  "aria-hidden": "true",
+                })
+              : null,
+            h(
+              FivraBoxPreview,
+              {
+                as: "span",
+                className: `${BUTTON_ICON_CLASS} ${BUTTON_LEADING_ICON_CLASS}`,
                 "aria-hidden": "true",
-              })
-            : null,
-          h(
-            "span",
-            {
-              class: `${BUTTON_ICON_CLASS} ${BUTTON_LEADING_ICON_CLASS}`,
-              "aria-hidden": "true",
-              "data-empty": props.leadingIcon ? undefined : "true",
-            },
-            props.leadingIcon ?? null,
-          ),
-          h(
-            "span",
-            {
-              class: BUTTON_LABEL_CLASS,
-              "data-empty": resolvedHasLabel.value ? undefined : "true",
-            },
-            resolvedHasLabel.value ? props.children || props.label || "" : null,
-          ),
-          h(
-            "span",
-            {
-              class: `${BUTTON_ICON_CLASS} ${BUTTON_TRAILING_ICON_CLASS}`,
-              "aria-hidden": "true",
-              "data-empty": props.trailingIcon ? undefined : "true",
-            },
-            props.trailingIcon ?? null,
-          ),
-          props.dropdown
-            ? h("span", {
-                class: BUTTON_CARET_CLASS,
+                "data-empty": resolvedLeadingIcon.value ? undefined : "true",
+              },
+              { default: () => resolvedLeadingIcon.value },
+            ),
+            h(
+              FivraBoxPreview,
+              {
+                as: "span",
+                className: BUTTON_LABEL_CLASS,
+                "data-empty": resolvedHasLabel.value ? undefined : "true",
+              },
+              { default: () => (resolvedHasLabel.value ? props.children || props.label || "" : null) },
+            ),
+            h(
+              FivraBoxPreview,
+              {
+                as: "span",
+                className: `${BUTTON_ICON_CLASS} ${BUTTON_TRAILING_ICON_CLASS}`,
                 "aria-hidden": "true",
-              })
-            : null,
-        ],
+                "data-empty": resolvedTrailingIcon.value ? undefined : "true",
+              },
+              { default: () => resolvedTrailingIcon.value },
+            ),
+            props.dropdown
+              ? h(FivraBoxPreview, {
+                  as: "span",
+                  className: BUTTON_CARET_CLASS,
+                  "aria-hidden": "true",
+                })
+              : null,
+          ],
+        },
       );
   },
 });
 
 const defaultRender = (args: VueButtonStoryArgs) => {
-  const resolvedArgs = resolveStoryArgs(args);
-
   return {
     components: { FivraButtonPreview },
     setup() {
-      return { args: resolvedArgs };
+      const resolvedArgs = computed(() => resolveStoryArgs(args));
+      return { resolvedArgs };
     },
-    template: `<FivraButtonPreview v-bind="args" />`,
+    template: `<FivraButtonPreview v-bind="resolvedArgs" />`,
   };
 };
 
@@ -244,19 +351,78 @@ const meta: Meta<VueButtonStoryArgs> = {
   },
   argTypes: {
     onClick: { action: "clicked" },
+    color: {
+      control: "inline-radio",
+      options: ["(default)", "primary-success", "primary-warning", "primary-error"],
+      mapping: {
+        "(default)": undefined,
+      },
+      description: "Preset palette identifier. Initially supports success/warning/error.",
+      table: { category: "Appearance" },
+    },
+    surfaceColor: {
+      control: "select",
+      options: SURFACE_COLOR_OPTIONS,
+      mapping: {
+        "(default)": undefined,
+      },
+      description: "Overrides the surface color via a design token string (e.g., `background-primary-success`).",
+      table: { category: "Appearance" },
+    },
+    borderColor: {
+      control: "select",
+      options: BORDER_COLOR_OPTIONS,
+      mapping: {
+        "(default)": undefined,
+      },
+      description: "Overrides the border color via a design token string (e.g., `border-primary-success`).",
+      table: { category: "Appearance" },
+    },
+    textColor: {
+      control: "select",
+      options: TEXT_COLOR_OPTIONS,
+      mapping: {
+        "(default)": undefined,
+      },
+      description: "Overrides the text color via a design token string (e.g., `text-primary-success`).",
+      table: { category: "Appearance" },
+    },
+    accentColor: {
+      control: "text",
+      description: "Overrides the accent color driving state layers via a design token string.",
+      table: { category: "Appearance" },
+    },
     leadingIcon: {
       control: false,
       description: "Optional icon rendered before the label.",
+    },
+    leadingIconName: {
+      control: "select",
+      options: ICON_NAME_OPTIONS,
+      mapping: {
+        "(none)": undefined,
+      },
+      description: "Icon name rendered before the label using the shared Icon component.",
+      table: { category: "Appearance" },
     },
     trailingIcon: {
       control: false,
       description: "Optional icon rendered after the label.",
     },
+    trailingIconName: {
+      control: "select",
+      options: ICON_NAME_OPTIONS,
+      mapping: {
+        "(none)": undefined,
+      },
+      description: "Icon name rendered after the label using the shared Icon component.",
+      table: { category: "Appearance" },
+    },
     variant: {
       control: "inline-radio",
       options: ["primary", "secondary", "tertiary"],
       description:
-        "Visual treatment of the button mapped to `--backgroundPrimaryInteractive`, `--backgroundNeutral0`, and transparent tiers.",
+        "Visual treatment of the button mapped to `--background-primary-interactive`, `--background-neutral-0`, and transparent tiers.",
       table: { category: "Appearance" },
     },
     size: {
@@ -272,7 +438,7 @@ const meta: Meta<VueButtonStoryArgs> = {
     },
     iconOnly: {
       control: "boolean",
-      description: "Removes the visible label and switches to `--radiusMax`. Provide `aria-label` for accessibility.",
+      description: "Removes the visible label and switches to `--radius-max`. Provide `aria-label` for accessibility.",
       table: { category: "Appearance" },
     },
     hasLabel: {
@@ -317,7 +483,7 @@ export const Primary: Story = {
     docs: {
       description: {
         story:
-          "Primary buttons emphasize the main action using '--backgroundPrimaryInteractive'. The default mixes keep brand overlays weighting the state layer and surface through `--fivra-button-hover-color`, `--fivra-button-active-color`, and `--fivra-button-focus-ring-color`.",
+          "Primary buttons emphasize the main action using '--background-primary-interactive'. The default mixes keep brand overlays weighting the state layer and surface through `--fivra-button-hover-color`, `--fivra-button-active-color`, and `--fivra-button-focus-ring-color`.",
       },
     },
   },
@@ -332,7 +498,7 @@ export const Secondary: Story = {
     docs: {
       description: {
         story:
-          "Secondary buttons pair `--backgroundNeutral0` with `--borderPrimaryInteractive` and now reweight their hover, active, and focus mixes so the accent receives the intensity percentage. The result keeps outline tiers neutral by default while adopting semantic hues when `--fivra-button-accent` is overridden.",
+          "Secondary buttons pair `--background-neutral-0` with `--border-primary-interactive` and now reweight their hover, active, and focus mixes so the accent receives the intensity percentage. The result keeps outline tiers neutral by default while adopting semantic hues when `--fivra-button-accent` is overridden.",
       },
     },
   },
@@ -367,7 +533,7 @@ export const DisabledStates: Story = {
       <div
         style="
           display: flex;
-          gap: calc(var(--spacingL) * 1px);
+          gap: calc(var(--spacing-l) * 1px);
           align-items: center;
           flex-wrap: wrap;
         "
@@ -382,7 +548,7 @@ export const DisabledStates: Story = {
     docs: {
       description: {
         story:
-          "Disabled states pull from `--backgroundPrimaryDisabled`, `--backgroundSecondaryDisabled`, and `--textPrimaryDisabled` ensuring consistent contrast and borders via `--borderPrimaryDisabled`.",
+          "Disabled states pull from `--background-primary-disabled`, `--background-secondary-disabled`, and `--text-primary-disabled` ensuring consistent contrast and borders via `--border-primary-disabled`.",
       },
     },
   },
@@ -398,8 +564,8 @@ export const SemanticOverrides: Story = {
       };
     },
     template: `
-      <div style="display: grid; gap: calc(var(--spacingM) * 1px);">
-        <div style="display: flex; gap: calc(var(--spacingL) * 1px); flex-wrap: wrap;">
+      <div style="display: grid; gap: calc(var(--spacing-m) * 1px);">
+        <div style="display: flex; gap: calc(var(--spacing-l) * 1px); flex-wrap: wrap;">
           <FivraButtonPreview
             v-for="tone in tones"
             :key="'primary-' + tone"
@@ -408,7 +574,7 @@ export const SemanticOverrides: Story = {
             :label="tone + ' Primary'"
           />
         </div>
-        <div style="display: flex; gap: calc(var(--spacingL) * 1px); flex-wrap: wrap;">
+        <div style="display: flex; gap: calc(var(--spacing-l) * 1px); flex-wrap: wrap;">
           <FivraButtonPreview
             v-for="tone in tones"
             :key="'secondary-' + tone"
@@ -417,7 +583,7 @@ export const SemanticOverrides: Story = {
             :label="tone + ' Secondary'"
           />
         </div>
-        <div style="display: flex; gap: calc(var(--spacingL) * 1px); flex-wrap: wrap;">
+        <div style="display: flex; gap: calc(var(--spacing-l) * 1px); flex-wrap: wrap;">
           <FivraButtonPreview
             v-for="tone in tones"
             :key="'tertiary-' + tone"
@@ -442,8 +608,8 @@ export const SemanticOverrides: Story = {
 export const WithIcons: Story = {
   args: {
     label: "Download",
-    leadingIcon: "⬇",
-    trailingIcon: "→",
+    leadingIconName: "chevron-left",
+    trailingIconName: "chevron-right",
   },
   parameters: {
     docs: {
@@ -475,7 +641,7 @@ export const Sizes: Story = {
         <div
           style="
             display: flex;
-            gap: calc(var(--spacingL) * 1px);
+            gap: calc(var(--spacing-l) * 1px);
             align-items: center;
             flex-wrap: wrap;
           "
@@ -491,7 +657,7 @@ export const Sizes: Story = {
     docs: {
       description: {
         story:
-          "Small, medium, and large presets use explicit padding (12×4, 16×8, 24×12) with heights 24/32/40px and radii mapped to `--radiusXs`, `--radiusS`, and `--radiusM`.",
+          "Small, medium, and large presets use explicit padding (12×4, 16×8, 24×12) with heights 24/32/40px and radii mapped to `--radius-xs`, `--radius-s`, and `--radius-m`.",
       },
     },
   },
@@ -563,14 +729,14 @@ export const IconOnly: Story = {
   args: {
     iconOnly: true,
     children: undefined,
-    leadingIcon: "→",
+    leadingIconName: "chevron-right",
     "aria-label": "Next",
   },
   parameters: {
     docs: {
       description: {
         story:
-          "Icon-only buttons collapse to a circular hit area via `--radiusMax`. Remember to supply an accessible `aria-label`.",
+          "Icon-only buttons collapse to a circular hit area via `--radius-max`. Remember to supply an accessible `aria-label`.",
       },
     },
   },

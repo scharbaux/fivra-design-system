@@ -48,10 +48,10 @@ interface InteractiveStateLayerMixes {
 export function createInteractiveStateLayerMixes({
   tintColor,
   focusColor = tintColor,
-  layerColor = 'var(--stateLayerBrightenBase)',
-  hoverPercentage = 'var(--intensityBrandHoverPercent)',
-  activePercentage = 'var(--intensityBrandActivePercent)',
-  focusPercentage = 'var(--intensityBrandFocusPercent)',
+  layerColor = 'var(--state-layer-brighten-base)',
+  hoverPercentage = 'var(--intensity-brand-hover-percent)',
+  activePercentage = 'var(--intensity-brand-active-percent)',
+  focusPercentage = 'var(--intensity-brand-focus-percent)',
   interactionOrder = 'tint-first',
 }: InteractiveStateLayerMixOptions): InteractiveStateLayerMixes {
   const hoverMix =

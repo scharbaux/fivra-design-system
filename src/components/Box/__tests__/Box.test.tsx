@@ -42,10 +42,10 @@ describe('Box', () => {
 
     const element = screen.getByTestId('spacing-box');
     const { cssText } = element.style;
-    expect(cssText).toContain('padding-top: calc(var(--spacingM) * 1px)');
-    expect(cssText).toContain('padding-bottom: calc(var(--spacingM) * 1px)');
-    expect(cssText).toContain('padding-right: calc(var(--spacingS) * 1px)');
-    expect(cssText).toContain('padding-left: calc(var(--spacingL) * 1px)');
+    expect(cssText).toContain('padding-top: calc(var(--spacing-m) * 1px)');
+    expect(cssText).toContain('padding-bottom: calc(var(--spacing-m) * 1px)');
+    expect(cssText).toContain('padding-right: calc(var(--spacing-s) * 1px)');
+    expect(cssText).toContain('padding-left: calc(var(--spacing-l) * 1px)');
   });
 
   it('converts token props to CSS custom property references', () => {
@@ -58,8 +58,8 @@ describe('Box', () => {
     );
 
     const element = screen.getByTestId('token-box');
-    expect(element.style.backgroundColor).toBe('var(--backgroundNeutral0)');
-    expect(element.style.borderRadius).toBe('calc(var(--radiusM) * 1px)');
+    expect(element.style.backgroundColor).toBe('var(--background-neutral-0)');
+    expect(element.style.borderRadius).toBe('calc(var(--radius-m) * 1px)');
   });
 
   it('converts border width tokens to the generated variable naming', () => {
@@ -71,7 +71,7 @@ describe('Box', () => {
     );
 
     const element = screen.getByTestId('border-width-box');
-    expect(element.style.borderWidth).toBe('calc(var(--borderwidthS) * 1px)');
+    expect(element.style.borderWidth).toBe('calc(var(--borderwidth-s) * 1px)');
   });
 
   it('converts shadow preset tokens to composite shadow values', () => {
@@ -84,7 +84,7 @@ describe('Box', () => {
 
     const element = screen.getByTestId('shadow-box');
     expect(element.style.boxShadow).toBe(
-      'calc(var(--shadowsMX) * 1px) calc(var(--shadowsMY) * 1px) calc(var(--shadowsMBlur) * 1px) calc(var(--shadowsMSpread) * 1px) var(--shadowsMColor)',
+      'calc(var(--shadows-mx) * 1px) calc(var(--shadows-my) * 1px) calc(var(--shadows-m-blur) * 1px) calc(var(--shadows-m-spread) * 1px) var(--shadows-m-color)',
     );
   });
 
@@ -105,7 +105,7 @@ describe('Box', () => {
     expect(element.style.flexDirection).toBe('column');
     expect(element.style.justifyContent).toBe('center');
     expect(element.style.alignItems).toBe('flex-start');
-    expect(element.style.gap).toBe('calc(var(--spacingM) * 1px)');
+    expect(element.style.gap).toBe('calc(var(--spacing-m) * 1px)');
   });
 
   it('only injects styles into the document once', async () => {

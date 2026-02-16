@@ -26,7 +26,7 @@ This document augments the root `AGENTS.md`. Ensure you understand the repositor
 - 1.1.0: Added documentation for the Changesets release pipeline, the `yarn changeset` authoring flow, and the AGENTS verification guard.
 - 1.2.0: Updated Button reference materials with tertiary styling, icon-only guidance, and loading/dropdown documentation.
 - 1.3.0: Documented percent-based intensity helpers and neutral state-layer sources for generated themes.
-- 1.4.0: Added guidance for bundling Google Sans fonts via the shared typography assets.
+- 1.4.0: Added guidance for bundling Saans fonts via the shared typography assets.
 - 1.8.0: Documented Angular consumption patterns for the Button component alongside existing React and web component usage.
 - 1.9.0: Captured the multi-framework Storybook composition model, including build orchestration and local dev commands.
 - 1.10.0: Documented the `yarn storybook` workflow and remote ref overrides.
@@ -39,3 +39,6 @@ This document augments the root `AGENTS.md`. Ensure you understand the repositor
 - 1.13.0: Reorganized Storybook docs into `Docs/Welcome`, `Docs/Overview/*`, and `Docs/Foundations/*`, aligning slugs and navigation with the new sidebar structure.
 - 1.13.1: Moved the Design Tokens reference, TokensTable specimen, and Icons Library story into `docs/foundations` for centralized foundations coverage.
 - 1.13.2: Added Chromatic and Tokens Studio integration placeholders and updated the Figma plugin documentation metadata.
+- 1.13.3: Updated architecture typography guidance to reference Saans as the default runtime font family.
+
+- 1.13.4: Updated architecture guidance examples to use kebab-case CSS custom property naming.

@@ -16,6 +16,7 @@ import {
 } from '@shared/button/button.styles';
 import type { ButtonColor } from '@shared/button/color-overrides';
 import { createButtonColorOverrides } from '@shared/button/color-overrides';
+import { Box } from '@components/Box';
 import { Icon } from '@components/Icon';
 
 function cx(...values: Array<string | undefined | false | null>): string {
@@ -85,18 +86,8 @@ function hasLabelContent(children: React.ReactNode): boolean {
   });
 }
 
-function capitalizeTokenSegment(segment: string): string {
-  if (!segment) {
-    return segment;
-  }
-
-  return segment[0].toUpperCase() + segment.slice(1);
-}
-
 function toCssVariableName(token: string): string {
-  const [first, ...rest] = token.split('-');
-  const suffix = rest.map(capitalizeTokenSegment).join('');
-  return `--${first}${suffix}`;
+  return `--${token}`;
 }
 
 function isDesignToken(value: string): boolean {
@@ -217,7 +208,8 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(props,
     ) : null);
 
   return (
-    <button
+    <Box
+      as="button"
       {...rest}
       ref={ref}
       type={buttonType}
@@ -239,20 +231,20 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(props,
       aria-expanded={ariaExpanded}
       aria-busy={loading || undefined}
     >
-      {loading ? <span className={BUTTON_SPINNER_CLASS} aria-hidden="true" /> : null}
+      {loading ? <Box as="span" className={BUTTON_SPINNER_CLASS} aria-hidden="true" /> : null}
       {resolvedLeadingIcon ? (
-        <span className={cx(BUTTON_ICON_CLASS, BUTTON_LEADING_ICON_CLASS)} aria-hidden="true">
+        <Box as="span" className={cx(BUTTON_ICON_CLASS, BUTTON_LEADING_ICON_CLASS)} aria-hidden="true">
           {resolvedLeadingIcon}
-        </span>
+        </Box>
       ) : null}
-      {resolvedHasLabel ? <span className={BUTTON_LABEL_CLASS}>{content}</span> : null}
+      {resolvedHasLabel ? <Box as="span" className={BUTTON_LABEL_CLASS}>{content}</Box> : null}
       {resolvedTrailingIcon ? (
-        <span className={cx(BUTTON_ICON_CLASS, BUTTON_TRAILING_ICON_CLASS)} aria-hidden="true">
+        <Box as="span" className={cx(BUTTON_ICON_CLASS, BUTTON_TRAILING_ICON_CLASS)} aria-hidden="true">
           {resolvedTrailingIcon}
-        </span>
+        </Box>
       ) : null}
-      {dropdown ? <span className={BUTTON_CARET_CLASS} aria-hidden="true" /> : null}
-    </button>
+      {dropdown ? <Box as="span" className={BUTTON_CARET_CLASS} aria-hidden="true" /> : null}
+    </Box>
   );
 });
 

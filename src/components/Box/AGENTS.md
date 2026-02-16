@@ -4,8 +4,8 @@ This directory inherits the repository root `AGENTS.md` and `src/components/AGEN
 
 ## Component Contract
 - `Box` is a polymorphic layout primitive that defaults to a `<div>` and forwards refs.
-- Spacing props (`m`, `mx`, `my`, `mt`, `mr`, `mb`, `ml`, `p`, `px`, `py`, `pt`, `pr`, `pb`, `pl`, `gap`, `rowGap`, `columnGap`) accept raw CSS values, numbers (treated as pixels), or Engage spacing tokens formatted as `spacing-{scale}` (e.g., `spacing-xs-3` -> `calc(var(--spacingXs3) * 1px)`). Axis and side shorthands override broader settings.
-- Visual tokens accept Engage hyphenated names and resolve to CSS custom properties: e.g., `background-neutral-0` -> `var(--backgroundNeutral0)`, `radius-m` -> `calc(var(--radiusM) * 1px)`, `border-width-s` -> `calc(var(--borderwidthS) * 1px)`. Raw CSS strings remain untouched.
+- Spacing props (`m`, `mx`, `my`, `mt`, `mr`, `mb`, `ml`, `p`, `px`, `py`, `pt`, `pr`, `pb`, `pl`, `gap`, `rowGap`, `columnGap`) accept raw CSS values, numbers (treated as pixels), or Engage spacing tokens formatted as `spacing-{scale}` (e.g., `spacing-xs-3` -> `calc(var(--spacing-xs-3) * 1px)`). Axis and side shorthands override broader settings.
+- Visual tokens accept Engage hyphenated names and resolve to CSS custom properties: e.g., `background-neutral-0` -> `var(--background-neutral-0)`, `radius-m` -> `calc(var(--radius-m) * 1px)`, `border-width-s` -> `calc(var(--borderwidth-s) * 1px)`. Raw CSS strings remain untouched.
 - Layout helpers map directly to CSS properties: `display`, `flexDirection`, `justifyContent`, `alignItems`, `flexWrap`, `width`, and `height`.
 - Accessibility defaults preserve author intent by avoiding implicit roles; the primitive simply renders the requested element and passes through semantics.
 - `ensureBoxStyles()` injects a single reset stylesheet (`box-sizing: border-box`, `min-width: 0`, `min-height: 0`) shared across frameworks. Call it before rendering in new adapters.
@@ -17,3 +17,7 @@ This directory inherits the repository root `AGENTS.md` and `src/components/AGEN
 - 1.3.2: Refined the Storybook nested composition example markup so icon usage matches current Button/Icon consumption patterns.
 - 1.3.3: Added centralized token-backed Storybook select controls for Box props (spacing, colors, radius, border width, shadow presets, and polymorphic/layout options).
 - 1.3.4: Added `shadow-{level}` preset support (`shadow-s|m|l`) and corrected border-width token variable mapping to `--borderwidth*` names.
+- 1.4.0: Moved Box style/token resolution into shared helpers consumed by React and Vue stories, and added helper-focused unit coverage.
+- 1.4.1: Added a cross-framework Box story parity test to guard React/Vue argTypes and story export alignment.
+
+- 1.5.0: Migrated Box helper token resolution and related stories/tests to kebab-case CSS custom properties, including shadow and border-width variable mapping updates.

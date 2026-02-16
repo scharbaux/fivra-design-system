@@ -1,20 +1,31 @@
 import React, { forwardRef, isValidElement } from 'react';
 
 import { icons as generatedIcons } from '@shared/icons/icons.generated';
+import {
+  DEFAULT_VIEWBOX,
+  hasVariantKeys,
+  isSvgMarkup,
+  normalizeVariant,
+  pickVariantEntry,
+  resolveIconColor,
+  resolveIconSize,
+  toPx,
+  type IconPathEntry,
+  type IconPaths,
+  type IconSvg,
+  type IconVariants as SharedIconVariants,
+  type IconsMap as SharedIconsMap,
+  type PortableIconSource,
+  type VariantProp,
+} from './icon.shared';
 
-export type IconPathEntry =
-  | string
-  | { d: string; fillRule?: 'evenodd' | 'nonzero'; clipRule?: 'evenodd' | 'nonzero' };
-export type IconPaths = { paths: IconPathEntry[]; viewBox?: string };
-export type IconSvg = { svg: string; viewBox?: string };
+export type { IconPathEntry, IconPaths, IconSvg } from './icon.shared';
+
 export type IconElement = React.ReactElement<React.SVGProps<SVGSVGElement>>;
 export type IconComponent = React.ComponentType<React.SVGProps<SVGSVGElement>>;
-export type IconSource = IconComponent | IconElement | string | IconPaths | IconSvg;
-export type IconVariants = { outline?: IconSource; solid?: IconSource };
-export type IconsMap = Record<string, IconSource | IconVariants>;
-
-type VariantProp = 'outline' | 'solid' | 'fill' | 'stroke';
-type NormalizedVariant = 'outline' | 'solid';
+export type IconSource = IconComponent | IconElement | PortableIconSource;
+export type IconVariants = SharedIconVariants<IconSource>;
+export type IconsMap = SharedIconsMap<IconSource>;
 
 export interface IconProps extends Omit<React.SVGProps<SVGSVGElement>, 'stroke' | 'strokeWidth'> {
   name: string;
@@ -33,44 +44,13 @@ function isComponent(x: unknown): x is IconComponent {
   return typeof x === 'function';
 }
 
-function isSvgMarkup(str: string): boolean {
-  return typeof str === 'string' && /<\s*svg[\s>]/i.test(str);
-}
-
-function toPx(v?: number | string): string | undefined {
-  if (v == null) return undefined;
-  return typeof v === 'number' ? `${v}px` : String(v);
-}
-
-function normalizeVariant(v: VariantProp | undefined): NormalizedVariant {
-  if (v === 'fill') return 'solid';
-  if (v === 'stroke') return 'outline';
-  return (v as NormalizedVariant) ?? 'outline';
-}
-
-function pickVariantEntry(entry: unknown, variant: NormalizedVariant) {
-  if (
-    entry &&
-    typeof entry === 'object' &&
-    !isValidElement(entry as any) &&
-    !isComponent(entry) &&
-    (Object.prototype.hasOwnProperty.call(entry, 'outline') ||
-      Object.prototype.hasOwnProperty.call(entry, 'solid'))
-  ) {
-    return (entry as IconVariants)[variant] ?? (entry as IconVariants).outline ?? (entry as IconVariants).solid;
-  }
-  return entry as IconSource;
-}
-
-const DEFAULT_VIEWBOX = '0 0 24 24';
-
 const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(props, ref) {
   const {
     name,
     icons = (generatedIcons as unknown) as IconsMap,
     variant = 'outline',
-    size = 'var(--iconsizesM)',
-    color = 'var(--textSecondaryInteractive)',
+    size = 'm',
+    color = 'text-secondary-interactive',
     title,
     className,
     style,
@@ -80,8 +60,14 @@ const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(props, ref) {
     ...svgProps
   } = props;
 
+  const resolvedSize = resolveIconSize(size);
+  const resolvedColor = resolveIconColor(color);
+
   const entry = icons ? (icons as any)[name] : undefined;
-  const source = pickVariantEntry(entry, normalizeVariant(variant)) as IconSource | undefined;
+  const source = pickVariantEntry<IconSource>(entry, normalizeVariant(variant), {
+    isVariantCandidate: (candidate) =>
+      hasVariantKeys(candidate) && !isValidElement(candidate as any) && !isComponent(candidate),
+  });
 
   if (!source) {
     if (process.env.NODE_ENV !== 'production') {
@@ -99,8 +85,8 @@ const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(props, ref) {
     focusable: (svgProps as any).focusable ?? false,
   };
 
-  const computedSize = toPx(size);
-  const isTokenSize = typeof size === 'string';
+  const computedSize = toPx(resolvedSize);
+  const isTokenSize = typeof resolvedSize === 'string';
   const providedWidth = (svgProps as any).width;
   const providedHeight = (svgProps as any).height;
 
@@ -125,7 +111,7 @@ const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(props, ref) {
   const baseSvgProps: React.SVGProps<SVGSVGElement> = {
     width: providedWidth ?? (isTokenSize ? undefined : computedSize),
     height: providedHeight ?? (isTokenSize ? undefined : computedSize),
-    color,
+    color: resolvedColor,
     fill: defaultFill,
     viewBox: (viewBoxProp as any) ?? (svgProps as any).viewBox ?? DEFAULT_VIEWBOX,
     xmlns: 'http://www.w3.org/2000/svg',

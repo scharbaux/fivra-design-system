@@ -31,3 +31,7 @@ This file extends the repository root `AGENTS.md`. Always review the root conven
 - 1.7.0: Extended `generate-design-tokens.mjs` to emit `storybook-token-options.generated.ts` with centralized token option arrays (colors, spacing, radius, border width, shadow presets) derived from the default theme CSS variables.
 - 1.8.0: Added `verify-angular-button-isolation.mjs` and wired it into `yarn test` to block Angular Button imports from shared/component Button modules.
 - 1.9.0: Added `generate-token-snapshot.mjs` and the `yarn generate:token-snapshot` workflow to persist deterministic docs baselines for token added/changed/removed diffing.
+- 1.10.0: Updated `generate-design-tokens.mjs` to preserve non-standard typography font-weight values (`300`, `380`, `570`, `670`) from token references when emitting theme CSS variables.
+- 1.11.0: Updated token generation to normalize emitted CSS custom properties to full kebab-case and added `verify-kebab-css-vars.mjs` plus `yarn verify:css-vars` enforcement in the test workflow.
+- 1.11.1: Updated `generate-token-snapshot.mjs` composite formatting to match TokensTable output exactly so snapshot diffs do not report false typography/shadow changes.
+- 1.11.2: Fixed `generate-design-tokens.mjs` Storybook option extraction to parse kebab-case CSS custom properties (including shadow presets), restoring non-empty generated token option arrays.

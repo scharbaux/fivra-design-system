@@ -54,14 +54,14 @@ Use these dimensions when deciding between web components and framework-specific
 
 - Maintain tokens via the Tokens Studio export consumed by `scripts/generate-design-tokens.mjs`; run `yarn generate:tokens` (or rely on `prebuild`/`prestorybook`) to refresh `src/styles/themes/*.css` and the manifest before shipping.
 - Engage tokens scope to `:root`; alternative themes apply when `data-fivra-theme='<slug>'` appears on a container. Import `src/styles/index.css` to register both Engage and Legacy layers.
-- Typography defaults to `'Google Sans', sans-serif`; ensure `src/styles/fonts.css` (or the published equivalent) ships alongside components.
+- Typography defaults to `'Saans', sans-serif`; ensure `src/styles/fonts.css` (or the published equivalent) ships alongside components.
 - Generated themes expose percent-based intensity helpers and neutral state-layer sources. Use `color-mix()` with helpers such as:
 
   ```css
   color-mix(
     in srgb,
-    var(--stateLayerBrightenBase) var(--intensityBrandHoverPercent),
-    var(--backgroundPrimaryBrand)
+    var(--state-layer-brighten-base) var(--intensity-brand-hover-percent),
+    var(--background-primary-brand)
   );
   ```
 

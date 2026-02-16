@@ -16,3 +16,9 @@ This file inherits the repository root `AGENTS.md`. Generated theme assets live 
 - 1.5.0: Added Google Sans font assets, imported `fonts.css`, and regenerated themes so typography tokens resolve to the new family.
 - 1.5.1: Restored the `@layer` ordering ahead of font imports so bundled theme variables remain available at runtime.
 - 1.6.0: Added generated Storybook token option metadata (`storybook-token-options.generated.ts`) so controls can share centralized theme-driven options across components.
+- 1.6.1: Replaced Google Sans `@font-face` registrations with local Saans assets so token-defined `Saans` family values resolve correctly at runtime.
+- 1.6.2: Aligned Saans `@font-face` weights with token-defined values (`300`, `380`, `570`, `670`) to avoid rounded-weight rendering drift.
+- 1.6.3: Regenerated Engage/Legacy typography variables to emit token-exact font weights (`380`, `570`, `670`) instead of rounded defaults from the transform pipeline.
+
+- 1.6.4: Regenerated Engage/Legacy theme assets and token option metadata with kebab-case CSS custom property names.
+- 1.6.5: Regenerated Storybook token option metadata after fixing kebab-case CSS variable parsing so shared color/spacing/radius/border/shadow option lists are populated again.

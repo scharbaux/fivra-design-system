@@ -10,3 +10,4 @@ This workspace inherits the repository root and `storybooks/AGENTS.md` guidance.
 ## Functional Changes
 - 1.3.0: Introduced the Vue Storybook workspace with shared theming, configuration, and placeholder button stories.
 - 1.3.1: Added CORS headers to the Vite dev server so React can consume the Vue ref without sidebar errors.
+- 1.3.2: Added a Vue workspace `tsconfig.json` that extends the root TypeScript config so IDEs resolve shared path aliases (for example `@shared/*` and `@styles/*`) inside Vue stories.

@@ -1,6 +1,7 @@
 # Button
 
 The Button component exposes an accessible, themeable action trigger implemented both as a React component and as a standards-based custom element. Styles, variants, and sizing tokens are shared across targets so teams can mix frameworks without visual drift.
+React and Vue Storybook adapters compose the Box primitive as their structural wrapper so layout/reset behavior stays consistent with other primitives.
 
 Refer to the [Button component contract](../../src/components/Button/AGENTS.md#component-contract) for the authoritative list of variants, sizes, accessibility requirements, and framework-specific props. Update that contract alongside this page when behavior shifts.
 
@@ -40,7 +41,7 @@ export function SaveButton() {
 | --- | --- | --- | --- |
 | `label` | `React.ReactNode` | `undefined` | Visible label content. Prefer this for straightforward usage. |
 | `children` | `React.ReactNode` | `undefined` | Advanced: custom content. When provided, it takes precedence over `label`. |
-| `variant` | `'primary' \| 'secondary' \| 'tertiary'` | `primary` | Chooses the visual treatment mapped to `--backgroundPrimaryInteractive`, `--backgroundNeutral0`, or a transparent tertiary surface. |
+| `variant` | `'primary' \| 'secondary' \| 'tertiary'` | `primary` | Chooses the visual treatment mapped to `--background-primary-interactive`, `--background-neutral-0`, or a transparent tertiary surface. |
 | `color` | `'primary-success' \| 'primary-warning' \| 'primary-error'` | `undefined` | Semantic palette alias. Prefer this for copy-paste examples. |
 | `surfaceColor` | `string` | `undefined` | Overrides `--fivra-button-surface` using a design token string (e.g., `background-primary-success`). |
 | `borderColor` | `string` | `undefined` | Overrides `--fivra-button-border` using a design token string (e.g., `border-primary-success`). |
@@ -52,7 +53,7 @@ export function SaveButton() {
 | `leadingIconName` | `string` | `undefined` | Convenience: renders the shared Icon before the label (uses `currentColor`). |
 | `trailingIcon` | `React.ReactNode` | `undefined` | Optional icon rendered after the label with `aria-hidden`. |
 | `trailingIconName` | `string` | `undefined` | Convenience: renders the shared Icon after the label (uses `currentColor`). |
-| `iconOnly` | `boolean` | `false` | Removes the visible label, switches to `--radiusMax`, and requires an accessible name via `aria-label`/`aria-labelledby`. |
+| `iconOnly` | `boolean` | `false` | Removes the visible label, switches to `--radius-max`, and requires an accessible name via `aria-label`/`aria-labelledby`. |
 | `hasLabel` | `boolean` | `undefined` | Overrides automatic label detection when providing off-screen copy or live region text. |
 | `dropdown` | `boolean` | `false` | Appends a disclosure caret to hint at menu/split button behavior. |
 | `loading` | `boolean` | `false` | Displays the centered spinner and sets `aria-busy` on the button. |
@@ -133,13 +134,13 @@ Attributes mirror the React props (`label`, `variant`, `color`, `surface-color`,
 
 ## Theming
 
-Design tokens are surfaced as CSS variables on the button root (e.g., `--backgroundPrimaryInteractive`, `--backgroundPrimaryDisabled`, `--textPrimaryInteractive`). Override them at the component or global level to align with product branding.
+Design tokens are surfaced as CSS variables on the button root (e.g., `--background-primary-interactive`, `--background-primary-disabled`, `--text-primary-interactive`). Override them at the component or global level to align with product branding.
 
 ```css
 .my-theme {
-  --backgroundPrimaryInteractive: #7c3aed;
-  --backgroundPrimaryDisabled: #cbd5f5;
-  --textPrimaryInteractive: #ffffff;
+  --background-primary-interactive: #7c3aed;
+  --background-primary-disabled: #cbd5f5;
+  --text-primary-interactive: #ffffff;
 }
 ```
 

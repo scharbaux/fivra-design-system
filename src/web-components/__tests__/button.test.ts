@@ -3,19 +3,19 @@ import { afterEach, beforeAll, describe, expect, it } from 'vitest';
 import { defineFivraButton, FivraButtonElement } from '@web-components';
 
 const BRAND_HOVER_MIX =
-  "--fivra-button-hover-color: color-mix(in srgb, var(--stateLayerBrightenBase) var(--intensityBrandHoverPercent), var(--fivra-button-state-tint));";
+  "--fivra-button-hover-color: color-mix(in srgb, var(--state-layer-brighten-base) var(--intensity-brand-hover-percent), var(--fivra-button-state-tint));";
 const BRAND_ACTIVE_MIX =
-  "--fivra-button-active-color: color-mix(in srgb, var(--stateLayerBrightenBase) var(--intensityBrandActivePercent), var(--fivra-button-state-tint));";
+  "--fivra-button-active-color: color-mix(in srgb, var(--state-layer-brighten-base) var(--intensity-brand-active-percent), var(--fivra-button-state-tint));";
 const BRAND_FOCUS_MIX =
-  "--fivra-button-focus-ring-color: color-mix(in srgb, var(--stateLayerBrightenBase) var(--intensityBrandFocusPercent), var(--fivra-button-focus-accent));";
+  "--fivra-button-focus-ring-color: color-mix(in srgb, var(--state-layer-brighten-base) var(--intensity-brand-focus-percent), var(--fivra-button-focus-accent));";
 const BRAND_HOVER_HALO_MIX =
-  "--fivra-button-hover-halo: color-mix(in srgb, var(--stateLayerBrightenBase), var(--fivra-button-state-tint) var(--intensityBrandHoverPercent));";
+  "--fivra-button-hover-halo: color-mix(in srgb, var(--state-layer-brighten-base), var(--fivra-button-state-tint) var(--intensity-brand-hover-percent));";
 const BRAND_ACTIVE_HALO_MIX =
-  "--fivra-button-active-halo: color-mix(in srgb, var(--stateLayerBrightenBase), var(--fivra-button-state-tint) var(--intensityBrandActivePercent));";
+  "--fivra-button-active-halo: color-mix(in srgb, var(--state-layer-brighten-base), var(--fivra-button-state-tint) var(--intensity-brand-active-percent));";
 const BRAND_FOCUS_HALO_MIX =
-  "--fivra-button-focus-halo: color-mix(in srgb, var(--stateLayerBrightenBase), var(--fivra-button-focus-accent) var(--intensityBrandFocusPercent));";
+  "--fivra-button-focus-halo: color-mix(in srgb, var(--state-layer-brighten-base), var(--fivra-button-focus-accent) var(--intensity-brand-focus-percent));";
 const SECONDARY_TERTIARY_HOVER_MIX =
-  "--fivra-button-hover-color: color-mix(in srgb, var(--fivra-button-state-tint) var(--intensityBrandHoverPercent), var(--stateLayerBrightenBase));";
+  "--fivra-button-hover-color: color-mix(in srgb, var(--fivra-button-state-tint) var(--intensity-brand-hover-percent), var(--state-layer-brighten-base));";
 
 const queryShadowStyles = (element: FivraButtonElement): string => {
   return element.shadowRoot?.querySelector('style')?.textContent ?? '';
@@ -43,7 +43,7 @@ describe('FivraButtonElement styles', () => {
     expect(styles).toContain(BRAND_ACTIVE_HALO_MIX);
     expect(styles).toContain(BRAND_FOCUS_HALO_MIX);
     expect(styles).toContain('--fivra-button-state-tint: var(--fivra-button-surface);');
-    expect(styles).toContain('--fivra-button-focus-accent: var(--backgroundPrimaryInteractive);');
+    expect(styles).toContain('--fivra-button-focus-accent: var(--background-primary-interactive);');
   });
 
   it('uses variant-aware tint sources and keeps tint-first mixes for secondary/tertiary', () => {
@@ -53,10 +53,10 @@ describe('FivraButtonElement styles', () => {
     const styles = queryShadowStyles(element);
 
     expect(styles).not.toContain(
-      "--fivra-button-hover-color: color-mix(in srgb, var(--stateLayerBrightenBase), var(--fivra-button-accent) var(--intensityBrandHoverPercent));",
+      "--fivra-button-hover-color: color-mix(in srgb, var(--state-layer-brighten-base), var(--fivra-button-accent) var(--intensity-brand-hover-percent));",
     );
     expect(styles).not.toContain(
-      "--fivra-button-focus-ring-color: color-mix(in srgb, var(--stateLayerBrightenBase), var(--fivra-button-accent) var(--intensityBrandFocusPercent));",
+      "--fivra-button-focus-ring-color: color-mix(in srgb, var(--state-layer-brighten-base), var(--fivra-button-accent) var(--intensity-brand-focus-percent));",
     );
     expect(styles).toContain(
       ".fivra-button[data-variant='secondary'] {",
@@ -157,18 +157,34 @@ describe('FivraButtonElement behavior', () => {
     await waitForUpdates();
 
     const button = element.shadowRoot?.querySelector('button') as HTMLButtonElement | null;
-    expect(button?.style.getPropertyValue('--fivra-button-accent')).toBe('var(--textPrimarySuccess)');
-    expect(button?.style.getPropertyValue('--fivra-button-border')).toBe('var(--borderPrimarySuccess)');
+    expect(button?.style.getPropertyValue('--fivra-button-accent')).toBe('var(--text-primary-success)');
+    expect(button?.style.getPropertyValue('--fivra-button-border')).toBe('var(--border-primary-success)');
 
     element.setAttribute('variant', 'primary');
     await waitForUpdates();
 
-    expect(button?.style.getPropertyValue('--fivra-button-surface')).toBe('var(--backgroundPrimarySuccess)');
+    expect(button?.style.getPropertyValue('--fivra-button-surface')).toBe('var(--background-primary-success)');
 
     element.removeAttribute('color');
     await waitForUpdates();
 
     expect(button?.style.getPropertyValue('--fivra-button-accent')).toBe('');
+  });
+
+  it('resolves direct color override attributes to kebab-case CSS variables', async () => {
+    const element = document.createElement('fivra-button') as FivraButtonElement;
+    element.setAttribute('surface-color', 'background-primary-warning');
+    element.setAttribute('border-color', 'border-primary-warning');
+    element.setAttribute('text-color', 'text-primary-warning');
+    element.textContent = 'Continue';
+    document.body.appendChild(element);
+
+    await waitForUpdates();
+
+    const button = element.shadowRoot?.querySelector('button') as HTMLButtonElement | null;
+    expect(button?.style.getPropertyValue('--fivra-button-surface')).toBe('var(--background-primary-warning)');
+    expect(button?.style.getPropertyValue('--fivra-button-border')).toBe('var(--border-primary-warning)');
+    expect(button?.style.getPropertyValue('--fivra-button-text')).toBe('var(--text-primary-warning)');
   });
 
   it('renders label text from the label attribute when the slot is empty', async () => {
@@ -193,6 +209,6 @@ describe('FivraButtonElement behavior', () => {
     await waitForUpdates();
 
     const button = element.shadowRoot?.querySelector('button') as HTMLButtonElement | null;
-    expect(button?.style.getPropertyValue('--fivra-button-accent')).toBe('var(--textPrimarySuccess)');
+    expect(button?.style.getPropertyValue('--fivra-button-accent')).toBe('var(--text-primary-success)');
   });
 });

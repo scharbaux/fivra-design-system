@@ -20,6 +20,7 @@ import {
 import { Subscription } from 'rxjs';
 
 import {
+  BOX_CLASS_NAME,
   BUTTON_CARET_CLASS,
   BUTTON_CLASS_NAME,
   BUTTON_ICON_CLASS,
@@ -103,18 +104,8 @@ const DIRECT_STYLE_VARS: DirectStyleKey[] = [
 ];
 const GENERATED_LABEL_ATTR = 'data-fivra-button-generated-label';
 
-function capitalizeTokenSegment(segment: string): string {
-  if (!segment) {
-    return segment;
-  }
-
-  return segment[0].toUpperCase() + segment.slice(1);
-}
-
 function toCssVariableName(token: string): string {
-  const [first, ...rest] = token.split('-');
-  const suffix = rest.map(capitalizeTokenSegment).join('');
-  return `--${first}${suffix}`;
+  return `--${token}`;
 }
 
 function isDesignToken(value: string): boolean {
@@ -211,12 +202,12 @@ export class FivraButtonComponent
   private readonly hostElementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly renderer = inject(Renderer2);
 
-  readonly buttonClassName = BUTTON_CLASS_NAME;
-  readonly spinnerClassName = BUTTON_SPINNER_CLASS;
-  readonly labelClassName = BUTTON_LABEL_CLASS;
-  readonly leadingIconClassName = `${BUTTON_ICON_CLASS} ${BUTTON_LEADING_ICON_CLASS}`;
-  readonly trailingIconClassName = `${BUTTON_ICON_CLASS} ${BUTTON_TRAILING_ICON_CLASS}`;
-  readonly caretClassName = BUTTON_CARET_CLASS;
+  readonly buttonClassName = `${BOX_CLASS_NAME} ${BUTTON_CLASS_NAME}`;
+  readonly spinnerClassName = `${BOX_CLASS_NAME} ${BUTTON_SPINNER_CLASS}`;
+  readonly labelClassName = `${BOX_CLASS_NAME} ${BUTTON_LABEL_CLASS}`;
+  readonly leadingIconClassName = `${BOX_CLASS_NAME} ${BUTTON_ICON_CLASS} ${BUTTON_LEADING_ICON_CLASS}`;
+  readonly trailingIconClassName = `${BOX_CLASS_NAME} ${BUTTON_ICON_CLASS} ${BUTTON_TRAILING_ICON_CLASS}`;
+  readonly caretClassName = `${BOX_CLASS_NAME} ${BUTTON_CARET_CLASS}`;
 
   private readonly subscriptions = new Subscription();
   private _variant: ButtonVariant = DEFAULT_BUTTON_VARIANT;

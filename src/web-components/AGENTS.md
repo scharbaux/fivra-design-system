@@ -26,3 +26,6 @@ This directory extends the repository and `src/components/` guidance for custom 
 - 1.6.5: Synced variant-specific mix ordering so primary remains layer-first while secondary and tertiary use tint-first hover/active blends.
 - 1.6.6: Switched the web-component button to import shared button styles and semantic color overrides from src/shared/button.
 - 1.6.7: Cleaned AGENTS history wording to match the shared-button-core terminology.
+
+- 1.6.8: Migrated web-component button token resolution and tests to kebab-case CSS custom properties.
+- 1.6.9: Added regression coverage for direct `surface-color`/`border-color`/`text-color` token overrides to ensure web-component style variables resolve via kebab-case token names.

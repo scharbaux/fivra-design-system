@@ -27,7 +27,7 @@ describe('Icon', () => {
   });
 
   it('merges token-driven size into inline styles when size is a CSS variable', () => {
-    const tokenSize = 'var(--iconsizesXl2)';
+    const tokenSize = 'var(--iconsizes-xl-2)';
     const { getByLabelText } = render(
       <Icon
         name="example"
@@ -43,5 +43,24 @@ describe('Icon', () => {
     expect(svg.getAttribute('width')).toBeNull();
     expect(svg.getAttribute('height')).toBeNull();
     expect(svg).toHaveStyle({ width: tokenSize, height: tokenSize });
+  });
+
+  it('resolves token keys for size and color props', () => {
+    const { getByLabelText } = render(
+      <Icon
+        name="example"
+        icons={ICONS_MAP}
+        size="xl-2"
+        color="text-primary-interactive"
+        aria-label="Token key icon"
+      />,
+    );
+
+    const svg = getByLabelText('Token key icon');
+
+    expect(svg.getAttribute('width')).toBeNull();
+    expect(svg.getAttribute('height')).toBeNull();
+    expect(svg).toHaveStyle({ width: 'var(--iconsizes-xl-2)', height: 'var(--iconsizes-xl-2)' });
+    expect(svg.getAttribute('color')).toBe('var(--text-primary-interactive)');
   });
 });

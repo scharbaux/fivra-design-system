@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-02-14T15:44:59.048Z",
+  "generatedAt": "2026-02-15T22:48:07.359Z",
   "themes": [
     "engage",
     "legacy"
@@ -9,7 +9,7 @@
     "Background.Neutral.0": {
       "type": "color",
       "alias": "Alias.Neutral.0",
-      "cssVariable": "--backgroundNeutral0",
+      "cssVariable": "--background-neutral-0",
       "valuesByTheme": {
         "engage": "#ffffff",
         "legacy": "#ffffff"
@@ -18,7 +18,7 @@
     "Background.Neutral.1": {
       "type": "color",
       "alias": "Alias.Neutral.10",
-      "cssVariable": "--backgroundNeutral1",
+      "cssVariable": "--background-neutral-1",
       "valuesByTheme": {
         "engage": "#3C3B44",
         "legacy": "#212121"
@@ -27,7 +27,7 @@
     "Background.Neutral.2": {
       "type": "color",
       "alias": "Alias.Neutral.8",
-      "cssVariable": "--backgroundNeutral2",
+      "cssVariable": "--background-neutral-2",
       "valuesByTheme": {
         "engage": "#706E7B",
         "legacy": "#575757"
@@ -36,7 +36,7 @@
     "Background.Neutral.3": {
       "type": "color",
       "alias": "Alias.Neutral.6",
-      "cssVariable": "--backgroundNeutral3",
+      "cssVariable": "--background-neutral-3",
       "valuesByTheme": {
         "engage": "#A4A2B0",
         "legacy": "#8c8c8c"
@@ -45,7 +45,7 @@
     "Background.Neutral.4": {
       "type": "color",
       "alias": "Alias.Neutral.4",
-      "cssVariable": "--backgroundNeutral4",
+      "cssVariable": "--background-neutral-4",
       "valuesByTheme": {
         "engage": "#D4D3DD",
         "legacy": "#c2c2c2"
@@ -54,7 +54,7 @@
     "Background.Neutral.5": {
       "type": "color",
       "alias": "Alias.Neutral.2",
-      "cssVariable": "--backgroundNeutral5",
+      "cssVariable": "--background-neutral-5",
       "valuesByTheme": {
         "engage": "#EEEEF2",
         "legacy": "#eaeaea"
@@ -63,7 +63,7 @@
     "Background.Neutral.6": {
       "type": "color",
       "alias": "Alias.Neutral.1",
-      "cssVariable": "--backgroundNeutral6",
+      "cssVariable": "--background-neutral-6",
       "valuesByTheme": {
         "engage": "#F7F7F8",
         "legacy": "#f7f7f7"
@@ -72,7 +72,7 @@
     "Background.Primary.Active": {
       "type": "color",
       "alias": "Alias.Status.Active.2",
-      "cssVariable": "--backgroundPrimaryActive",
+      "cssVariable": "--background-primary-active",
       "valuesByTheme": {
         "engage": "#4c57ea",
         "legacy": "#0071FD"
@@ -81,7 +81,7 @@
     "Background.Primary.Agent": {
       "type": "color",
       "alias": "Alias.Core.User.2",
-      "cssVariable": "--backgroundPrimaryAgent",
+      "cssVariable": "--background-primary-agent",
       "valuesByTheme": {
         "engage": "#4c57ea",
         "legacy": "#0071FD"
@@ -90,7 +90,7 @@
     "Background.Primary.Brand": {
       "type": "color",
       "alias": "Alias.Core.Brand.1",
-      "cssVariable": "--backgroundPrimaryBrand",
+      "cssVariable": "--background-primary-brand",
       "valuesByTheme": {
         "engage": "#29308a",
         "legacy": "#29308a"
@@ -99,7 +99,7 @@
     "Background.Primary.Campaign": {
       "type": "color",
       "alias": "Alias.Core.Campaign.1",
-      "cssVariable": "--backgroundPrimaryCampaign",
+      "cssVariable": "--background-primary-campaign",
       "valuesByTheme": {
         "engage": "#f2960c",
         "legacy": "#f2960c"
@@ -108,7 +108,7 @@
     "Background.Primary.Chat": {
       "type": "color",
       "alias": "Alias.Core.Chat.1",
-      "cssVariable": "--backgroundPrimaryChat",
+      "cssVariable": "--background-primary-chat",
       "valuesByTheme": {
         "engage": "#4c57ea",
         "legacy": "#0071FD"
@@ -117,7 +117,7 @@
     "Background.Primary.Contact": {
       "type": "color",
       "alias": "Alias.Core.User.1",
-      "cssVariable": "--backgroundPrimaryContact",
+      "cssVariable": "--background-primary-contact",
       "valuesByTheme": {
         "engage": "#BDBBC8",
         "legacy": "#a7a7a7"
@@ -126,7 +126,7 @@
     "Background.Primary.Disabled": {
       "type": "color",
       "alias": "Alias.Neutral.3",
-      "cssVariable": "--backgroundPrimaryDisabled",
+      "cssVariable": "--background-primary-disabled",
       "valuesByTheme": {
         "engage": "#E4E3EB",
         "legacy": "#dddddd"
@@ -135,7 +135,7 @@
     "Background.Primary.Done": {
       "type": "color",
       "alias": "Alias.Status.Done.2",
-      "cssVariable": "--backgroundPrimaryDone",
+      "cssVariable": "--background-primary-done",
       "valuesByTheme": {
         "engage": "#079950",
         "legacy": "#079950"
@@ -144,7 +144,7 @@
     "Background.Primary.Error": {
       "type": "color",
       "alias": "Alias.Semantic.Error.1",
-      "cssVariable": "--backgroundPrimaryError",
+      "cssVariable": "--background-primary-error",
       "valuesByTheme": {
         "engage": "#fc4032",
         "legacy": "#fc4032"
@@ -153,7 +153,7 @@
     "Background.Primary.Ignored": {
       "type": "color",
       "alias": "Alias.Status.Ignored.2",
-      "cssVariable": "--backgroundPrimaryIgnored",
+      "cssVariable": "--background-primary-ignored",
       "valuesByTheme": {
         "engage": "#A4A2B0",
         "legacy": "#8c8c8c"
@@ -162,7 +162,7 @@
     "Background.Primary.Interactive": {
       "type": "color",
       "alias": "Alias.Core.Primary.1",
-      "cssVariable": "--backgroundPrimaryInteractive",
+      "cssVariable": "--background-primary-interactive",
       "valuesByTheme": {
         "engage": "#4c57ea",
         "legacy": "#0071FD"
@@ -171,7 +171,7 @@
     "Background.Primary.Issue": {
       "type": "color",
       "alias": "Alias.Status.Issue.2",
-      "cssVariable": "--backgroundPrimaryIssue",
+      "cssVariable": "--background-primary-issue",
       "valuesByTheme": {
         "engage": "#fc4032",
         "legacy": "#fc4032"
@@ -180,7 +180,7 @@
     "Background.Primary.Mail": {
       "type": "color",
       "alias": "Alias.Core.Mail.1",
-      "cssVariable": "--backgroundPrimaryMail",
+      "cssVariable": "--background-primary-mail",
       "valuesByTheme": {
         "engage": "#f2960c",
         "legacy": "#f2960c"
@@ -189,7 +189,7 @@
     "Background.Primary.Notice": {
       "type": "color",
       "alias": "Alias.Semantic.Notice.1",
-      "cssVariable": "--backgroundPrimaryNotice",
+      "cssVariable": "--background-primary-notice",
       "valuesByTheme": {
         "engage": "#4c57ea",
         "legacy": "#0071FD"
@@ -198,7 +198,7 @@
     "Background.Primary.Pending": {
       "type": "color",
       "alias": "Alias.Status.Pending.2",
-      "cssVariable": "--backgroundPrimaryPending",
+      "cssVariable": "--background-primary-pending",
       "valuesByTheme": {
         "engage": "#f2960c",
         "legacy": "#f2960c"
@@ -207,7 +207,7 @@
     "Background.Primary.Processing": {
       "type": "color",
       "alias": "Alias.Status.Processing.2",
-      "cssVariable": "--backgroundPrimaryProcessing",
+      "cssVariable": "--background-primary-processing",
       "valuesByTheme": {
         "engage": "#ea6208",
         "legacy": "#ea6208"
@@ -216,7 +216,7 @@
     "Background.Primary.Robot": {
       "type": "color",
       "alias": "Alias.Core.User.3",
-      "cssVariable": "--backgroundPrimaryRobot",
+      "cssVariable": "--background-primary-robot",
       "valuesByTheme": {
         "engage": "#ea6208",
         "legacy": "#ea6208"
@@ -225,7 +225,7 @@
     "Background.Primary.Selected": {
       "type": "color",
       "alias": "Alias.Core.Primary.2",
-      "cssVariable": "--backgroundPrimarySelected",
+      "cssVariable": "--background-primary-selected",
       "valuesByTheme": {
         "engage": "#f3f4fc",
         "legacy": "#f3f4fc"
@@ -234,7 +234,7 @@
     "Background.Primary.Success": {
       "type": "color",
       "alias": "Alias.Semantic.Positive.1",
-      "cssVariable": "--backgroundPrimarySuccess",
+      "cssVariable": "--background-primary-success",
       "valuesByTheme": {
         "engage": "#079950",
         "legacy": "#079950"
@@ -243,7 +243,7 @@
     "Background.Primary.Voice": {
       "type": "color",
       "alias": "Alias.Core.Voice.1",
-      "cssVariable": "--backgroundPrimaryVoice",
+      "cssVariable": "--background-primary-voice",
       "valuesByTheme": {
         "engage": "#4c57ea",
         "legacy": "#0071FD"
@@ -252,7 +252,7 @@
     "Background.Primary.Warning": {
       "type": "color",
       "alias": "Alias.Semantic.Warning.1",
-      "cssVariable": "--backgroundPrimaryWarning",
+      "cssVariable": "--background-primary-warning",
       "valuesByTheme": {
         "engage": "#ea6208",
         "legacy": "#ea6208"
@@ -261,7 +261,7 @@
     "Background.Secondary.Active": {
       "type": "color",
       "alias": "Alias.Status.Active.1",
-      "cssVariable": "--backgroundSecondaryActive",
+      "cssVariable": "--background-secondary-active",
       "valuesByTheme": {
         "engage": "#bec3ff",
         "legacy": "#bec3ff"
@@ -270,7 +270,7 @@
     "Background.Secondary.Brand": {
       "type": "color",
       "alias": "Alias.Core.Brand.2",
-      "cssVariable": "--backgroundSecondaryBrand",
+      "cssVariable": "--background-secondary-brand",
       "valuesByTheme": {
         "engage": "#1e246e",
         "legacy": "#1e246e"
@@ -279,7 +279,7 @@
     "Background.Secondary.Campaign": {
       "type": "color",
       "alias": "Alias.Core.Campaign.2",
-      "cssVariable": "--backgroundSecondaryCampaign",
+      "cssVariable": "--background-secondary-campaign",
       "valuesByTheme": {
         "engage": "#fcf7ed",
         "legacy": "#fcf7ed"
@@ -288,7 +288,7 @@
     "Background.Secondary.Chat": {
       "type": "color",
       "alias": "Alias.Core.Chat.2",
-      "cssVariable": "--backgroundSecondaryChat",
+      "cssVariable": "--background-secondary-chat",
       "valuesByTheme": {
         "engage": "#f3f4fc",
         "legacy": "#f3f4fc"
@@ -297,7 +297,7 @@
     "Background.Secondary.Disabled": {
       "type": "color",
       "alias": "Alias.Neutral.1",
-      "cssVariable": "--backgroundSecondaryDisabled",
+      "cssVariable": "--background-secondary-disabled",
       "valuesByTheme": {
         "engage": "#F7F7F8",
         "legacy": "#f7f7f7"
@@ -306,7 +306,7 @@
     "Background.Secondary.Done": {
       "type": "color",
       "alias": "Alias.Status.Done.1",
-      "cssVariable": "--backgroundSecondaryDone",
+      "cssVariable": "--background-secondary-done",
       "valuesByTheme": {
         "engage": "#94e6b0",
         "legacy": "#94e6b0"
@@ -315,7 +315,7 @@
     "Background.Secondary.Error": {
       "type": "color",
       "alias": "Alias.Semantic.Error.2",
-      "cssVariable": "--backgroundSecondaryError",
+      "cssVariable": "--background-secondary-error",
       "valuesByTheme": {
         "engage": "#fcf1f1",
         "legacy": "#fcf1f1"
@@ -324,7 +324,7 @@
     "Background.Secondary.Ignored": {
       "type": "color",
       "alias": "Alias.Status.Ignored.1",
-      "cssVariable": "--backgroundSecondaryIgnored",
+      "cssVariable": "--background-secondary-ignored",
       "valuesByTheme": {
         "engage": "#E4E3EB",
         "legacy": "#dddddd"
@@ -333,7 +333,7 @@
     "Background.Secondary.Interactive": {
       "type": "color",
       "alias": "Alias.Core.Secondary.1",
-      "cssVariable": "--backgroundSecondaryInteractive",
+      "cssVariable": "--background-secondary-interactive",
       "valuesByTheme": {
         "engage": "#3C3B44",
         "legacy": "#212121"
@@ -342,7 +342,7 @@
     "Background.Secondary.Issue": {
       "type": "color",
       "alias": "Alias.Status.Issue.1",
-      "cssVariable": "--backgroundSecondaryIssue",
+      "cssVariable": "--background-secondary-issue",
       "valuesByTheme": {
         "engage": "#ffc5c4",
         "legacy": "#ffc5c4"
@@ -351,7 +351,7 @@
     "Background.Secondary.Mail": {
       "type": "color",
       "alias": "Alias.Core.Mail.2",
-      "cssVariable": "--backgroundSecondaryMail",
+      "cssVariable": "--background-secondary-mail",
       "valuesByTheme": {
         "engage": "#fcf7ed",
         "legacy": "#fcf7ed"
@@ -360,7 +360,7 @@
     "Background.Secondary.Notice": {
       "type": "color",
       "alias": "Alias.Semantic.Notice.2",
-      "cssVariable": "--backgroundSecondaryNotice",
+      "cssVariable": "--background-secondary-notice",
       "valuesByTheme": {
         "engage": "#f3f4fc",
         "legacy": "#f3f4fc"
@@ -369,7 +369,7 @@
     "Background.Secondary.Pending": {
       "type": "color",
       "alias": "Alias.Status.Pending.1",
-      "cssVariable": "--backgroundSecondaryPending",
+      "cssVariable": "--background-secondary-pending",
       "valuesByTheme": {
         "engage": "#ffe0a7",
         "legacy": "#ffe0a7"
@@ -378,7 +378,7 @@
     "Background.Secondary.Processing": {
       "type": "color",
       "alias": "Alias.Status.Processing.1",
-      "cssVariable": "--backgroundSecondaryProcessing",
+      "cssVariable": "--background-secondary-processing",
       "valuesByTheme": {
         "engage": "#fbc5ae",
         "legacy": "#fbc5ae"
@@ -387,7 +387,7 @@
     "Background.Secondary.Success": {
       "type": "color",
       "alias": "Alias.Semantic.Positive.2",
-      "cssVariable": "--backgroundSecondarySuccess",
+      "cssVariable": "--background-secondary-success",
       "valuesByTheme": {
         "engage": "#f1fcf3",
         "legacy": "#f1fcf3"
@@ -396,7 +396,7 @@
     "Background.Secondary.Voice": {
       "type": "color",
       "alias": "Alias.Core.Voice.2",
-      "cssVariable": "--backgroundSecondaryVoice",
+      "cssVariable": "--background-secondary-voice",
       "valuesByTheme": {
         "engage": "#f3f4fc",
         "legacy": "#f3f4fc"
@@ -405,7 +405,7 @@
     "Background.Secondary.Warning": {
       "type": "color",
       "alias": "Alias.Semantic.Warning.2",
-      "cssVariable": "--backgroundSecondaryWarning",
+      "cssVariable": "--background-secondary-warning",
       "valuesByTheme": {
         "engage": "#fcf4f1",
         "legacy": "#fcf4f1"
@@ -414,7 +414,7 @@
     "Background.Tertiary.Brand": {
       "type": "color",
       "alias": "Alias.Core.Brand.3",
-      "cssVariable": "--backgroundTertiaryBrand",
+      "cssVariable": "--background-tertiary-brand",
       "valuesByTheme": {
         "engage": "#14184A",
         "legacy": "#14184A"
@@ -423,7 +423,7 @@
     "Background.Tertiary.Campaign": {
       "type": "color",
       "alias": "Alias.Core.Campaign.3",
-      "cssVariable": "--backgroundTertiaryCampaign",
+      "cssVariable": "--background-tertiary-campaign",
       "valuesByTheme": {
         "engage": "#4d3300",
         "legacy": "#4d3300"
@@ -432,7 +432,7 @@
     "Background.Tertiary.Chat": {
       "type": "color",
       "alias": "Alias.Core.Chat.3",
-      "cssVariable": "--backgroundTertiaryChat",
+      "cssVariable": "--background-tertiary-chat",
       "valuesByTheme": {
         "engage": "#1f0099",
         "legacy": "#1f0099"
@@ -441,7 +441,7 @@
     "Background.Tertiary.Interactive": {
       "type": "color",
       "alias": "Alias.Core.Tertiary.1",
-      "cssVariable": "--backgroundTertiaryInteractive",
+      "cssVariable": "--background-tertiary-interactive",
       "valuesByTheme": {
         "engage": "#ffffff",
         "legacy": "#ffffff"
@@ -450,7 +450,7 @@
     "Background.Tertiary.Mail": {
       "type": "color",
       "alias": "Alias.Core.Mail.3",
-      "cssVariable": "--backgroundTertiaryMail",
+      "cssVariable": "--background-tertiary-mail",
       "valuesByTheme": {
         "engage": "#4d3300",
         "legacy": "#4d3300"
@@ -459,7 +459,7 @@
     "Background.Tertiary.Voice": {
       "type": "color",
       "alias": "Alias.Core.Voice.3",
-      "cssVariable": "--backgroundTertiaryVoice",
+      "cssVariable": "--background-tertiary-voice",
       "valuesByTheme": {
         "engage": "#1f0099",
         "legacy": "#1f0099"
@@ -468,7 +468,7 @@
     "Border.Neutral.1": {
       "type": "color",
       "alias": "Alias.Neutral.10",
-      "cssVariable": "--borderNeutral1",
+      "cssVariable": "--border-neutral-1",
       "valuesByTheme": {
         "engage": "#3C3B44",
         "legacy": "#212121"
@@ -477,7 +477,7 @@
     "Border.Neutral.2": {
       "type": "color",
       "alias": "Alias.Neutral.8",
-      "cssVariable": "--borderNeutral2",
+      "cssVariable": "--border-neutral-2",
       "valuesByTheme": {
         "engage": "#706E7B",
         "legacy": "#575757"
@@ -486,7 +486,7 @@
     "Border.Neutral.3": {
       "type": "color",
       "alias": "Alias.Neutral.6",
-      "cssVariable": "--borderNeutral3",
+      "cssVariable": "--border-neutral-3",
       "valuesByTheme": {
         "engage": "#A4A2B0",
         "legacy": "#8c8c8c"
@@ -495,7 +495,7 @@
     "Border.Neutral.4": {
       "type": "color",
       "alias": "Alias.Neutral.4",
-      "cssVariable": "--borderNeutral4",
+      "cssVariable": "--border-neutral-4",
       "valuesByTheme": {
         "engage": "#D4D3DD",
         "legacy": "#c2c2c2"
@@ -504,7 +504,7 @@
     "Border.Neutral.5": {
       "type": "color",
       "alias": "Alias.Neutral.2",
-      "cssVariable": "--borderNeutral5",
+      "cssVariable": "--border-neutral-5",
       "valuesByTheme": {
         "engage": "#EEEEF2",
         "legacy": "#eaeaea"
@@ -513,7 +513,7 @@
     "Border.Neutral.6": {
       "type": "color",
       "alias": "Alias.Neutral.1",
-      "cssVariable": "--borderNeutral6",
+      "cssVariable": "--border-neutral-6",
       "valuesByTheme": {
         "engage": "#F7F7F8",
         "legacy": "#f7f7f7"
@@ -522,7 +522,7 @@
     "Border.Primary.Active": {
       "type": "color",
       "alias": "Alias.Status.Active.2",
-      "cssVariable": "--borderPrimaryActive",
+      "cssVariable": "--border-primary-active",
       "valuesByTheme": {
         "engage": "#4c57ea",
         "legacy": "#0071FD"
@@ -531,7 +531,7 @@
     "Border.Primary.Brand": {
       "type": "color",
       "alias": "Alias.Core.Brand.1",
-      "cssVariable": "--borderPrimaryBrand",
+      "cssVariable": "--border-primary-brand",
       "valuesByTheme": {
         "engage": "#29308a",
         "legacy": "#29308a"
@@ -540,7 +540,7 @@
     "Border.Primary.Campaign": {
       "type": "color",
       "alias": "Alias.Core.Campaign.1",
-      "cssVariable": "--borderPrimaryCampaign",
+      "cssVariable": "--border-primary-campaign",
       "valuesByTheme": {
         "engage": "#f2960c",
         "legacy": "#f2960c"
@@ -549,7 +549,7 @@
     "Border.Primary.Chat": {
       "type": "color",
       "alias": "Alias.Core.Chat.1",
-      "cssVariable": "--borderPrimaryChat",
+      "cssVariable": "--border-primary-chat",
       "valuesByTheme": {
         "engage": "#4c57ea",
         "legacy": "#0071FD"
@@ -558,7 +558,7 @@
     "Border.Primary.Disabled": {
       "type": "color",
       "alias": "Alias.Neutral.4",
-      "cssVariable": "--borderPrimaryDisabled",
+      "cssVariable": "--border-primary-disabled",
       "valuesByTheme": {
         "engage": "#D4D3DD",
         "legacy": "#c2c2c2"
@@ -567,7 +567,7 @@
     "Border.Primary.Done": {
       "type": "color",
       "alias": "Alias.Status.Done.2",
-      "cssVariable": "--borderPrimaryDone",
+      "cssVariable": "--border-primary-done",
       "valuesByTheme": {
         "engage": "#079950",
         "legacy": "#079950"
@@ -576,7 +576,7 @@
     "Border.Primary.Error": {
       "type": "color",
       "alias": "Alias.Semantic.Error.1",
-      "cssVariable": "--borderPrimaryError",
+      "cssVariable": "--border-primary-error",
       "valuesByTheme": {
         "engage": "#fc4032",
         "legacy": "#fc4032"
@@ -585,7 +585,7 @@
     "Border.Primary.Ignored": {
       "type": "color",
       "alias": "Alias.Status.Ignored.2",
-      "cssVariable": "--borderPrimaryIgnored",
+      "cssVariable": "--border-primary-ignored",
       "valuesByTheme": {
         "engage": "#A4A2B0",
         "legacy": "#8c8c8c"
@@ -594,7 +594,7 @@
     "Border.Primary.Interactive": {
       "type": "color",
       "alias": "Alias.Core.Primary.1",
-      "cssVariable": "--borderPrimaryInteractive",
+      "cssVariable": "--border-primary-interactive",
       "valuesByTheme": {
         "engage": "#4c57ea",
         "legacy": "#0071FD"
@@ -603,7 +603,7 @@
     "Border.Primary.Issue": {
       "type": "color",
       "alias": "Alias.Status.Issue.2",
-      "cssVariable": "--borderPrimaryIssue",
+      "cssVariable": "--border-primary-issue",
       "valuesByTheme": {
         "engage": "#fc4032",
         "legacy": "#fc4032"
@@ -612,7 +612,7 @@
     "Border.Primary.Mail": {
       "type": "color",
       "alias": "Alias.Core.Mail.1",
-      "cssVariable": "--borderPrimaryMail",
+      "cssVariable": "--border-primary-mail",
       "valuesByTheme": {
         "engage": "#f2960c",
         "legacy": "#f2960c"
@@ -621,7 +621,7 @@
     "Border.Primary.Notice": {
       "type": "color",
       "alias": "Alias.Semantic.Notice.1",
-      "cssVariable": "--borderPrimaryNotice",
+      "cssVariable": "--border-primary-notice",
       "valuesByTheme": {
         "engage": "#4c57ea",
         "legacy": "#0071FD"
@@ -630,7 +630,7 @@
     "Border.Primary.Pending": {
       "type": "color",
       "alias": "Alias.Status.Pending.2",
-      "cssVariable": "--borderPrimaryPending",
+      "cssVariable": "--border-primary-pending",
       "valuesByTheme": {
         "engage": "#f2960c",
         "legacy": "#f2960c"
@@ -639,7 +639,7 @@
     "Border.Primary.Processing": {
       "type": "color",
       "alias": "Alias.Status.Processing.2",
-      "cssVariable": "--borderPrimaryProcessing",
+      "cssVariable": "--border-primary-processing",
       "valuesByTheme": {
         "engage": "#ea6208",
         "legacy": "#ea6208"
@@ -648,7 +648,7 @@
     "Border.Primary.Selected": {
       "type": "color",
       "alias": "Alias.Core.Primary.1",
-      "cssVariable": "--borderPrimarySelected",
+      "cssVariable": "--border-primary-selected",
       "valuesByTheme": {
         "engage": "#4c57ea",
         "legacy": "#0071FD"
@@ -657,7 +657,7 @@
     "Border.Primary.Success": {
       "type": "color",
       "alias": "Alias.Semantic.Positive.1",
-      "cssVariable": "--borderPrimarySuccess",
+      "cssVariable": "--border-primary-success",
       "valuesByTheme": {
         "engage": "#079950",
         "legacy": "#079950"
@@ -666,7 +666,7 @@
     "Border.Primary.Voice": {
       "type": "color",
       "alias": "Alias.Core.Voice.1",
-      "cssVariable": "--borderPrimaryVoice",
+      "cssVariable": "--border-primary-voice",
       "valuesByTheme": {
         "engage": "#4c57ea",
         "legacy": "#0071FD"
@@ -675,7 +675,7 @@
     "Border.Primary.Warning": {
       "type": "color",
       "alias": "Alias.Semantic.Warning.1",
-      "cssVariable": "--borderPrimaryWarning",
+      "cssVariable": "--border-primary-warning",
       "valuesByTheme": {
         "engage": "#ea6208",
         "legacy": "#ea6208"
@@ -684,7 +684,7 @@
     "Border.Secondary.Brand": {
       "type": "color",
       "alias": "Alias.Core.Brand.2",
-      "cssVariable": "--borderSecondaryBrand",
+      "cssVariable": "--border-secondary-brand",
       "valuesByTheme": {
         "engage": "#1e246e",
         "legacy": "#1e246e"
@@ -693,7 +693,7 @@
     "Border.Secondary.Campaign": {
       "type": "color",
       "alias": "Alias.Core.Campaign.2",
-      "cssVariable": "--borderSecondaryCampaign",
+      "cssVariable": "--border-secondary-campaign",
       "valuesByTheme": {
         "engage": "#fcf7ed",
         "legacy": "#fcf7ed"
@@ -702,7 +702,7 @@
     "Border.Secondary.Chat": {
       "type": "color",
       "alias": "Alias.Core.Chat.2",
-      "cssVariable": "--borderSecondaryChat",
+      "cssVariable": "--border-secondary-chat",
       "valuesByTheme": {
         "engage": "#f3f4fc",
         "legacy": "#f3f4fc"
@@ -711,7 +711,7 @@
     "Border.Secondary.Disabled": {
       "type": "color",
       "alias": "Alias.Neutral.1",
-      "cssVariable": "--borderSecondaryDisabled",
+      "cssVariable": "--border-secondary-disabled",
       "valuesByTheme": {
         "engage": "#F7F7F8",
         "legacy": "#f7f7f7"
@@ -720,7 +720,7 @@
     "Border.Secondary.Error": {
       "type": "color",
       "alias": "Alias.Semantic.Error.2",
-      "cssVariable": "--borderSecondaryError",
+      "cssVariable": "--border-secondary-error",
       "valuesByTheme": {
         "engage": "#fcf1f1",
         "legacy": "#fcf1f1"
@@ -729,7 +729,7 @@
     "Border.Secondary.Interactive": {
       "type": "color",
       "alias": "Alias.Core.Secondary.1",
-      "cssVariable": "--borderSecondaryInteractive",
+      "cssVariable": "--border-secondary-interactive",
       "valuesByTheme": {
         "engage": "#3C3B44",
         "legacy": "#212121"
@@ -738,7 +738,7 @@
     "Border.Secondary.Mail": {
       "type": "color",
       "alias": "Alias.Core.Mail.2",
-      "cssVariable": "--borderSecondaryMail",
+      "cssVariable": "--border-secondary-mail",
       "valuesByTheme": {
         "engage": "#fcf7ed",
         "legacy": "#fcf7ed"
@@ -747,7 +747,7 @@
     "Border.Secondary.Notice": {
       "type": "color",
       "alias": "Alias.Semantic.Notice.2",
-      "cssVariable": "--borderSecondaryNotice",
+      "cssVariable": "--border-secondary-notice",
       "valuesByTheme": {
         "engage": "#f3f4fc",
         "legacy": "#f3f4fc"
@@ -756,7 +756,7 @@
     "Border.Secondary.Success": {
       "type": "color",
       "alias": "Alias.Semantic.Positive.2",
-      "cssVariable": "--borderSecondarySuccess",
+      "cssVariable": "--border-secondary-success",
       "valuesByTheme": {
         "engage": "#f1fcf3",
         "legacy": "#f1fcf3"
@@ -765,7 +765,7 @@
     "Border.Secondary.Voice": {
       "type": "color",
       "alias": "Alias.Core.Voice.2",
-      "cssVariable": "--borderSecondaryVoice",
+      "cssVariable": "--border-secondary-voice",
       "valuesByTheme": {
         "engage": "#f3f4fc",
         "legacy": "#f3f4fc"
@@ -774,7 +774,7 @@
     "Border.Secondary.Warning": {
       "type": "color",
       "alias": "Alias.Semantic.Warning.2",
-      "cssVariable": "--borderSecondaryWarning",
+      "cssVariable": "--border-secondary-warning",
       "valuesByTheme": {
         "engage": "#fcf4f1",
         "legacy": "#fcf4f1"
@@ -783,7 +783,7 @@
     "Border.Tertiary.Campaign": {
       "type": "color",
       "alias": "Alias.Core.Campaign.3",
-      "cssVariable": "--borderTertiaryCampaign",
+      "cssVariable": "--border-tertiary-campaign",
       "valuesByTheme": {
         "engage": "#4d3300",
         "legacy": "#4d3300"
@@ -792,7 +792,7 @@
     "Border.Tertiary.Chat": {
       "type": "color",
       "alias": "Alias.Core.Chat.3",
-      "cssVariable": "--borderTertiaryChat",
+      "cssVariable": "--border-tertiary-chat",
       "valuesByTheme": {
         "engage": "#1f0099",
         "legacy": "#1f0099"
@@ -801,7 +801,7 @@
     "Border.Tertiary.Interactive": {
       "type": "color",
       "alias": "Alias.Core.Tertiary.1",
-      "cssVariable": "--borderTertiaryInteractive",
+      "cssVariable": "--border-tertiary-interactive",
       "valuesByTheme": {
         "engage": "#ffffff",
         "legacy": "#ffffff"
@@ -810,7 +810,7 @@
     "Border.Tertiary.Mail": {
       "type": "color",
       "alias": "Alias.Core.Mail.3",
-      "cssVariable": "--borderTertiaryMail",
+      "cssVariable": "--border-tertiary-mail",
       "valuesByTheme": {
         "engage": "#4d3300",
         "legacy": "#4d3300"
@@ -819,7 +819,7 @@
     "Border.Tertiary.Voice": {
       "type": "color",
       "alias": "Alias.Core.Voice.3",
-      "cssVariable": "--borderTertiaryVoice",
+      "cssVariable": "--border-tertiary-voice",
       "valuesByTheme": {
         "engage": "#1f0099",
         "legacy": "#1f0099"
@@ -827,7 +827,7 @@
     },
     "Borderwidth.l": {
       "type": "borderWidth",
-      "cssVariable": "--borderwidthL",
+      "cssVariable": "--borderwidth-l",
       "valuesByTheme": {
         "engage": "3",
         "legacy": "3"
@@ -835,7 +835,7 @@
     },
     "Borderwidth.m": {
       "type": "borderWidth",
-      "cssVariable": "--borderwidthM",
+      "cssVariable": "--borderwidth-m",
       "valuesByTheme": {
         "engage": "2",
         "legacy": "2"
@@ -843,7 +843,7 @@
     },
     "Borderwidth.none": {
       "type": "borderWidth",
-      "cssVariable": "--borderwidthNone",
+      "cssVariable": "--borderwidth-none",
       "valuesByTheme": {
         "engage": "0",
         "legacy": "0"
@@ -851,7 +851,7 @@
     },
     "Borderwidth.s": {
       "type": "borderWidth",
-      "cssVariable": "--borderwidthS",
+      "cssVariable": "--borderwidth-s",
       "valuesByTheme": {
         "engage": "1",
         "legacy": "1"
@@ -859,7 +859,7 @@
     },
     "Borderwidth.sm": {
       "type": "borderWidth",
-      "cssVariable": "--borderwidthSm",
+      "cssVariable": "--borderwidth-sm",
       "valuesByTheme": {
         "engage": "1.5",
         "legacy": "1.5"
@@ -867,7 +867,7 @@
     },
     "Borderwidth.xl": {
       "type": "borderWidth",
-      "cssVariable": "--borderwidthXl",
+      "cssVariable": "--borderwidth-xl",
       "valuesByTheme": {
         "engage": "6",
         "legacy": "6"
@@ -876,7 +876,7 @@
     "Iconsizes.l": {
       "type": "dimension",
       "alias": "Size.Icons.l",
-      "cssVariable": "--iconsizesL",
+      "cssVariable": "--iconsizes-l",
       "valuesByTheme": {
         "engage": "16",
         "legacy": "16"
@@ -885,7 +885,7 @@
     "Iconsizes.m": {
       "type": "dimension",
       "alias": "Size.Icons.m",
-      "cssVariable": "--iconsizesM",
+      "cssVariable": "--iconsizes-m",
       "valuesByTheme": {
         "engage": "14",
         "legacy": "14"
@@ -894,7 +894,7 @@
     "Iconsizes.s": {
       "type": "dimension",
       "alias": "Size.Icons.s",
-      "cssVariable": "--iconsizesS",
+      "cssVariable": "--iconsizes-s",
       "valuesByTheme": {
         "engage": "12",
         "legacy": "12"
@@ -903,7 +903,7 @@
     "Iconsizes.xl": {
       "type": "dimension",
       "alias": "Size.Icons.xl",
-      "cssVariable": "--iconsizesXl",
+      "cssVariable": "--iconsizes-xl",
       "valuesByTheme": {
         "engage": "20",
         "legacy": "20"
@@ -912,7 +912,7 @@
     "Iconsizes.xl2": {
       "type": "dimension",
       "alias": "Size.Icons.xl2",
-      "cssVariable": "--iconsizesXl2",
+      "cssVariable": "--iconsizes-xl-2",
       "valuesByTheme": {
         "engage": "24",
         "legacy": "24"
@@ -921,7 +921,7 @@
     "Iconsizes.xl3": {
       "type": "dimension",
       "alias": "Size.Icons.xl3",
-      "cssVariable": "--iconsizesXl3",
+      "cssVariable": "--iconsizes-xl-3",
       "valuesByTheme": {
         "engage": "32",
         "legacy": "32"
@@ -930,7 +930,7 @@
     "Iconsizes.xl4": {
       "type": "dimension",
       "alias": "Size.Icons.xl4",
-      "cssVariable": "--iconsizesXl4",
+      "cssVariable": "--iconsizes-xl-4",
       "valuesByTheme": {
         "engage": "48",
         "legacy": "48"
@@ -939,7 +939,7 @@
     "Iconsizes.xs": {
       "type": "dimension",
       "alias": "Size.Icons.xs",
-      "cssVariable": "--iconsizesXs",
+      "cssVariable": "--iconsizes-xs",
       "valuesByTheme": {
         "engage": "8",
         "legacy": "8"
@@ -948,7 +948,7 @@
     "intensity.brand.active": {
       "type": "opacity",
       "alias": "Opacity.18",
-      "cssVariable": "--intensityBrandActive",
+      "cssVariable": "--intensity-brand-active",
       "valuesByTheme": {
         "engage": "18%",
         "legacy": "18%"
@@ -957,7 +957,7 @@
     "intensity.brand.focus": {
       "type": "opacity",
       "alias": "Opacity.50",
-      "cssVariable": "--intensityBrandFocus",
+      "cssVariable": "--intensity-brand-focus",
       "valuesByTheme": {
         "engage": "50%",
         "legacy": "50%"
@@ -966,7 +966,7 @@
     "intensity.brand.hover": {
       "type": "opacity",
       "alias": "Opacity.24",
-      "cssVariable": "--intensityBrandHover",
+      "cssVariable": "--intensity-brand-hover",
       "valuesByTheme": {
         "engage": "24%",
         "legacy": "24%"
@@ -975,7 +975,7 @@
     "intensity.brighten.active": {
       "type": "opacity",
       "alias": "Opacity.16",
-      "cssVariable": "--intensityBrightenActive",
+      "cssVariable": "--intensity-brighten-active",
       "valuesByTheme": {
         "engage": "16%",
         "legacy": "16%"
@@ -984,7 +984,7 @@
     "intensity.brighten.drag": {
       "type": "opacity",
       "alias": "Opacity.24",
-      "cssVariable": "--intensityBrightenDrag",
+      "cssVariable": "--intensity-brighten-drag",
       "valuesByTheme": {
         "engage": "24%",
         "legacy": "24%"
@@ -993,7 +993,7 @@
     "intensity.brighten.focus": {
       "type": "opacity",
       "alias": "Opacity.16",
-      "cssVariable": "--intensityBrightenFocus",
+      "cssVariable": "--intensity-brighten-focus",
       "valuesByTheme": {
         "engage": "16%",
         "legacy": "16%"
@@ -1002,7 +1002,7 @@
     "intensity.brighten.hover": {
       "type": "opacity",
       "alias": "Opacity.12",
-      "cssVariable": "--intensityBrightenHover",
+      "cssVariable": "--intensity-brighten-hover",
       "valuesByTheme": {
         "engage": "12%",
         "legacy": "12%"
@@ -1011,7 +1011,7 @@
     "intensity.darken.active": {
       "type": "opacity",
       "alias": "Opacity.16",
-      "cssVariable": "--intensityDarkenActive",
+      "cssVariable": "--intensity-darken-active",
       "valuesByTheme": {
         "engage": "16%",
         "legacy": "16%"
@@ -1020,7 +1020,7 @@
     "intensity.darken.drag": {
       "type": "opacity",
       "alias": "Opacity.24",
-      "cssVariable": "--intensityDarkenDrag",
+      "cssVariable": "--intensity-darken-drag",
       "valuesByTheme": {
         "engage": "24%",
         "legacy": "24%"
@@ -1029,7 +1029,7 @@
     "intensity.darken.focus": {
       "type": "opacity",
       "alias": "Opacity.16",
-      "cssVariable": "--intensityDarkenFocus",
+      "cssVariable": "--intensity-darken-focus",
       "valuesByTheme": {
         "engage": "16%",
         "legacy": "16%"
@@ -1038,7 +1038,7 @@
     "intensity.darken.hover": {
       "type": "opacity",
       "alias": "Opacity.12",
-      "cssVariable": "--intensityDarkenHover",
+      "cssVariable": "--intensity-darken-hover",
       "valuesByTheme": {
         "engage": "12%",
         "legacy": "12%"
@@ -1047,7 +1047,7 @@
     "Radius.l": {
       "type": "borderRadius",
       "alias": "Size.Radius.l",
-      "cssVariable": "--radiusL",
+      "cssVariable": "--radius-l",
       "valuesByTheme": {
         "engage": "12",
         "legacy": "12"
@@ -1056,7 +1056,7 @@
     "Radius.m": {
       "type": "borderRadius",
       "alias": "Size.Radius.m",
-      "cssVariable": "--radiusM",
+      "cssVariable": "--radius-m",
       "valuesByTheme": {
         "engage": "8",
         "legacy": "8"
@@ -1064,7 +1064,7 @@
     },
     "Radius.max": {
       "type": "borderRadius",
-      "cssVariable": "--radiusMax",
+      "cssVariable": "--radius-max",
       "valuesByTheme": {
         "engage": "999",
         "legacy": "999"
@@ -1072,7 +1072,7 @@
     },
     "Radius.none": {
       "type": "borderRadius",
-      "cssVariable": "--radiusNone",
+      "cssVariable": "--radius-none",
       "valuesByTheme": {
         "engage": "0",
         "legacy": "0"
@@ -1081,7 +1081,7 @@
     "Radius.s": {
       "type": "borderRadius",
       "alias": "Size.Radius.s",
-      "cssVariable": "--radiusS",
+      "cssVariable": "--radius-s",
       "valuesByTheme": {
         "engage": "6",
         "legacy": "6"
@@ -1090,7 +1090,7 @@
     "Radius.xl": {
       "type": "borderRadius",
       "alias": "Size.Radius.xl",
-      "cssVariable": "--radiusXl",
+      "cssVariable": "--radius-xl",
       "valuesByTheme": {
         "engage": "16",
         "legacy": "16"
@@ -1099,7 +1099,7 @@
     "Radius.xs": {
       "type": "borderRadius",
       "alias": "Size.Radius.xs",
-      "cssVariable": "--radiusXs",
+      "cssVariable": "--radius-xs",
       "valuesByTheme": {
         "engage": "4",
         "legacy": "4"
@@ -1108,7 +1108,7 @@
     "Radius.xs2": {
       "type": "borderRadius",
       "alias": "Size.Radius.xs2",
-      "cssVariable": "--radiusXs2",
+      "cssVariable": "--radius-xs-2",
       "valuesByTheme": {
         "engage": "2",
         "legacy": "2"
@@ -1116,7 +1116,8 @@
     },
     "shadows.l": {
       "type": "boxShadow",
-      "cssVariable": "--shadowsL",
+      "alias": "x: 0 | y: 4 | blur: 16 | spread: 0 | color: rgba(21,21,21,0.2) | type: dropShadow",
+      "cssVariable": "--shadows-l",
       "valuesByTheme": {
         "engage": "box-shadow: 0 4 16 0 rgba(21,21,21,0.2);",
         "legacy": "box-shadow: 0 4 16 0 rgba(21,21,21,0.2);"
@@ -1124,7 +1125,8 @@
     },
     "shadows.m": {
       "type": "boxShadow",
-      "cssVariable": "--shadowsM",
+      "alias": "x: 0 | y: 2 | blur: 12 | spread: 0 | color: rgba(21,21,21,0.2) | type: dropShadow",
+      "cssVariable": "--shadows-m",
       "valuesByTheme": {
         "engage": "box-shadow: 0 2 12 0 rgba(21,21,21,0.2);",
         "legacy": "box-shadow: 0 2 12 0 rgba(21,21,21,0.2);"
@@ -1132,7 +1134,8 @@
     },
     "shadows.s": {
       "type": "boxShadow",
-      "cssVariable": "--shadowsS",
+      "alias": "x: 0 | y: 2 | blur: 8 | spread: 0 | color: rgba(21,21,21,0.2) | type: dropShadow",
+      "cssVariable": "--shadows-s",
       "valuesByTheme": {
         "engage": "box-shadow: 0 2 8 0 rgba(21,21,21,0.2);",
         "legacy": "box-shadow: 0 2 8 0 rgba(21,21,21,0.2);"
@@ -1141,7 +1144,7 @@
     "Spacing.l": {
       "type": "spacing",
       "alias": "Size.Base.l",
-      "cssVariable": "--spacingL",
+      "cssVariable": "--spacing-l",
       "valuesByTheme": {
         "engage": "16",
         "legacy": 16
@@ -1150,7 +1153,7 @@
     "Spacing.m": {
       "type": "spacing",
       "alias": "Size.Base.m",
-      "cssVariable": "--spacingM",
+      "cssVariable": "--spacing-m",
       "valuesByTheme": {
         "engage": "12",
         "legacy": 12
@@ -1159,7 +1162,7 @@
     "Spacing.s": {
       "type": "spacing",
       "alias": "Size.Base.s",
-      "cssVariable": "--spacingS",
+      "cssVariable": "--spacing-s",
       "valuesByTheme": {
         "engage": "8",
         "legacy": 8
@@ -1168,7 +1171,7 @@
     "Spacing.xl": {
       "type": "spacing",
       "alias": "Size.Base.xl",
-      "cssVariable": "--spacingXl",
+      "cssVariable": "--spacing-xl",
       "valuesByTheme": {
         "engage": "24",
         "legacy": 24
@@ -1177,7 +1180,7 @@
     "Spacing.xl2": {
       "type": "spacing",
       "alias": "Size.Base.xl2",
-      "cssVariable": "--spacingXl2",
+      "cssVariable": "--spacing-xl-2",
       "valuesByTheme": {
         "engage": "32",
         "legacy": 32
@@ -1186,7 +1189,7 @@
     "Spacing.xl3": {
       "type": "spacing",
       "alias": "Size.Base.xl3",
-      "cssVariable": "--spacingXl3",
+      "cssVariable": "--spacing-xl-3",
       "valuesByTheme": {
         "engage": "48",
         "legacy": 48
@@ -1195,7 +1198,7 @@
     "Spacing.xl4": {
       "type": "spacing",
       "alias": "Size.Base.xl4",
-      "cssVariable": "--spacingXl4",
+      "cssVariable": "--spacing-xl-4",
       "valuesByTheme": {
         "engage": "64",
         "legacy": 64
@@ -1204,7 +1207,7 @@
     "Spacing.xs": {
       "type": "spacing",
       "alias": "Size.Base.xs",
-      "cssVariable": "--spacingXs",
+      "cssVariable": "--spacing-xs",
       "valuesByTheme": {
         "engage": "4",
         "legacy": 4
@@ -1213,7 +1216,7 @@
     "Spacing.xs2": {
       "type": "spacing",
       "alias": "Size.Base.xs2",
-      "cssVariable": "--spacingXs2",
+      "cssVariable": "--spacing-xs-2",
       "valuesByTheme": {
         "engage": "2",
         "legacy": 2
@@ -1222,7 +1225,7 @@
     "Spacing.xs3": {
       "type": "spacing",
       "alias": "Size.Base.xs3",
-      "cssVariable": "--spacingXs3",
+      "cssVariable": "--spacing-xs-3",
       "valuesByTheme": {
         "engage": "1",
         "legacy": 1
@@ -1231,7 +1234,7 @@
     "State.Brand.Focus": {
       "type": "color",
       "alias": "Palette.Alpha.Brand.50",
-      "cssVariable": "--stateBrandFocus",
+      "cssVariable": "--state-brand-focus",
       "valuesByTheme": {
         "engage": "rgba(76,87,234,0.5)",
         "legacy": "rgba(0,113,253,0.5)"
@@ -1240,7 +1243,7 @@
     "State.Brand.Hover": {
       "type": "color",
       "alias": "Palette.Alpha.Brand.24",
-      "cssVariable": "--stateBrandHover",
+      "cssVariable": "--state-brand-hover",
       "valuesByTheme": {
         "engage": "rgba(76,87,234,0.24)",
         "legacy": "rgba(0,113,253,0.24)"
@@ -1249,7 +1252,7 @@
     "State.Brand.Press": {
       "type": "color",
       "alias": "Palette.Alpha.Brand.18",
-      "cssVariable": "--stateBrandPress",
+      "cssVariable": "--state-brand-press",
       "valuesByTheme": {
         "engage": "rgba(76,87,234,0.18)",
         "legacy": "rgba(0,113,253,0.18)"
@@ -1258,7 +1261,7 @@
     "State.Brighten.Drag": {
       "type": "color",
       "alias": "Palette.Alpha.Brighten.24",
-      "cssVariable": "--stateBrightenDrag",
+      "cssVariable": "--state-brighten-drag",
       "valuesByTheme": {
         "engage": "rgba(255,255,255,0.24)",
         "legacy": "rgba(255,255,255,0.24)"
@@ -1267,7 +1270,7 @@
     "State.Brighten.Focus": {
       "type": "color",
       "alias": "Palette.Alpha.Brighten.16",
-      "cssVariable": "--stateBrightenFocus",
+      "cssVariable": "--state-brighten-focus",
       "valuesByTheme": {
         "engage": "rgba(255,255,255,0.16)",
         "legacy": "rgba(255,255,255,0.16)"
@@ -1276,7 +1279,7 @@
     "State.Brighten.Hover": {
       "type": "color",
       "alias": "Palette.Alpha.Brighten.12",
-      "cssVariable": "--stateBrightenHover",
+      "cssVariable": "--state-brighten-hover",
       "valuesByTheme": {
         "engage": "rgba(255,255,255,0.12)",
         "legacy": "rgba(255,255,255,0.12)"
@@ -1285,7 +1288,7 @@
     "State.Brighten.Hoveralt": {
       "type": "color",
       "alias": "Palette.Alpha.Brighten.32",
-      "cssVariable": "--stateBrightenHoveralt",
+      "cssVariable": "--state-brighten-hoveralt",
       "valuesByTheme": {
         "engage": "rgba(255,255,255,0.32)",
         "legacy": "rgba(255,255,255,0.32)"
@@ -1294,7 +1297,7 @@
     "State.Brighten.Press": {
       "type": "color",
       "alias": "Palette.Alpha.Brighten.16",
-      "cssVariable": "--stateBrightenPress",
+      "cssVariable": "--state-brighten-press",
       "valuesByTheme": {
         "engage": "rgba(255,255,255,0.16)",
         "legacy": "rgba(255,255,255,0.16)"
@@ -1303,7 +1306,7 @@
     "State.Darken.Drag": {
       "type": "color",
       "alias": "Palette.Alpha.Darken.24",
-      "cssVariable": "--stateDarkenDrag",
+      "cssVariable": "--state-darken-drag",
       "valuesByTheme": {
         "engage": "rgba(0,0,0,0.24)",
         "legacy": "rgba(0,0,0,0.24)"
@@ -1312,7 +1315,7 @@
     "State.Darken.Focus": {
       "type": "color",
       "alias": "Palette.Alpha.Darken.16",
-      "cssVariable": "--stateDarkenFocus",
+      "cssVariable": "--state-darken-focus",
       "valuesByTheme": {
         "engage": "rgba(0,0,0,0.16)",
         "legacy": "rgba(0,0,0,0.16)"
@@ -1321,7 +1324,7 @@
     "State.Darken.Hover": {
       "type": "color",
       "alias": "Palette.Alpha.Darken.12",
-      "cssVariable": "--stateDarkenHover",
+      "cssVariable": "--state-darken-hover",
       "valuesByTheme": {
         "engage": "rgba(0,0,0,0.12)",
         "legacy": "rgba(0,0,0,0.12)"
@@ -1330,7 +1333,7 @@
     "State.Darken.Hoveralt": {
       "type": "color",
       "alias": "Palette.Alpha.Darken.32",
-      "cssVariable": "--stateDarkenHoveralt",
+      "cssVariable": "--state-darken-hoveralt",
       "valuesByTheme": {
         "engage": "rgba(0,0,0,0.32)",
         "legacy": "rgba(0,0,0,0.32)"
@@ -1339,7 +1342,7 @@
     "State.Darken.Press": {
       "type": "color",
       "alias": "Palette.Alpha.Darken.16",
-      "cssVariable": "--stateDarkenPress",
+      "cssVariable": "--state-darken-press",
       "valuesByTheme": {
         "engage": "rgba(0,0,0,0.16)",
         "legacy": "rgba(0,0,0,0.16)"
@@ -1348,7 +1351,7 @@
     "Text.Neutral.1": {
       "type": "color",
       "alias": "Alias.Neutral.10",
-      "cssVariable": "--textNeutral1",
+      "cssVariable": "--text-neutral-1",
       "valuesByTheme": {
         "engage": "#3C3B44",
         "legacy": "#212121"
@@ -1357,7 +1360,7 @@
     "Text.Neutral.2": {
       "type": "color",
       "alias": "Alias.Neutral.8",
-      "cssVariable": "--textNeutral2",
+      "cssVariable": "--text-neutral-2",
       "valuesByTheme": {
         "engage": "#706E7B",
         "legacy": "#575757"
@@ -1366,7 +1369,7 @@
     "Text.Neutral.3": {
       "type": "color",
       "alias": "Alias.Neutral.6",
-      "cssVariable": "--textNeutral3",
+      "cssVariable": "--text-neutral-3",
       "valuesByTheme": {
         "engage": "#A4A2B0",
         "legacy": "#8c8c8c"
@@ -1375,7 +1378,7 @@
     "Text.Neutral.4": {
       "type": "color",
       "alias": "Alias.Neutral.4",
-      "cssVariable": "--textNeutral4",
+      "cssVariable": "--text-neutral-4",
       "valuesByTheme": {
         "engage": "#D4D3DD",
         "legacy": "#c2c2c2"
@@ -1384,7 +1387,7 @@
     "Text.Neutral.5": {
       "type": "color",
       "alias": "Alias.Neutral.2",
-      "cssVariable": "--textNeutral5",
+      "cssVariable": "--text-neutral-5",
       "valuesByTheme": {
         "engage": "#EEEEF2",
         "legacy": "#eaeaea"
@@ -1393,7 +1396,7 @@
     "Text.Neutral.6": {
       "type": "color",
       "alias": "Alias.Neutral.1",
-      "cssVariable": "--textNeutral6",
+      "cssVariable": "--text-neutral-6",
       "valuesByTheme": {
         "engage": "#F7F7F8",
         "legacy": "#f7f7f7"
@@ -1402,7 +1405,7 @@
     "Text.Primary.Active": {
       "type": "color",
       "alias": "Alias.Status.Active.2",
-      "cssVariable": "--textPrimaryActive",
+      "cssVariable": "--text-primary-active",
       "valuesByTheme": {
         "engage": "#4c57ea",
         "legacy": "#0071FD"
@@ -1411,7 +1414,7 @@
     "Text.Primary.Brand": {
       "type": "color",
       "alias": "Alias.Core.Brand.1",
-      "cssVariable": "--textPrimaryBrand",
+      "cssVariable": "--text-primary-brand",
       "valuesByTheme": {
         "engage": "#29308a",
         "legacy": "#29308a"
@@ -1420,7 +1423,7 @@
     "Text.Primary.Campaign": {
       "type": "color",
       "alias": "Alias.Core.Campaign.1",
-      "cssVariable": "--textPrimaryCampaign",
+      "cssVariable": "--text-primary-campaign",
       "valuesByTheme": {
         "engage": "#f2960c",
         "legacy": "#f2960c"
@@ -1429,7 +1432,7 @@
     "Text.Primary.Chat": {
       "type": "color",
       "alias": "Alias.Core.Chat.1",
-      "cssVariable": "--textPrimaryChat",
+      "cssVariable": "--text-primary-chat",
       "valuesByTheme": {
         "engage": "#4c57ea",
         "legacy": "#0071FD"
@@ -1438,7 +1441,7 @@
     "Text.Primary.Disabled": {
       "type": "color",
       "alias": "Alias.Neutral.6",
-      "cssVariable": "--textPrimaryDisabled",
+      "cssVariable": "--text-primary-disabled",
       "valuesByTheme": {
         "engage": "#A4A2B0",
         "legacy": "#8c8c8c"
@@ -1447,7 +1450,7 @@
     "Text.Primary.Done": {
       "type": "color",
       "alias": "Alias.Status.Done.2",
-      "cssVariable": "--textPrimaryDone",
+      "cssVariable": "--text-primary-done",
       "valuesByTheme": {
         "engage": "#079950",
         "legacy": "#079950"
@@ -1456,7 +1459,7 @@
     "Text.Primary.Error": {
       "type": "color",
       "alias": "Alias.Semantic.Error.1",
-      "cssVariable": "--textPrimaryError",
+      "cssVariable": "--text-primary-error",
       "valuesByTheme": {
         "engage": "#fc4032",
         "legacy": "#fc4032"
@@ -1465,7 +1468,7 @@
     "Text.Primary.Ignored": {
       "type": "color",
       "alias": "Alias.Status.Ignored.2",
-      "cssVariable": "--textPrimaryIgnored",
+      "cssVariable": "--text-primary-ignored",
       "valuesByTheme": {
         "engage": "#A4A2B0",
         "legacy": "#8c8c8c"
@@ -1474,7 +1477,7 @@
     "Text.Primary.Interactive": {
       "type": "color",
       "alias": "Alias.Core.Primary.1",
-      "cssVariable": "--textPrimaryInteractive",
+      "cssVariable": "--text-primary-interactive",
       "valuesByTheme": {
         "engage": "#4c57ea",
         "legacy": "#0071FD"
@@ -1483,7 +1486,7 @@
     "Text.Primary.Issue": {
       "type": "color",
       "alias": "Alias.Status.Issue.2",
-      "cssVariable": "--textPrimaryIssue",
+      "cssVariable": "--text-primary-issue",
       "valuesByTheme": {
         "engage": "#fc4032",
         "legacy": "#fc4032"
@@ -1492,7 +1495,7 @@
     "Text.Primary.Mail": {
       "type": "color",
       "alias": "Alias.Core.Mail.1",
-      "cssVariable": "--textPrimaryMail",
+      "cssVariable": "--text-primary-mail",
       "valuesByTheme": {
         "engage": "#f2960c",
         "legacy": "#f2960c"
@@ -1501,7 +1504,7 @@
     "Text.Primary.Notice": {
       "type": "color",
       "alias": "Alias.Semantic.Notice.1",
-      "cssVariable": "--textPrimaryNotice",
+      "cssVariable": "--text-primary-notice",
       "valuesByTheme": {
         "engage": "#4c57ea",
         "legacy": "#0071FD"
@@ -1510,7 +1513,7 @@
     "Text.Primary.Pending": {
       "type": "color",
       "alias": "Alias.Status.Pending.2",
-      "cssVariable": "--textPrimaryPending",
+      "cssVariable": "--text-primary-pending",
       "valuesByTheme": {
         "engage": "#f2960c",
         "legacy": "#f2960c"
@@ -1519,7 +1522,7 @@
     "Text.Primary.Processing": {
       "type": "color",
       "alias": "Alias.Status.Processing.2",
-      "cssVariable": "--textPrimaryProcessing",
+      "cssVariable": "--text-primary-processing",
       "valuesByTheme": {
         "engage": "#ea6208",
         "legacy": "#ea6208"
@@ -1528,7 +1531,7 @@
     "Text.Primary.Success": {
       "type": "color",
       "alias": "Alias.Semantic.Positive.1",
-      "cssVariable": "--textPrimarySuccess",
+      "cssVariable": "--text-primary-success",
       "valuesByTheme": {
         "engage": "#079950",
         "legacy": "#079950"
@@ -1537,7 +1540,7 @@
     "Text.Primary.Voice": {
       "type": "color",
       "alias": "Alias.Core.Voice.1",
-      "cssVariable": "--textPrimaryVoice",
+      "cssVariable": "--text-primary-voice",
       "valuesByTheme": {
         "engage": "#4c57ea",
         "legacy": "#0071FD"
@@ -1546,7 +1549,7 @@
     "Text.Primary.Warning": {
       "type": "color",
       "alias": "Alias.Semantic.Warning.1",
-      "cssVariable": "--textPrimaryWarning",
+      "cssVariable": "--text-primary-warning",
       "valuesByTheme": {
         "engage": "#ea6208",
         "legacy": "#ea6208"
@@ -1555,7 +1558,7 @@
     "Text.Secondary.Active": {
       "type": "color",
       "alias": "Alias.Status.Active.3",
-      "cssVariable": "--textSecondaryActive",
+      "cssVariable": "--text-secondary-active",
       "valuesByTheme": {
         "engage": "#1f0099",
         "legacy": "#1f0099"
@@ -1564,7 +1567,7 @@
     "Text.Secondary.Brand": {
       "type": "color",
       "alias": "Alias.Core.Brand.2",
-      "cssVariable": "--textSecondaryBrand",
+      "cssVariable": "--text-secondary-brand",
       "valuesByTheme": {
         "engage": "#1e246e",
         "legacy": "#1e246e"
@@ -1573,7 +1576,7 @@
     "Text.Secondary.Campaign": {
       "type": "color",
       "alias": "Alias.Core.Campaign.3",
-      "cssVariable": "--textSecondaryCampaign",
+      "cssVariable": "--text-secondary-campaign",
       "valuesByTheme": {
         "engage": "#4d3300",
         "legacy": "#4d3300"
@@ -1582,7 +1585,7 @@
     "Text.Secondary.Chat": {
       "type": "color",
       "alias": "Alias.Core.Chat.3",
-      "cssVariable": "--textSecondaryChat",
+      "cssVariable": "--text-secondary-chat",
       "valuesByTheme": {
         "engage": "#1f0099",
         "legacy": "#1f0099"
@@ -1591,7 +1594,7 @@
     "Text.Secondary.Disabled": {
       "type": "color",
       "alias": "Alias.Neutral.7",
-      "cssVariable": "--textSecondaryDisabled",
+      "cssVariable": "--text-secondary-disabled",
       "valuesByTheme": {
         "engage": "#898794",
         "legacy": "#717171"
@@ -1600,7 +1603,7 @@
     "Text.Secondary.Done": {
       "type": "color",
       "alias": "Alias.Status.Done.3",
-      "cssVariable": "--textSecondaryDone",
+      "cssVariable": "--text-secondary-done",
       "valuesByTheme": {
         "engage": "#004a19",
         "legacy": "#004a19"
@@ -1609,7 +1612,7 @@
     "Text.Secondary.Error": {
       "type": "color",
       "alias": "Alias.Semantic.Error.3",
-      "cssVariable": "--textSecondaryError",
+      "cssVariable": "--text-secondary-error",
       "valuesByTheme": {
         "engage": "#690000",
         "legacy": "#690000"
@@ -1618,7 +1621,7 @@
     "Text.Secondary.Ignored": {
       "type": "color",
       "alias": "Alias.Status.Ignored.3",
-      "cssVariable": "--textSecondaryIgnored",
+      "cssVariable": "--text-secondary-ignored",
       "valuesByTheme": {
         "engage": "#585663",
         "legacy": "#3c3c3c"
@@ -1627,7 +1630,7 @@
     "Text.Secondary.Interactive": {
       "type": "color",
       "alias": "Alias.Core.Secondary.1",
-      "cssVariable": "--textSecondaryInteractive",
+      "cssVariable": "--text-secondary-interactive",
       "valuesByTheme": {
         "engage": "#3C3B44",
         "legacy": "#212121"
@@ -1636,7 +1639,7 @@
     "Text.Secondary.Issue": {
       "type": "color",
       "alias": "Alias.Status.Issue.3",
-      "cssVariable": "--textSecondaryIssue",
+      "cssVariable": "--text-secondary-issue",
       "valuesByTheme": {
         "engage": "#690000",
         "legacy": "#690000"
@@ -1645,7 +1648,7 @@
     "Text.Secondary.Mail": {
       "type": "color",
       "alias": "Alias.Core.Mail.3",
-      "cssVariable": "--textSecondaryMail",
+      "cssVariable": "--text-secondary-mail",
       "valuesByTheme": {
         "engage": "#4d3300",
         "legacy": "#4d3300"
@@ -1654,7 +1657,7 @@
     "Text.Secondary.Notice": {
       "type": "color",
       "alias": "Alias.Semantic.Notice.3",
-      "cssVariable": "--textSecondaryNotice",
+      "cssVariable": "--text-secondary-notice",
       "valuesByTheme": {
         "engage": "#1f0099",
         "legacy": "#1f0099"
@@ -1663,7 +1666,7 @@
     "Text.Secondary.Pending": {
       "type": "color",
       "alias": "Alias.Status.Pending.3",
-      "cssVariable": "--textSecondaryPending",
+      "cssVariable": "--text-secondary-pending",
       "valuesByTheme": {
         "engage": "#4d3300",
         "legacy": "#4d3300"
@@ -1672,7 +1675,7 @@
     "Text.Secondary.Processing": {
       "type": "color",
       "alias": "Alias.Status.Processing.3",
-      "cssVariable": "--textSecondaryProcessing",
+      "cssVariable": "--text-secondary-processing",
       "valuesByTheme": {
         "engage": "#5d2201",
         "legacy": "#5d2201"
@@ -1681,7 +1684,7 @@
     "Text.Secondary.Success": {
       "type": "color",
       "alias": "Alias.Semantic.Positive.3",
-      "cssVariable": "--textSecondarySuccess",
+      "cssVariable": "--text-secondary-success",
       "valuesByTheme": {
         "engage": "#004a19",
         "legacy": "#004a19"
@@ -1690,7 +1693,7 @@
     "Text.Secondary.Voice": {
       "type": "color",
       "alias": "Alias.Core.Voice.3",
-      "cssVariable": "--textSecondaryVoice",
+      "cssVariable": "--text-secondary-voice",
       "valuesByTheme": {
         "engage": "#1f0099",
         "legacy": "#1f0099"
@@ -1699,7 +1702,7 @@
     "Text.Secondary.Warning": {
       "type": "color",
       "alias": "Alias.Semantic.Warning.3",
-      "cssVariable": "--textSecondaryWarning",
+      "cssVariable": "--text-secondary-warning",
       "valuesByTheme": {
         "engage": "#5d2201",
         "legacy": "#5d2201"
@@ -1708,7 +1711,7 @@
     "Text.Tertiary.Interactive": {
       "type": "color",
       "alias": "Alias.Neutral.8",
-      "cssVariable": "--textTertiaryInteractive",
+      "cssVariable": "--text-tertiary-interactive",
       "valuesByTheme": {
         "engage": "#706E7B",
         "legacy": "#575757"
@@ -1716,8 +1719,8 @@
     },
     "typography.body.1": {
       "type": "typography",
-      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.380 | fontSize: FontSize.body.1",
-      "cssVariable": "--typographyBody1",
+      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.380 | fontSize: FontSize.body.1 | lineHeight: 18px",
+      "cssVariable": "--typography-body-1",
       "valuesByTheme": {
         "engage": "font-family: Saans; font-weight: Regular; font-size: 16; line-height: 18px;",
         "legacy": "font-family: Saans; font-weight: Regular; font-size: 16; line-height: 18px;"
@@ -1725,8 +1728,8 @@
     },
     "typography.body.1-medium": {
       "type": "typography",
-      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.570 | fontSize: FontSize.body.1",
-      "cssVariable": "--typographyBody1Medium",
+      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.570 | fontSize: FontSize.body.1 | lineHeight: 18px",
+      "cssVariable": "--typography-body-1-medium",
       "valuesByTheme": {
         "engage": "font-family: Saans; font-weight: Medium; font-size: 16; line-height: 18px;",
         "legacy": "font-family: Saans; font-weight: Medium; font-size: 16; line-height: 18px;"
@@ -1734,8 +1737,8 @@
     },
     "typography.body.1-strong": {
       "type": "typography",
-      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.670 | fontSize: FontSize.body.1",
-      "cssVariable": "--typographyBody1Strong",
+      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.670 | fontSize: FontSize.body.1 | lineHeight: 18px",
+      "cssVariable": "--typography-body-1-strong",
       "valuesByTheme": {
         "engage": "font-family: Saans; font-weight: SemiBold; font-size: 16; line-height: 18px;",
         "legacy": "font-family: Saans; font-weight: SemiBold; font-size: 16; line-height: 18px;"
@@ -1743,8 +1746,8 @@
     },
     "typography.body.2": {
       "type": "typography",
-      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.380 | fontSize: FontSize.body.2",
-      "cssVariable": "--typographyBody2",
+      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.380 | fontSize: FontSize.body.2 | lineHeight: 16px | letterSpacing: 1.5%",
+      "cssVariable": "--typography-body-2",
       "valuesByTheme": {
         "engage": "font-family: Saans; font-weight: Regular; font-size: 14; line-height: 16px; letter-spacing: 1.5%;",
         "legacy": "font-family: Saans; font-weight: Regular; font-size: 14; line-height: 16px; letter-spacing: 1.5%;"
@@ -1752,8 +1755,8 @@
     },
     "typography.body.2-link": {
       "type": "typography",
-      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.380 | fontSize: FontSize.body.2",
-      "cssVariable": "--typographyBody2Link",
+      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.380 | fontSize: FontSize.body.2 | lineHeight: 16px | letterSpacing: 1.5%",
+      "cssVariable": "--typography-body-2-link",
       "valuesByTheme": {
         "engage": "font-family: Saans; font-weight: Regular; font-size: 14; line-height: 16px; letter-spacing: 1.5%;",
         "legacy": "font-family: Saans; font-weight: Regular; font-size: 14; line-height: 16px; letter-spacing: 1.5%;"
@@ -1761,17 +1764,17 @@
     },
     "typography.body.2-long": {
       "type": "typography",
-      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.380 | fontSize: FontSize.body.2 | lineHeight: LineHeights.MultiLine.l",
-      "cssVariable": "--typographyBody2Long",
+      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.380 | fontSize: FontSize.body.2 | lineHeight: LineHeights.MultiLine.l | letterSpacing: 1.5%",
+      "cssVariable": "--typography-body-2-long",
       "valuesByTheme": {
-        "engage": "font-family: Saans; font-weight: Regular; font-size: 14; line-height: 21; letter-spacing: 1.5%;",
+        "engage": "font-family: Saans; font-weight: Regular; font-size: 14; line-height: 21px; letter-spacing: 1.5%;",
         "legacy": "font-family: Saans; font-weight: Regular; font-size: 14; line-height: 21; letter-spacing: 1.5%;"
       }
     },
     "typography.body.2-strong": {
       "type": "typography",
-      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.570 | fontSize: FontSize.body.2",
-      "cssVariable": "--typographyBody2Strong",
+      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.570 | fontSize: FontSize.body.2 | lineHeight: 16px | letterSpacing: 1.5%",
+      "cssVariable": "--typography-body-2-strong",
       "valuesByTheme": {
         "engage": "font-family: Saans; font-weight: Medium; font-size: 14; line-height: 16px; letter-spacing: 1.5%;",
         "legacy": "font-family: Saans; font-weight: Medium; font-size: 14; line-height: 16px; letter-spacing: 1.5%;"
@@ -1779,8 +1782,8 @@
     },
     "typography.caption.1": {
       "type": "typography",
-      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.380 | fontSize: FontSize.caption.1",
-      "cssVariable": "--typographyCaption1",
+      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.380 | fontSize: FontSize.caption.1 | lineHeight: 14px | letterSpacing: 1.5%",
+      "cssVariable": "--typography-caption-1",
       "valuesByTheme": {
         "engage": "font-family: Saans; font-weight: Regular; font-size: 12; line-height: 14px; letter-spacing: 1.5%;",
         "legacy": "font-family: Saans; font-weight: Regular; font-size: 12; line-height: 14px; letter-spacing: 1.5%;"
@@ -1788,8 +1791,8 @@
     },
     "typography.caption.1-strong": {
       "type": "typography",
-      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.570 | fontSize: FontSize.caption.1",
-      "cssVariable": "--typographyCaption1Strong",
+      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.570 | fontSize: FontSize.caption.1 | lineHeight: 14px | letterSpacing: 1.5%",
+      "cssVariable": "--typography-caption-1-strong",
       "valuesByTheme": {
         "engage": "font-family: Saans; font-weight: Medium; font-size: 12; line-height: 14px; letter-spacing: 1.5%;",
         "legacy": "font-family: Saans; font-weight: Medium; font-size: 12; line-height: 14px; letter-spacing: 1.5%;"
@@ -1797,8 +1800,8 @@
     },
     "typography.display.1": {
       "type": "typography",
-      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.670 | fontSize: FontSize.display.1",
-      "cssVariable": "--typographyDisplay1",
+      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.670 | fontSize: FontSize.display.1 | lineHeight: 30px",
+      "cssVariable": "--typography-display-1",
       "valuesByTheme": {
         "engage": "font-family: Saans; font-weight: SemiBold; font-size: 36; line-height: 30px;",
         "legacy": "font-family: Saans; font-weight: SemiBold; font-size: 36; line-height: 30px;"
@@ -1806,8 +1809,8 @@
     },
     "typography.display.2": {
       "type": "typography",
-      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.670 | fontSize: FontSize.display.2",
-      "cssVariable": "--typographyDisplay2",
+      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.670 | fontSize: FontSize.display.2 | lineHeight: 20px",
+      "cssVariable": "--typography-display-2",
       "valuesByTheme": {
         "engage": "font-family: Saans; font-weight: SemiBold; font-size: 32; line-height: 20px;",
         "legacy": "font-family: Saans; font-weight: SemiBold; font-size: 32; line-height: 20px;"
@@ -1815,8 +1818,8 @@
     },
     "typography.heading.1": {
       "type": "typography",
-      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.670 | fontSize: FontSize.heading.1",
-      "cssVariable": "--typographyHeading1",
+      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.670 | fontSize: FontSize.heading.1 | lineHeight: 30px",
+      "cssVariable": "--typography-heading-1",
       "valuesByTheme": {
         "engage": "font-family: Saans; font-weight: SemiBold; font-size: 28; line-height: 30px;",
         "legacy": "font-family: Saans; font-weight: SemiBold; font-size: 28; line-height: 30px;"
@@ -1824,8 +1827,8 @@
     },
     "typography.heading.2": {
       "type": "typography",
-      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.570 | fontSize: FontSize.heading.2",
-      "cssVariable": "--typographyHeading2",
+      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.570 | fontSize: FontSize.heading.2 | lineHeight: 20px",
+      "cssVariable": "--typography-heading-2",
       "valuesByTheme": {
         "engage": "font-family: Saans; font-weight: Medium; font-size: 18; line-height: 20px;",
         "legacy": "font-family: Saans; font-weight: Medium; font-size: 18; line-height: 20px;"
@@ -1833,8 +1836,8 @@
     },
     "typography.heading.3": {
       "type": "typography",
-      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.300 | fontSize: FontSize.heading.3",
-      "cssVariable": "--typographyHeading3",
+      "alias": "fontFamily: FontFamily.Saans | fontWeight: FontWeight.300 | fontSize: FontSize.heading.3 | lineHeight: 20px",
+      "cssVariable": "--typography-heading-3",
       "valuesByTheme": {
         "engage": "font-family: Saans; font-weight: Light; font-size: 18; line-height: 20px;",
         "legacy": "font-family: Saans; font-weight: Light; font-size: 18; line-height: 20px;"
