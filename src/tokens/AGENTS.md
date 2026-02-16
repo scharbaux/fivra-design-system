@@ -17,3 +17,4 @@ This document inherits all policies from the repository root `AGENTS.md`. Review
 - 1.0: Established directory governance, documented Engage/Legacy exports, and recorded the initial Tokens Studio import; validated with `yarn test` and `yarn build`.
 - 1.1.0: Updated font family tokens to default to Saans with sans-serif fallback and refreshed generated outputs.
 - 1.2.0: Synced `$themes.json`, `Externals/Default.json`, and Engage/Legacy internal exports with the latest Tokens Studio source-of-truth payload for downstream docs and style generation.
+- 1.2.1: Synced latest Tokens Studio exports and added color-token descriptions in source JSON so downstream docs and tooling can surface richer token metadata.

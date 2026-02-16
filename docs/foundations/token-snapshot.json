@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-02-15T22:48:07.359Z",
+  "generatedAt": "2026-02-16T12:00:19.565Z",
   "themes": [
     "engage",
     "legacy"
@@ -1768,7 +1768,7 @@
       "cssVariable": "--typography-body-2-long",
       "valuesByTheme": {
         "engage": "font-family: Saans; font-weight: Regular; font-size: 14; line-height: 21px; letter-spacing: 1.5%;",
-        "legacy": "font-family: Saans; font-weight: Regular; font-size: 14; line-height: 21; letter-spacing: 1.5%;"
+        "legacy": "font-family: Saans; font-weight: Regular; font-size: 14; line-height: 21px; letter-spacing: 1.5%;"
       }
     },
     "typography.body.2-strong": {

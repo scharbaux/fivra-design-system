@@ -22,3 +22,4 @@ This file inherits the repository root `AGENTS.md`. Generated theme assets live 
 
 - 1.6.4: Regenerated Engage/Legacy theme assets and token option metadata with kebab-case CSS custom property names.
 - 1.6.5: Regenerated Storybook token option metadata after fixing kebab-case CSS variable parsing so shared color/spacing/radius/border/shadow option lists are populated again.
+- 1.6.6: Regenerated Engage/Legacy theme CSS and Storybook token option metadata after refreshing token exports with color-token descriptions to keep generated assets aligned.
