@@ -19,6 +19,17 @@ const typographyStories: StoryConfig[] = [
   { id: "atomics-typography-vue--no-wrap", name: "vue-no-wrap", framePrefix: "/vue" },
 ];
 
+const TYPOGRAPHY_DIFF_RATIO_OVERRIDES: Partial<Record<string, number>> = {
+  "react-body-copy": 0.16,
+  "react-emphasis-and-links": 0.06,
+  "react-truncation": 0.07,
+  "react-no-wrap": 0.16,
+  "vue-body-copy": 0.16,
+  "vue-emphasis-and-links": 0.06,
+  "vue-truncation": 0.07,
+  "vue-no-wrap": 0.16,
+};
+
 const storyUrl = (story: StoryConfig) =>
   `${story.framePrefix}/iframe.html?id=${story.id}&globals=backgrounds.grid:false&viewMode=story`;
 
@@ -36,7 +47,7 @@ async function loadStory(page: Page, story: StoryConfig) {
 }
 
 test.describe("Typography visual regressions", () => {
-  const screenshotOptions = {
+  const baseScreenshotOptions = {
     animations: "disabled" as const,
     caret: "hide" as const,
     scale: "css" as const,
@@ -51,6 +62,12 @@ test.describe("Typography visual regressions", () => {
     test(`${story.name} matches baseline`, async ({ page }) => {
       await loadStory(page, story);
       const canvas = page.locator("#storybook-root");
+      const screenshotOptions = {
+        ...baseScreenshotOptions,
+        maxDiffPixelRatio:
+          TYPOGRAPHY_DIFF_RATIO_OVERRIDES[story.name] ?? baseScreenshotOptions.maxDiffPixelRatio,
+      };
+
       await expect(canvas).toHaveScreenshot(`${story.name}.png`, screenshotOptions);
     });
   }

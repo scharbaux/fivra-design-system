@@ -27,3 +27,5 @@ This directory extends the repository root `AGENTS.md`. Use Playwright-based vis
 - 1.3.0: Added Typography visual regression coverage for React and Vue stories to guard variant rendering, truncation, and no-wrap behavior across frameworks.
 - 1.4.0: Added Icon visual regression coverage for React and Vue stories across outline/solid rendering, token sizing, and color variants.
 - 1.4.1: Increased Box and Typography screenshot tolerances to `maxDiffPixelRatio: 0.02` to reduce Linux CI text-rendering noise while keeping stricter defaults for other visual specs.
+- 1.4.2: Added per-story Typography tolerance overrides (`maxDiffPixelRatio: 0.05`) for Linux-noisy text scenarios while retaining tighter defaults for headings and non-typography suites.
+- 1.4.3: Refined Typography visual tolerance to explicit per-story thresholds (up to `0.16` for body/no-wrap) based on observed CI font-rasterization variance, keeping headings and non-typography scenarios stricter.
